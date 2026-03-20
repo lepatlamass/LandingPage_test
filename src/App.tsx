@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+"use client";
+
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { 
   FileText, 
   Image as ImageIcon, 
@@ -31,406 +34,351 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 
 const sidebarTools = [
-  { id: 'bg-remover', name: 'Background Remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
-  { id: 'watermark', name: 'Watermark', icon: Droplets, color: 'text-blue-400', hover: 'hover:bg-blue-400/10' },
-  { id: 'watermark-remover', name: 'Watermark Remover', icon: Droplets, color: 'text-purple-400', hover: 'hover:bg-purple-400/10' },
-  { id: 'image-to-text', name: 'Image to Text', icon: Type, color: 'text-pink-400', hover: 'hover:bg-pink-400/10' },
-  { id: 'resize', name: 'Resize', icon: Maximize, color: 'text-cyan-400', hover: 'hover:bg-cyan-400/10' },
-  { id: 'compress', name: 'Compress', icon: Minimize, color: 'text-green-400', hover: 'hover:bg-green-400/10' },
+  { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
+  { id: 'watermark', nameKey: 'Tools.watermark', icon: Droplets, color: 'text-blue-400', hover: 'hover:bg-blue-400/10' },
+  { id: 'watermark-remover', nameKey: 'Tools.watermark-remover', icon: Droplets, color: 'text-purple-400', hover: 'hover:bg-purple-400/10' },
+  { id: 'image-to-text', nameKey: 'Tools.image-to-text', icon: Type, color: 'text-pink-400', hover: 'hover:bg-pink-400/10' },
+  { id: 'resize', nameKey: 'Tools.resize', icon: Maximize, color: 'text-cyan-400', hover: 'hover:bg-cyan-400/10' },
+  { id: 'compress', nameKey: 'Tools.compress', icon: Minimize, color: 'text-green-400', hover: 'hover:bg-green-400/10' },
   { 
     id: 'convert', 
-    name: 'Convert', 
+    nameKey: 'Tools.convert', 
     icon: RefreshCw, 
     color: 'text-yellow-400', 
     hover: 'hover:bg-yellow-400/10',
     children: [
-      { id: 'compress-images', name: 'Compress Images' },
-      { id: 'compress-pdf', name: 'Compress PDF' },
-      { id: 'compress-video', name: 'Compress Video' },
+      { id: 'compress-images', nameKey: 'Tools.compress-images' },
+      { id: 'compress-pdf', nameKey: 'Tools.compress-pdf' },
+      { id: 'compress-video', nameKey: 'Tools.compress-video' },
     ]
   },
-  { id: 'pdf-to-csv', name: 'PDF to CSV', icon: FileCode, color: 'text-red-400', hover: 'hover:bg-red-400/10' },
-  { id: 'pdf-to-excel', name: 'PDF to Excel', icon: FileSpreadsheet, color: 'text-lime-400', hover: 'hover:bg-lime-400/10' },
-  { id: 'excel-csv', name: 'Excel / CSV', icon: FileSpreadsheet, color: 'text-emerald-400', hover: 'hover:bg-emerald-400/10' },
-  { id: 'pdf-to-word', name: 'PDF to Word', icon: FileText, color: 'text-blue-500', hover: 'hover:bg-blue-500/10' },
-  { id: 'video-to-gif', name: 'Video to GIF', icon: FileVideo, color: 'text-purple-500', hover: 'hover:bg-purple-500/10' },
+  { id: 'pdf-to-csv', nameKey: 'Tools.pdf-to-csv', icon: FileCode, color: 'text-red-400', hover: 'hover:bg-red-400/10' },
+  { id: 'pdf-to-excel', nameKey: 'Tools.pdf-to-excel', icon: FileSpreadsheet, color: 'text-lime-400', hover: 'hover:bg-lime-400/10' },
+  { id: 'excel-csv', nameKey: 'Tools.excel-csv', icon: FileSpreadsheet, color: 'text-emerald-400', hover: 'hover:bg-emerald-400/10' },
+  { id: 'pdf-to-word', nameKey: 'Tools.pdf-to-word', icon: FileText, color: 'text-blue-500', hover: 'hover:bg-blue-500/10' },
+  { id: 'video-to-gif', nameKey: 'Tools.video-to-gif', icon: FileVideo, color: 'text-purple-500', hover: 'hover:bg-purple-500/10' },
 ];
 
 interface ToolPageContent {
-  title: string;
-  accent: string;
-  description: string;
+  titleKey: string;
+  accentKey: string;
+  descriptionKey: string;
   heroIcon: React.ElementType;
   features: {
-    title: string;
-    description: string;
+    titleKey: string;
+    descriptionKey: string;
     icon: React.ElementType;
     color: string;
   }[];
-  steps: string[];
-  faqs: {
-    question: string;
-    answer: string;
+  stepsKeys: string[];
+  faqsKeys: {
+    questionKey: string;
+    answerKey: string;
   }[];
 }
 
 const toolContent: Record<string, ToolPageContent> = {
   'bg-remover': {
-    title: 'Background',
-    accent: 'Remover',
-    description: 'Remove backgrounds from your images instantly with AI-powered precision. Perfect for product photos and portraits.',
+    titleKey: 'Tools.bg-remover-title',
+    accentKey: 'Tools.bg-remover-accent',
+    descriptionKey: 'Tools.bg-remover-desc',
     heroIcon: Eraser,
     features: [
-      { title: 'AI-Powered Precision', description: 'Our advanced AI automatically detects and removes backgrounds with pixel-perfect accuracy.', icon: Zap, color: 'text-orange-400' },
-      { title: 'Batch Processing', description: 'Upload multiple images at once and remove backgrounds in seconds.', icon: LayoutGrid, color: 'text-blue-400' },
-      { title: 'High Resolution', description: 'Download your processed images in high resolution without any quality loss.', icon: Maximize, color: 'text-green-400' },
+      { titleKey: 'Tools.bg-remover-f1-title', descriptionKey: 'Tools.bg-remover-f1-desc', icon: Zap, color: 'text-orange-400' },
+      { titleKey: 'Tools.bg-remover-f2-title', descriptionKey: 'Tools.bg-remover-f2-desc', icon: LayoutGrid, color: 'text-blue-400' },
+      { titleKey: 'Tools.bg-remover-f3-title', descriptionKey: 'Tools.bg-remover-f3-desc', icon: Maximize, color: 'text-green-400' },
     ],
-    steps: [
-      'Upload your image file (JPG, PNG, WebP).',
-      'Wait a few seconds for the AI to process.',
-      'Review the result and make fine adjustments if needed.',
-      'Download your transparent PNG instantly.'
+    stepsKeys: [
+      'Tools.bg-remover-step1',
+      'Tools.bg-remover-step2',
+      'Tools.bg-remover-step3',
+      'Tools.bg-remover-step4'
     ],
-    faqs: [
-      { question: 'What image formats are supported?', answer: 'We support JPG, PNG, WebP, and BMP formats for background removal.' },
-      { question: 'Is it free to use?', answer: 'Yes, you can remove backgrounds for free with some daily limits.' },
-      { question: 'Is my data safe?', answer: 'Absolutely. All images are processed securely and deleted automatically.' }
+    faqsKeys: [
+      { questionKey: 'Tools.bg-remover-faq1-q', answerKey: 'Tools.bg-remover-faq1-a' },
+      { questionKey: 'Tools.bg-remover-faq2-q', answerKey: 'Tools.bg-remover-faq2-a' },
+      { questionKey: 'Tools.bg-remover-faq3-q', answerKey: 'Tools.bg-remover-faq3-a' }
     ]
   },
   'watermark': {
-    title: 'Add',
-    accent: 'Watermark',
-    description: 'Protect your creative work by adding custom text or image watermarks to your photos and documents.',
+    titleKey: 'Tools.watermark-title',
+    accentKey: 'Tools.watermark-accent',
+    descriptionKey: 'Tools.watermark-desc',
     heroIcon: Droplets,
     features: [
-      { title: 'Custom Branding', description: 'Add your logo or custom text to any image or PDF document.', icon: ShieldCheck, color: 'text-blue-400' },
-      { title: 'Full Control', description: 'Adjust opacity, position, rotation, and size of your watermarks.', icon: Maximize, color: 'text-purple-400' },
-      { title: 'Bulk Watermarking', description: 'Apply watermarks to hundreds of files at once to save time.', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.watermark-f1-title', descriptionKey: 'Tools.watermark-f1-desc', icon: ShieldCheck, color: 'text-blue-400' },
+      { titleKey: 'Tools.watermark-f2-title', descriptionKey: 'Tools.watermark-f2-desc', icon: Maximize, color: 'text-purple-400' },
+      { titleKey: 'Tools.watermark-f3-title', descriptionKey: 'Tools.watermark-f3-desc', icon: Zap, color: 'text-yellow-400' },
     ],
-    steps: [
-      'Select the files you want to watermark.',
-      'Upload your logo or type your custom text.',
-      'Adjust the watermark placement and transparency.',
-      'Process and download your protected files.'
+    stepsKeys: [
+      'Tools.watermark-step1',
+      'Tools.watermark-step2',
+      'Tools.watermark-step3',
+      'Tools.watermark-step4'
     ],
-    faqs: [
-      { question: 'Can I use my own logo?', answer: 'Yes, you can upload any image file to use as a watermark.' },
-      { question: 'Does it work with PDFs?', answer: 'Yes, our tool supports both images and PDF documents.' }
+    faqsKeys: [
+      { questionKey: 'Tools.watermark-faq1-q', answerKey: 'Tools.watermark-faq1-a' },
+      { questionKey: 'Tools.watermark-faq2-q', answerKey: 'Tools.watermark-faq2-a' }
     ]
   },
   'watermark-remover': {
-    title: 'Watermark',
-    accent: 'Remover',
-    description: 'Remove unwanted watermarks, logos, or text from your images using advanced AI inpainting technology.',
+    titleKey: 'Tools.watermark-remover-title',
+    accentKey: 'Tools.watermark-remover-accent',
+    descriptionKey: 'Tools.watermark-remover-desc',
     heroIcon: Droplets,
     features: [
-      { title: 'AI Inpainting', description: 'Our AI intelligently fills in the gaps after removing watermarks.', icon: Zap, color: 'text-purple-400' },
-      { title: 'Clean Results', description: 'Get high-quality images without any visible traces of the original watermark.', icon: CheckCircle2, color: 'text-green-400' },
-      { title: 'Fast Processing', description: 'Remove watermarks in seconds with our optimized cloud servers.', icon: Zap, color: 'text-cyan-400' },
+      { titleKey: 'Tools.watermark-remover-f1-title', descriptionKey: 'Tools.watermark-remover-f1-desc', icon: Zap, color: 'text-purple-400' },
+      { titleKey: 'Tools.watermark-remover-f2-title', descriptionKey: 'Tools.watermark-remover-f2-desc', icon: ShieldCheck, color: 'text-blue-400' },
+      { titleKey: 'Tools.watermark-remover-f3-title', descriptionKey: 'Tools.watermark-remover-f3-desc', icon: Maximize, color: 'text-green-400' },
     ],
-    steps: [
-      'Upload the image containing the watermark.',
-      'Highlight the area you want to remove.',
-      'Click "Remove" and wait for the AI to process.',
-      'Download your clean, watermark-free image.'
+    stepsKeys: [
+      'Tools.watermark-remover-step1',
+      'Tools.watermark-remover-step2',
+      'Tools.watermark-remover-step3',
+      'Tools.watermark-remover-step4'
     ],
-    faqs: [
-      { question: 'Will it affect image quality?', answer: 'Our AI is designed to preserve the original quality as much as possible.' },
-      { question: 'Can it remove complex logos?', answer: 'Yes, it can handle most logos and text overlays effectively.' }
+    faqsKeys: [
+      { questionKey: 'Tools.watermark-remover-faq1-q', answerKey: 'Tools.watermark-remover-faq1-a' },
+      { questionKey: 'Tools.watermark-remover-faq2-q', answerKey: 'Tools.watermark-remover-faq2-a' }
     ]
   },
   'image-to-text': {
-    title: 'Image to',
-    accent: 'Text',
-    description: 'Convert images, screenshots, and scanned documents into editable text using high-accuracy OCR technology.',
+    titleKey: 'Tools.image-to-text-title',
+    accentKey: 'Tools.image-to-text-accent',
+    descriptionKey: 'Tools.image-to-text-desc',
     heroIcon: Type,
     features: [
-      { title: 'High Accuracy OCR', description: 'Extract text from images with industry-leading accuracy.', icon: FileText, color: 'text-pink-400' },
-      { title: 'Multi-Language Support', description: 'Recognize text in over 100 different languages.', icon: RefreshCw, color: 'text-blue-400' },
-      { title: 'Export Options', description: 'Save your extracted text as TXT, Word, or PDF files.', icon: FileCode, color: 'text-yellow-400' },
+      { titleKey: 'Tools.image-to-text-f1-title', descriptionKey: 'Tools.image-to-text-f1-desc', icon: Search, color: 'text-pink-400' },
+      { titleKey: 'Tools.image-to-text-f2-title', descriptionKey: 'Tools.image-to-text-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.image-to-text-f3-title', descriptionKey: 'Tools.image-to-text-f3-desc', icon: FileText, color: 'text-blue-400' },
     ],
-    steps: [
-      'Upload your image or scanned document.',
-      'Select the language of the text in the image.',
-      'Wait for the OCR engine to scan and extract text.',
-      'Copy the text or download it as a document.'
+    stepsKeys: [
+      'Tools.image-to-text-step1',
+      'Tools.image-to-text-step2',
+      'Tools.image-to-text-step3',
+      'Tools.image-to-text-step4'
     ],
-    faqs: [
-      { question: 'Does it work with handwriting?', answer: 'It works best with printed text, but can handle clear handwriting.' },
-      { question: 'Can I convert multiple images?', answer: 'Yes, you can upload and process multiple images in a batch.' }
+    faqsKeys: [
+      { questionKey: 'Tools.image-to-text-faq1-q', answerKey: 'Tools.image-to-text-faq1-a' },
+      { questionKey: 'Tools.image-to-text-faq2-q', answerKey: 'Tools.image-to-text-faq2-a' }
     ]
   },
   'resize': {
-    title: 'Image',
-    accent: 'Resize',
-    description: 'Resize your images to specific dimensions or percentages while maintaining the best possible quality.',
+    titleKey: 'Tools.resize-title',
+    accentKey: 'Tools.resize-accent',
+    descriptionKey: 'Tools.resize-desc',
     heroIcon: Maximize,
     features: [
-      { title: 'Precise Dimensions', description: 'Set exact width and height or resize by percentage.', icon: Maximize, color: 'text-cyan-400' },
-      { title: 'Aspect Ratio Lock', description: 'Keep your images from stretching by locking the aspect ratio.', icon: ShieldCheck, color: 'text-blue-400' },
-      { title: 'Social Media Presets', description: 'Quickly resize for Instagram, Facebook, Twitter, and more.', icon: LayoutGrid, color: 'text-purple-400' },
+      { titleKey: 'Tools.resize-f1-title', descriptionKey: 'Tools.resize-f1-desc', icon: Maximize, color: 'text-cyan-400' },
+      { titleKey: 'Tools.resize-f2-title', descriptionKey: 'Tools.resize-f2-desc', icon: Minimize, color: 'text-blue-400' },
+      { titleKey: 'Tools.resize-f3-title', descriptionKey: 'Tools.resize-f3-desc', icon: Zap, color: 'text-yellow-400' },
     ],
-    steps: [
-      'Upload the images you want to resize.',
-      'Choose your target dimensions or a preset.',
-      'Select the output format and quality settings.',
-      'Download your perfectly sized images.'
+    stepsKeys: [
+      'Tools.resize-step1',
+      'Tools.resize-step2',
+      'Tools.resize-step3',
+      'Tools.resize-step4'
     ],
-    faqs: [
-      { question: 'Will my images look blurry?', answer: 'We use advanced resampling to minimize quality loss during resizing.' },
-      { question: 'Can I resize in bulk?', answer: 'Yes, you can resize hundreds of images at once.' }
+    faqsKeys: [
+      { questionKey: 'Tools.resize-faq1-q', answerKey: 'Tools.resize-faq1-a' },
+      { questionKey: 'Tools.resize-faq2-q', answerKey: 'Tools.resize-faq2-a' }
     ]
   },
   'compress': {
-    title: 'File',
-    accent: 'Compress',
-    description: 'Reduce the file size of your images, PDFs, and videos without sacrificing visible quality.',
+    titleKey: 'Tools.compress-title',
+    accentKey: 'Tools.compress-accent',
+    descriptionKey: 'Tools.compress-desc',
     heroIcon: Minimize,
     features: [
-      { title: 'Smart Compression', description: 'Our algorithms find the perfect balance between size and quality.', icon: Zap, color: 'text-green-400' },
-      { title: 'Huge Savings', description: 'Reduce file sizes by up to 90% for faster sharing and storage.', icon: Minimize, color: 'text-emerald-400' },
-      { title: 'Privacy First', description: 'Your files are processed locally or on secure servers and deleted.', icon: ShieldCheck, color: 'text-blue-400' },
+      { titleKey: 'Tools.compress-f1-title', descriptionKey: 'Tools.compress-f1-desc', icon: Minimize, color: 'text-green-400' },
+      { titleKey: 'Tools.compress-f2-title', descriptionKey: 'Tools.compress-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.compress-f3-title', descriptionKey: 'Tools.compress-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
     ],
-    steps: [
-      'Select the files you want to compress.',
-      'Choose your desired compression level.',
-      'Wait for the optimization process to finish.',
-      'Download your smaller, optimized files.'
+    stepsKeys: [
+      'Tools.compress-step1',
+      'Tools.compress-step2',
+      'Tools.compress-step3',
+      'Tools.compress-step4'
     ],
-    faqs: [
-      { question: 'Is there a file size limit?', answer: 'Free users can compress files up to 50MB. Pro users have higher limits.' },
-      { question: 'Will it ruin my video quality?', answer: 'No, we use high-efficiency codecs to maintain visual clarity.' }
-    ]
-  },
-  'pdf-to-excel': {
-    title: 'PDF to',
-    accent: 'Excel',
-    description: 'Extract tables from your PDF files into editable Excel spreadsheets with high accuracy, no signups or downloads necessary.',
-    heroIcon: FileSpreadsheet,
-    features: [
-      { title: 'Work With Scanned Documents', description: 'Easily extract text from scanned PDFs using optical character recognition (OCR).', icon: FileText, color: 'text-emerald-400' },
-      { title: 'Teamwork Made Easy', description: 'After converting, easily share your Excel files with teammates via cloud links.', icon: Users, color: 'text-blue-400' },
-      { title: 'Fast, Hassle-Free Conversion', description: 'No complex software, no long installations—just quick, hassle-free conversion.', icon: Zap, color: 'text-yellow-400' },
-    ],
-    steps: [
-      'Import or drag & drop your PDF file to our converter.',
-      'Apply OCR to PDFs without editable text (Pro feature).',
-      'Click "Convert" and wait just a few seconds.',
-      'Download or share your converted XLSX file—easy!'
-    ],
-    faqs: [
-      { question: 'Can I convert a scanned PDF to Excel?', answer: 'Yes! Our OCR technology can extract text and tables from scanned PDF documents.' },
-      { question: 'Is it free to use?', answer: 'Smallpdf offers a free version for basic tasks. Pro plan offers unlimited conversions.' },
-      { question: 'Is it safe?', answer: 'Absolutely. We use high-level SSL encryption to ensure your documents are handled securely.' }
-    ]
-  },
-  'pdf-to-csv': {
-    title: 'PDF to',
-    accent: 'CSV',
-    description: 'Convert PDF tables to CSV format for easy data analysis and import into any database or spreadsheet software.',
-    heroIcon: FileCode,
-    features: [
-      { title: 'Data Ready', description: 'Get clean CSV files ready for import into Python, R, or SQL.', icon: FileCode, color: 'text-red-400' },
-      { title: 'Table Detection', description: 'Our AI automatically identifies table structures within your PDFs.', icon: LayoutGrid, color: 'text-blue-400' },
-      { title: 'Fast Export', description: 'Convert large documents to CSV in just a few seconds.', icon: Zap, color: 'text-yellow-400' },
-    ],
-    steps: [
-      'Upload your PDF document.',
-      'Select the pages containing the tables.',
-      'Choose CSV as your output format.',
-      'Download your structured data file.'
-    ],
-    faqs: [
-      { question: 'What is the difference between Excel and CSV?', answer: 'CSV is a plain text format, while Excel is a binary format with more features.' },
-      { question: 'Can I choose the delimiter?', answer: 'Yes, you can choose between comma, semicolon, or tab delimiters.' }
-    ]
-  },
-  'excel-csv': {
-    title: 'Excel to',
-    accent: 'CSV',
-    description: 'Quickly convert your Excel spreadsheets (XLSX, XLS) to CSV format or vice versa with perfect data integrity.',
-    heroIcon: FileSpreadsheet,
-    features: [
-      { title: 'Bidirectional', description: 'Convert Excel to CSV or CSV to Excel with one click.', icon: RefreshCw, color: 'text-emerald-400' },
-      { title: 'Data Integrity', description: 'We ensure all your numbers, dates, and text remain exactly as they were.', icon: ShieldCheck, color: 'text-blue-400' },
-      { title: 'No Data Loss', description: 'Handle large datasets without worrying about row limits or data truncation.', icon: LayoutGrid, color: 'text-purple-400' },
-    ],
-    steps: [
-      'Upload your Excel or CSV file.',
-      'Select the target format you want to convert to.',
-      'Review the data preview if needed.',
-      'Download your converted file instantly.'
-    ],
-    faqs: [
-      { question: 'Does it support multiple sheets?', answer: 'Yes, you can choose which sheet to convert from an Excel file.' },
-      { question: 'Is there a row limit?', answer: 'We support very large files, up to 1 million rows for Excel.' }
-    ]
-  },
-  'pdf-to-word': {
-    title: 'PDF to',
-    accent: 'Word',
-    description: 'Convert your PDF documents into editable Word files (DOCX) while preserving the original layout and formatting.',
-    heroIcon: FileText,
-    features: [
-      { title: 'Perfect Layout', description: 'We keep your fonts, images, and alignment exactly like the original PDF.', icon: FileText, color: 'text-blue-500' },
-      { title: 'Editable Text', description: 'Turn non-editable PDFs into fully editable Word documents.', icon: Type, color: 'text-pink-400' },
-      { title: 'Cloud Integration', description: 'Save your Word files directly to Google Drive or Dropbox.', icon: RefreshCw, color: 'text-cyan-400' },
-    ],
-    steps: [
-      'Upload your PDF file to the converter.',
-      'Choose "Word" as the output format.',
-      'Wait for the conversion to complete.',
-      'Download your editable DOCX file.'
-    ],
-    faqs: [
-      { question: 'Can I convert back to PDF?', answer: 'Yes, we also offer a Word to PDF converter tool.' },
-      { question: 'Will the images be preserved?', answer: 'Yes, all images and graphics will be included in the Word file.' }
-    ]
-  },
-  'video-to-gif': {
-    title: 'Video to',
-    accent: 'GIF',
-    description: 'Create high-quality animated GIFs from your video clips. Perfect for social media, memes, and tutorials.',
-    heroIcon: FileVideo,
-    features: [
-      { title: 'High Quality', description: 'Generate crisp, clear GIFs with optimized color palettes.', icon: FileVideo, color: 'text-purple-500' },
-      { title: 'Trim & Crop', description: 'Select the exact part of the video you want to turn into a GIF.', icon: Maximize, color: 'text-cyan-400' },
-      { title: 'Small File Size', description: 'Our optimization ensures your GIFs load fast everywhere.', icon: Minimize, color: 'text-green-400' },
-    ],
-    steps: [
-      'Upload your video file (MP4, MOV, AVI).',
-      'Select the start and end time for your GIF.',
-      'Adjust the frame rate and resolution.',
-      'Generate and download your animated GIF.'
-    ],
-    faqs: [
-      { question: 'What video formats are supported?', answer: 'We support all major formats including MP4, MOV, AVI, and WebM.' },
-      { question: 'Can I add text to my GIF?', answer: 'Yes, you can add custom text overlays in the editor.' }
+    faqsKeys: [
+      { questionKey: 'Tools.compress-faq1-q', answerKey: 'Tools.compress-faq1-a' },
+      { questionKey: 'Tools.compress-faq2-q', answerKey: 'Tools.compress-faq2-a' }
     ]
   },
   'compress-images': {
-    title: 'Compress',
-    accent: 'Images',
-    description: 'Reduce image file size without losing quality. Support for JPG, PNG, WebP, and more.',
+    titleKey: 'Tools.compress-images-title',
+    accentKey: 'Tools.compress-images-accent',
+    descriptionKey: 'Tools.compress-images-desc',
     heroIcon: ImageIcon,
     features: [
-      { title: 'Lossless Compression', description: 'Reduce size without any visible change in quality.', icon: Zap, color: 'text-green-400' },
-      { title: 'Format Support', description: 'Works with all popular image formats.', icon: LayoutGrid, color: 'text-blue-400' },
-      { title: 'Fast & Secure', description: 'Process images in seconds right in your browser.', icon: ShieldCheck, color: 'text-purple-400' },
+      { titleKey: 'Tools.compress-images-f1-title', descriptionKey: 'Tools.compress-images-f1-desc', icon: Minimize, color: 'text-green-400' },
+      { titleKey: 'Tools.compress-images-f2-title', descriptionKey: 'Tools.compress-images-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.compress-images-f3-title', descriptionKey: 'Tools.compress-images-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
     ],
-    steps: [
-      'Upload your images.',
-      'Select compression level.',
-      'Wait for optimization.',
-      'Download compressed images.'
+    stepsKeys: [
+      'Tools.compress-images-step1',
+      'Tools.compress-images-step2',
+      'Tools.compress-images-step3',
+      'Tools.compress-images-step4'
     ],
-    faqs: [
-      { question: 'Is there a limit?', answer: 'Free users can process up to 20 images at once.' }
+    faqsKeys: [
+      { questionKey: 'Tools.compress-images-faq1-q', answerKey: 'Tools.compress-images-faq1-a' },
+      { questionKey: 'Tools.compress-images-faq2-q', answerKey: 'Tools.compress-images-faq2-a' }
     ]
   },
   'compress-pdf': {
-    title: 'Compress',
-    accent: 'PDF',
-    description: 'Make your PDF files smaller for easier emailing and faster web loading.',
+    titleKey: 'Tools.compress-pdf-title',
+    accentKey: 'Tools.compress-pdf-accent',
+    descriptionKey: 'Tools.compress-pdf-desc',
     heroIcon: FileText,
     features: [
-      { title: 'Strong Compression', description: 'Reduce PDF size by up to 90%.', icon: Minimize, color: 'text-red-400' },
-      { title: 'Maintain Quality', description: 'Text and images stay sharp and readable.', icon: CheckCircle2, color: 'text-green-400' },
-      { title: 'Batch Mode', description: 'Compress multiple PDFs simultaneously.', icon: LayoutGrid, color: 'text-blue-400' },
+      { titleKey: 'Tools.compress-pdf-f1-title', descriptionKey: 'Tools.compress-pdf-f1-desc', icon: Minimize, color: 'text-red-400' },
+      { titleKey: 'Tools.compress-pdf-f2-title', descriptionKey: 'Tools.compress-pdf-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.compress-pdf-f3-title', descriptionKey: 'Tools.compress-pdf-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
     ],
-    steps: [
-      'Upload your PDF files.',
-      'Choose compression strength.',
-      'Download optimized PDFs.'
+    stepsKeys: [
+      'Tools.compress-pdf-step1',
+      'Tools.compress-pdf-step2',
+      'Tools.compress-pdf-step3',
+      'Tools.compress-pdf-step4'
     ],
-    faqs: [
-      { question: 'Will it affect text?', answer: 'No, text remains fully searchable and sharp.' }
+    faqsKeys: [
+      { questionKey: 'Tools.compress-pdf-faq1-q', answerKey: 'Tools.compress-pdf-faq1-a' },
+      { questionKey: 'Tools.compress-pdf-faq2-q', answerKey: 'Tools.compress-pdf-faq2-a' }
     ]
   },
   'compress-video': {
-    title: 'Compress',
-    accent: 'Video',
-    description: 'Shrink video files for social media, email, or storage without losing clarity.',
+    titleKey: 'Tools.compress-video-title',
+    accentKey: 'Tools.compress-video-accent',
+    descriptionKey: 'Tools.compress-video-desc',
     heroIcon: FileVideo,
     features: [
-      { title: 'Efficient Codecs', description: 'Uses H.264 and H.265 for maximum efficiency.', icon: Zap, color: 'text-purple-400' },
-      { title: 'Preset Sizes', description: 'Choose presets for Discord, WhatsApp, or Email.', icon: LayoutGrid, color: 'text-cyan-400' },
-      { title: 'Preview Results', description: 'Check the quality before downloading.', icon: Search, color: 'text-yellow-400' },
+      { titleKey: 'Tools.compress-video-f1-title', descriptionKey: 'Tools.compress-video-f1-desc', icon: Minimize, color: 'text-purple-400' },
+      { titleKey: 'Tools.compress-video-f2-title', descriptionKey: 'Tools.compress-video-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.compress-video-f3-title', descriptionKey: 'Tools.compress-video-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
     ],
-    steps: [
-      'Upload your video file.',
-      'Select target size or quality.',
-      'Wait for transcoding.',
-      'Download compressed video.'
+    stepsKeys: [
+      'Tools.compress-video-step1',
+      'Tools.compress-video-step2',
+      'Tools.compress-video-step3',
+      'Tools.compress-video-step4'
     ],
-    faqs: [
-      { question: 'How long does it take?', answer: 'Depends on video length, but usually just a few minutes.' }
+    faqsKeys: [
+      { questionKey: 'Tools.compress-video-faq1-q', answerKey: 'Tools.compress-video-faq1-a' },
+      { questionKey: 'Tools.compress-video-faq2-q', answerKey: 'Tools.compress-video-faq2-a' }
     ]
   },
-  'tools': {
-    title: 'All',
-    accent: 'Tools',
-    description: 'Explore our full suite of document, image, and video processing tools. Everything you need in one place.',
-    heroIcon: LayoutGrid,
+  'pdf-to-csv': {
+    titleKey: 'Tools.pdf-to-csv-title',
+    accentKey: 'Tools.pdf-to-csv-accent',
+    descriptionKey: 'Tools.pdf-to-csv-desc',
+    heroIcon: FileCode,
     features: [
-      { title: 'PDF Tools', description: 'Convert, merge, split, and compress PDF documents with ease.', icon: FileText, color: 'text-red-400' },
-      { title: 'Image Tools', description: 'Remove backgrounds, resize, and watermark your photos.', icon: ImageIcon, color: 'text-blue-400' },
-      { title: 'Video Tools', description: 'Compress videos and convert them to animated GIFs.', icon: FileVideo, color: 'text-purple-400' },
+      { titleKey: 'Tools.pdf-to-csv-f1-title', descriptionKey: 'Tools.pdf-to-csv-f1-desc', icon: FileCode, color: 'text-red-400' },
+      { titleKey: 'Tools.pdf-to-csv-f2-title', descriptionKey: 'Tools.pdf-to-csv-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.pdf-to-csv-f3-title', descriptionKey: 'Tools.pdf-to-csv-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
     ],
-    steps: [
-      'Browse our collection of online tools.',
-      'Select the tool that fits your needs.',
-      'Upload your files and process them instantly.',
-      'Download your results for free.'
+    stepsKeys: [
+      'Tools.pdf-to-csv-step1',
+      'Tools.pdf-to-csv-step2',
+      'Tools.pdf-to-csv-step3',
+      'Tools.pdf-to-csv-step4'
     ],
-    faqs: [
-      { question: 'Are all tools free?', answer: 'Yes, all our tools have a free tier for basic usage.' },
-      { question: 'Do I need to install anything?', answer: 'No, all tools work directly in your web browser.' }
+    faqsKeys: [
+      { questionKey: 'Tools.pdf-to-csv-faq1-q', answerKey: 'Tools.pdf-to-csv-faq1-a' },
+      { questionKey: 'Tools.pdf-to-csv-faq2-q', answerKey: 'Tools.pdf-to-csv-faq2-a' }
     ]
   },
-  'merge': {
-    title: 'Merge',
-    accent: 'PDF',
-    description: 'Combine multiple PDF files into a single document in seconds. Reorder pages as needed.',
+  'pdf-to-excel': {
+    titleKey: 'Tools.pdf-to-excel-title',
+    accentKey: 'Tools.pdf-to-excel-accent',
+    descriptionKey: 'Tools.pdf-to-excel-desc',
+    heroIcon: FileSpreadsheet,
+    features: [
+      { titleKey: 'Tools.pdf-to-excel-f1-title', descriptionKey: 'Tools.pdf-to-excel-f1-desc', icon: FileText, color: 'text-emerald-400' },
+      { titleKey: 'Tools.pdf-to-excel-f2-title', descriptionKey: 'Tools.pdf-to-excel-f2-desc', icon: Users, color: 'text-blue-400' },
+      { titleKey: 'Tools.pdf-to-excel-f3-title', descriptionKey: 'Tools.pdf-to-excel-f3-desc', icon: Zap, color: 'text-yellow-400' },
+    ],
+    stepsKeys: [
+      'Tools.pdf-to-excel-step1',
+      'Tools.pdf-to-excel-step2',
+      'Tools.pdf-to-excel-step3',
+      'Tools.pdf-to-excel-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.pdf-to-excel-faq1-q', answerKey: 'Tools.pdf-to-excel-faq1-a' },
+      { questionKey: 'Tools.pdf-to-excel-faq2-q', answerKey: 'Tools.pdf-to-excel-faq2-a' },
+      { questionKey: 'Tools.pdf-to-excel-faq3-q', answerKey: 'Tools.pdf-to-excel-faq3-a' }
+    ]
+  },
+  'excel-csv': {
+    titleKey: 'Tools.excel-csv-title',
+    accentKey: 'Tools.excel-csv-accent',
+    descriptionKey: 'Tools.excel-csv-desc',
+    heroIcon: FileSpreadsheet,
+    features: [
+      { titleKey: 'Tools.excel-csv-f1-title', descriptionKey: 'Tools.excel-csv-f1-desc', icon: FileSpreadsheet, color: 'text-emerald-400' },
+      { titleKey: 'Tools.excel-csv-f2-title', descriptionKey: 'Tools.excel-csv-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.excel-csv-f3-title', descriptionKey: 'Tools.excel-csv-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
+    ],
+    stepsKeys: [
+      'Tools.excel-csv-step1',
+      'Tools.excel-csv-step2',
+      'Tools.excel-csv-step3',
+      'Tools.excel-csv-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.excel-csv-faq1-q', answerKey: 'Tools.excel-csv-faq1-a' },
+      { questionKey: 'Tools.excel-csv-faq2-q', answerKey: 'Tools.excel-csv-faq2-a' }
+    ]
+  },
+  'pdf-to-word': {
+    titleKey: 'Tools.pdf-to-word-title',
+    accentKey: 'Tools.pdf-to-word-accent',
+    descriptionKey: 'Tools.pdf-to-word-desc',
     heroIcon: FileText,
     features: [
-      { title: 'Easy Reordering', description: 'Drag and drop pages to arrange them in the perfect order.', icon: LayoutGrid, color: 'text-orange-400' },
-      { title: 'Fast Merging', description: 'Combine dozens of files into one instantly.', icon: Zap, color: 'text-yellow-400' },
-      { title: 'Secure Handling', description: 'Your documents are encrypted and deleted after processing.', icon: ShieldCheck, color: 'text-blue-400' },
+      { titleKey: 'Tools.pdf-to-word-f1-title', descriptionKey: 'Tools.pdf-to-word-f1-desc', icon: FileText, color: 'text-blue-500' },
+      { titleKey: 'Tools.pdf-to-word-f2-title', descriptionKey: 'Tools.pdf-to-word-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.pdf-to-word-f3-title', descriptionKey: 'Tools.pdf-to-word-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
     ],
-    steps: [
-      'Upload the PDF files you want to merge.',
-      'Arrange the files in your preferred order.',
-      'Click "Merge PDF" to combine them.',
-      'Download your new single PDF document.'
+    stepsKeys: [
+      'Tools.pdf-to-word-step1',
+      'Tools.pdf-to-word-step2',
+      'Tools.pdf-to-word-step3',
+      'Tools.pdf-to-word-step4'
     ],
-    faqs: [
-      { question: 'Is there a limit to how many files I can merge?', answer: 'Free users can merge up to 20 files at once.' }
+    faqsKeys: [
+      { questionKey: 'Tools.pdf-to-word-faq1-q', answerKey: 'Tools.pdf-to-word-faq1-a' },
+      { questionKey: 'Tools.pdf-to-word-faq2-q', answerKey: 'Tools.pdf-to-word-faq2-a' }
     ]
   },
-  'edit': {
-    title: 'Edit',
-    accent: 'PDF',
-    description: 'Add text, shapes, comments, and highlights to your PDF documents directly in your browser.',
-    heroIcon: FileText,
+  'video-to-gif': {
+    titleKey: 'Tools.video-to-gif-title',
+    accentKey: 'Tools.video-to-gif-accent',
+    descriptionKey: 'Tools.video-to-gif-desc',
+    heroIcon: FileVideo,
     features: [
-      { title: 'Full Editing', description: 'Add text, images, and shapes to any PDF page.', icon: Type, color: 'text-pink-400' },
-      { title: 'Annotation Tools', description: 'Highlight text and add comments for collaboration.', icon: FileText, color: 'text-blue-400' },
-      { title: 'Form Filling', description: 'Easily fill out PDF forms and add your signature.', icon: CheckCircle2, color: 'text-green-400' },
+      { titleKey: 'Tools.video-to-gif-f1-title', descriptionKey: 'Tools.video-to-gif-f1-desc', icon: FileVideo, color: 'text-purple-500' },
+      { titleKey: 'Tools.video-to-gif-f2-title', descriptionKey: 'Tools.video-to-gif-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.video-to-gif-f3-title', descriptionKey: 'Tools.video-to-gif-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
     ],
-    steps: [
-      'Upload the PDF document you want to edit.',
-      'Use our toolbar to add text, shapes, or highlights.',
-      'Save your changes and preview the document.',
-      'Download your edited PDF file.'
+    stepsKeys: [
+      'Tools.video-to-gif-step1',
+      'Tools.video-to-gif-step2',
+      'Tools.video-to-gif-step3',
+      'Tools.video-to-gif-step4'
     ],
-    faqs: [
-      { question: 'Can I edit existing text?', answer: 'Our editor allows you to add new text and whiteout existing text.' }
+    faqsKeys: [
+      { questionKey: 'Tools.video-to-gif-faq1-q', answerKey: 'Tools.video-to-gif-faq1-a' },
+      { questionKey: 'Tools.video-to-gif-faq2-q', answerKey: 'Tools.video-to-gif-faq2-a' }
     ]
   }
 };
 
 export default function App() {
+  const t = useTranslations('Common');
+  const tt = useTranslations('Tools');
   const [activeTool, setActiveTool] = useState('pdf-to-excel');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -467,7 +415,7 @@ export default function App() {
                     <div className={`p-1.5 rounded-lg bg-gray-800 group-hover:bg-gray-700 transition-colors ${tool.color}`}>
                       <tool.icon size={18} />
                     </div>
-                    <span className="text-sm font-medium flex-1 text-left">{tool.name}</span>
+                    <span className="text-sm font-medium flex-1 text-left">{tt(tool.nameKey.split('.')[1])}</span>
                     {tool.children && (
                       <ChevronDown size={14} className={`transition-transform duration-200 ${isActive ? 'rotate-180' : ''}`} />
                     )}
@@ -487,7 +435,7 @@ export default function App() {
                             activeTool === child.id ? 'text-[#d4ff33]' : 'text-gray-500 hover:text-gray-300'
                           }`}
                         >
-                          {child.name}
+                          {tt(child.nameKey.split('.')[1])}
                         </button>
                       ))}
                     </motion.div>
@@ -508,13 +456,13 @@ export default function App() {
               onClick={() => setActiveTool('tools')}
               className={`text-sm font-medium transition-colors ${activeTool === 'tools' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
-              Tools
+              {t('tools')}
             </button>
             <button 
               onClick={() => setActiveTool('compress')}
               className={`text-sm font-medium transition-colors ${activeTool === 'compress' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
-              Compress
+              {t('compress')}
             </button>
             <div className="relative group/menu">
               <button 
@@ -525,7 +473,7 @@ export default function App() {
                     : 'hover:text-white'
                 }`}
               >
-                Convert <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
+                {t('convert')} <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
               </button>
               
               {/* Sub-menu (Tab Bar style) */}
@@ -537,7 +485,7 @@ export default function App() {
                       activeTool === 'compress-images' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
                     }`}
                   >
-                    Compress Images
+                    {tt('compress-images')}
                   </button>
                   <button 
                     onClick={() => setActiveTool('compress-pdf')}
@@ -545,7 +493,7 @@ export default function App() {
                       activeTool === 'compress-pdf' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
                     }`}
                   >
-                    Compress PDF
+                    {tt('compress-pdf')}
                   </button>
                   <button 
                     onClick={() => setActiveTool('compress-video')}
@@ -553,7 +501,7 @@ export default function App() {
                       activeTool === 'compress-video' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
                     }`}
                   >
-                    Compress Video
+                    {tt('compress-video')}
                   </button>
                 </div>
               </div>
@@ -562,19 +510,19 @@ export default function App() {
               onClick={() => setActiveTool('merge')}
               className={`text-sm font-medium transition-colors ${activeTool === 'merge' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
-              Merge
+              {t('merge')}
             </button>
             <button 
               onClick={() => setActiveTool('edit')}
               className={`text-sm font-medium transition-colors ${activeTool === 'edit' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
-              Edit
+              {t('edit')}
             </button>
           </nav>
           <div className="flex items-center gap-4">
-            <button className="text-sm font-medium hover:text-white transition-colors">Log In</button>
+            <button className="text-sm font-medium hover:text-white transition-colors">{t('logIn')}</button>
             <button className="bg-[#d4ff33] text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#c2eb2e] transition-colors">
-              Free Trial
+              {t('freeTrial')}
             </button>
           </div>
         </header>
@@ -583,15 +531,15 @@ export default function App() {
         <section className="px-8 py-16 max-w-5xl mx-auto w-full">
           <div className="text-center mb-12">
             <nav className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest text-gray-500 mb-4">
-              <a href="#" className="hover:text-gray-300">Home</a>
+              <a href="#" className="hover:text-gray-300">{t('home')}</a>
               <span>/</span>
-              <span className="text-gray-400">{activeToolData?.name || 'Tool'}</span>
+              <span className="text-gray-400">{activeToolData?.nameKey ? tt(activeToolData.nameKey.split('.')[1]) : 'Tool'}</span>
             </nav>
             <h1 className="text-5xl font-bold text-white mb-6">
-              {currentContent.title} <span className="italic text-[#d4ff33]">{currentContent.accent}</span> Online
+              {tt(currentContent.titleKey.split('.')[1])} <span className="italic text-[#d4ff33]">{tt(currentContent.accentKey.split('.')[1])}</span> Online
             </h1>
             <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
-              {currentContent.description}
+              {tt(currentContent.descriptionKey.split('.')[1])}
             </p>
           </div>
 
@@ -605,22 +553,22 @@ export default function App() {
             </div>
             <div className="flex items-center gap-2 mb-4">
               <button className="bg-[#d4ff33] text-black px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/20">
-                CHOOSE FILES <ChevronDown size={20} />
+                {t('chooseFiles')} <ChevronDown size={20} />
               </button>
             </div>
-            <p className="text-gray-500 text-sm">or drop files here</p>
+            <p className="text-gray-500 text-sm">{t('dropFilesHere')}</p>
           </motion.div>
 
           {/* Stats Bar */}
           <div className="flex items-center justify-center gap-12 text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-32">
-            <span>1.7 billion users</span>
-            <span>ISO/IEC 27001</span>
-            <span>GDPR Compliant</span>
+            <span>{t('billionUsers')}</span>
+            <span>{t('isoCompliance')}</span>
+            <span>{t('gdprCompliant')}</span>
           </div>
 
           {/* Features Section */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">{currentContent.title} {currentContent.accent} in Seconds</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} in Seconds</h2>
             <p className="text-gray-500 max-w-xl mx-auto">
               Our tool is designed to be fast, secure, and easy to use for everyone.
             </p>
@@ -632,9 +580,9 @@ export default function App() {
                 <div className={`w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center ${feature.color} mb-6`}>
                   <feature.icon size={24} />
                 </div>
-                <h3 className="text-white font-bold mb-3">{feature.title}</h3>
+                <h3 className="text-white font-bold mb-3">{tt(feature.titleKey.split('.')[1])}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  {feature.description}
+                  {tt(feature.descriptionKey.split('.')[1])}
                 </p>
               </div>
             ))}
@@ -654,14 +602,14 @@ export default function App() {
               </div>
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-white mb-8">How To {currentContent.title} {currentContent.accent} for Free</h2>
+              <h2 className="text-3xl font-bold text-white mb-8">How To {tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} for Free</h2>
               <div className="space-y-6">
-                {currentContent.steps.map((step, i) => (
+                {currentContent.stepsKeys.map((stepKey, i) => (
                   <div key={i} className="flex items-start gap-4">
                     <div className="w-6 h-6 rounded-full bg-[#d4ff33] text-black flex items-center justify-center text-xs font-bold shrink-0 mt-1">
                       {i + 1}
                     </div>
-                    <p className="text-gray-400 leading-relaxed">{step}</p>
+                    <p className="text-gray-400 leading-relaxed">{tt(stepKey.split('.')[1])}</p>
                   </div>
                 ))}
               </div>
@@ -670,15 +618,15 @@ export default function App() {
 
           {/* FAQs Section */}
           <div className="max-w-3xl mx-auto mb-32">
-            <h2 className="text-3xl font-bold text-white text-center mb-12">{currentContent.title} {currentContent.accent} FAQs</h2>
+            <h2 className="text-3xl font-bold text-white text-center mb-12">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} FAQs</h2>
             <div className="space-y-4">
-              {currentContent.faqs.map((faq, i) => (
+              {currentContent.faqsKeys.map((faq, i) => (
                 <div key={i} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
                   <button 
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
                   >
-                    <span className="font-bold text-white">{faq.question}</span>
+                    <span className="font-bold text-white">{tt(faq.questionKey.split('.')[1])}</span>
                     <ChevronDown className={`text-lime-400 transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -689,7 +637,7 @@ export default function App() {
                         exit={{ height: 0, opacity: 0 }}
                         className="px-8 pb-6 text-gray-500 text-sm leading-relaxed"
                       >
-                        {faq.answer}
+                        {tt(faq.answerKey.split('.')[1])}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -702,12 +650,12 @@ export default function App() {
         {/* CTA Section */}
         <section className="bg-[#d4ff33] py-24 px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-bold text-black mb-6 tracking-tight">Do Business Better</h2>
+            <h2 className="text-5xl font-bold text-black mb-6 tracking-tight">{t('doBusinessBetter')}</h2>
             <p className="text-black/70 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Document work should be easy. Speed through your admin and document management with our suite of premium tools.
+              {t('documentWorkEasy')}
             </p>
             <button className="bg-black text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-900 transition-all hover:scale-105 shadow-xl">
-              Try 7 Days Free
+              {t('try7DaysFree')}
             </button>
           </div>
         </section>
@@ -724,12 +672,12 @@ export default function App() {
                   <span className="text-white font-bold text-lg">Refindocs</span>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  We make PDF easy.
+                  {t('weMakePdfEasy')}
                 </p>
               </div>
               
               <div>
-                <h4 className="text-white font-bold mb-6">Solutions</h4>
+                <h4 className="text-white font-bold mb-6">{t('solutions')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
                   <li><a href="#" className="hover:text-white transition-colors">Sales</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Finance</a></li>
@@ -739,7 +687,7 @@ export default function App() {
               </div>
 
               <div>
-                <h4 className="text-white font-bold mb-6">Company</h4>
+                <h4 className="text-white font-bold mb-6">{t('company')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
                   <li><a href="#" className="hover:text-white transition-colors">About</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Help</a></li>
@@ -749,7 +697,7 @@ export default function App() {
               </div>
 
               <div>
-                <h4 className="text-white font-bold mb-6">Product</h4>
+                <h4 className="text-white font-bold mb-6">{t('product')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
                   <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Teams</a></li>
@@ -759,7 +707,7 @@ export default function App() {
               </div>
 
               <div>
-                <h4 className="text-white font-bold mb-6">Apps</h4>
+                <h4 className="text-white font-bold mb-6">{t('apps')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
                   <li><a href="#" className="hover:text-white transition-colors">Download Refindocs</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">PDF Scanner</a></li>
@@ -774,11 +722,11 @@ export default function App() {
                 <a href="#" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
               </div>
               <div className="flex items-center gap-8 text-[11px] text-gray-600 uppercase tracking-widest font-bold">
-                <span>© 2026 Refindocs AG</span>
-                <a href="#" className="hover:text-white transition-colors">Privacy Notice</a>
-                <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
-                <a href="#" className="hover:text-white transition-colors">Imprint</a>
-                <a href="#" className="hover:text-white transition-colors">Contact Us</a>
+                <span>{t('copyright')}</span>
+                <a href="#" className="hover:text-white transition-colors">{t('privacyNotice')}</a>
+                <a href="#" className="hover:text-white transition-colors">{t('termsConditions')}</a>
+                <a href="#" className="hover:text-white transition-colors">{t('imprint')}</a>
+                <a href="#" className="hover:text-white transition-colors">{t('contactUs')}</a>
               </div>
             </div>
           </div>
