@@ -41,6 +41,7 @@ import WatermarkRemoverTool from './components/tools/WatermarkRemover/WatermarkR
 import ImageToTextTool from './components/tools/ImageToText/ImageToTextTool';
 import ImageResizerTool from './components/tools/ImageResizer/ImageResizerTool';
 import CompressImagesTool from './components/tools/CompressImages/CompressImagesTool';
+import CompressPdfTool from './components/tools/CompressPdf/CompressPdfTool';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -807,6 +808,8 @@ export default function App() {
               <BackgroundRemover />
             ) : activeTool === 'compress-images' ? (
               <CompressImagesTool />
+            ) : activeTool === 'compress-pdf' ? (
+              <CompressPdfTool />
             ) : activeTool === 'watermark' ? (
               <WatermarkTool />
             ) : activeTool === 'watermark-remover' ? (
