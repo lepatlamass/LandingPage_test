@@ -554,7 +554,9 @@ export default function App() {
                 <div key={tool.id} className="space-y-1">
                   <button
                     onClick={() => {
-                      if (tool.children && tool.children.length > 0) {
+                      if (tool.id === 'compress' && tool.children) {
+                        setActiveTool(tool.children[0].id);
+                      } else if (tool.children && tool.children.length > 0) {
                         // If it has children and we're clicking the parent, 
                         // we either select the first child or just toggle expansion by selecting the parent
                         // if the parent itself has no content, we should select the first child.
@@ -623,7 +625,7 @@ export default function App() {
             </button>
             <div className="relative group/menu">
               <button 
-                onClick={() => setActiveTool('compress')}
+                onClick={() => setActiveTool('compress-images')}
                 className={`text-sm font-medium transition-colors flex items-center gap-1 ${
                   ['compress', 'resize', 'compress-images', 'compress-pdf', 'compress-video'].includes(activeTool) 
                     ? 'text-[#d4ff33]' 
