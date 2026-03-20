@@ -40,6 +40,7 @@ import WatermarkTool from './components/tools/Watermark/WatermarkTool';
 import WatermarkRemoverTool from './components/tools/WatermarkRemover/WatermarkRemoverTool';
 import ImageToTextTool from './components/tools/ImageToText/ImageToTextTool';
 import ImageResizerTool from './components/tools/ImageResizer/ImageResizerTool';
+import CompressImagesTool from './components/tools/CompressImages/CompressImagesTool';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -47,7 +48,18 @@ const sidebarTools = [
   { id: 'watermark-remover', nameKey: 'Tools.watermark-remover', icon: Droplets, color: 'text-purple-400', hover: 'hover:bg-purple-400/10' },
   { id: 'image-to-text', nameKey: 'Tools.image-to-text', icon: Type, color: 'text-pink-400', hover: 'hover:bg-pink-400/10' },
   { id: 'resize', nameKey: 'Tools.resize', icon: Maximize, color: 'text-cyan-400', hover: 'hover:bg-cyan-400/10' },
-  { id: 'compress', nameKey: 'Tools.compress', icon: Minimize, color: 'text-green-400', hover: 'hover:bg-green-400/10' },
+  { 
+    id: 'compress', 
+    nameKey: 'Tools.compress', 
+    icon: Minimize, 
+    color: 'text-green-400', 
+    hover: 'hover:bg-green-400/10',
+    children: [
+      { id: 'compress-images', nameKey: 'Tools.compress-images' },
+      { id: 'compress-pdf', nameKey: 'Tools.compress-pdf' },
+      { id: 'compress-video', nameKey: 'Tools.compress-video' },
+    ]
+  },
   { 
     id: 'convert', 
     nameKey: 'Tools.convert', 
@@ -55,9 +67,10 @@ const sidebarTools = [
     color: 'text-yellow-400', 
     hover: 'hover:bg-yellow-400/10',
     children: [
-      { id: 'compress-images', nameKey: 'Tools.compress-images' },
-      { id: 'compress-pdf', nameKey: 'Tools.compress-pdf' },
-      { id: 'compress-video', nameKey: 'Tools.compress-video' },
+      { id: 'image-converter', nameKey: 'Tools.image-converter' },
+      { id: 'heic-to-png', nameKey: 'Tools.heic-to-png' },
+      { id: 'pdf-to-image', nameKey: 'Tools.pdf-to-image' },
+      { id: 'svg-to-png', nameKey: 'Tools.svg-to-png' },
     ]
   },
   { id: 'pdf-to-csv', nameKey: 'Tools.pdf-to-csv', icon: FileCode, color: 'text-red-400', hover: 'hover:bg-red-400/10' },
@@ -381,6 +394,90 @@ const toolContent: Record<string, ToolPageContent> = {
       { questionKey: 'Tools.video-to-gif-faq1-q', answerKey: 'Tools.video-to-gif-faq1-a' },
       { questionKey: 'Tools.video-to-gif-faq2-q', answerKey: 'Tools.video-to-gif-faq2-a' }
     ]
+  },
+  'image-converter': {
+    titleKey: 'Tools.image-converter-title',
+    accentKey: 'Tools.image-converter-accent',
+    descriptionKey: 'Tools.image-converter-desc',
+    heroIcon: ImageIcon,
+    features: [
+      { titleKey: 'Tools.image-converter-f1-title', descriptionKey: 'Tools.image-converter-f1-desc', icon: ImageIcon, color: 'text-blue-400' },
+      { titleKey: 'Tools.image-converter-f2-title', descriptionKey: 'Tools.image-converter-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.image-converter-f3-title', descriptionKey: 'Tools.image-converter-f3-desc', icon: ShieldCheck, color: 'text-green-400' },
+    ],
+    stepsKeys: [
+      'Tools.image-converter-step1',
+      'Tools.image-converter-step2',
+      'Tools.image-converter-step3',
+      'Tools.image-converter-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.image-converter-faq1-q', answerKey: 'Tools.image-converter-faq1-a' },
+      { questionKey: 'Tools.image-converter-faq2-q', answerKey: 'Tools.image-converter-faq2-a' }
+    ]
+  },
+  'heic-to-png': {
+    titleKey: 'Tools.heic-to-png-title',
+    accentKey: 'Tools.heic-to-png-accent',
+    descriptionKey: 'Tools.heic-to-png-desc',
+    heroIcon: ImageIcon,
+    features: [
+      { titleKey: 'Tools.heic-to-png-f1-title', descriptionKey: 'Tools.heic-to-png-f1-desc', icon: ImageIcon, color: 'text-orange-400' },
+      { titleKey: 'Tools.heic-to-png-f2-title', descriptionKey: 'Tools.heic-to-png-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.heic-to-png-f3-title', descriptionKey: 'Tools.heic-to-png-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
+    ],
+    stepsKeys: [
+      'Tools.heic-to-png-step1',
+      'Tools.heic-to-png-step2',
+      'Tools.heic-to-png-step3',
+      'Tools.heic-to-png-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.heic-to-png-faq1-q', answerKey: 'Tools.heic-to-png-faq1-a' },
+      { questionKey: 'Tools.heic-to-png-faq2-q', answerKey: 'Tools.heic-to-png-faq2-a' }
+    ]
+  },
+  'pdf-to-image': {
+    titleKey: 'Tools.pdf-to-image-title',
+    accentKey: 'Tools.pdf-to-image-accent',
+    descriptionKey: 'Tools.pdf-to-image-desc',
+    heroIcon: FileText,
+    features: [
+      { titleKey: 'Tools.pdf-to-image-f1-title', descriptionKey: 'Tools.pdf-to-image-f1-desc', icon: FileText, color: 'text-red-400' },
+      { titleKey: 'Tools.pdf-to-image-f2-title', descriptionKey: 'Tools.pdf-to-image-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.pdf-to-image-f3-title', descriptionKey: 'Tools.pdf-to-image-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
+    ],
+    stepsKeys: [
+      'Tools.pdf-to-image-step1',
+      'Tools.pdf-to-image-step2',
+      'Tools.pdf-to-image-step3',
+      'Tools.pdf-to-image-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.pdf-to-image-faq1-q', answerKey: 'Tools.pdf-to-image-faq1-a' },
+      { questionKey: 'Tools.pdf-to-image-faq2-q', answerKey: 'Tools.pdf-to-image-faq2-a' }
+    ]
+  },
+  'svg-to-png': {
+    titleKey: 'Tools.svg-to-png-title',
+    accentKey: 'Tools.svg-to-png-accent',
+    descriptionKey: 'Tools.svg-to-png-desc',
+    heroIcon: FileCode,
+    features: [
+      { titleKey: 'Tools.svg-to-png-f1-title', descriptionKey: 'Tools.svg-to-png-f1-desc', icon: FileCode, color: 'text-emerald-400' },
+      { titleKey: 'Tools.svg-to-png-f2-title', descriptionKey: 'Tools.svg-to-png-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.svg-to-png-f3-title', descriptionKey: 'Tools.svg-to-png-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
+    ],
+    stepsKeys: [
+      'Tools.svg-to-png-step1',
+      'Tools.svg-to-png-step2',
+      'Tools.svg-to-png-step3',
+      'Tools.svg-to-png-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.svg-to-png-faq1-q', answerKey: 'Tools.svg-to-png-faq1-a' },
+      { questionKey: 'Tools.svg-to-png-faq2-q', answerKey: 'Tools.svg-to-png-faq2-a' }
+    ]
   }
 };
 
@@ -524,22 +621,16 @@ export default function App() {
             >
               {t('tools')}
             </button>
-            <button 
-              onClick={() => setActiveTool('compress')}
-              className={`text-sm font-medium transition-colors ${['compress', 'resize'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
-            >
-              {t('compress')}
-            </button>
             <div className="relative group/menu">
               <button 
-                onClick={() => setActiveTool('compress-images')}
+                onClick={() => setActiveTool('compress')}
                 className={`text-sm font-medium transition-colors flex items-center gap-1 ${
-                  ['compress-images', 'compress-pdf', 'compress-video'].includes(activeTool) 
+                  ['compress', 'resize', 'compress-images', 'compress-pdf', 'compress-video'].includes(activeTool) 
                     ? 'text-[#d4ff33]' 
                     : 'hover:text-white'
                 }`}
               >
-                {t('convert')} <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
+                {t('compress')} <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
               </button>
               
               {/* Sub-menu (Tab Bar style) */}
@@ -572,6 +663,58 @@ export default function App() {
                 </div>
               </div>
             </div>
+
+            <div className="relative group/menu">
+              <button 
+                onClick={() => setActiveTool('image-converter')}
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                  ['image-converter', 'heic-to-png', 'pdf-to-image', 'svg-to-png'].includes(activeTool) 
+                    ? 'text-[#d4ff33]' 
+                    : 'hover:text-white'
+                }`}
+              >
+                {t('convert')} <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
+              </button>
+              
+              {/* Sub-menu (Tab Bar style) */}
+              <div className="absolute top-full left-0 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover/menu:opacity-100 group-hover/menu:translate-y-0 group-hover/menu:pointer-events-auto transition-all duration-200">
+                <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-1.5 flex items-center gap-1 shadow-2xl min-w-[550px]">
+                  <button 
+                    onClick={() => setActiveTool('image-converter')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'image-converter' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('image-converter')}
+                  </button>
+                  <button 
+                    onClick={() => setActiveTool('heic-to-png')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'heic-to-png' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('heic-to-png')}
+                  </button>
+                  <button 
+                    onClick={() => setActiveTool('pdf-to-image')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'pdf-to-image' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('pdf-to-image')}
+                  </button>
+                  <button 
+                    onClick={() => setActiveTool('svg-to-png')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'svg-to-png' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('svg-to-png')}
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <button 
               onClick={() => setActiveTool('pdf-to-excel')}
               className={`text-sm font-medium transition-colors ${['pdf-to-excel', 'pdf-to-csv', 'excel-csv'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
@@ -660,6 +803,8 @@ export default function App() {
           <div className="mb-16">
             {activeTool === 'bg-remover' ? (
               <BackgroundRemover />
+            ) : activeTool === 'compress-images' ? (
+              <CompressImagesTool />
             ) : activeTool === 'watermark' ? (
               <WatermarkTool />
             ) : activeTool === 'watermark-remover' ? (
