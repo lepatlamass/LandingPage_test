@@ -5,8 +5,11 @@
 
 "use client";
 
-import React, { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import React, { useState, useEffect } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+import { usePathname, useRouter } from './navigation';
+import { useSearchParams } from 'next/navigation';
+import { Locale } from './i18n/config';
 import { 
   FileText, 
   Image as ImageIcon, 
@@ -32,6 +35,11 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import BackgroundRemover from './components/tools/BackgroundRemover/BackgroundRemover';
+import WatermarkTool from './components/tools/Watermark/WatermarkTool';
+import WatermarkRemoverTool from './components/tools/WatermarkRemover/WatermarkRemoverTool';
+import ImageToTextTool from './components/tools/ImageToText/ImageToTextTool';
+import ImageResizerTool from './components/tools/ImageResizer/ImageResizerTool';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -379,8 +387,49 @@ const toolContent: Record<string, ToolPageContent> = {
 export default function App() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
-  const [activeTool, setActiveTool] = useState('pdf-to-excel');
+  const locale = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  const activeTool = searchParams.get('tool') || 'pdf-to-excel';
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+
+  const setActiveTool = (toolId: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('tool', toolId);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  // Ensure URL has the tool param on mount if missing
+  useEffect(() => {
+    if (!searchParams.get('tool')) {
+      setActiveTool('pdf-to-excel');
+    }
+  }, []);
+
+  // Reset FAQ when tool changes
+  useEffect(() => {
+    setOpenFaq(null);
+  }, [activeTool]);
+
+  const languages: { code: Locale; name: string; flag: string }[] = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'pt-PT', name: 'Português (PT)', flag: '🇵🇹' },
+    { code: 'pt-BR', name: 'Português (BR)', flag: '🇧🇷' },
+    { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  ];
+
+  const currentLanguage = languages.find(l => l.code === locale) || languages[0];
+
+  const handleLanguageChange = (newLocale: Locale) => {
+    const params = new URLSearchParams(searchParams.toString());
+    router.replace(`${pathname}?${params.toString()}`, { locale: newLocale });
+    setIsLangMenuOpen(false);
+  };
 
   const currentContent = toolContent[activeTool] || toolContent['pdf-to-excel'];
   const activeToolData = sidebarTools.find(t => t.id === activeTool) || 
@@ -401,15 +450,32 @@ export default function App() {
           <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-4">Tools</h2>
           <nav className="space-y-1 overflow-y-auto max-h-[calc(100vh-120px)] scrollbar-hide">
             {sidebarTools.map((tool) => {
-              const isActive = activeTool === tool.id || tool.children?.some(c => c.id === activeTool);
+              const isStrictlyActive = activeTool === tool.id;
+              const isExpanded = tool.children?.some(c => c.id === activeTool) || isStrictlyActive;
+              
               return (
                 <div key={tool.id} className="space-y-1">
                   <button
-                    onClick={() => setActiveTool(tool.id)}
+                    onClick={() => {
+                      if (tool.children && tool.children.length > 0) {
+                        // If it has children and we're clicking the parent, 
+                        // we either select the first child or just toggle expansion by selecting the parent
+                        // if the parent itself has no content, we should select the first child.
+                        if (!toolContent[tool.id]) {
+                          setActiveTool(tool.children[0].id);
+                        } else {
+                          setActiveTool(tool.id);
+                        }
+                      } else {
+                        setActiveTool(tool.id);
+                      }
+                    }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
-                      isActive 
+                      isStrictlyActive 
                         ? 'bg-white/10 text-white' 
-                        : `text-gray-400 hover:text-gray-200 ${tool.hover}`
+                        : isExpanded && tool.children
+                          ? 'text-white'
+                          : `text-gray-400 hover:text-gray-200 ${tool.hover}`
                     }`}
                   >
                     <div className={`p-1.5 rounded-lg bg-gray-800 group-hover:bg-gray-700 transition-colors ${tool.color}`}>
@@ -417,11 +483,11 @@ export default function App() {
                     </div>
                     <span className="text-sm font-medium flex-1 text-left">{tt(tool.nameKey.split('.')[1])}</span>
                     {tool.children && (
-                      <ChevronDown size={14} className={`transition-transform duration-200 ${isActive ? 'rotate-180' : ''}`} />
+                      <ChevronDown size={14} className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
                     )}
                   </button>
                   
-                  {tool.children && isActive && (
+                  {tool.children && isExpanded && (
                     <motion.div 
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
@@ -453,22 +519,22 @@ export default function App() {
         <header className="h-16 border-b border-gray-800 flex items-center justify-between px-8 shrink-0 bg-[#0f1115] sticky top-0 z-50">
           <nav className="flex items-center gap-8">
             <button 
-              onClick={() => setActiveTool('tools')}
-              className={`text-sm font-medium transition-colors ${activeTool === 'tools' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
+              onClick={() => setActiveTool('bg-remover')}
+              className={`text-sm font-medium transition-colors ${['bg-remover', 'image-to-text'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
               {t('tools')}
             </button>
             <button 
               onClick={() => setActiveTool('compress')}
-              className={`text-sm font-medium transition-colors ${activeTool === 'compress' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
+              className={`text-sm font-medium transition-colors ${['compress', 'resize'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
               {t('compress')}
             </button>
             <div className="relative group/menu">
               <button 
-                onClick={() => setActiveTool('convert')}
+                onClick={() => setActiveTool('compress-images')}
                 className={`text-sm font-medium transition-colors flex items-center gap-1 ${
-                  activeTool === 'convert' || ['compress-images', 'compress-pdf', 'compress-video'].includes(activeTool) 
+                  ['compress-images', 'compress-pdf', 'compress-video'].includes(activeTool) 
                     ? 'text-[#d4ff33]' 
                     : 'hover:text-white'
                 }`}
@@ -507,19 +573,66 @@ export default function App() {
               </div>
             </div>
             <button 
-              onClick={() => setActiveTool('merge')}
-              className={`text-sm font-medium transition-colors ${activeTool === 'merge' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
+              onClick={() => setActiveTool('pdf-to-excel')}
+              className={`text-sm font-medium transition-colors ${['pdf-to-excel', 'pdf-to-csv', 'excel-csv'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
               {t('merge')}
             </button>
             <button 
-              onClick={() => setActiveTool('edit')}
-              className={`text-sm font-medium transition-colors ${activeTool === 'edit' ? 'text-[#d4ff33]' : 'hover:text-white'}`}
+              onClick={() => setActiveTool('watermark')}
+              className={`text-sm font-medium transition-colors ${['watermark', 'watermark-remover'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
               {t('edit')}
             </button>
           </nav>
           <div className="flex items-center gap-4">
+            {/* Language Switcher */}
+            <div className="relative">
+              <button 
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-400 transition-colors rounded-lg bg-white/5 hover:bg-white/10 hover:text-white"
+              >
+                <span>{currentLanguage.flag}</span>
+                <span className="hidden sm:inline">{currentLanguage.name}</span>
+                <ChevronDown size={14} className={`transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              <AnimatePresence>
+                {isLangMenuOpen && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-10" 
+                      onClick={() => setIsLangMenuOpen(false)}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      className="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-xl border border-gray-800 bg-[#1a1c21] shadow-2xl"
+                    >
+                      <div className="py-1">
+                        {languages.map((lang) => (
+                          <button
+                            key={lang.code}
+                            onClick={() => handleLanguageChange(lang.code)}
+                            className={`flex w-full items-center gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-white/5 ${
+                              locale === lang.code ? 'text-[#d4ff33] bg-white/5' : 'text-gray-400'
+                            }`}
+                          >
+                            <span className="text-lg">{lang.flag}</span>
+                            <span className="flex-1">{lang.name}</span>
+                            {locale === lang.code && (
+                              <CheckCircle2 size={14} className="text-[#d4ff33]" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
+
             <button className="text-sm font-medium hover:text-white transition-colors">{t('logIn')}</button>
             <button className="bg-[#d4ff33] text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#c2eb2e] transition-colors">
               {t('freeTrial')}
@@ -543,21 +656,35 @@ export default function App() {
             </p>
           </div>
 
-          {/* Upload Area */}
-          <motion.div 
-            whileHover={{ scale: 1.005 }}
-            className="border-2 border-dashed border-lime-400/30 bg-lime-400/5 rounded-[32px] p-20 flex flex-col items-center justify-center mb-8 group cursor-pointer transition-colors hover:border-lime-400/50"
-          >
-            <div className="w-16 h-16 bg-lime-400/10 rounded-full flex items-center justify-center text-lime-400 mb-6 group-hover:scale-110 transition-transform">
-              <Upload size={32} />
-            </div>
-            <div className="flex items-center gap-2 mb-4">
-              <button className="bg-[#d4ff33] text-black px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/20">
-                {t('chooseFiles')} <ChevronDown size={20} />
-              </button>
-            </div>
-            <p className="text-gray-500 text-sm">{t('dropFilesHere')}</p>
-          </motion.div>
+          {/* Tool Area */}
+          <div className="mb-16">
+            {activeTool === 'bg-remover' ? (
+              <BackgroundRemover />
+            ) : activeTool === 'watermark' ? (
+              <WatermarkTool />
+            ) : activeTool === 'watermark-remover' ? (
+              <WatermarkRemoverTool />
+            ) : activeTool === 'image-to-text' ? (
+              <ImageToTextTool />
+            ) : activeTool === 'resize' ? (
+              <ImageResizerTool />
+            ) : (
+              <motion.div 
+                whileHover={{ scale: 1.005 }}
+                className="border-2 border-dashed border-lime-400/30 bg-lime-400/5 rounded-[32px] p-20 min-h-[500px] flex flex-col items-center justify-center group cursor-pointer transition-colors hover:border-lime-400/50"
+              >
+                <div className="w-16 h-16 bg-lime-400/10 rounded-full flex items-center justify-center text-lime-400 mb-6 group-hover:scale-110 transition-transform">
+                  <Upload size={32} />
+                </div>
+                <div className="flex items-center gap-2 mb-4">
+                  <button className="bg-[#d4ff33] text-black px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/20">
+                    {t('chooseFiles')} <ChevronDown size={20} />
+                  </button>
+                </div>
+                <p className="text-gray-500 text-sm">{t('dropFilesHere')}</p>
+              </motion.div>
+            )}
+          </div>
 
           {/* Stats Bar */}
           <div className="flex items-center justify-center gap-12 text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-32">

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import App from '../../App';
 
 export default async function Home({
@@ -6,5 +7,9 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   await params;
-  return <App />;
+  return (
+    <Suspense fallback={null}>
+      <App />
+    </Suspense>
+  );
 }
