@@ -42,6 +42,8 @@ import ImageToTextTool from './components/tools/ImageToText/ImageToTextTool';
 import ImageResizerTool from './components/tools/ImageResizer/ImageResizerTool';
 import CompressImagesTool from './components/tools/CompressImages/CompressImagesTool';
 import CompressPdfTool from './components/tools/CompressPdf/CompressPdfTool';
+import CompressVideoTool from './components/tools/CompressVideo/CompressVideoTool';
+import ImageConverterTool from './components/tools/ImageConverter/ImageConverterTool';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -810,6 +812,8 @@ export default function App() {
               <CompressImagesTool />
             ) : activeTool === 'compress-pdf' ? (
               <CompressPdfTool />
+            ) : activeTool === 'compress-video' ? (
+              <CompressVideoTool />
             ) : activeTool === 'watermark' ? (
               <WatermarkTool />
             ) : activeTool === 'watermark-remover' ? (
@@ -818,6 +822,8 @@ export default function App() {
               <ImageToTextTool />
             ) : activeTool === 'resize' ? (
               <ImageResizerTool />
+            ) : activeTool === 'image-converter' ? (
+              <ImageConverterTool />
             ) : (
               <motion.div 
                 whileHover={{ scale: 1.005 }}

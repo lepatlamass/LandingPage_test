@@ -11,6 +11,8 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
     "@google/genai": "^1.29.0",
     "@tailwindcss/postcss": "^4.2.2",
     "better-sqlite3": "^12.4.1",
