@@ -44,6 +44,7 @@ import CompressImagesTool from './components/tools/CompressImages/CompressImages
 import CompressPdfTool from './components/tools/CompressPdf/CompressPdfTool';
 import CompressVideoTool from './components/tools/CompressVideo/CompressVideoTool';
 import ImageConverterTool from './components/tools/ImageConverter/ImageConverterTool';
+import HeicConverterTool from './components/tools/HeicConverter/HeicConverterTool';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -824,6 +825,8 @@ export default function App() {
               <ImageResizerTool />
             ) : activeTool === 'image-converter' ? (
               <ImageConverterTool />
+            ) : activeTool === 'heic-to-png' ? (
+              <HeicConverterTool />
             ) : (
               <motion.div 
                 whileHover={{ scale: 1.005 }}
