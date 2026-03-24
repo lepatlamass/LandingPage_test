@@ -45,6 +45,10 @@ import CompressPdfTool from './components/tools/CompressPdf/CompressPdfTool';
 import CompressVideoTool from './components/tools/CompressVideo/CompressVideoTool';
 import ImageConverterTool from './components/tools/ImageConverter/ImageConverterTool';
 import HeicConverterTool from './components/tools/HeicConverter/HeicConverterTool';
+import PdfToImageTool from './components/tools/PdfToImage/PdfToImageTool';
+import SvgConverterTool from './components/tools/SvgConverter/SvgConverterTool';
+import PdfToCsvTool from './components/tools/PdfToCsv/PdfToCsvTool';
+import CsvToPdfTool from './components/tools/CsvToPdf/CsvToPdfTool';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -77,7 +81,17 @@ const sidebarTools = [
       { id: 'svg-to-png', nameKey: 'Tools.svg-to-png' },
     ]
   },
-  { id: 'pdf-to-csv', nameKey: 'Tools.pdf-to-csv', icon: FileCode, color: 'text-red-400', hover: 'hover:bg-red-400/10' },
+  { 
+    id: 'pdf-to-csv-menu', 
+    nameKey: 'Tools.pdf-to-csv', 
+    icon: FileCode, 
+    color: 'text-red-400', 
+    hover: 'hover:bg-red-400/10',
+    children: [
+      { id: 'pdf-to-csv', nameKey: 'Tools.pdf-to-csv' },
+      { id: 'csv-to-pdf', nameKey: 'Tools.csv-to-pdf' },
+    ]
+  },
   { id: 'pdf-to-excel', nameKey: 'Tools.pdf-to-excel', icon: FileSpreadsheet, color: 'text-lime-400', hover: 'hover:bg-lime-400/10' },
   { id: 'excel-csv', nameKey: 'Tools.excel-csv', icon: FileSpreadsheet, color: 'text-emerald-400', hover: 'hover:bg-emerald-400/10' },
   { id: 'pdf-to-word', nameKey: 'Tools.pdf-to-word', icon: FileText, color: 'text-blue-500', hover: 'hover:bg-blue-500/10' },
@@ -312,6 +326,27 @@ const toolContent: Record<string, ToolPageContent> = {
     faqsKeys: [
       { questionKey: 'Tools.pdf-to-csv-faq1-q', answerKey: 'Tools.pdf-to-csv-faq1-a' },
       { questionKey: 'Tools.pdf-to-csv-faq2-q', answerKey: 'Tools.pdf-to-csv-faq2-a' }
+    ]
+  },
+  'csv-to-pdf': {
+    titleKey: 'Tools.csv-to-pdf-title',
+    accentKey: 'Tools.csv-to-pdf-accent',
+    descriptionKey: 'Tools.csv-to-pdf-desc',
+    heroIcon: FileText,
+    features: [
+      { titleKey: 'Tools.csv-to-pdf-f1-title', descriptionKey: 'Tools.csv-to-pdf-f1-desc', icon: FileText, color: 'text-red-400' },
+      { titleKey: 'Tools.csv-to-pdf-f2-title', descriptionKey: 'Tools.csv-to-pdf-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.csv-to-pdf-f3-title', descriptionKey: 'Tools.csv-to-pdf-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
+    ],
+    stepsKeys: [
+      'Tools.csv-to-pdf-step1',
+      'Tools.csv-to-pdf-step2',
+      'Tools.csv-to-pdf-step3',
+      'Tools.csv-to-pdf-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.csv-to-pdf-faq1-q', answerKey: 'Tools.csv-to-pdf-faq1-a' },
+      { questionKey: 'Tools.csv-to-pdf-faq2-q', answerKey: 'Tools.csv-to-pdf-faq2-a' }
     ]
   },
   'pdf-to-excel': {
@@ -721,9 +756,44 @@ export default function App() {
               </div>
             </div>
 
+            <div className="relative group/menu">
+              <button 
+                onClick={() => setActiveTool('pdf-to-csv')}
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                  ['pdf-to-csv', 'csv-to-pdf'].includes(activeTool) 
+                    ? 'text-[#d4ff33]' 
+                    : 'hover:text-white'
+                }`}
+              >
+                {tt('pdf-to-csv')} <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
+              </button>
+              
+              {/* Sub-menu (Tab Bar style) */}
+              <div className="absolute top-full left-0 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover/menu:opacity-100 group-hover/menu:translate-y-0 group-hover/menu:pointer-events-auto transition-all duration-200">
+                <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-1.5 flex items-center gap-1 shadow-2xl min-w-[350px]">
+                  <button 
+                    onClick={() => setActiveTool('pdf-to-csv')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'pdf-to-csv' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('pdf-to-csv')}
+                  </button>
+                  <button 
+                    onClick={() => setActiveTool('csv-to-pdf')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'csv-to-pdf' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('csv-to-pdf')}
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <button 
               onClick={() => setActiveTool('pdf-to-excel')}
-              className={`text-sm font-medium transition-colors ${['pdf-to-excel', 'pdf-to-csv', 'excel-csv'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
+              className={`text-sm font-medium transition-colors ${['pdf-to-excel', 'excel-csv'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
             >
               {t('merge')}
             </button>
@@ -827,6 +897,14 @@ export default function App() {
               <ImageConverterTool />
             ) : activeTool === 'heic-to-png' ? (
               <HeicConverterTool />
+            ) : activeTool === 'pdf-to-image' ? (
+              <PdfToImageTool />
+            ) : activeTool === 'svg-to-png' ? (
+              <SvgConverterTool />
+            ) : activeTool === 'pdf-to-csv' ? (
+              <PdfToCsvTool />
+            ) : activeTool === 'csv-to-pdf' ? (
+              <CsvToPdfTool />
             ) : (
               <motion.div 
                 whileHover={{ scale: 1.005 }}
