@@ -54,6 +54,8 @@ import ExcelToPdfTool from './components/tools/ExcelToPdf/ExcelToPdfTool';
 
 import ExcelToCsvTool from './components/tools/ExcelToCsv/ExcelToCsvTool';
 import CsvToExcelTool from './components/tools/CsvToExcel/CsvToExcelTool';
+import PdfToWordTool from './components/tools/PdfToWordTool';
+import WordToPdfTool from './components/tools/WordToPdfTool';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -119,7 +121,17 @@ const sidebarTools = [
       { id: 'csv-to-excel', nameKey: 'Tools.csv-to-excel' },
     ]
   },
-  { id: 'pdf-to-word', nameKey: 'Tools.pdf-to-word', icon: FileText, color: 'text-blue-500', hover: 'hover:bg-blue-500/10' },
+  { 
+    id: 'pdf-word-menu', 
+    nameKey: 'Tools.pdf-to-word', 
+    icon: FileText, 
+    color: 'text-blue-500', 
+    hover: 'hover:bg-blue-500/10',
+    children: [
+      { id: 'pdf-to-word', nameKey: 'Tools.pdf-to-word' },
+      { id: 'word-to-pdf', nameKey: 'Tools.word-to-pdf' },
+    ]
+  },
   { id: 'video-to-gif', nameKey: 'Tools.video-to-gif', icon: FileVideo, color: 'text-purple-500', hover: 'hover:bg-purple-500/10' },
 ];
 
@@ -478,6 +490,27 @@ const toolContent: Record<string, ToolPageContent> = {
     faqsKeys: [
       { questionKey: 'Tools.pdf-to-word-faq1-q', answerKey: 'Tools.pdf-to-word-faq1-a' },
       { questionKey: 'Tools.pdf-to-word-faq2-q', answerKey: 'Tools.pdf-to-word-faq2-a' }
+    ]
+  },
+  'word-to-pdf': {
+    titleKey: 'Tools.word-to-pdf-title',
+    accentKey: 'Tools.word-to-pdf-accent',
+    descriptionKey: 'Tools.word-to-pdf-desc',
+    heroIcon: FileText,
+    features: [
+      { titleKey: 'Tools.word-to-pdf-f1-title', descriptionKey: 'Tools.word-to-pdf-f1-desc', icon: FileText, color: 'text-blue-500' },
+      { titleKey: 'Tools.word-to-pdf-f2-title', descriptionKey: 'Tools.word-to-pdf-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.word-to-pdf-f3-title', descriptionKey: 'Tools.word-to-pdf-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
+    ],
+    stepsKeys: [
+      'Tools.word-to-pdf-step1',
+      'Tools.word-to-pdf-step2',
+      'Tools.word-to-pdf-step3',
+      'Tools.word-to-pdf-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.word-to-pdf-faq1-q', answerKey: 'Tools.word-to-pdf-faq1-a' },
+      { questionKey: 'Tools.word-to-pdf-faq2-q', answerKey: 'Tools.word-to-pdf-faq2-a' }
     ]
   },
   'video-to-gif': {
@@ -927,6 +960,40 @@ export default function App() {
                 </div>
               </div>
             </div>
+            <div className="relative group/menu">
+              <button 
+                onClick={() => setActiveTool('pdf-to-word')}
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                  ['pdf-to-word', 'word-to-pdf'].includes(activeTool) 
+                    ? 'text-[#d4ff33]' 
+                    : 'hover:text-white'
+                }`}
+              >
+                {tt('pdf-to-word')} <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
+              </button>
+              
+              {/* Sub-menu (Tab Bar style) */}
+              <div className="absolute top-full left-0 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover/menu:opacity-100 group-hover/menu:translate-y-0 group-hover/menu:pointer-events-auto transition-all duration-200">
+                <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-1.5 flex items-center gap-1 shadow-2xl min-w-[350px]">
+                  <button 
+                    onClick={() => setActiveTool('pdf-to-word')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'pdf-to-word' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('pdf-to-word')}
+                  </button>
+                  <button 
+                    onClick={() => setActiveTool('word-to-pdf')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'word-to-pdf' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('word-to-pdf')}
+                  </button>
+                </div>
+              </div>
+            </div>
             <button 
               onClick={() => setActiveTool('watermark')}
               className={`text-sm font-medium transition-colors ${['watermark', 'watermark-remover'].includes(activeTool) ? 'text-[#d4ff33]' : 'hover:text-white'}`}
@@ -1043,6 +1110,10 @@ export default function App() {
               <ExcelToCsvTool />
             ) : activeTool === 'csv-to-excel' ? (
               <CsvToExcelTool />
+            ) : activeTool === 'pdf-to-word' ? (
+              <PdfToWordTool />
+            ) : activeTool === 'word-to-pdf' ? (
+              <WordToPdfTool />
             ) : (
               <motion.div 
                 whileHover={{ scale: 1.005 }}
