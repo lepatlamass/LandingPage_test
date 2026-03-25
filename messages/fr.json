@@ -351,7 +351,7 @@
     "word-to-pdf-faq1-a": "Oui, nous prenons en charge les formats DOC et DOCX.",
     "word-to-pdf-faq2-q": "Y a-t-il une limite de taille de fichier ?",
     "word-to-pdf-faq2-a": "Les utilisateurs gratuits peuvent convertir des documents jusqu'à 50 Mo.",
-
+    "video": "Vidéo",
     "video-to-gif": "Vidéo en GIF",
     "video-to-gif-title": "Convertir",
     "video-to-gif-accent": "Vidéo en GIF",
@@ -370,6 +370,12 @@
     "video-to-gif-faq1-a": "Nous prenons en charge tous les formats populaires, y compris MP4, WebM et AVI.",
     "video-to-gif-faq2-q": "Puis-je ajouter du texte à mon GIF ?",
     "video-to-gif-faq2-a": "Oui, vous pouvez ajouter des légendes et des superpositions pendant le processus de conversion.",
+    "video-to-gif-fps-label": "Images par seconde (FPS)",
+    "video-to-gif-scale-label": "Largeur (px)",
+    "video-to-gif-loading-ffmpeg": "Chargement de FFmpeg...",
+    "video-to-gif-processing": "Conversion en GIF...",
+    "video-to-gif-ready": "Votre GIF est prêt !",
+    "video-to-gif-download": "Télécharger le GIF",
 
     "compress-images": "Compresser les images",
     "compress-images-title": "Compresser",

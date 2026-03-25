@@ -351,7 +351,7 @@
     "word-to-pdf-faq1-a": "Yes, we support both DOC and DOCX formats.",
     "word-to-pdf-faq2-q": "Is there a file size limit?",
     "word-to-pdf-faq2-a": "Free users can convert documents up to 50 MB.",
-
+    "video": "Video",
     "video-to-gif": "Video to GIF",
     "video-to-gif-title": "Convert",
     "video-to-gif-accent": "Video to GIF",
@@ -370,6 +370,13 @@
     "video-to-gif-faq1-a": "We support all popular formats including MP4, WebM, and AVI.",
     "video-to-gif-faq2-q": "Can I add text to my GIF?",
     "video-to-gif-faq2-a": "Yes, you can add captions and overlays during the conversion process.",
+    "video-to-gif-fps-label": "Frames Per Second (FPS)",
+    "video-to-gif-scale-label": "Width (px)",
+    "video-to-gif-processing": "Converting to GIF...",
+    "video-to-gif-ready": "Your GIF is ready!",
+    "video-to-gif-download": "Download GIF",
+    "video-to-gif-loading-ffmpeg": "Loading FFmpeg...",
+    "video-to-gif-error-large": "Video file is too large (>100MB). Browser-based conversion is limited by memory.",
 
     "compress-images": "Compress Images",
     "compress-images-title": "Compress",

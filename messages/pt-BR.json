@@ -293,6 +293,12 @@
     "video-to-gif-faq1-a": "Suportamos todos os formatos populares, incluindo MP4, WebM e AVI.",
     "video-to-gif-faq2-q": "Posso adicionar texto ao meu GIF?",
     "video-to-gif-faq2-a": "Sim, você pode adicionar legendas e sobreposições durante o processo de conversão.",
+    "video-to-gif-fps-label": "Quadros por segundo (FPS)",
+    "video-to-gif-scale-label": "Largura (px)",
+    "video-to-gif-loading-ffmpeg": "Carregando FFmpeg...",
+    "video-to-gif-processing": "Convertendo para GIF...",
+    "video-to-gif-ready": "Seu GIF está pronto!",
+    "video-to-gif-download": "Baixar GIF",
 
     "compress-images": "Comprimir Imagens",
     "compress-images-title": "Comprimir",
@@ -350,7 +356,7 @@
     "compress-pdf-processing": "Comprimindo PDF...",
     "compress-pdf-ready": "Seu PDF está pronto!",
     "compress-pdf-download": "Baixar PDF Comprimido",
-
+    "video": "Vídeo",
     "compress-video": "Comprimir Vídeo",
     "compress-video-title": "Comprimir",
     "compress-video-accent": "Vídeo",
