@@ -16,7 +16,7 @@ import {
   File
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Document, Packer, Paragraph, TextRun } from 'docx';
+import { Document, Packer, Paragraph, TextRun, ImageRun } from 'docx';
 
 interface PdfToWordFile {
   id: string;
@@ -99,6 +99,114 @@ export default function PdfToWordTool() {
         const textContent = await page.getTextContent();
         const items = textContent.items as any[];
         
+        // Extract images
+        const ops = await page.getOperatorList();
+        const images: { buffer: ArrayBuffer, width: number, height: number }[] = [];
+
+        for (let j = 0; j < ops.fnArray.length; j++) {
+          const fn = ops.fnArray[j];
+          if (
+            fn === pdfjs.OPS.paintImageXObject ||
+            fn === pdfjs.OPS.paintInlineImageXObject
+          ) {
+            try {
+              let img: any = null;
+              if (fn === pdfjs.OPS.paintImageXObject) {
+                const objId = ops.argsArray[j][0];
+                try {
+                  // Synchronous get, as getOperatorList should have resolved it
+                  img = page.objs.get(objId);
+                } catch (e) {
+                  console.warn('Object not resolved synchronously, trying callback...', e);
+                  img = await new Promise<any>((resolve) => {
+                    try {
+                      page.objs.get(objId, (image: any) => {
+                        resolve(image);
+                      });
+                    } catch (err) {
+                      resolve(null);
+                    }
+                  });
+                }
+              } else {
+                // paintInlineImageXObject passes the image object directly
+                img = ops.argsArray[j][0];
+              }
+
+              if (img) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                  canvas.width = img.width || 100;
+                  canvas.height = img.height || 100;
+                  
+                  if (img.bitmap) {
+                    ctx.drawImage(img.bitmap, 0, 0, canvas.width, canvas.height);
+                  } else if (img instanceof HTMLImageElement || img instanceof ImageBitmap || img instanceof HTMLCanvasElement) {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                  } else if (img.data && img.width && img.height) {
+                    const imgData = ctx.createImageData(img.width, img.height);
+                    const data = img.data;
+                    const out = imgData.data;
+                    const pixels = img.width * img.height;
+                    
+                    if (data.length === pixels * 4) {
+                      out.set(data);
+                    } else if (data.length === pixels * 3) {
+                      for (let i = 0, k = 0; i < pixels; i++) {
+                        out[k++] = data[i * 3];
+                        out[k++] = data[i * 3 + 1];
+                        out[k++] = data[i * 3 + 2];
+                        out[k++] = 255;
+                      }
+                    } else if (data.length === pixels) {
+                      for (let i = 0, k = 0; i < pixels; i++) {
+                        const val = data[i];
+                        out[k++] = val;
+                        out[k++] = val;
+                        out[k++] = val;
+                        out[k++] = 255;
+                      }
+                    } else {
+                      const expected1Bpp = Math.ceil(img.width / 8) * img.height;
+                      if (data.length === expected1Bpp) {
+                        for (let y = 0; y < img.height; y++) {
+                          for (let x = 0; x < img.width; x++) {
+                            const byteIdx = y * Math.ceil(img.width / 8) + Math.floor(x / 8);
+                            const bitIdx = 7 - (x % 8);
+                            const val = ((data[byteIdx] >> bitIdx) & 1) ? 255 : 0;
+                            const outIdx = (y * img.width + x) * 4;
+                            out[outIdx] = val;
+                            out[outIdx + 1] = val;
+                            out[outIdx + 2] = val;
+                            out[outIdx + 3] = 255;
+                          }
+                        }
+                      } else {
+                        for (let i = 0, k = 0; i < data.length && k < out.length; i++, k += 4) {
+                          out[k] = data[i];
+                          out[k + 1] = data[i];
+                          out[k + 2] = data[i];
+                          out[k + 3] = 255;
+                        }
+                      }
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+                  }
+                  
+                  const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
+                  if (blob) {
+                    const arrayBuffer = await blob.arrayBuffer();
+                    images.push({ buffer: arrayBuffer, width: canvas.width, height: canvas.height });
+                  }
+                }
+              }
+            } catch (e) {
+              console.error('Error extracting image:', e);
+            }
+          }
+        }
+
         let lastY = -1;
         let currentLine = '';
 
@@ -130,6 +238,33 @@ export default function PdfToWordTool() {
           paragraphs.push(
             new Paragraph({
               children: [new TextRun({ text: currentLine.trim(), size: 24 })],
+              spacing: { after: 120 }
+            })
+          );
+        }
+
+        // Add extracted images
+        for (const img of images) {
+          const maxWidth = 600;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxWidth) {
+            h = (maxWidth / w) * h;
+            w = maxWidth;
+          }
+          
+          paragraphs.push(
+            new Paragraph({
+              children: [
+                new ImageRun({
+                  data: img.buffer,
+                  transformation: {
+                    width: w,
+                    height: h,
+                  },
+                  type: 'png'
+                }),
+              ],
               spacing: { after: 120 }
             })
           );

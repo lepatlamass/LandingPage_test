@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import mammoth from 'mammoth';
-import { jsPDF } from 'jspdf';
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 interface WordToPdfFile {
   id: string;
@@ -80,25 +80,116 @@ export default function WordToPdfTool() {
     try {
       const arrayBuffer = await fileObj.file.arrayBuffer();
       
-      // Extract text from DOCX
-      const result = await mammoth.extractRawText({ arrayBuffer });
-      const text = result.value;
+      // 1. Convert DOCX to HTML to extract both text and images
+      const result = await mammoth.convertToHtml({ arrayBuffer });
+      const html = result.value;
 
-      // Create PDF
-      const doc = new jsPDF();
-      const splitText = doc.splitTextToSize(text, 180);
-      
-      let y = 10;
-      for (let i = 0; i < splitText.length; i++) {
-        if (y > 280) {
-          doc.addPage();
-          y = 10;
+      // 2. Create a new PDF document using pdf-lib
+      const pdfDoc = await PDFDocument.create();
+      const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+      const fontSize = 11;
+      const margin = 50;
+      const width = 595.28; // A4 width in points
+      const height = 841.89; // A4 height in points
+      const maxWidth = width - margin * 2;
+
+      // Custom wrapText function using font metrics from pdf-lib
+      const wrapText = (text: string, maxWidth: number) => {
+        const words = text.split(/\s+/);
+        const lines = [];
+        let currentLine = '';
+
+        for (const word of words) {
+          const testLine = currentLine ? `${currentLine} ${word}` : word;
+          const testWidth = font.widthOfTextAtSize(testLine, fontSize);
+          if (testWidth > maxWidth) {
+            if (currentLine) lines.push(currentLine);
+            currentLine = word;
+          } else {
+            currentLine = testLine;
+          }
         }
-        doc.text(splitText[i], 10, y);
-        y += 7;
+        if (currentLine) lines.push(currentLine);
+        return lines;
+      };
+
+      // Parse the HTML to iterate through elements
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const nodes = Array.from(doc.body.childNodes);
+
+      let page = pdfDoc.addPage([width, height]);
+      let y = height - margin;
+      const lineHeight = fontSize * 1.4;
+
+      for (const node of nodes) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const el = node as HTMLElement;
+          
+          if (['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LI'].includes(el.tagName)) {
+            const text = el.innerText || el.textContent || '';
+            if (!text.trim()) {
+              y -= lineHeight; // Empty line
+              continue;
+            }
+
+            const lines = wrapText(text, maxWidth);
+            for (const line of lines) {
+              if (y < margin + lineHeight) {
+                page = pdfDoc.addPage([width, height]);
+                y = height - margin;
+              }
+              page.drawText(line, {
+                x: margin,
+                y: y,
+                size: fontSize,
+                font: font,
+                color: rgb(0, 0, 0),
+              });
+              y -= lineHeight;
+            }
+            y -= lineHeight * 0.5; // Spacing between blocks
+          } else if (el.tagName === 'IMG') {
+            const src = el.getAttribute('src');
+            if (src && src.startsWith('data:image/')) {
+              try {
+                const base64Data = src.split(',')[1];
+                const imageBytes = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
+                
+                let image;
+                if (src.includes('image/png')) {
+                  image = await pdfDoc.embedPng(imageBytes);
+                } else if (src.includes('image/jpeg') || src.includes('image/jpg')) {
+                  image = await pdfDoc.embedJpg(imageBytes);
+                } else {
+                  continue; // Unsupported format for pdf-lib direct embedding
+                }
+
+                const dims = image.scaleToFit(maxWidth, height * 0.4);
+                
+                if (y < margin + dims.height) {
+                  page = pdfDoc.addPage([width, height]);
+                  y = height - margin;
+                }
+
+                page.drawImage(image, {
+                  x: margin + (maxWidth - dims.width) / 2,
+                  y: y - dims.height,
+                  width: dims.width,
+                  height: dims.height,
+                });
+                y -= dims.height + lineHeight;
+              } catch (imgErr) {
+                console.warn('Failed to embed image:', imgErr);
+              }
+            }
+          }
+        }
       }
 
-      const pdfBlob = doc.output('blob');
+      // 4. Output as Blob
+      const pdfBytes = await pdfDoc.save();
+      const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
 
       setFiles(prev => prev.map(f => 
         f.id === fileObj.id ? { 
