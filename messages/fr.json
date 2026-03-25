@@ -293,6 +293,8 @@
     "excel-to-pdf-faq2-q": "Puis-je convertir des fichiers CSV ?",
     "excel-to-pdf-faq2-a": "Oui, notre convertisseur prend entièrement en charge les fichiers CSV ainsi que les formats Excel.",
 
+    "excel-to-csv": "Excel en CSV",
+    "csv-to-excel": "CSV en Excel",
     "excel-csv": "Excel / CSV",
     "excel-csv-title": "Convertir",
     "excel-csv-accent": "Excel en CSV",

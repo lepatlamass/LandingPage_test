@@ -52,6 +52,9 @@ import CsvToPdfTool from './components/tools/CsvToPdf/CsvToPdfTool';
 import PdfToExcelTool from './components/tools/PdfToExcel/PdfToExcelTool';
 import ExcelToPdfTool from './components/tools/ExcelToPdf/ExcelToPdfTool';
 
+import ExcelToCsvTool from './components/tools/ExcelToCsv/ExcelToCsvTool';
+import CsvToExcelTool from './components/tools/CsvToExcel/CsvToExcelTool';
+
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
   { id: 'watermark', nameKey: 'Tools.watermark', icon: Droplets, color: 'text-blue-400', hover: 'hover:bg-blue-400/10' },
@@ -105,7 +108,17 @@ const sidebarTools = [
       { id: 'excel-to-pdf', nameKey: 'Tools.excel-to-pdf' },
     ]
   },
-  { id: 'excel-csv', nameKey: 'Tools.excel-csv', icon: FileSpreadsheet, color: 'text-emerald-400', hover: 'hover:bg-emerald-400/10' },
+  { 
+    id: 'excel-csv-menu', 
+    nameKey: 'Tools.excel-csv', 
+    icon: FileSpreadsheet, 
+    color: 'text-emerald-400', 
+    hover: 'hover:bg-emerald-400/10',
+    children: [
+      { id: 'excel-to-csv', nameKey: 'Tools.excel-to-csv' },
+      { id: 'csv-to-excel', nameKey: 'Tools.csv-to-excel' },
+    ]
+  },
   { id: 'pdf-to-word', nameKey: 'Tools.pdf-to-word', icon: FileText, color: 'text-blue-500', hover: 'hover:bg-blue-500/10' },
   { id: 'video-to-gif', nameKey: 'Tools.video-to-gif', icon: FileVideo, color: 'text-purple-500', hover: 'hover:bg-purple-500/10' },
 ];
@@ -404,7 +417,28 @@ const toolContent: Record<string, ToolPageContent> = {
       { questionKey: 'Tools.excel-to-pdf-faq2-q', answerKey: 'Tools.excel-to-pdf-faq2-a' }
     ]
   },
-  'excel-csv': {
+  'excel-to-csv': {
+    titleKey: 'Tools.excel-csv-title',
+    accentKey: 'Tools.excel-csv-accent',
+    descriptionKey: 'Tools.excel-csv-desc',
+    heroIcon: FileSpreadsheet,
+    features: [
+      { titleKey: 'Tools.excel-csv-f1-title', descriptionKey: 'Tools.excel-csv-f1-desc', icon: FileSpreadsheet, color: 'text-emerald-400' },
+      { titleKey: 'Tools.excel-csv-f2-title', descriptionKey: 'Tools.excel-csv-f2-desc', icon: Zap, color: 'text-yellow-400' },
+      { titleKey: 'Tools.excel-csv-f3-title', descriptionKey: 'Tools.excel-csv-f3-desc', icon: ShieldCheck, color: 'text-blue-400' },
+    ],
+    stepsKeys: [
+      'Tools.excel-csv-step1',
+      'Tools.excel-csv-step2',
+      'Tools.excel-csv-step3',
+      'Tools.excel-csv-step4'
+    ],
+    faqsKeys: [
+      { questionKey: 'Tools.excel-csv-faq1-q', answerKey: 'Tools.excel-csv-faq1-a' },
+      { questionKey: 'Tools.excel-csv-faq2-q', answerKey: 'Tools.excel-csv-faq2-a' }
+    ]
+  },
+  'csv-to-excel': {
     titleKey: 'Tools.excel-csv-title',
     accentKey: 'Tools.excel-csv-accent',
     descriptionKey: 'Tools.excel-csv-desc',
@@ -828,7 +862,7 @@ export default function App() {
               <button 
                 onClick={() => setActiveTool('pdf-to-excel')}
                 className={`text-sm font-medium transition-colors flex items-center gap-1 ${
-                  ['pdf-to-excel', 'excel-to-pdf', 'excel-csv'].includes(activeTool) 
+                  ['pdf-to-excel', 'excel-to-pdf'].includes(activeTool) 
                     ? 'text-[#d4ff33]' 
                     : 'hover:text-white'
                 }`}
@@ -854,6 +888,41 @@ export default function App() {
                     }`}
                   >
                     {tt('excel-to-pdf')}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative group/menu">
+              <button 
+                onClick={() => setActiveTool('excel-to-csv')}
+                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                  ['excel-to-csv', 'csv-to-excel'].includes(activeTool) 
+                    ? 'text-[#d4ff33]' 
+                    : 'hover:text-white'
+                }`}
+              >
+                {tt('excel-csv')} <ChevronDown size={14} className="group-hover/menu:rotate-180 transition-transform" />
+              </button>
+              
+              {/* Sub-menu (Tab Bar style) */}
+              <div className="absolute top-full left-0 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover/menu:opacity-100 group-hover/menu:translate-y-0 group-hover/menu:pointer-events-auto transition-all duration-200">
+                <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-1.5 flex items-center gap-1 shadow-2xl min-w-[350px]">
+                  <button 
+                    onClick={() => setActiveTool('excel-to-csv')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'excel-to-csv' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('excel-to-csv')}
+                  </button>
+                  <button 
+                    onClick={() => setActiveTool('csv-to-excel')}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${
+                      activeTool === 'csv-to-excel' ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    {tt('csv-to-excel')}
                   </button>
                 </div>
               </div>
@@ -970,6 +1039,10 @@ export default function App() {
               <PdfToExcelTool />
             ) : activeTool === 'excel-to-pdf' ? (
               <ExcelToPdfTool />
+            ) : activeTool === 'excel-to-csv' ? (
+              <ExcelToCsvTool />
+            ) : activeTool === 'csv-to-excel' ? (
+              <CsvToExcelTool />
             ) : (
               <motion.div 
                 whileHover={{ scale: 1.005 }}

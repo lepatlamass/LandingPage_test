@@ -216,6 +216,8 @@
     "pdf-to-excel-faq3-q": "Os meus dados estão seguros?",
     "pdf-to-excel-faq3-a": "Com certeza. Utilizamos encriptação SSL e eliminamos os ficheiros após 1 hora.",
 
+    "excel-to-csv": "Excel para CSV",
+    "csv-to-excel": "CSV para Excel",
     "excel-csv": "Excel / CSV",
     "excel-csv-title": "Converter",
     "excel-csv-accent": "Excel para CSV",
