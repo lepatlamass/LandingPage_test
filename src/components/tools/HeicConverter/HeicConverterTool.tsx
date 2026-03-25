@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import JSZip from 'jszip';
-import { heicTo } from 'heic-to';
 
 type OutputFormat = 'jpeg' | 'png' | 'webp';
 
@@ -92,9 +91,10 @@ export default function HeicConverterTool() {
           f.id === item.id ? { ...f, status: 'processing' } : f
         ));
 
+        const { heicTo } = await import('heic-to');
         const resultBlob = await heicTo({
           blob: item.file,
-          type: `image/${outputFormat}`,
+          type: `image/${outputFormat}` as any,
           quality: outputFormat === 'jpeg' ? quality : undefined
         });
         

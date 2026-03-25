@@ -1,328 +1,222 @@
-"use client";
+'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { 
-  Upload, 
-  X, 
-  Download, 
-  Loader2, 
-  CheckCircle2,
-  AlertCircle,
-  FileText,
-  ShieldCheck,
-  Zap,
-  RefreshCw,
-  FileArchive,
-  ChevronDown,
-  Settings,
-  ImageIcon
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Upload, FileText, Download, Loader2, X, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import JSZip from 'jszip';
-import * as pdfjsLib from 'pdfjs-dist';
 
-// Set worker path
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
-
-type OutputFormat = 'jpeg' | 'png';
-
-interface PdfFile {
-  id: string;
-  file: File;
-  status: 'idle' | 'processing' | 'completed' | 'error';
-  totalPages: number;
-  processedPages: number;
-  resultZip?: Blob;
-  error?: string;
-}
-
-export default function PdfToImageTool() {
+const PdfToImageTool = () => {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
-  const [pdfFile, setPdfFile] = useState<PdfFile | null>(null);
-  const [outputFormat, setOutputFormat] = useState<OutputFormat>('png');
+  const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [resultZip, setResultZip] = useState<Blob | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length > 0) {
-      addFile(files[0]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile && selectedFile.type === 'application/pdf') {
+      setFile(selectedFile);
+      setResultZip(null);
+      setError(null);
+    } else if (selectedFile) {
+      setError('Please upload a valid PDF file.');
     }
-  };
-
-  const addFile = async (file: File) => {
-    if (file.type !== 'application/pdf') return;
-
-    try {
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      
-      setPdfFile({
-        id: Math.random().toString(36).substring(2, 11),
-        file,
-        status: 'idle',
-        totalPages: pdf.numPages,
-        processedPages: 0
-      });
-    } catch (error) {
-      console.error('Error loading PDF:', error);
-    }
-  };
-
-  const removeFile = () => {
-    setPdfFile(null);
-    setIsProcessing(false);
   };
 
   const processPdf = async () => {
-    if (!pdfFile || isProcessing) return;
+    if (!file) return;
+
     setIsProcessing(true);
+    setProgress(0);
+    setError(null);
 
     try {
-      setPdfFile(prev => prev ? { ...prev, status: 'processing', processedPages: 0 } : null);
-
-      const arrayBuffer = await pdfFile.file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.js');
+      const pdfjs = pdfjsLib.default || pdfjsLib;
+      
+      pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+      
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
       const zip = new JSZip();
-      const folder = zip.folder("images");
+      const numPages = pdf.numPages;
 
-      for (let i = 1; i <= pdf.numPages; i++) {
+      for (let i = 1; i <= numPages; i++) {
         const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 2.0 }); // 2.0 for high resolution
+        const viewport = page.getViewport({ scale: 2 }); // High quality
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-        
+
         if (!context) throw new Error('Could not get canvas context');
-        
+
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
         await page.render({
           canvasContext: context,
-          viewport: viewport
+          viewport: viewport,
         }).promise;
 
-        const mimeType = `image/${outputFormat}`;
-        const blob = await new Promise<Blob | null>((resolve) => {
-          canvas.toBlob((b) => resolve(b), mimeType, 0.9);
-        });
-
-        if (blob) {
-          folder?.file(`page-${i}.${outputFormat}`, blob);
-        }
-
-        setPdfFile(prev => prev ? { ...prev, processedPages: i } : null);
+        const imageData = canvas.toDataURL('image/png').split(',')[1];
+        zip.file(`page-${i}.png`, imageData, { base64: true });
+        
+        setProgress(Math.round((i / numPages) * 100));
       }
 
-      const resultZip = await zip.generateAsync({ type: 'blob' });
-      setPdfFile(prev => prev ? { ...prev, status: 'completed', resultZip } : null);
-    } catch (error) {
-      console.error('PDF Processing error:', error);
-      setPdfFile(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
+      const content = await zip.generateAsync({ type: 'blob' });
+      setResultZip(content);
+    } catch (err) {
+      console.error('PDF processing error:', err);
+      setError('An error occurred while processing the PDF. Please try again.');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const downloadResult = () => {
-    if (!pdfFile?.resultZip) return;
-    const url = URL.createObjectURL(pdfFile.resultZip);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${pdfFile.file.name.split('.')[0]}-images.zip`;
-    link.click();
+  const downloadZip = () => {
+    if (!resultZip) return;
+    const url = URL.createObjectURL(resultZip);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${file?.name.replace('.pdf', '') || 'pdf-images'}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
-  return (
-    <div className="w-full max-w-5xl mx-auto">
-      <div className="bg-[#1a1c21] border border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-8 border-b border-gray-800 flex items-center justify-between bg-white/5">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-red-400/10 rounded-2xl flex items-center justify-center text-red-400">
-              <FileText size={24} />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white">PDF to Image</h3>
-              <p className="text-gray-500 text-sm">Convert PDF pages into high-quality images</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex bg-black/40 p-1 rounded-xl border border-gray-800">
-              {(['png', 'jpeg'] as OutputFormat[]).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setOutputFormat(f)}
-                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                    outputFormat === f 
-                      ? 'bg-red-500 text-white shadow-lg' 
-                      : 'text-gray-500 hover:text-gray-300'
-                  }`}
-                >
-                  {f.toUpperCase()}
-                </button>
-              ))}
-            </div>
-            {pdfFile && (
-              <button 
-                onClick={removeFile}
-                className="p-2 text-gray-500 hover:text-red-400 transition-colors"
-                title="Clear all"
-              >
-                <X size={20} />
-              </button>
-            )}
-          </div>
-        </div>
+  const reset = () => {
+    setFile(null);
+    setResultZip(null);
+    setProgress(0);
+    setError(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
-        <div className="p-8">
-          {!pdfFile ? (
-            <div 
-              onClick={() => fileInputRef.current?.click()}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => {
-                e.preventDefault();
-                const droppedFiles = Array.from(e.dataTransfer.files);
-                if (droppedFiles.length > 0) addFile(droppedFiles[0]);
-              }}
-              className="border-2 border-dashed border-red-400/30 bg-red-400/5 rounded-[24px] p-20 flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-red-400/50 hover:bg-red-400/10"
-            >
-              <div className="w-16 h-16 bg-red-400/10 rounded-full flex items-center justify-center text-red-400 mb-6 group-hover:scale-110 transition-transform">
-                <Upload size={32} />
-              </div>
-              <h4 className="text-white font-bold text-lg mb-2">{t('chooseFiles')}</h4>
-              <p className="text-gray-500 text-sm mb-8">Select a PDF file to convert</p>
-              <div className="flex items-center gap-6 text-xs text-gray-500 font-medium">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={14} className="text-blue-400" />
-                  Secure Processing
-                </div>
-                <div className="flex items-center gap-2">
-                  <Zap size={14} className="text-yellow-400" />
-                  Instant Conversion
-                </div>
-              </div>
+  return (
+    <div className="w-full max-w-4xl mx-auto">
+      <AnimatePresence mode="wait">
+        {!file ? (
+          <motion.div
+            key="upload"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            onClick={() => fileInputRef.current?.click()}
+            className="border-2 border-dashed border-red-400/30 bg-red-400/5 rounded-[32px] p-20 min-h-[400px] flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-red-400/50"
+          >
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept=".pdf"
+              className="hidden"
+            />
+            <div className="w-16 h-16 bg-red-400/10 rounded-full flex items-center justify-center text-red-400 mb-6 group-hover:scale-110 transition-transform">
+              <Upload size={32} />
             </div>
-          ) : (
-            <div className="space-y-6">
-              <motion.div 
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-black/40 border border-gray-800 rounded-2xl p-6 flex items-center gap-6"
+            <h3 className="text-xl font-bold text-white mb-2">{t('chooseFiles')}</h3>
+            <p className="text-gray-500 text-sm mb-6">{t('dropFilesHere')}</p>
+            <div className="bg-[#d4ff33] text-black px-8 py-3 rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/10">
+              Select PDF
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="processing"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-[#1a1c21] border border-gray-800 rounded-[32px] p-12"
+          >
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-red-400/10 rounded-xl flex items-center justify-center text-red-400">
+                  <FileText size={24} />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold truncate max-w-[300px]">{file.name}</h3>
+                  <p className="text-gray-500 text-xs">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                </div>
+              </div>
+              {!isProcessing && (
+                <button onClick={reset} className="text-gray-500 hover:text-white transition-colors">
+                  <X size={20} />
+                </button>
+              )}
+            </div>
+
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm mb-6">
+                {error}
+              </div>
+            )}
+
+            {!resultZip ? (
+              <div className="space-y-6">
+                {isProcessing ? (
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-400">Converting pages...</span>
+                      <span className="text-[#d4ff33] font-bold">{progress}%</span>
+                    </div>
+                    <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                      <motion.div 
+                        className="h-full bg-[#d4ff33]"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-gray-500 text-sm pt-4">
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>Processing PDF pages into images...</span>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={processPdf}
+                    className="w-full bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10"
+                  >
+                    Convert to Images
+                  </button>
+                )}
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-6 text-center"
               >
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-900 shrink-0 border border-gray-800 flex items-center justify-center">
-                  <FileText size={32} className="text-red-400" />
+                <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 mx-auto mb-4">
+                  <CheckCircle2 size={40} />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-lg font-bold text-white truncate">{pdfFile.file.name}</p>
-                  <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">
-                    {(pdfFile.file.size / (1024 * 1024)).toFixed(2)} MB • {pdfFile.totalPages} Pages
-                  </p>
-                  
-                  {pdfFile.status === 'processing' && (
-                    <div className="mt-4">
-                      <div className="flex items-center justify-between text-[10px] text-gray-500 uppercase tracking-widest mb-2">
-                        <span>Processing Pages...</span>
-                        <span>{Math.round((pdfFile.processedPages / pdfFile.totalPages) * 100)}%</span>
-                      </div>
-                      <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                        <motion.div 
-                          className="h-full bg-red-500"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${(pdfFile.processedPages / pdfFile.totalPages) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <h4 className="text-white text-xl font-bold">Conversion Complete!</h4>
+                <p className="text-gray-500">All pages have been converted to images and bundled into a ZIP file.</p>
                 
-                <div className="flex items-center gap-3">
-                  {pdfFile.status === 'completed' ? (
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-2 text-green-400 font-bold text-sm">
-                        <CheckCircle2 size={20} />
-                        Converted
-                      </div>
-                      <button 
-                        onClick={downloadResult}
-                        className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-xl text-sm font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
-                      >
-                        <FileArchive size={18} /> Download ZIP
-                      </button>
-                    </div>
-                  ) : pdfFile.status === 'error' ? (
-                    <div className="flex items-center gap-2 text-red-400 font-bold text-sm">
-                      <AlertCircle size={20} />
-                      Failed
-                    </div>
-                  ) : (
-                    <button 
-                      onClick={processPdf}
-                      disabled={isProcessing}
-                      className="flex items-center gap-2 px-8 py-3 bg-red-500 text-white rounded-xl text-sm font-bold hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-red-500/20"
-                    >
-                      {isProcessing ? (
-                        <><Loader2 size={18} className="animate-spin" /> Converting...</>
-                      ) : (
-                        <><RefreshCw size={18} /> Convert to {outputFormat.toUpperCase()}</>
-                      )}
-                    </button>
-                  )}
+                <div className="flex gap-4">
+                  <button
+                    onClick={downloadZip}
+                    className="flex-1 bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10"
+                  >
+                    <Download size={20} /> Download ZIP
+                  </button>
+                  <button
+                    onClick={reset}
+                    className="px-8 py-4 rounded-2xl font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+                  >
+                    Convert Another
+                  </button>
                 </div>
               </motion.div>
-
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex items-center gap-4">
-                <AlertCircle size={20} className="text-yellow-400 shrink-0" />
-                <p className="text-xs text-gray-400 leading-relaxed">
-                  Every page of your PDF will be converted into a separate high-resolution image file. All images will be bundled into a single ZIP archive for easy downloading.
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <input 
-        type="file" 
-        ref={fileInputRef}
-        onChange={handleFileSelect}
-        accept=".pdf"
-        className="hidden"
-      />
-
-      {/* SEO Content Section */}
-      <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <div className="w-12 h-12 bg-red-400/10 rounded-2xl flex items-center justify-center text-red-400 mb-6">
-            <ImageIcon size={24} />
-          </div>
-          <h4 className="text-white font-bold mb-4">High Fidelity</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            We render PDF pages at 2x scale to ensure your resulting images are sharp, clear, and professional-quality.
-          </p>
-        </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <div className="w-12 h-12 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-yellow-400 mb-6">
-            <Zap size={24} />
-          </div>
-          <h4 className="text-white font-bold mb-4">Fast Extraction</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            Our optimized rendering engine processes multi-page documents quickly, converting dozens of pages in seconds.
-          </p>
-        </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 mb-6">
-            <ShieldCheck size={24} />
-          </div>
-          <h4 className="text-white font-bold mb-4">100% Private</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            All processing happens locally in your browser. Your sensitive documents never leave your computer.
-          </p>
-        </div>
-      </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
-}
+};
+
+export default PdfToImageTool;
