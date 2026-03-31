@@ -33,6 +33,8 @@ interface SvgFile {
   height?: number;
 }
 
+import Image from 'next/image';
+
 export default function SvgConverterTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
@@ -282,8 +284,8 @@ export default function SvgConverterTool() {
                     key={item.id}
                     className="bg-black/40 border border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
                   >
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-white shrink-0 border border-gray-800 p-2">
-                      <img src={item.preview} alt="preview" className="w-full h-full object-contain" />
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-white shrink-0 border border-gray-800 p-2 relative">
+                      <Image src={item.preview} alt="preview" fill className="object-contain" unoptimized />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{item.file.name}</p>

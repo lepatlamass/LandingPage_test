@@ -13,7 +13,6 @@ import {
   ShieldCheck,
   Zap,
   RefreshCw,
-  FileSpreadsheet,
   Table
 } from 'lucide-react';
 import { motion } from 'motion/react';

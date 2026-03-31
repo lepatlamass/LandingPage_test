@@ -9,14 +9,12 @@ import {
   Loader2, 
   Settings,
   CheckCircle2,
-  AlertCircle,
   Video,
   ShieldCheck,
   Zap,
-  Minimize,
-  Play
+  Minimize
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { toBlobURL } from '@ffmpeg/util';
 

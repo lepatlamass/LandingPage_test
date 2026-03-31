@@ -355,7 +355,7 @@ export default function HeicConverterTool() {
           </div>
           <h4 className="text-white font-bold mb-4">Instant Conversion</h4>
           <p className="text-gray-500 text-sm leading-relaxed">
-            No software installation required. Our browser-based converter processes your files instantly using your device's power.
+            No software installation required. Our browser-based converter processes your files instantly using your device&apos;s power.
           </p>
         </div>
         <div className="bg-white/5 border border-white/10 rounded-3xl p-8">

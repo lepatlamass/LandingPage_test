@@ -7,7 +7,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { usePathname, useRouter } from './navigation';
+import Image from 'next/image';
+import { usePathname, useRouter, Link } from './navigation';
 import { useSearchParams } from 'next/navigation';
 import { Locale } from './i18n/config';
 import { 
@@ -642,9 +643,11 @@ export default function App() {
   // Ensure URL has the tool param on mount if missing
   useEffect(() => {
     if (!searchParams.get('tool')) {
-      setActiveTool('pdf-to-excel');
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('tool', 'pdf-to-excel');
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
-  }, []);
+  }, [searchParams, pathname, router]);
 
   // Reset FAQ when tool changes
   useEffect(() => {
@@ -756,7 +759,14 @@ export default function App() {
       <main className="flex-1 flex flex-col overflow-y-auto scroll-smooth">
         {/* Navbar */}
         <header className="h-16 border-b border-gray-800 flex items-center justify-between px-8 shrink-0 bg-[#0f1115] sticky top-0 z-50">
-          <div className="flex-1" />
+          <div className="flex items-center gap-6 flex-1">
+            <Link href="/home" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              Home
+            </Link>
+            <Link href="/" className="text-sm font-medium text-white transition-colors">
+              Tools
+            </Link>
+          </div>
           <div className="flex items-center gap-4">
             {/* Language Switcher */}
             <div className="relative">
@@ -924,10 +934,11 @@ export default function App() {
             <div className="relative group">
               <div className="absolute -inset-4 bg-lime-400/20 rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative rounded-[32px] overflow-hidden border border-white/10 aspect-[4/3] bg-white/5 flex items-center justify-center">
-                <img 
+                <Image 
                   src="/amico.svg"
                   alt="Process guide" 
-                  className="w-full h-full object-contain p-8"
+                  fill
+                  className="object-contain p-8"
                   referrerPolicy="no-referrer"
                 />
               </div>

@@ -1,9 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { Inter } from 'next/font/google';
-import '@/index.css';
-
-const inter = Inter({ subsets: ['latin'] });
+import React from 'react';
 
 export default async function LocaleLayout({
   children,
@@ -16,8 +13,12 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
-      {children}
+    <NextIntlClientProvider messages={messages} locale={locale}>
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-grow">
+          {children}
+        </main>
+      </div>
     </NextIntlClientProvider>
   );
 }

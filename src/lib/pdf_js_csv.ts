@@ -7,7 +7,7 @@ export async function extractTableFromPdf(
   onPageProcessed?: (pageNumber: number) => void
 ): Promise<string[][]> {
   if (typeof window === 'undefined') return [];
-  const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.js');
+  const pdfjsLib = await import('pdfjs-dist');
   const pdfjs = pdfjsLib.default || pdfjsLib;
   
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;

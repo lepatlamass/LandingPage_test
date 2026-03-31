@@ -37,6 +37,8 @@ interface UploadedFile {
   error?: string;
 }
 
+import Image from 'next/image';
+
 export default function WatermarkTool() {
   const t = useTranslations('Tools');
   const [files, setFiles] = useState<UploadedFile[]>([]);
@@ -390,7 +392,7 @@ export default function WatermarkTool() {
                   />
                   {watermark ? (
                     <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-gray-800">
-                      <img src={watermark} alt="Watermark" className="w-full h-full object-contain" />
+                      <Image src={watermark} alt="Watermark" fill className="object-contain" unoptimized />
                       <button 
                         onClick={(e) => { e.stopPropagation(); setWatermark(null); }}
                         className="absolute top-1 right-1 bg-black/60 p-1 rounded-full text-white hover:bg-red-500 transition-colors"
@@ -562,9 +564,9 @@ export default function WatermarkTool() {
                     {files.map((f) => (
                       <div key={f.id} className="bg-gray-50 rounded-xl p-3 border border-gray-100 space-y-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center shrink-0 overflow-hidden">
+                          <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center shrink-0 overflow-hidden relative">
                             {f.type === 'image' ? (
-                              <img src={f.preview} alt="Preview" className="w-full h-full object-cover" />
+                              <Image src={f.preview} alt="Preview" fill className="object-cover" unoptimized />
                             ) : (
                               <FileText className="text-gray-400" size={24} />
                             )}

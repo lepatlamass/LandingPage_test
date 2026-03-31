@@ -16,7 +16,7 @@ import {
   FileText,
   Table
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
@@ -138,7 +138,6 @@ export default function CsvToPdfTool() {
 
       const margin = 50;
       const fontSize = 8;
-      const rowHeight = 20;
       const colPadding = 5;
 
       let page = pdfDoc.addPage();

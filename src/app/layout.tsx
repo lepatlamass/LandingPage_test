@@ -1,6 +1,11 @@
-import { ReactNode } from 'react';
+import React from 'react';
+import '../index.css';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>{children}</body>

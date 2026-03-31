@@ -29,6 +29,8 @@ interface VideoFile {
   previewUrl?: string;
 }
 
+import Image from 'next/image';
+
 export default function VideoToGifTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
@@ -350,10 +352,12 @@ export default function VideoToGifTool() {
               <div className="p-8">
                 <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 group">
                   {video.status === 'completed' && video.resultUrl ? (
-                    <img 
+                    <Image 
                       src={video.resultUrl} 
                       alt="GIF Result" 
-                      className="w-full h-full object-contain"
+                      fill
+                      className="object-contain"
+                      unoptimized
                     />
                   ) : video.previewUrl ? (
                     <video 

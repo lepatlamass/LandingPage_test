@@ -214,7 +214,7 @@ export default function ExcelToPdfTool() {
             });
 
             const lines = cellLines[j] || [];
-            lines.forEach((line, lineIdx) => {
+            lines.forEach((line: string, lineIdx: number) => {
               const textY = y - (lineIdx + 1) * (fontSize + 2) - 4;
               const safeTextY = isNaN(textY) ? 0 : textY;
               page.drawText(line, {

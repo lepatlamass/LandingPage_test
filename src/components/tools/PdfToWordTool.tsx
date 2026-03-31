@@ -10,12 +10,9 @@ import {
   CheckCircle2,
   AlertCircle,
   FileText,
-  ShieldCheck,
-  Zap,
-  RefreshCw,
-  File
+  RefreshCw
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Document, Packer, Paragraph, TextRun, ImageRun } from 'docx';
 
 interface PdfToWordFile {
@@ -82,7 +79,7 @@ export default function PdfToWordTool() {
     try {
       const arrayBuffer = await fileObj.file.arrayBuffer();
       
-      const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.js');
+      const pdfjsLib = await import('pdfjs-dist');
       const pdfjs = pdfjsLib.default || pdfjsLib;
       pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 

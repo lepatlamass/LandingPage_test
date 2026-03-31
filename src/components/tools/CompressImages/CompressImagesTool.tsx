@@ -27,6 +27,8 @@ interface CompressibleImage {
   error?: string;
 }
 
+import Image from 'next/image';
+
 export default function CompressImagesTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
@@ -302,8 +304,8 @@ export default function CompressImagesTool() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   className="bg-white/5 border border-white/10 rounded-3xl p-4 flex items-center gap-6 group hover:bg-white/8 transition-colors"
                 >
-                  <div className="w-24 h-24 rounded-2xl overflow-hidden bg-black/40 shrink-0 border border-white/5">
-                    <img src={img.preview} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="w-24 h-24 rounded-2xl overflow-hidden bg-black/40 shrink-0 border border-white/5 relative">
+                    <Image src={img.preview} alt="Preview" fill className="object-cover" unoptimized />
                   </div>
 
                   <div className="flex-1 min-w-0">

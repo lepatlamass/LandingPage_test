@@ -26,6 +26,8 @@ interface ImageFile {
   error?: string;
 }
 
+import Image from 'next/image';
+
 export default function ImageToTextTool() {
   const t = useTranslations('Common');
   const [images, setImages] = useState<ImageFile[]>([]);
@@ -144,10 +146,12 @@ export default function ImageToTextTool() {
           {/* Image Preview & Controls */}
           <div className="space-y-6">
             <div className="relative aspect-square rounded-[32px] overflow-hidden bg-black/40 border border-white/10 group">
-              <img 
+              <Image 
                 src={images[0].preview} 
                 alt="Original" 
-                className="w-full h-full object-contain"
+                fill
+                className="object-contain"
+                unoptimized
               />
               <button 
                 onClick={() => removeImage(images[0].id)}
@@ -245,7 +249,7 @@ export default function ImageToTextTool() {
                       className="absolute inset-0 flex flex-col items-center justify-center text-gray-500 text-center p-8"
                     >
                       <FileText size={48} className="mb-4 opacity-20" />
-                      <p>Click "Process Image" to extract text or generate a caption.</p>
+                      <p>Click &quot;Process Image&quot; to extract text or generate a caption.</p>
                     </motion.div>
                   )}
 

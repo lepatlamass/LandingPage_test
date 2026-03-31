@@ -15,7 +15,7 @@ import {
   Zap,
   Minimize
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { PDFDocument } from 'pdf-lib';
 
 type CompressionLevel = 'recommended' | 'extreme' | 'low';
@@ -358,28 +358,6 @@ export default function CompressPdfTool() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
-            </div>
-
-            {/* Info Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex gap-4">
-                <div className="p-3 bg-blue-400/10 rounded-xl text-blue-400 h-fit">
-                  <ShieldCheck size={20} />
-                </div>
-                <div>
-                  <h5 className="text-white font-bold text-sm mb-1">{tt('compress-pdf-f2-title')}</h5>
-                  <p className="text-xs text-gray-500 leading-relaxed">{tt('compress-pdf-f2-desc')}</p>
-                </div>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex gap-4">
-                <div className="p-3 bg-yellow-400/10 rounded-xl text-yellow-400 h-fit">
-                  <Zap size={20} />
-                </div>
-                <div>
-                  <h5 className="text-white font-bold text-sm mb-1">{tt('compress-pdf-f1-title')}</h5>
-                  <p className="text-xs text-gray-500 leading-relaxed">{tt('compress-pdf-f1-desc')}</p>
-                </div>
               </div>
             </div>
           </div>

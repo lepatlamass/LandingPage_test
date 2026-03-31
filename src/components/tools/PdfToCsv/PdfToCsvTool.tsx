@@ -16,7 +16,7 @@ import {
   FileSpreadsheet,
   Table
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Papa from 'papaparse';
 import { extractTableFromPdf } from '@/lib/pdf_js_csv';
 
@@ -52,7 +52,7 @@ export default function PdfToCsvTool() {
     }
 
     try {
-      const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.js');
+      const pdfjsLib = await import('pdfjs-dist');
       const pdfjs = pdfjsLib.default || pdfjsLib;
       
       pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;

@@ -16,7 +16,7 @@ import {
   FileSpreadsheet,
   Table
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
 import { extractTableFromPdf } from '@/lib/pdf_js_csv';
 
@@ -53,7 +53,7 @@ export default function PdfToExcelTool() {
     }
 
     try {
-      const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.js');
+      const pdfjsLib = await import('pdfjs-dist');
       const pdfjs = pdfjsLib.default || pdfjsLib;
       
       pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -264,37 +264,6 @@ export default function PdfToExcelTool() {
         accept=".pdf"
         className="hidden"
       />
-
-      {/* SEO Content Section */}
-      <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <div className="w-12 h-12 bg-lime-400/10 rounded-2xl flex items-center justify-center text-lime-400 mb-6">
-            <Table size={24} />
-          </div>
-          <h4 className="text-white font-bold mb-4">{t('pdf-to-excel-f1-title')}</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            {t('pdf-to-excel-f1-desc')}
-          </p>
-        </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <div className="w-12 h-12 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-yellow-400 mb-6">
-            <Zap size={24} />
-          </div>
-          <h4 className="text-white font-bold mb-4">{t('pdf-to-excel-f2-title')}</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            {t('pdf-to-excel-f2-desc')}
-          </p>
-        </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-          <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 mb-6">
-            <ShieldCheck size={24} />
-          </div>
-          <h4 className="text-white font-bold mb-4">{t('pdf-to-excel-f3-title')}</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
-            {t('pdf-to-excel-f3-desc')}
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

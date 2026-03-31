@@ -30,6 +30,8 @@ interface ImageFile {
   error?: string;
 }
 
+import Image from 'next/image';
+
 export default function ImageConverterTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
@@ -252,8 +254,8 @@ export default function ImageConverterTool() {
                     key={img.id}
                     className="bg-black/40 border border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
                   >
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-800">
-                      <img src={img.preview} alt="preview" className="w-full h-full object-cover" />
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-800 relative">
+                      <Image src={img.preview} alt="preview" fill className="object-cover" unoptimized />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{img.file.name}</p>
@@ -356,7 +358,7 @@ export default function ImageConverterTool() {
           </div>
           <h4 className="text-white font-bold mb-4">Lightning Fast</h4>
           <p className="text-gray-500 text-sm leading-relaxed">
-            Experience near-instant conversion speeds. Since processing happens locally, there's no network latency or upload wait times.
+            Experience near-instant conversion speeds. Since processing happens locally, there&apos;s no network latency or upload wait times.
           </p>
         </div>
         <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
