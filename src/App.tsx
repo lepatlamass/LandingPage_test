@@ -675,70 +675,6 @@ export default function App() {
   const activeToolData = sidebarTools.find(t => t.id === activeTool) || 
                         sidebarTools.flatMap(t => t.children || []).find(c => c.id === activeTool);
 
-  const toolDirectory = [
-    {
-      title: t('directoryCompress'),
-      tools: [
-        { id: "compress-pdf", name: tt('compress-pdf'), icon: Minimize },
-        { id: "compress-images", name: tt('compress-images'), icon: ImageIcon },
-        { id: "compress-video", name: tt('compress-video'), icon: FileVideo },
-      ]
-    },
-    {
-      title: t('directoryConvert'),
-      tools: [
-        { id: "image-converter", name: tt('image-converter'), icon: RefreshCw },
-        { id: "heic-to-png", name: tt('heic-to-png'), icon: ImageIcon },
-        { id: "pdf-to-image", name: tt('pdf-to-image'), icon: FileText },
-        { id: "svg-to-png", name: tt('svg-to-png'), icon: FileCode },
-      ]
-    },
-    {
-      title: t('directoryAiTools'),
-      tools: [
-        { id: "bg-remover", name: tt('bg-remover'), icon: Eraser },
-        { id: "watermark-remover", name: tt('watermark-remover'), icon: Droplets },
-        { id: "image-to-text", name: tt('image-to-text'), icon: Type },
-      ]
-    },
-    {
-      title: t('directoryViewEdit'),
-      tools: [
-        { id: "watermark", name: tt('watermark'), icon: Droplets },
-        { id: "resize", name: tt('resize'), icon: Maximize },
-      ]
-    },
-    {
-      title: t('directoryConvertFromPdf'),
-      tools: [
-        { id: "pdf-to-word", name: tt('pdf-to-word'), icon: FileText },
-        { id: "pdf-to-excel", name: tt('pdf-to-excel'), icon: FileSpreadsheet },
-        { id: "pdf-to-csv", name: tt('pdf-to-csv'), icon: FileCode },
-      ]
-    },
-    {
-      title: t('directoryConvertToPdf'),
-      tools: [
-        { id: "word-to-pdf", name: tt('word-to-pdf'), icon: FileText },
-        { id: "excel-to-pdf", name: tt('excel-to-pdf'), icon: FileSpreadsheet },
-        { id: "csv-to-pdf", name: tt('csv-to-pdf'), icon: FileCode },
-      ]
-    },
-    {
-      title: t('directorySpreadsheet'),
-      tools: [
-        { id: "excel-to-csv", name: tt('excel-to-csv'), icon: FileSpreadsheet },
-        { id: "csv-to-excel", name: tt('csv-to-excel'), icon: FileSpreadsheet },
-      ]
-    },
-    {
-      title: t('directoryMedia'),
-      tools: [
-        { id: "video-to-gif", name: tt('video-to-gif'), icon: FileVideo },
-      ]
-    }
-  ];
-
   return (
     <div className="flex h-screen bg-[#0f1115] text-gray-300 font-sans overflow-hidden">
       {/* Sidebar */}
@@ -824,10 +760,10 @@ export default function App() {
         {/* Navbar */}
         <header className="h-16 border-b border-gray-800 flex items-center justify-between px-8 shrink-0 bg-[#0f1115] sticky top-0 z-50">
           <div className="flex items-center gap-6 flex-1">
-            <Link href="/home" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+            <Link href="/" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Home
             </Link>
-            <Link href="/" className="text-sm font-medium text-white transition-colors">
+            <Link href="/tools" className="text-sm font-medium text-white transition-colors">
               Tools
             </Link>
           </div>
@@ -1066,37 +1002,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* Tools Directory Section */}
-        <section className="py-20 bg-[#0a0b0e] border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-2xl font-bold mb-12 text-white">{t('allTools')}</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12">
-              {toolDirectory.map((category, idx) => (
-                <div key={idx} className="flex flex-col">
-                  <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest mb-6 border-b border-white/5 pb-2">
-                    {category.title}
-                  </h3>
-                  <ul className="space-y-4">
-                    {category.tools.map((tool, toolIdx) => (
-                      <li key={toolIdx}>
-                        <button 
-                          onClick={() => setActiveTool(tool.id)}
-                          className="group flex items-center gap-3 text-gray-400 hover:text-[#d4ff33] transition-colors text-left"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#d4ff33]/10 transition-colors">
-                            <tool.icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                          </div>
-                          <span className="text-sm font-medium">{tool.name}</span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Footer */}
         <footer className="bg-black py-20 px-16">
           <div className="max-w-7xl mx-auto">
@@ -1116,26 +1021,26 @@ export default function App() {
               <div>
                 <h4 className="text-white font-bold mb-6">{t('solutions')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{t('sales')}</Link></li>
-                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{t('finance')}</Link></li>
-                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{t('realEstate')}</Link></li>
-                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{t('education')}</Link></li>
+                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('sales')}</Link></li>
+                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('finance')}</Link></li>
+                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('realEstate')}</Link></li>
+                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('education')}</Link></li>
                 </ul>
               </div>
 
               <div>
                 <h4 className="text-white font-bold mb-6">{t('company')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/home#about" className="hover:text-white transition-colors">{t('about')}</Link></li>
-                  <li><Link href="/home#cta" className="hover:text-white transition-colors">{t('help')}</Link></li>
-                  <li><Link href="/home#about" className="hover:text-white transition-colors">{t('blog')}</Link></li>
+                  <li><Link href="/#about" className="hover:text-white transition-colors">{t('about')}</Link></li>
+                  <li><Link href="/#cta" className="hover:text-white transition-colors">{t('help')}</Link></li>
+                  <li><Link href="/#about" className="hover:text-white transition-colors">{t('blog')}</Link></li>
                 </ul>
               </div>
 
               <div>
                 <h4 className="text-white font-bold mb-6">{t('product')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/home#price" className="hover:text-white transition-colors">{t('pricing')}</Link></li>
+                  <li><Link href="/#price" className="hover:text-white transition-colors">{t('pricing')}</Link></li>
                 </ul>
               </div>
             </div>

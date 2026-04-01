@@ -7,7 +7,7 @@ export default async function ImprintPage() {
   return (
     <div className="min-h-screen bg-[#111111] text-white font-sans p-12">
       <div className="max-w-4xl mx-auto">
-        <Link href="/home" className="text-[#d4ff33] hover:underline mb-8 inline-block">
+        <Link href="/" className="text-[#d4ff33] hover:underline mb-8 inline-block">
           ← {tCommon('home')}
         </Link>
         <h1 className="text-4xl font-bold mb-8">{tCommon('imprint')}</h1>
