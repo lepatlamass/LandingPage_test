@@ -1,12 +1,77 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '../../../navigation';
 import Image from 'next/image';
-import { ArrowRight, Check, ChevronDown, FileText, Image as ImageIcon, Video, Zap, Shield, TrendingUp, CloudDownload, Twitter, Linkedin } from 'lucide-react';
+import { ArrowRight, Check, ChevronDown, FileText, Image as ImageIcon, Video, Zap, Shield, TrendingUp, CloudDownload, Twitter, Linkedin, Minimize, RefreshCw, Eraser, Droplets, Type, Maximize, FileSpreadsheet, FileCode, FileVideo } from 'lucide-react';
 import LanguageSwitcher from '../../../components/LanguageSwitcher';
 
 export default async function HomePage() {
   const t = await getTranslations('Home');
   const tCommon = await getTranslations('Common');
+  const tTools = await getTranslations('Tools');
+
+  const toolDirectory = [
+    {
+      title: tCommon('directoryCompress'),
+      tools: [
+        { id: "compress-pdf", name: tTools('compress-pdf'), icon: Minimize },
+        { id: "compress-images", name: tTools('compress-images'), icon: ImageIcon },
+        { id: "compress-video", name: tTools('compress-video'), icon: Video },
+      ]
+    },
+    {
+      title: tCommon('directoryConvert'),
+      tools: [
+        { id: "image-converter", name: tTools('image-converter'), icon: RefreshCw },
+        { id: "heic-to-png", name: tTools('heic-to-png'), icon: ImageIcon },
+        { id: "pdf-to-image", name: tTools('pdf-to-image'), icon: FileText },
+        { id: "svg-to-png", name: tTools('svg-to-png'), icon: ImageIcon },
+      ]
+    },
+    {
+      title: tCommon('directoryAiTools'),
+      tools: [
+        { id: "bg-remover", name: tTools('bg-remover'), icon: Eraser },
+        { id: "watermark-remover", name: tTools('watermark-remover'), icon: Droplets },
+        { id: "image-to-text", name: tTools('image-to-text'), icon: Type },
+      ]
+    },
+    {
+      title: tCommon('directoryViewEdit'),
+      tools: [
+        { id: "watermark", name: tTools('watermark'), icon: Droplets },
+        { id: "resize", name: tTools('resize'), icon: Maximize },
+      ]
+    },
+    {
+      title: tCommon('directoryConvertFromPdf'),
+      tools: [
+        { id: "pdf-to-word", name: tTools('pdf-to-word'), icon: FileText },
+        { id: "pdf-to-excel", name: tTools('pdf-to-excel'), icon: FileSpreadsheet },
+        { id: "pdf-to-csv", name: tTools('pdf-to-csv'), icon: FileCode },
+      ]
+    },
+    {
+      title: tCommon('directoryConvertToPdf'),
+      tools: [
+        { id: "word-to-pdf", name: tTools('word-to-pdf'), icon: FileText },
+        { id: "excel-to-pdf", name: tTools('excel-to-pdf'), icon: FileSpreadsheet },
+        { id: "csv-to-pdf", name: tTools('csv-to-pdf'), icon: FileCode },
+      ]
+    },
+    {
+      title: tCommon('directorySpreadsheet'),
+      tools: [
+        { id: "excel-to-csv", name: tTools('excel-to-csv'), icon: FileSpreadsheet },
+        { id: "csv-to-excel", name: tTools('csv-to-excel'), icon: FileSpreadsheet },
+      ]
+    },
+    {
+      title: tCommon('directoryMedia'),
+      tools: [
+        { id: "video-to-gif", name: tTools('video-to-gif'), icon: FileVideo },
+      ]
+    }
+  ];
   
   return (
     <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
@@ -171,7 +236,7 @@ export default async function HomePage() {
         </section>
 
         {/* Built for Every Need */}
-        <section className="py-16 bg-[#111111]">
+        <section id="solutions" className="py-16 bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">{t('builtForEveryNeed')}</h2>
             
@@ -354,7 +419,7 @@ export default async function HomePage() {
         </section>
 
         {/* Premium Quality Section */}
-        <section className="py-16 bg-[#111111]">
+        <section id="about" className="py-16 bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">{t('premiumQuality')}</h2>
             
@@ -403,7 +468,7 @@ export default async function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-[#1a1c21]">
+        <section id="cta" className="py-16 bg-[#1a1c21]">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="flex-1">
@@ -440,10 +505,41 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Tools Directory Section */}
+        <section className="py-20 bg-[#0a0b0e] border-t border-white/5">
+          <div className="max-w-7xl mx-auto px-6">
+            <h2 className="text-2xl font-bold mb-12 text-white">{tCommon('allTools')}</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12">
+              {toolDirectory.map((category, idx) => (
+                <div key={idx} className="flex flex-col">
+                  <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest mb-6 border-b border-white/5 pb-2">
+                    {category.title}
+                  </h3>
+                  <ul className="space-y-4">
+                    {category.tools.map((tool, toolIdx) => (
+                      <li key={toolIdx}>
+                        <Link 
+                          href={`/?tool=${tool.id}`}
+                          className="group flex items-center gap-3 text-gray-400 hover:text-[#d4ff33] transition-colors"
+                        >
+                          <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#d4ff33]/10 transition-colors">
+                            <tool.icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                          </div>
+                          <span className="text-sm font-medium">{tool.name}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Footer */}
         <footer className="bg-black py-20 px-16">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20">
               <div className="col-span-2 md:col-span-1">
                 <div className="flex items-center gap-2 mb-6">
                   <div className="w-6 h-6 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-sm">
@@ -459,39 +555,26 @@ export default async function HomePage() {
               <div>
                 <h4 className="text-white font-bold mb-6">{tCommon('solutions')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><a href="#" className="hover:text-white transition-colors">Sales</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Finance</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Real Estate</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Education</a></li>
+                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{tCommon('sales')}</Link></li>
+                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{tCommon('finance')}</Link></li>
+                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{tCommon('realEstate')}</Link></li>
+                  <li><Link href="/home#solutions" className="hover:text-white transition-colors">{tCommon('education')}</Link></li>
                 </ul>
               </div>
 
               <div>
                 <h4 className="text-white font-bold mb-6">{tCommon('company')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Help</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                  <li><Link href="/home#about" className="hover:text-white transition-colors">{tCommon('about')}</Link></li>
+                  <li><Link href="/home#cta" className="hover:text-white transition-colors">{tCommon('help')}</Link></li>
+                  <li><Link href="/home#about" className="hover:text-white transition-colors">{tCommon('blog')}</Link></li>
                 </ul>
               </div>
 
               <div>
                 <h4 className="text-white font-bold mb-6">{tCommon('product')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Teams</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Embed PDF</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">API</a></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-white font-bold mb-6">{tCommon('apps')}</h4>
-                <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><a href="#" className="hover:text-white transition-colors">Download Refindocs</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">PDF Scanner</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Windows App</a></li>
+                  <li><Link href="/home#price" className="hover:text-white transition-colors">{tCommon('pricing')}</Link></li>
                 </ul>
               </div>
             </div>
@@ -503,10 +586,10 @@ export default async function HomePage() {
               </div>
               <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-[11px] text-gray-600 uppercase tracking-widest font-bold">
                 <span>{tCommon('copyright')}</span>
-                <a href="#" className="hover:text-white transition-colors">{tCommon('privacyNotice')}</a>
-                <a href="#" className="hover:text-white transition-colors">{tCommon('termsConditions')}</a>
-                <a href="#" className="hover:text-white transition-colors">{tCommon('imprint')}</a>
-                <a href="#" className="hover:text-white transition-colors">{tCommon('contactUs')}</a>
+                <Link href="/privacy" className="hover:text-white transition-colors">{tCommon('privacyNotice')}</Link>
+                <Link href="/terms" className="hover:text-white transition-colors">{tCommon('termsConditions')}</Link>
+                <Link href="/imprint" className="hover:text-white transition-colors">{tCommon('imprint')}</Link>
+                <Link href="/contact" className="hover:text-white transition-colors">{tCommon('contactUs')}</Link>
               </div>
             </div>
           </div>
