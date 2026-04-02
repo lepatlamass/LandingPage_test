@@ -72,7 +72,7 @@ export default async function Page() {
       ]
     }
   ];
-  
+
   return (
     <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       {/* Navigation */}
@@ -104,7 +104,7 @@ export default async function Page() {
           <Link href="/tools" className="text-xs font-medium text-gray-300 hover:text-white transition-colors hidden sm:block">
             {tCommon('logIn')}
           </Link>
-          <Link 
+          <Link
             href="/tools"
             className="px-4 py-1.5 bg-[#d4ff33] text-black text-xs font-bold rounded hover:bg-[#bce622] transition-colors"
           >
@@ -127,7 +127,7 @@ export default async function Page() {
             {t('heroSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Link 
+            <Link
               href="/tools"
               className="w-full sm:w-auto px-6 py-3.5 bg-[#d4ff33] text-black font-bold rounded hover:bg-[#bce622] transition-colors text-base"
             >
@@ -140,13 +140,13 @@ export default async function Page() {
 
           {/* App Mockup Placeholder - YouTube Embed Ready */}
           <div className="relative w-full max-w-5xl mx-auto rounded-xl overflow-hidden border-2 border-[#d4ff33] shadow-[0_0_50px_rgba(212,255,51,0.15)] bg-[#1a1c21] aspect-[16/9]">
-            <iframe 
+            <iframe
               className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=placeholder" 
-              title="YouTube video player" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              referrerPolicy="strict-origin-when-cross-origin" 
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=placeholder"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
             ></iframe>
           </div>
@@ -159,7 +159,7 @@ export default async function Page() {
               <h2 className="text-2xl md:text-3xl font-bold mb-2">{t('powerfulTools')}</h2>
               <h2 className="text-2xl md:text-3xl font-bold text-[#d4ff33]">{t('powerfulToolsAccent')}</h2>
             </div>
-            
+
             {/* PDF Tools */}
             <div className="mb-12">
               <div className="flex items-center justify-center gap-2 mb-8">
@@ -239,7 +239,7 @@ export default async function Page() {
         <section id="solutions" className="py-16 bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">{t('builtForEveryNeed')}</h2>
-            
+
             <div className="space-y-20">
               {/* For Businesses */}
               <div className="flex flex-col md:flex-row items-center gap-12 md:gap-24">
@@ -253,8 +253,8 @@ export default async function Page() {
                   </Link>
                 </div>
                 <div className="flex-1 relative w-full aspect-square max-w-md">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1664575602276-acd073f104c1?q=80&w=1000&auto=format&fit=crop"
+                  <Image
+                    src="/Business.svg"
                     alt="For Businesses"
                     fill
                     className="object-cover rounded-2xl"
@@ -275,8 +275,8 @@ export default async function Page() {
                   </Link>
                 </div>
                 <div className="flex-1 relative w-full aspect-square max-w-md">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1000&auto=format&fit=crop"
+                  <Image
+                    src="/Accountant.svg"
                     alt="For Accountants"
                     fill
                     className="object-cover rounded-2xl"
@@ -297,8 +297,8 @@ export default async function Page() {
                   </Link>
                 </div>
                 <div className="flex-1 relative w-full aspect-square max-w-md">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop"
+                  <Image
+                    src="/Student.svg"
                     alt="For Students"
                     fill
                     className="object-cover rounded-2xl"
@@ -319,8 +319,8 @@ export default async function Page() {
                   </Link>
                 </div>
                 <div className="flex-1 relative w-full aspect-square max-w-md">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1000&auto=format&fit=crop"
+                  <Image
+                    src="/design.svg"
                     alt="For Designers"
                     fill
                     className="object-cover rounded-2xl"
@@ -342,7 +342,7 @@ export default async function Page() {
                   {t('pricingSubtitle')}
                 </p>
               </div>
-              
+
               <div className="lg:w-2/3 flex flex-col sm:flex-row gap-8 w-full items-stretch">
                 {/* Monthly Plan */}
                 <div className="flex-1 rounded-[32px] border-[2px] border-[#d4ff33] bg-[#111111] p-8 relative flex flex-col shadow-2xl shadow-[#d4ff33]/5 min-h-[500px]">
@@ -355,7 +355,7 @@ export default async function Page() {
                     <span className="text-gray-500 text-xl">{t('foundryProPeriod')}</span>
                   </div>
                   <div className="text-xs text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t('bestForOccasional')}</div>
-                  
+
                   <ul className="space-y-4 mb-10 flex-1">
                     <li className="flex items-start gap-3 text-[14px] text-gray-300">
                       <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
@@ -374,7 +374,7 @@ export default async function Page() {
                       <span className="leading-tight">{t('noWatermarks')}</span>
                     </li>
                   </ul>
-                  
+
                   <button className="w-full py-4 rounded-xl bg-[#d4ff33] text-black font-black text-base hover:bg-[#bce622] transition-all hover:scale-[1.02] active:scale-[0.98]">
                     {t('startMonthly')}
                   </button>
@@ -389,7 +389,7 @@ export default async function Page() {
                     <span className="text-[#d4ff33] text-lg font-bold ml-2">{t('saveAmount')}</span>
                   </div>
                   <div className="text-xs text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t('bestForPower')}</div>
-                  
+
                   <ul className="space-y-4 mb-10 flex-1">
                     <li className="flex items-start gap-3 text-[14px] text-gray-300">
                       <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
@@ -408,7 +408,7 @@ export default async function Page() {
                       <span className="leading-tight">{t('noWatermarks')}</span>
                     </li>
                   </ul>
-                  
+
                   <button className="w-full py-4 rounded-xl bg-[#2a2d35] text-white font-black text-base hover:bg-[#353943] transition-all hover:scale-[1.02] active:scale-[0.98]">
                     {t('getYearly')}
                   </button>
@@ -422,7 +422,7 @@ export default async function Page() {
         <section id="about" className="py-16 bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">{t('premiumQuality')}</h2>
-            
+
             <div className="grid md:grid-cols-2 gap-x-10 gap-y-12">
               <div className="flex flex-col items-start">
                 <div className="w-12 h-12 text-[#d4ff33] mb-6">
@@ -433,7 +433,7 @@ export default async function Page() {
                   {t('lightningFastDesc')}
                 </p>
               </div>
-              
+
               <div className="flex flex-col items-start">
                 <div className="w-12 h-12 text-[#d4ff33] mb-6">
                   <Shield className="w-full h-full" fill="currentColor" />
@@ -443,7 +443,7 @@ export default async function Page() {
                   {t('privacyFirstDesc')}
                 </p>
               </div>
-              
+
               <div className="flex flex-col items-start">
                 <div className="w-12 h-12 text-[#d4ff33] mb-6">
                   <TrendingUp className="w-full h-full" fill="currentColor" />
@@ -453,7 +453,7 @@ export default async function Page() {
                   {t('unbeatableValueDesc')}
                 </p>
               </div>
-              
+
               <div className="flex flex-col items-start">
                 <div className="w-12 h-12 text-[#d4ff33] mb-6">
                   <CloudDownload className="w-full h-full" fill="currentColor" />
@@ -477,7 +477,7 @@ export default async function Page() {
                   {t('readyToTransformDesc')}
                 </p>
                 <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <Link 
+                  <Link
                     href="/tools"
                     className="w-full sm:w-auto px-6 py-2.5 bg-[#d4ff33] text-black font-bold rounded hover:bg-[#bce622] transition-colors text-center text-sm"
                   >
@@ -492,8 +492,8 @@ export default async function Page() {
               </div>
               <div className="flex-1 flex justify-center">
                 <div className="relative w-64 h-64">
-                   <Image 
-                    src="/amico.svg"
+                  <Image
+                    src="/Happy.svg"
                     alt="Globe Illustration"
                     fill
                     className="object-contain"
@@ -518,7 +518,7 @@ export default async function Page() {
                   <ul className="space-y-4">
                     {category.tools.map((tool, toolIdx) => (
                       <li key={toolIdx}>
-                        <Link 
+                        <Link
                           href={`/tools?tool=${tool.id}`}
                           className="group flex items-center gap-3 text-gray-400 hover:text-[#d4ff33] transition-colors"
                         >
@@ -551,7 +551,7 @@ export default async function Page() {
                   {tCommon('weMakePdfEasy')}
                 </p>
               </div>
-              
+
               <div>
                 <h4 className="text-white font-bold mb-6">{tCommon('solutions')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
