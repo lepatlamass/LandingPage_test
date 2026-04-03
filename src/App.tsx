@@ -58,6 +58,7 @@ import CsvToExcelTool from './components/tools/CsvToExcel/CsvToExcelTool';
 import PdfToWordTool from './components/tools/PdfToWordTool';
 import WordToPdfTool from './components/tools/WordToPdfTool';
 import VideoToGifTool from './components/tools/VideoToGif/VideoToGifTool';
+import NavigationLoginButton from './components/auth/NavigationLoginButton';
 
 const sidebarTools = [
   { id: 'bg-remover', nameKey: 'Tools.bg-remover', icon: Eraser, color: 'text-orange-400', hover: 'hover:bg-orange-400/10' },
@@ -815,7 +816,7 @@ export default function App() {
               </AnimatePresence>
             </div>
 
-            <button className="text-sm font-medium hover:text-white transition-colors">{t('logIn')}</button>
+            <NavigationLoginButton />
             <button className="bg-[#d4ff33] text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#c2eb2e] transition-colors">
               {t('freeTrial')}
             </button>

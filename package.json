@@ -16,6 +16,7 @@
     "@next/third-parties": "^16.2.1",
     "clsx": "^2.1.1",
     "docx": "^9.0.3",
+    "firebase": "^12.11.0",
     "framer-motion": "^12.38.0",
     "heic-to": "^1.1.0",
     "jszip": "^3.10.1",

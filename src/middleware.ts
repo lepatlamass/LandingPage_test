@@ -11,5 +11,11 @@ export default createMiddleware({
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ['/', '/(en|es|fr|pt-PT|pt-BR|it)/:path*']
+  matcher: [
+    '/',
+    '/(en|es|fr|pt-PT|pt-BR|it)/:path*',
+    // Enable redirects that add missing locales
+    // (e.g. `/pathnames` -> `/en/pathnames`)
+    '/((?!_next|_vercel|.*\\..*).*)'
+  ]
 };

@@ -3,6 +3,7 @@ import { Link } from '../../navigation';
 import Image from 'next/image';
 import { ArrowRight, Check, ChevronDown, FileText, Image as ImageIcon, Video, Zap, Shield, TrendingUp, CloudDownload, Twitter, Linkedin, Minimize, RefreshCw, Eraser, Droplets, Type, Maximize, FileSpreadsheet, FileCode, FileVideo } from 'lucide-react';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
+import NavigationLoginButton from '../../components/auth/NavigationLoginButton';
 
 export default async function Page() {
   const t = await getTranslations('Home');
@@ -101,9 +102,7 @@ export default async function Page() {
         </div>
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
-          <Link href="/tools" className="text-xs font-medium text-gray-300 hover:text-white transition-colors hidden sm:block">
-            {tCommon('logIn')}
-          </Link>
+          <NavigationLoginButton />
           <Link
             href="/tools"
             className="px-4 py-1.5 bg-[#d4ff33] text-black text-xs font-bold rounded hover:bg-[#bce622] transition-colors"
