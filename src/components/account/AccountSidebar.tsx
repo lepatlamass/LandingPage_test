@@ -3,15 +3,14 @@
 import React from 'react';
 import { usePathname } from '../../navigation';
 import { Link } from '../../navigation';
-import { User, Shield, CreditCard, Settings, ArrowLeft } from 'lucide-react';
+import { User, Crown, CreditCard, Settings, ArrowLeft } from 'lucide-react';
 
 export default function AccountSidebar() {
   const pathname = usePathname();
 
   const navItems = [
     { name: 'Profile', href: '/account', icon: User },
-    // Google OAuth means we don't handle passwords, but might handle 2FA or external logins in the future
-    { name: 'Security', href: '/account/security', icon: Shield },
+    { name: 'Subscription', href: '/account/subscription', icon: Crown },
     { name: 'Billing', href: '/account/billing', icon: CreditCard },
     { name: 'Preferences', href: '/account/preferences', icon: Settings },
   ];
