@@ -88,7 +88,6 @@
     "bg-remover-status-completed": "Terminé",
     "bg-remover-status-processing": "Traitement...",
     "bg-remover-status-pending": "En attente",
-
     "watermark": "Filigrane",
     "watermark-title": "Ajouter",
     "watermark-accent": "Filigrane",
@@ -128,7 +127,6 @@
     "watermark-select-watermark": "Sélectionner le filigrane",
     "watermark-click-to-upload": "Cliquez pour télécharger",
     "watermark-or-drag-drop": "ou glissez-déposez",
-
     "watermark-remover": "Suppresseur de filigrane",
     "watermark-remover-title": "Supprimer",
     "watermark-remover-accent": "Filigrane",
@@ -147,7 +145,6 @@
     "watermark-remover-faq1-a": "Oui, notre IA est entraînée pour gérer des motifs et des textures complexes derrière les filigranes.",
     "watermark-remover-faq2-q": "La suppression est-elle permanente ?",
     "watermark-remover-faq2-a": "Oui, le filigrane est supprimé du fichier image lui-même.",
-
     "image-to-text": "Image en texte",
     "image-to-text-title": "Extraire",
     "image-to-text-accent": "Texte de l'image",
@@ -166,7 +163,6 @@
     "image-to-text-faq1-a": "Cela fonctionne mieux avec du texte imprimé, mais cela peut gérer une écriture manuscrite claire dans de nombreux cas.",
     "image-to-text-faq2-q": "Y a-t-il une limite de taille de fichier ?",
     "image-to-text-faq2-a": "Vous pouvez télécharger des fichiers jusqu'à 50 Mo pour l'extraction de texte.",
-
     "resize": "Redimensionner",
     "resize-title": "Redimensionner",
     "resize-accent": "Images",
@@ -196,7 +192,6 @@
     "resize-download": "Télécharger",
     "resize-target": "Cible",
     "resize-max-images": "(Max 10 images)",
-
     "compress": "Compresser",
     "compress-title": "Compresser",
     "compress-accent": "Fichiers",
@@ -215,7 +210,6 @@
     "compress-faq1-a": "Selon le type de fichier, vous pouvez souvent réduire la taille jusqu'à 80 % ou plus.",
     "compress-faq2-q": "La qualité est-elle affectée ?",
     "compress-faq2-a": "Avec une compression 'Moyenne', la perte de qualité est pratiquement invisible à l'œil nu.",
-
     "convert": "Convertir",
     "pdf-to-csv": "PDF en CSV",
     "pdf-to-csv-title": "Convertir",
@@ -235,7 +229,6 @@
     "pdf-to-csv-faq1-a": "Oui, notre moteur peut gérer les cellules fusionnées et les structures de tableaux complexes.",
     "pdf-to-csv-faq2-q": "Puis-je convertir des PDF numérisés ?",
     "pdf-to-csv-faq2-a": "Oui, notre technologie OCR nous permet d'extraire des données même à partir de documents numérisés.",
-
     "csv-to-pdf": "CSV en PDF",
     "csv-to-pdf-title": "Convertir",
     "csv-to-pdf-accent": "CSV en PDF",
@@ -254,7 +247,6 @@
     "csv-to-pdf-faq1-a": "Oui, notre moteur peut gérer efficacement de grands ensembles de données.",
     "csv-to-pdf-faq2-q": "Puis-je changer l'orientation de la page ?",
     "csv-to-pdf-faq2-a": "Oui, vous pouvez choisir entre les orientations portrait et paysage.",
-
     "pdf-to-excel": "PDF en Excel",
     "pdf-to-excel-title": "Convertir",
     "pdf-to-excel-accent": "PDF en Excel",
@@ -283,7 +275,6 @@
     "pdf-to-excel-extracting": "Extraction...",
     "pdf-to-excel-apply": "Convertir en Excel",
     "pdf-to-excel-info-desc": "Notre convertisseur PDF en Excel extrait avec précision les tableaux de vos documents PDF et les convertit en feuilles de calcul Excel modifiables. Il conserve la structure d'origine du tableau et le formatage des données.",
-
     "excel-to-pdf": "Excel en PDF",
     "excel-to-pdf-title": "Convertir",
     "excel-to-pdf-accent": "Excel en PDF",
@@ -309,7 +300,6 @@
     "excel-to-pdf-faq1-a": "Oui, chaque feuille de votre fichier Excel sera convertie en une section distincte dans le PDF.",
     "excel-to-pdf-faq2-q": "Puis-je convertir des fichiers CSV ?",
     "excel-to-pdf-faq2-a": "Oui, notre convertisseur prend entièrement en charge les fichiers CSV ainsi que les formats Excel.",
-
     "excel-to-csv": "Excel en CSV",
     "csv-to-excel": "CSV en Excel",
     "excel-csv": "Excel / CSV",
@@ -330,7 +320,6 @@
     "excel-csv-faq1-a": "Oui, nous prenons en charge l'ancien format .xls et le nouveau format .xlsx.",
     "excel-csv-faq2-q": "Puis-je changer le délimiteur ?",
     "excel-csv-faq2-a": "Oui, vous pouvez choisir entre des délimiteurs virgule, point-virgule ou tabulation.",
-
     "pdf-to-word": "PDF en Word",
     "pdf-to-word-title": "Convertir",
     "pdf-to-word-accent": "PDF en Word",
@@ -349,7 +338,6 @@
     "pdf-to-word-faq1-a": "Oui, notre technologie OCR peut convertir des images numérisées en texte modifiable.",
     "pdf-to-word-faq2-q": "Y a-t-il une limite de pages ?",
     "pdf-to-word-faq2-a": "Les utilisateurs gratuits peuvent convertir des documents jusqu'à 50 pages.",
-
     "word-to-pdf": "Word en PDF",
     "word-to-pdf-title": "Convertir",
     "word-to-pdf-accent": "Word en PDF",
@@ -393,7 +381,6 @@
     "video-to-gif-processing": "Conversion en GIF...",
     "video-to-gif-ready": "Votre GIF est prêt !",
     "video-to-gif-download": "Télécharger le GIF",
-
     "compress-images": "Compresser les images",
     "compress-images-title": "Compresser",
     "compress-images-accent": "Images",
@@ -421,7 +408,6 @@
     "compress-images-download": "Télécharger",
     "compress-images-add-more": "Ajouter Plus d'Images",
     "compress-images-max-images": "(Max 10 images)",
-
     "compress-pdf": "Compresser le PDF",
     "compress-pdf-title": "Compresser",
     "compress-pdf-accent": "PDF",
@@ -450,7 +436,6 @@
     "compress-pdf-processing": "Compression du PDF...",
     "compress-pdf-ready": "Votre PDF est prêt !",
     "compress-pdf-download": "Télécharger le PDF compressé",
-
     "compress-video": "Compresser la vidéo",
     "compress-video-title": "Compresser",
     "compress-video-accent": "Vidéo",
@@ -478,7 +463,6 @@
     "compress-video-original": "Original",
     "compress-video-compressed": "Compressé",
     "compress-video-savings": "Économies",
-
     "image-converter": "Convertisseur d'images",
     "image-converter-title": "Convertir",
     "image-converter-accent": "Images",
@@ -497,7 +481,6 @@
     "image-converter-faq1-a": "Oui, notre convertisseur d'images est entièrement gratuit pour tous les utilisateurs.",
     "image-converter-faq2-q": "Puis-je convertir en WebP ?",
     "image-converter-faq2-a": "Oui, nous prenons entièrement en charge la conversion de n'importe quelle image au format moderne WebP.",
-
     "heic-to-png": "HEIC vers PNG/JPG/WebP",
     "heic-to-png-title": "Convertir",
     "heic-to-png-accent": "HEIC",
@@ -516,7 +499,6 @@
     "heic-to-png-faq1-a": "HEIC est un format d'image à haute efficacité utilisé par Apple pour les photos sur les appareils iOS.",
     "heic-to-png-faq2-q": "Vais-je perdre en qualité ?",
     "heic-to-png-faq2-a": "Non, nous utilisons un encodage de haute qualité pour garantir que vos photos soient superbes.",
-
     "pdf-to-image": "PDF vers image",
     "pdf-to-image-title": "Convertir",
     "pdf-to-image-accent": "PDF vers image",
@@ -535,7 +517,6 @@
     "pdf-to-image-faq1-a": "Actuellement, nous convertissons toutes les pages, mais vous pouvez choisir celles à conserver après le téléchargement.",
     "pdf-to-image-faq2-q": "Quelle est la résolution ?",
     "pdf-to-image-faq2-a": "Nous convertissons les pages à 300 DPI pour des résultats de qualité professionnelle.",
-
     "svg-to-png": "SVG vers PNG/JPG",
     "svg-to-png-title": "Convertir",
     "svg-to-png-accent": "SVG",
@@ -608,5 +589,64 @@
     "readyToTransform": "Prêt à Transformer Votre Flux de Travail ?",
     "readyToTransformDesc": "Ne laissez pas les formats de fichiers vous ralentir. Essayez Refindocs sans risque dès aujourd'hui.",
     "unlimitedAccessNote": "Puis seulement 3 $/mois pour un accès illimité • Annulez à tout moment"
+  },
+  "UserMenu": {
+    "account": "Compte",
+    "subscription": "Abonnement",
+    "billing": "Facturation",
+    "invoices": "Factures",
+    "team": "Équipe",
+    "settings": "Paramètres",
+    "help": "Aide",
+    "logout": "Déconnexion"
+  },
+  "Account": {
+    "sidebar": {
+      "account": "Compte",
+      "subscription": "Abonnement",
+      "billing": "Facturation",
+      "invoices": "Factures",
+      "team": "Équipe",
+      "settings": "Paramètres"
+    },
+    "pages": {
+      "account": {
+        "title": "Compte",
+        "email": "Email",
+        "verified": "Vérifié",
+        "managedViaGoogle": "Géré via Google",
+        "name": "Nom",
+        "firstName": "Prénom",
+        "lastName": "Nom de famille",
+        "saveChanges": "Enregistrer"
+      },
+      "subscription": {
+        "title": "Abonnement",
+        "teamPlanInfo": "Pourquoi payer pour un forfait Pro, quand votre organisation pourrait payer pour un forfait Équipe et économiser jusqu'à 22 % sur les licences, obtenir une facturation et une gestion de compte centralisées, et une assistance prioritaire ?",
+        "switchToTeamPlan": "Passer au forfait Équipe",
+        "tellYourBoss": "Dites-le à votre patron",
+        "noSubscription": "Vous n'avez pas d'abonnement.",
+        "tryFree": "Essayer gratuitement 7 jours"
+      },
+      "billing": {
+        "title": "Facturation",
+        "invoiceInfo": "Ces informations apparaîtront sur votre facture.",
+        "billingAddress": "Adresse de facturation",
+        "billingEmail": "Email de facturation",
+        "vatNumber": "Numéro de TVA",
+        "firstName": "Prénom",
+        "lastName": "Nom de famille",
+        "companyName": "Nom de l'entreprise",
+        "phoneNumber": "Numéro de téléphone",
+        "country": "Pays",
+        "postalCode": "Code postal",
+        "state": "État",
+        "city": "Ville",
+        "street": "Rue",
+        "emailInvoicesTo": "Envoyer les factures à",
+        "save": "Enregistrer",
+        "close": "Fermer"
+      }
+    }
   }
 }

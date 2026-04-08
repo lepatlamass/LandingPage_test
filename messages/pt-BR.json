@@ -66,7 +66,6 @@
     "bg-remover-faq2-a": "Suportamos todos os principais formatos de imagem, incluindo JPG, PNG e WebP.",
     "bg-remover-faq3-q": "Meus dados estão seguros?",
     "bg-remover-faq3-a": "Com certeza. Suas imagens são processadas de forma segura e excluídas de nossos servidores após o processamento.",
-
     "watermark": "Marca d'Água",
     "watermark-title": "Adicionar",
     "watermark-accent": "Marca d'Água",
@@ -85,7 +84,6 @@
     "watermark-faq1-a": "Sim, você pode adicionar marcas d'água de texto e de imagem ao mesmo arquivo.",
     "watermark-faq2-q": "Suporta marcação em lote?",
     "watermark-faq2-a": "Sim, você pode carregar várias imagens e aplicar a mesma marca d'água a todas.",
-
     "watermark-remover": "Removedor de Marca d'Água",
     "watermark-remover-title": "Remover",
     "watermark-remover-accent": "Marca d'Água",
@@ -104,7 +102,6 @@
     "watermark-remover-faq1-a": "Sim, nossa IA está treinada para lidar com padrões e texturas complexas por trás das marcas d'água.",
     "watermark-remover-faq2-q": "A remoção é permanente?",
     "watermark-remover-faq2-a": "Sim, a marca d'água é removida do próprio arquivo de imagem.",
-
     "image-to-text": "Imagem para Texto",
     "image-to-text-title": "Extrair",
     "image-to-text-accent": "Texto de Imagem",
@@ -123,7 +120,6 @@
     "image-to-text-faq1-a": "Funciona melhor com texto impresso, mas pode lidar com caligrafia clara em muitos casos.",
     "image-to-text-faq2-q": "Existe um limite de tamanho de arquivo?",
     "image-to-text-faq2-a": "Você pode carregar arquivos de até 50MB para extração de texto.",
-
     "resize": "Redimensionar",
     "resize-title": "Redimensionar",
     "resize-accent": "Imagens",
@@ -153,7 +149,6 @@
     "resize-download": "Baixar",
     "resize-target": "Alvo",
     "resize-max-images": "(Máx. 10 imagens)",
-
     "compress": "Comprimir",
     "compress-title": "Comprimir",
     "compress-accent": "Arquivos",
@@ -172,7 +167,6 @@
     "compress-faq1-a": "Dependendo do tipo de arquivo, você pode muitas vezes reduzir o tamanho em até 80% ou mais.",
     "compress-faq2-q": "A qualidade é afetada?",
     "compress-faq2-a": "Na compressão 'Média', a perda de qualidade é praticamente invisível ao olho humano.",
-
     "convert": "Converter",
     "pdf-to-csv": "PDF para CSV",
     "pdf-to-csv-title": "Converter",
@@ -192,7 +186,6 @@
     "pdf-to-csv-faq1-a": "Sim, nosso motor consegue lidar com células mescladas e estruturas de tabelas complexas.",
     "pdf-to-csv-faq2-q": "Posso converter PDFs digitalizados?",
     "pdf-to-csv-faq2-a": "Sim, nossa tecnologia OCR nos permite extrair dados mesmo de documentos digitalizados.",
-
     "csv-to-pdf": "CSV para PDF",
     "csv-to-pdf-title": "Converter",
     "csv-to-pdf-accent": "CSV para PDF",
@@ -211,7 +204,6 @@
     "csv-to-pdf-faq1-a": "Sim, nosso motor pode lidar com grandes conjuntos de dados de forma eficiente.",
     "csv-to-pdf-faq2-q": "Posso alterar a orientação da página?",
     "csv-to-pdf-faq2-a": "Sim, você pode escolher entre as orientações retrato e paisagem.",
-
     "pdf-to-excel": "PDF para Excel",
     "pdf-to-excel-title": "Converter",
     "pdf-to-excel-accent": "PDF para Excel",
@@ -232,7 +224,6 @@
     "pdf-to-excel-faq2-a": "Sim, nossa funcionalidade de conversão em lote permite que você processe vários arquivos.",
     "pdf-to-excel-faq3-q": "Meus dados estão seguros?",
     "pdf-to-excel-faq3-a": "Com certeza. Utilizamos criptografia SSL e excluímos os arquivos após 1 hora.",
-
     "excel-to-csv": "Excel para CSV",
     "csv-to-excel": "CSV para Excel",
     "excel-csv": "Excel / CSV",
@@ -253,7 +244,6 @@
     "excel-csv-faq1-a": "Sim, suportamos tanto o formato .xls antigo quanto o .xlsx mais recente.",
     "excel-csv-faq2-q": "Posso alterar o delimitador?",
     "excel-csv-faq2-a": "Sim, você pode escolher entre delimitadores de vírgula, ponto e vírgula ou tabulação.",
-
     "pdf-to-word": "PDF para Word",
     "pdf-to-word-title": "Converter",
     "pdf-to-word-accent": "PDF para Word",
@@ -272,7 +262,6 @@
     "pdf-to-word-faq1-a": "Sim, nossa tecnologia OCR pode converter imagens digitalizadas em texto editável.",
     "pdf-to-word-faq2-q": "Existe um limite de páginas?",
     "pdf-to-word-faq2-a": "Usuários gratuitos podem converter documentos de até 50 páginas.",
-
     "word-to-pdf": "Word para PDF",
     "word-to-pdf-title": "Converter",
     "word-to-pdf-accent": "Word para PDF",
@@ -291,7 +280,6 @@
     "word-to-pdf-faq1-a": "Sim, oferecemos suporte aos formatos DOC e DOCX.",
     "word-to-pdf-faq2-q": "Existe um limite de tamanho de arquivo?",
     "word-to-pdf-faq2-a": "Usuários gratuitos podem converter documentos de até 50 MB.",
-
     "video-to-gif": "Vídeo para GIF",
     "video-to-gif-title": "Converter",
     "video-to-gif-accent": "Vídeo para GIF",
@@ -316,7 +304,6 @@
     "video-to-gif-processing": "Convertendo para GIF...",
     "video-to-gif-ready": "Seu GIF está pronto!",
     "video-to-gif-download": "Baixar GIF",
-
     "compress-images": "Comprimir Imagens",
     "compress-images-title": "Comprimir",
     "compress-images-accent": "Imagens",
@@ -344,7 +331,6 @@
     "compress-images-download": "Baixar",
     "compress-images-add-more": "Adicionar Mais Imagens",
     "compress-images-max-images": "(Máx 10 imagens)",
-
     "compress-pdf": "Comprimir PDF",
     "compress-pdf-title": "Comprimir",
     "compress-pdf-accent": "PDF",
@@ -401,7 +387,6 @@
     "compress-video-original": "Original",
     "compress-video-compressed": "Comprimido",
     "compress-video-savings": "Economia",
-
     "image-converter": "Conversor de imagens",
     "image-converter-title": "Converter",
     "image-converter-accent": "Imagens",
@@ -420,7 +405,6 @@
     "image-converter-faq1-a": "Sim, nosso conversor de imagens é totalmente gratuito para todos os usuários.",
     "image-converter-faq2-q": "Posso converter para WebP?",
     "image-converter-faq2-a": "Sim, oferecemos suporte total à conversão de qualquer imagem para o moderno formato WebP.",
-
     "heic-to-png": "HEIC para PNG/JPG/WebP",
     "heic-to-png-title": "Converter",
     "heic-to-png-accent": "HEIC",
@@ -439,7 +423,6 @@
     "heic-to-png-faq1-a": "HEIC é um formato de imagem de alta eficiência usado pela Apple para fotos em dispositivos iOS.",
     "heic-to-png-faq2-q": "Vou perder qualidade?",
     "heic-to-png-faq2-a": "Não, usamos codificação de alta qualidade para garantir que suas fotos fiquem ótimas.",
-
     "pdf-to-image": "PDF para imagem",
     "pdf-to-image-title": "Converter",
     "pdf-to-image-accent": "PDF para imagem",
@@ -458,7 +441,6 @@
     "pdf-to-image-faq1-a": "Atualmente convertemos todas as páginas, mas você pode escolher quais manter após o download.",
     "pdf-to-image-faq2-q": "Qual é a resolução?",
     "pdf-to-image-faq2-a": "Convertemos páginas a 300 DPI para resultados de qualidade profissional.",
-
     "svg-to-png": "SVG para PNG/JPG",
     "svg-to-png-title": "Converter",
     "svg-to-png-accent": "SVG",
@@ -527,5 +509,64 @@
     "readyToTransform": "Pronto para Transformar seu Fluxo de Trabalho?",
     "readyToTransformDesc": "Não deixe que os formatos de arquivo o atrasem. Experimente o Refindocs sem riscos hoje mesmo.",
     "unlimitedAccessNote": "Depois, apenas R$15/mês para acesso ilimitado • Cancele a qualquer momento"
+  },
+  "UserMenu": {
+    "account": "Conta",
+    "subscription": "Assinatura",
+    "billing": "Faturamento",
+    "invoices": "Faturas",
+    "team": "Equipe",
+    "settings": "Configurações",
+    "help": "Ajuda",
+    "logout": "Sair"
+  },
+  "Account": {
+    "sidebar": {
+      "account": "Conta",
+      "subscription": "Assinatura",
+      "billing": "Faturamento",
+      "invoices": "Faturas",
+      "team": "Equipe",
+      "settings": "Configurações"
+    },
+    "pages": {
+      "account": {
+        "title": "Conta",
+        "email": "Email",
+        "verified": "Verificado",
+        "managedViaGoogle": "Gerenciado pelo Google",
+        "name": "Nome",
+        "firstName": "Nome",
+        "lastName": "Sobrenome",
+        "saveChanges": "Salvar alterações"
+      },
+      "subscription": {
+        "title": "Assinatura",
+        "teamPlanInfo": "Por que pagar por um plano Pro, quando sua organização poderia pagar por um plano Team e economizar até 22% em licenças, obter faturamento centralizado e suporte prioritário?",
+        "switchToTeamPlan": "Mudar para o plano Team",
+        "tellYourBoss": "Alerte seu chefe",
+        "noSubscription": "Você não tem uma assinatura.",
+        "tryFree": "Teste grátis 7 dias"
+      },
+      "billing": {
+        "title": "Faturamento",
+        "invoiceInfo": "Estas informações aparecerão na sua fatura.",
+        "billingAddress": "Endereço de faturamento",
+        "billingEmail": "Email de faturamento",
+        "vatNumber": "CNPJ / CPF",
+        "firstName": "Nome",
+        "lastName": "Sobrenome",
+        "companyName": "Nome da empresa",
+        "phoneNumber": "Número de telefone",
+        "country": "País",
+        "postalCode": "CEP",
+        "state": "Estado",
+        "city": "Cidade",
+        "street": "Rua",
+        "emailInvoicesTo": "Enviar faturas por email para",
+        "save": "Salvar",
+        "close": "Fechar"
+      }
+    }
   }
 }

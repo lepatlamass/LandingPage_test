@@ -5,9 +5,11 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import { useAuth } from '../../providers/AuthProvider';
 import { useRouter } from '../../navigation';
+import { useTranslations } from 'next-intl';
 import { User, HelpCircle, LogOut, ChevronRight } from 'lucide-react';
 
 export default function UserMenuDropdown() {
+  const t = useTranslations('UserMenu');
   const { user } = useAuth();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -132,7 +134,7 @@ export default function UserMenuDropdown() {
               role="menuitem"
             >
               <User className="w-5 h-5 text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
-              <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">Account</span>
+              <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">{t('account')}</span>
               <ChevronRight className="w-4 h-4 text-gray-500 shrink-0 group-hover:text-gray-400 transition-colors" />
             </button>
 
@@ -142,7 +144,7 @@ export default function UserMenuDropdown() {
               role="menuitem"
             >
               <HelpCircle className="w-5 h-5 text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
-              <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">Help</span>
+              <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">{t('help')}</span>
               <ChevronRight className="w-4 h-4 text-gray-500 shrink-0 group-hover:text-gray-400 transition-colors" />
             </button>
             
@@ -154,7 +156,7 @@ export default function UserMenuDropdown() {
               role="menuitem"
             >
               <LogOut className="w-5 h-5 text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
-              <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">Log out</span>
+              <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">{t('logout')}</span>
               <ChevronRight className="w-4 h-4 text-gray-500 shrink-0 group-hover:text-gray-400 transition-colors" />
             </button>
           </div>

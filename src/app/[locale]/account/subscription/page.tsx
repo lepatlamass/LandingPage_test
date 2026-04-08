@@ -2,14 +2,16 @@
 
 import React from 'react';
 import { Link } from '../../../../navigation';
+import { useTranslations } from 'next-intl';
 import { CreditCard, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function SubscriptionPage() {
+  const t = useTranslations('Account.pages.subscription');
   return (
     <div className="p-8 max-w-4xl mx-auto w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Subscription</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
         <p className="text-zinc-400">Manage your plan and billing.</p>
       </div>
 
@@ -24,7 +26,7 @@ export default function SubscriptionPage() {
             <div className="space-y-2 flex-1">
               <h3 className="text-lg font-semibold text-white">Upgrade to Team Plan</h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Why pay for a Pro plan, when your organization could pay for a Team plan and save up to 22% on licensing, get centralized billing and account management, plus priority support?
+                {t('teamPlanInfo')}
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 shrink-0">
@@ -32,13 +34,13 @@ export default function SubscriptionPage() {
                 href="#"
                 className="text-sm font-medium text-[#d4ff33] hover:text-[#c2eb2e] hover:underline transition-colors flex items-center justify-center pt-2 sm:pt-0"
               >
-                Tell your boss
+                {t('tellYourBoss')}
               </Link>
               <Link
                 href="#"
                 className="inline-flex items-center justify-center gap-2 bg-zinc-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-zinc-700 transition-colors"
               >
-                Switch to a Team plan
+                {t('switchToTeamPlan')}
               </Link>
             </div>
           </div>
@@ -57,13 +59,13 @@ export default function SubscriptionPage() {
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">No Active Subscription</h3>
             <p className="text-zinc-400 mb-8 max-w-sm">
-              You do not have a subscription. Upgrade to a Pro or Team plan to unlock premium features and advanced tools.
+              {t('noSubscription')}
             </p>
             
             <button
               className="inline-flex items-center justify-center gap-2 bg-[#d4ff33] text-black px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#c2eb2e] transition-colors active:scale-[0.98]"
             >
-              Try 7 days free <ArrowRight size={16} />
+              {t('tryFree')} <ArrowRight size={16} />
             </button>
           </div>
         </div>

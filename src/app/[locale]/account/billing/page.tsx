@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../../providers/AuthProvider';
 import { getBillingProfile, updateBillingProfile, BillingProfile } from '../../../../lib/firestore/billing';
+import { useTranslations } from 'next-intl';
 import { Mail, Check, CreditCard } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function BillingPage() {
+  const t = useTranslations('Account.pages.billing');
   const { user, loading: authLoading } = useAuth();
   
   const [dataLoading, setDataLoading] = useState(true);
@@ -85,7 +87,7 @@ export default function BillingPage() {
 
     // Basic Validation
     if (!addressData.firstName || !addressData.lastName || !addressData.country || !addressData.city || !addressData.street || !addressData.postalCode) {
-      setAddressError('Please fill out all required fields.');
+      setAddressError("Please fill out all required fields.");
       setIsSavingAddress(false);
       return;
     }
@@ -95,7 +97,7 @@ export default function BillingPage() {
       setAddressSuccess(true);
       setTimeout(() => setAddressSuccess(false), 3000);
     } catch (err: any) {
-      setAddressError(err.message || 'Failed to save address info.');
+      setAddressError(err.message || "Failed to save address info.");
     } finally {
       setIsSavingAddress(false);
     }
@@ -109,7 +111,7 @@ export default function BillingPage() {
     setEmailSuccess(false);
 
     if (!billingEmail || !billingEmail.includes('@')) {
-      setEmailError('Please enter a valid email address.');
+      setEmailError("Please enter a valid email address.");
       setIsSavingEmail(false);
       return;
     }
@@ -119,7 +121,7 @@ export default function BillingPage() {
       setEmailSuccess(true);
       setTimeout(() => setEmailSuccess(false), 3000);
     } catch (err: any) {
-      setEmailError(err.message || 'Failed to save billing email.');
+      setEmailError(err.message || "Failed to save billing email.");
     } finally {
       setIsSavingEmail(false);
     }
@@ -137,7 +139,7 @@ export default function BillingPage() {
       setVatSuccess(true);
       setTimeout(() => setVatSuccess(false), 3000);
     } catch (err: any) {
-      setVatError(err.message || 'Failed to save VAT number.');
+      setVatError(err.message || "Failed to save VAT number.");
     } finally {
       setIsSavingVat(false);
     }
@@ -159,8 +161,8 @@ export default function BillingPage() {
   return (
     <div className="p-8 max-w-2xl mx-auto w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Billing Details</h1>
-        <p className="text-zinc-400">This information will appear on your invoice.</p>
+        <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
+        <p className="text-zinc-400">{t('invoiceInfo')}</p>
       </div>
 
       <div className="space-y-6">
@@ -168,15 +170,15 @@ export default function BillingPage() {
         {/* Section 1: Billing Address */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">Billing address</h2>
-            <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">Close</button>
+            <h2 className="text-lg font-semibold text-white">{t('billingAddress')}</h2>
+            <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">{t('close')}</button>
           </div>
           
           <div className="p-6">
             <form onSubmit={handleSaveAddress} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="firstName">First name *</label>
+                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="firstName">{t('firstName')}</label>
                   <input
                     id="firstName"
                     type="text"
@@ -187,7 +189,7 @@ export default function BillingPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="lastName">Last name *</label>
+                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="lastName">{t('lastName')}</label>
                   <input
                     id="lastName"
                     type="text"
@@ -200,7 +202,7 @@ export default function BillingPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="companyName">Company name</label>
+                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="companyName">{t('companyName')}</label>
                 <input
                   id="companyName"
                   type="text"
@@ -212,7 +214,7 @@ export default function BillingPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="phoneNumber">Phone number</label>
+                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="phoneNumber">{t('phoneNumber')}</label>
                 <input
                   id="phoneNumber"
                   type="tel"
@@ -225,7 +227,7 @@ export default function BillingPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="country">Country *</label>
+                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="country">{t('country')}</label>
                   <select
                     id="country"
                     value={addressData.country}
@@ -241,7 +243,7 @@ export default function BillingPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="postalCode">Postal code *</label>
+                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="postalCode">{t('postalCode')}</label>
                   <input
                     id="postalCode"
                     type="text"
@@ -255,7 +257,7 @@ export default function BillingPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="state">State / Province</label>
+                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="state">{t('state')}</label>
                   <input
                     id="state"
                     type="text"
@@ -266,7 +268,7 @@ export default function BillingPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="city">City *</label>
+                  <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="city">{t('city')}</label>
                   <input
                     id="city"
                     type="text"
@@ -279,7 +281,7 @@ export default function BillingPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="street">Street *</label>
+                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="street">{t('street')}</label>
                 <input
                   id="street"
                   type="text"
@@ -304,7 +306,7 @@ export default function BillingPage() {
                 >
                   {isSavingAddress ? (
                     <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                  ) : 'Save'}
+                  ) : t('save')}
                 </button>
                 {addressSuccess && (
                   <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-1.5 text-sm text-green-400">
@@ -319,14 +321,14 @@ export default function BillingPage() {
         {/* Section 2: Billing Email */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">Billing email</h2>
-            <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">Close</button>
+            <h2 className="text-lg font-semibold text-white">{t('billingEmail')}</h2>
+            <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">{t('close')}</button>
           </div>
           
           <div className="p-6">
             <form onSubmit={handleSaveEmail} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="billingEmail">Email invoices to *</label>
+                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="billingEmail">{t('emailInvoicesTo')}</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Mail className="h-5 w-5 text-zinc-500" />
@@ -356,7 +358,7 @@ export default function BillingPage() {
                 >
                   {isSavingEmail ? (
                     <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                  ) : 'Save'}
+                  ) : t('save')}
                 </button>
                 {emailSuccess && (
                   <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-1.5 text-sm text-green-400">
@@ -371,14 +373,14 @@ export default function BillingPage() {
         {/* Section 3: VAT Number */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">VAT Number</h2>
-            <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">Close</button>
+            <h2 className="text-lg font-semibold text-white">{t('vatNumber')}</h2>
+            <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">{t('close')}</button>
           </div>
           
           <div className="p-6">
             <form onSubmit={handleSaveVat} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="vatNumber">VAT Number</label>
+                <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="vatNumber">{t('vatNumber')}</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <CreditCard className="h-5 w-5 text-zinc-500" />
@@ -408,7 +410,7 @@ export default function BillingPage() {
                 >
                   {isSavingVat ? (
                     <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                  ) : 'Save'}
+                  ) : t('save')}
                 </button>
                 {vatSuccess && (
                   <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-1.5 text-sm text-green-400">

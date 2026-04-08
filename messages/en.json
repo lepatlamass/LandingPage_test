@@ -88,7 +88,6 @@
     "bg-remover-status-completed": "Completed",
     "bg-remover-status-processing": "Processing",
     "bg-remover-status-pending": "Pending",
-
     "watermark": "Watermark",
     "watermark-title": "Add",
     "watermark-accent": "Watermark",
@@ -128,7 +127,6 @@
     "watermark-select-watermark": "Select Watermark",
     "watermark-click-to-upload": "Click to upload",
     "watermark-or-drag-drop": "or drag and drop",
-
     "watermark-remover": "Watermark Remover",
     "watermark-remover-title": "Remove",
     "watermark-remover-accent": "Watermark",
@@ -147,7 +145,6 @@
     "watermark-remover-faq1-a": "Yes, our AI is trained to handle complex patterns and textures behind watermarks.",
     "watermark-remover-faq2-q": "Is the removal permanent?",
     "watermark-remover-faq2-a": "Yes, the watermark is removed from the image file itself.",
-
     "image-to-text": "Image to Text",
     "image-to-text-title": "Extract",
     "image-to-text-accent": "Text from Image",
@@ -166,7 +163,6 @@
     "image-to-text-faq1-a": "It works best with printed text, but it can handle clear handwriting in many cases.",
     "image-to-text-faq2-q": "Is there a limit on file size?",
     "image-to-text-faq2-a": "You can upload files up to 50MB for text extraction.",
-
     "resize": "Resize",
     "resize-title": "Resize",
     "resize-accent": "Images",
@@ -196,7 +192,6 @@
     "resize-download": "Download",
     "resize-target": "Target",
     "resize-max-images": "(Max 10 images)",
-
     "compress": "Compress",
     "compress-title": "Compress",
     "compress-accent": "Files",
@@ -215,7 +210,6 @@
     "compress-faq1-a": "Depending on the file type, you can often reduce size by up to 80% or more.",
     "compress-faq2-q": "Is the quality affected?",
     "compress-faq2-a": "At 'Medium' compression, the quality loss is virtually invisible to the human eye.",
-
     "convert": "Convert",
     "pdf-to-csv": "PDF to CSV",
     "pdf-to-csv-title": "Convert",
@@ -235,7 +229,6 @@
     "pdf-to-csv-faq1-a": "Yes, our engine can handle merged cells and complex table structures.",
     "pdf-to-csv-faq2-q": "Can I convert scanned PDFs?",
     "pdf-to-csv-faq2-a": "Yes, our OCR technology allows us to extract data even from scanned documents.",
-
     "csv-to-pdf": "CSV to PDF",
     "csv-to-pdf-title": "Convert",
     "csv-to-pdf-accent": "CSV to PDF",
@@ -254,7 +247,6 @@
     "csv-to-pdf-faq1-a": "Yes, our engine can handle large datasets efficiently.",
     "csv-to-pdf-faq2-q": "Can I change the page orientation?",
     "csv-to-pdf-faq2-a": "Yes, you can choose between portrait and landscape orientations.",
-
     "pdf-to-excel": "PDF to Excel",
     "pdf-to-excel-title": "Convert",
     "pdf-to-excel-accent": "PDF to Excel",
@@ -283,7 +275,6 @@
     "pdf-to-excel-extracting": "Extracting...",
     "pdf-to-excel-apply": "Convert to Excel",
     "pdf-to-excel-info-desc": "Our PDF to Excel converter accurately extracts tables from your PDF documents and converts them into editable Excel spreadsheets. It maintains the original table structure and data formatting.",
-
     "excel-to-pdf": "Excel to PDF",
     "excel-to-pdf-title": "Convert",
     "excel-to-pdf-accent": "Excel to PDF",
@@ -309,7 +300,6 @@
     "excel-to-pdf-faq1-a": "Yes, each sheet in your Excel file will be converted into a separate section in the PDF.",
     "excel-to-pdf-faq2-q": "Can I convert CSV files?",
     "excel-to-pdf-faq2-a": "Yes, our converter fully supports CSV files as well as Excel formats.",
-
     "excel-to-csv": "Excel to CSV",
     "csv-to-excel": "CSV to Excel",
     "excel-csv": "Excel / CSV",
@@ -330,7 +320,6 @@
     "excel-csv-faq1-a": "Yes, we support both the older .xls and the newer .xlsx formats.",
     "excel-csv-faq2-q": "Can I change the delimiter?",
     "excel-csv-faq2-a": "Yes, you can choose between comma, semicolon, or tab delimiters.",
-
     "pdf-to-word": "PDF to Word",
     "pdf-to-word-title": "Convert",
     "pdf-to-word-accent": "PDF to Word",
@@ -349,7 +338,6 @@
     "pdf-to-word-faq1-a": "Yes, our OCR technology can convert scanned images into editable text.",
     "pdf-to-word-faq2-q": "Is there a page limit?",
     "pdf-to-word-faq2-a": "Free users can convert documents up to 50 pages long.",
-
     "word-to-pdf": "Word to PDF",
     "word-to-pdf-title": "Convert",
     "word-to-pdf-accent": "Word to PDF",
@@ -394,7 +382,6 @@
     "video-to-gif-download": "Download GIF",
     "video-to-gif-loading-ffmpeg": "Loading FFmpeg...",
     "video-to-gif-error-large": "Video file is too large (>100MB). Browser-based conversion is limited by memory.",
-
     "compress-images": "Compress Images",
     "compress-images-title": "Compress",
     "compress-images-accent": "Images",
@@ -422,7 +409,6 @@
     "compress-images-download": "Download",
     "compress-images-add-more": "Add More Images",
     "compress-images-max-images": "(Max 10 images)",
-
     "compress-pdf": "Compress PDF",
     "compress-pdf-title": "Compress",
     "compress-pdf-accent": "PDF",
@@ -451,7 +437,6 @@
     "compress-pdf-processing": "Compressing PDF...",
     "compress-pdf-ready": "Your PDF is ready!",
     "compress-pdf-download": "Download Compressed PDF",
-
     "compress-video": "Compress Video",
     "compress-video-title": "Compress",
     "compress-video-accent": "Video",
@@ -479,7 +464,6 @@
     "compress-video-original": "Original",
     "compress-video-compressed": "Compressed",
     "compress-video-savings": "Savings",
-
     "image-converter": "Image Converter",
     "image-converter-title": "Convert",
     "image-converter-accent": "Images",
@@ -498,7 +482,6 @@
     "image-converter-faq1-a": "Yes, our image converter is completely free for all users.",
     "image-converter-faq2-q": "Can I convert to WebP?",
     "image-converter-faq2-a": "Yes, we fully support converting any image to the modern WebP format.",
-
     "heic-to-png": "HEIC to PNG/JPG/WebP",
     "heic-to-png-title": "Convert",
     "heic-to-png-accent": "HEIC",
@@ -517,7 +500,6 @@
     "heic-to-png-faq1-a": "HEIC is a high-efficiency image format used by Apple for photos on iOS devices.",
     "heic-to-png-faq2-q": "Will I lose quality?",
     "heic-to-png-faq2-a": "No, we use high-quality encoding to ensure your photos look great.",
-
     "pdf-to-image": "PDF to Image",
     "pdf-to-image-title": "Convert",
     "pdf-to-image-accent": "PDF to Image",
@@ -536,7 +518,6 @@
     "pdf-to-image-faq1-a": "Currently, we convert all pages, but you can choose which ones to keep after downloading.",
     "pdf-to-image-faq2-q": "What is the resolution?",
     "pdf-to-image-faq2-a": "We convert pages at 300 DPI for professional-quality results.",
-
     "svg-to-png": "SVG to PNG/JPG",
     "svg-to-png-title": "Convert",
     "svg-to-png-accent": "SVG",
@@ -609,5 +590,64 @@
     "readyToTransform": "Ready to Transform Your Workflow?",
     "readyToTransformDesc": "Don't let file formats slow you down. Try Refindocs risk-free today.",
     "unlimitedAccessNote": "Then just $3/mo for unlimited access • Cancel anytime"
+  },
+  "UserMenu": {
+    "account": "Account",
+    "subscription": "Subscription",
+    "billing": "Billing",
+    "invoices": "Invoices",
+    "team": "Team",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Log out"
+  },
+  "Account": {
+    "sidebar": {
+      "account": "Account",
+      "subscription": "Subscription",
+      "billing": "Billing",
+      "invoices": "Invoices",
+      "team": "Team",
+      "settings": "Settings"
+    },
+    "pages": {
+      "account": {
+        "title": "Account",
+        "email": "Email",
+        "verified": "Verified",
+        "managedViaGoogle": "Managed via Google",
+        "name": "Name",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "saveChanges": "Save Changes"
+      },
+      "subscription": {
+        "title": "Subscription",
+        "teamPlanInfo": "Why pay for a Pro plan, when your organization could pay for a Team plan and save up to 22% on licensing, get centralized billing and account management, plus priority support?",
+        "switchToTeamPlan": "Switch to a Team plan",
+        "tellYourBoss": "Tell your boss",
+        "noSubscription": "You do not have a subscription.",
+        "tryFree": "Try 7 days free"
+      },
+      "billing": {
+        "title": "Billing",
+        "invoiceInfo": "This information will appear on your invoice.",
+        "billingAddress": "Billing address",
+        "billingEmail": "Billing email",
+        "vatNumber": "VAT Number",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "companyName": "Company Name",
+        "phoneNumber": "Phone number",
+        "country": "Country",
+        "postalCode": "Postal code",
+        "state": "State",
+        "city": "City",
+        "street": "Street",
+        "emailInvoicesTo": "Email invoices to",
+        "save": "Save",
+        "close": "Close"
+      }
+    }
   }
 }

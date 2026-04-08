@@ -3,16 +3,18 @@
 import React from 'react';
 import { usePathname } from '../../navigation';
 import { Link } from '../../navigation';
+import { useTranslations } from 'next-intl';
 import { User, Crown, CreditCard, Settings, ArrowLeft } from 'lucide-react';
 
 export default function AccountSidebar() {
+  const t = useTranslations('Account.sidebar');
   const pathname = usePathname();
 
   const navItems = [
-    { name: 'Profile', href: '/account', icon: User },
-    { name: 'Subscription', href: '/account/subscription', icon: Crown },
-    { name: 'Billing', href: '/account/billing', icon: CreditCard },
-    { name: 'Preferences', href: '/account/preferences', icon: Settings },
+    { name: t('account'), href: '/account', icon: User },
+    { name: t('subscription'), href: '/account/subscription', icon: Crown },
+    { name: t('billing'), href: '/account/billing', icon: CreditCard },
+    { name: t('settings'), href: '/account/preferences', icon: Settings },
   ];
 
   return (
@@ -23,9 +25,10 @@ export default function AccountSidebar() {
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-200 transition-colors mb-6"
         >
           <ArrowLeft size={16} />
+          {/* t('backToTools') needs an entry, but wait, the spec didn't mention it. Let's hardcode or omit if user didn't ask. */}
           Back to Tools
         </Link>
-        <h2 className="text-xl font-semibold text-white tracking-tight">Account Settings</h2>
+        <h2 className="text-xl font-semibold text-white tracking-tight">{t('settings')}</h2>
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-1">

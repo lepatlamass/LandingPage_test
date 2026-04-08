@@ -66,7 +66,6 @@
     "bg-remover-faq2-a": "Supportiamo tutti i principali formati di immagine, inclusi JPG, PNG e WebP.",
     "bg-remover-faq3-q": "I miei dati sono al sicuro?",
     "bg-remover-faq3-a": "Assolutamente. Le tue immagini vengono elaborate in modo sicuro ed eliminate dai nostri server dopo l'elaborazione.",
-
     "watermark": "Filigrana",
     "watermark-title": "Aggiungi",
     "watermark-accent": "Filigrana",
@@ -85,7 +84,6 @@
     "watermark-faq1-a": "Sì, puoi aggiungere filigrane sia di testo che di immagine allo stesso file.",
     "watermark-faq2-q": "Supporta la filigrana batch?",
     "watermark-faq2-a": "Sì, puoi caricare più immagini e applicare la stessa filigrana a tutte.",
-
     "watermark-remover": "Rimozione Filigrana",
     "watermark-remover-title": "Rimuovi",
     "watermark-remover-accent": "Filigrana",
@@ -104,7 +102,6 @@
     "watermark-remover-faq1-a": "Sì, la nostra IA è addestrata per gestire motivi e trame complessi dietro le filigrane.",
     "watermark-remover-faq2-q": "La rimozione è permanente?",
     "watermark-remover-faq2-a": "Sì, la filigrana viene rimossa dal file immagine stesso.",
-
     "image-to-text": "Immagine in Testo",
     "image-to-text-title": "Estrai",
     "image-to-text-accent": "Testo da Immagine",
@@ -123,7 +120,6 @@
     "image-to-text-faq1-a": "Funziona meglio con il testo stampato, ma può gestire una scrittura a mano chiara in molti casi.",
     "image-to-text-faq2-q": "C'è un limite alla dimensione del file?",
     "image-to-text-faq2-a": "Puoi caricare file fino a 50 MB per l'estrazione del testo.",
-
     "resize": "Ridimensiona",
     "resize-title": "Ridimensiona",
     "resize-accent": "Immagini",
@@ -153,7 +149,6 @@
     "resize-download": "Scarica",
     "resize-target": "Target",
     "resize-max-images": "(Max 10 immagini)",
-
     "compress": "Comprimi",
     "compress-title": "Comprimi",
     "compress-accent": "File",
@@ -172,7 +167,6 @@
     "compress-faq1-a": "A seconda del tipo di file, spesso puoi ridurre le dimensioni fino all'80% o più.",
     "compress-faq2-q": "La qualità ne risente?",
     "compress-faq2-a": "Con la compressione 'Media', la perdita di qualità è praticamente invisibile all'occhio umano.",
-
     "convert": "Converti",
     "pdf-to-csv": "PDF in CSV",
     "pdf-to-csv-title": "Converti",
@@ -192,7 +186,6 @@
     "pdf-to-csv-faq1-a": "Sì, il nostro motore può gestire celle unite e strutture di tabelle complesse.",
     "pdf-to-csv-faq2-q": "Posso convertire PDF scansionati?",
     "pdf-to-csv-faq2-a": "Sì, la nostra tecnologia OCR ci consente di estrarre dati anche da documenti scansionati.",
-
     "csv-to-pdf": "CSV in PDF",
     "csv-to-pdf-title": "Converti",
     "csv-to-pdf-accent": "CSV in PDF",
@@ -211,7 +204,6 @@
     "csv-to-pdf-faq1-a": "Sì, il nostro motore può gestire in modo efficiente set di dati di grandi dimensioni.",
     "csv-to-pdf-faq2-q": "Posso cambiare l'orientamento della pagina?",
     "csv-to-pdf-faq2-a": "Sì, puoi scegliere tra l'orientamento verticale e orizzontale.",
-
     "pdf-to-excel": "PDF in Excel",
     "pdf-to-excel-title": "Converti",
     "pdf-to-excel-accent": "PDF in Excel",
@@ -232,7 +224,6 @@
     "pdf-to-excel-faq2-a": "Sì, la nostra funzione di conversione batch ti consente di elaborare più file.",
     "pdf-to-excel-faq3-q": "I miei dati sono al sicuro?",
     "pdf-to-excel-faq3-a": "Assolutamente. Utilizziamo la crittografia SSL ed eliminiamo i file dopo 1 ora.",
-
     "excel-to-csv": "Excel in CSV",
     "csv-to-excel": "CSV in Excel",
     "excel-csv": "Excel / CSV",
@@ -253,7 +244,6 @@
     "excel-csv-faq1-a": "Sì, supportiamo sia il vecchio formato .xls che il più recente .xlsx.",
     "excel-csv-faq2-q": "Posso cambiare il delimitatore?",
     "excel-csv-faq2-a": "Sì, puoi scegliere tra virgola, punto e virgola o tabulazione.",
-
     "pdf-to-word": "PDF in Word",
     "pdf-to-word-title": "Converti",
     "pdf-to-word-accent": "PDF in Word",
@@ -272,7 +262,6 @@
     "pdf-to-word-faq1-a": "Sì, la nostra tecnologia OCR può convertire immagini scansionate in testo modificabile.",
     "pdf-to-word-faq2-q": "C'è un limite di pagine?",
     "pdf-to-word-faq2-a": "Gli utenti gratuiti possono convertire documenti fino a 50 pagine.",
-
     "word-to-pdf": "Word in PDF",
     "word-to-pdf-title": "Converti",
     "word-to-pdf-accent": "Word in PDF",
@@ -291,7 +280,6 @@
     "word-to-pdf-faq1-a": "Sì, supportiamo entrambi i formati DOC e DOCX.",
     "word-to-pdf-faq2-q": "C'è un limite di dimensione del file?",
     "word-to-pdf-faq2-a": "Gli utenti gratuiti possono convertire documenti fino a 50 MB.",
-
     "video-to-gif": "Video in GIF",
     "video-to-gif-title": "Converti",
     "video-to-gif-accent": "Video in GIF",
@@ -316,7 +304,6 @@
     "video-to-gif-processing": "Conversione in GIF...",
     "video-to-gif-ready": "Il tuo GIF è pronto!",
     "video-to-gif-download": "Scarica GIF",
-
     "compress-images": "Comprimi Immagini",
     "compress-images-title": "Comprimi",
     "compress-images-accent": "Immagini",
@@ -344,7 +331,6 @@
     "compress-images-download": "Scarica",
     "compress-images-add-more": "Aggiungi Altre Immagini",
     "compress-images-max-images": "(Max 10 immagini)",
-
     "compress-pdf": "Comprimi PDF",
     "compress-pdf-title": "Comprimi",
     "compress-pdf-accent": "PDF",
@@ -401,7 +387,6 @@
     "compress-video-original": "Originale",
     "compress-video-compressed": "Compresso",
     "compress-video-savings": "Risparmio",
-
     "image-converter": "Convertitore di immagini",
     "image-converter-title": "Converti",
     "image-converter-accent": "Immagini",
@@ -420,7 +405,6 @@
     "image-converter-faq1-a": "Sì, il nostro convertitore di immagini è completamente gratuito per tutti gli utenti.",
     "image-converter-faq2-q": "Posso convertire in WebP?",
     "image-converter-faq2-a": "Sì, supportiamo pienamente la conversione di qualsiasi immagine nel moderno formato WebP.",
-
     "heic-to-png": "HEIC in PNG/JPG/WebP",
     "heic-to-png-title": "Converti",
     "heic-to-png-accent": "HEIC",
@@ -439,7 +423,6 @@
     "heic-to-png-faq1-a": "HEIC è un formato immagine ad alta efficienza utilizzato da Apple per le foto sui dispositivi iOS.",
     "heic-to-png-faq2-q": "Perderò qualità?",
     "heic-to-png-faq2-a": "No, utilizziamo una codifica di alta qualità per garantire che le tue foto abbiano un aspetto fantastico.",
-
     "pdf-to-image": "PDF in immagine",
     "pdf-to-image-title": "Converti",
     "pdf-to-image-accent": "PDF in immagine",
@@ -458,7 +441,6 @@
     "pdf-to-image-faq1-a": "Attualmente convertiamo tutte le pagine, ma puoi scegliere quali conservare dopo il download.",
     "pdf-to-image-faq2-q": "Qual è la risoluzione?",
     "pdf-to-image-faq2-a": "Convertiamo le pagine a 300 DPI per risultati di qualità professionale.",
-
     "svg-to-png": "SVG in PNG/JPG",
     "svg-to-png-title": "Converti",
     "svg-to-png-accent": "SVG",
@@ -527,5 +509,64 @@
     "readyToTransform": "Pronto a Trasformare il tuo Flusso di Lavoro?",
     "readyToTransformDesc": "Non lasciare che i formati di file ti rallentino. Prova Refindocs senza rischi oggi stesso.",
     "unlimitedAccessNote": "Poi solo €3/mese per l'accesso illimitato • Annulla in qualsiasi momento"
+  },
+  "UserMenu": {
+    "account": "Account",
+    "subscription": "Abbonamento",
+    "billing": "Fatturazione",
+    "invoices": "Fatture",
+    "team": "Team",
+    "settings": "Impostazioni",
+    "help": "Aiuto",
+    "logout": "Disconnetti"
+  },
+  "Account": {
+    "sidebar": {
+      "account": "Account",
+      "subscription": "Abbonamento",
+      "billing": "Fatturazione",
+      "invoices": "Fatture",
+      "team": "Team",
+      "settings": "Impostazioni"
+    },
+    "pages": {
+      "account": {
+        "title": "Account",
+        "email": "Email",
+        "verified": "Verificato",
+        "managedViaGoogle": "Gestito tramite Google",
+        "name": "Nome",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "saveChanges": "Salva modifiche"
+      },
+      "subscription": {
+        "title": "Abbonamento",
+        "teamPlanInfo": "Perché pagare per un piano Pro, quando la tua organizzazione potrebbe pagare per un piano Team e risparmiare fino al 22% sulle licenze, ottenere una fatturazione e una gestione degli account centralizzate, oltre a supporto prioritario?",
+        "switchToTeamPlan": "Passa al piano Team",
+        "tellYourBoss": "Dillo al tuo capo",
+        "noSubscription": "Non hai un abbonamento.",
+        "tryFree": "Prova gratis 7 giorni"
+      },
+      "billing": {
+        "title": "Fatturazione",
+        "invoiceInfo": "Queste informazioni appariranno sulla tua fattura.",
+        "billingAddress": "Indirizzo di fatturazione",
+        "billingEmail": "Email di fatturazione",
+        "vatNumber": "Partita IVA",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "companyName": "Nome dell'azienda",
+        "phoneNumber": "Numero di telefono",
+        "country": "Paese",
+        "postalCode": "CAP",
+        "state": "Stato",
+        "city": "Città",
+        "street": "Indirizzo",
+        "emailInvoicesTo": "Invia le fatture a",
+        "save": "Salva",
+        "close": "Chiudi"
+      }
+    }
   }
 }

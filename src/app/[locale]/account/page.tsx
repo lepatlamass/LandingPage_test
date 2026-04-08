@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { updateProfile } from 'firebase/auth';
 import { useAuth } from '../../../providers/AuthProvider';
+import { useTranslations } from 'next-intl';
 import { User, Mail, Save, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function AccountPage() {
+  const t = useTranslations('Account.pages.account');
   const { user, loading } = useAuth();
   
   const [displayName, setDisplayName] = useState('');
@@ -32,10 +34,10 @@ export default function AccountPage() {
       await updateProfile(user, {
         displayName: displayName
       });
-      setSuccessMsg('Profile updated successfully');
+      setSuccessMsg(t('saveChanges'));
       setTimeout(() => setSuccessMsg(''), 3000);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to update profile');
+      setErrorMsg(err.message || "Failed to update profile");
     } finally {
       setIsSaving(false);
     }
@@ -55,14 +57,14 @@ export default function AccountPage() {
   return (
     <div className="p-8 max-w-4xl mx-auto w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Profile Settings</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
         <p className="text-zinc-400">Manage your account details and personalization.</p>
       </div>
 
       <div className="space-y-6">
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800">
-            <h2 className="text-lg font-semibold text-white">Personal Information</h2>
+            <h2 className="text-lg font-semibold text-white">{t('title')}</h2>
           </div>
           
           <div className="p-6">
@@ -71,7 +73,7 @@ export default function AccountPage() {
               {/* Display Name Field */}
               <div>
                 <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="displayName">
-                  Full Name
+                  {t('name')}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -91,7 +93,7 @@ export default function AccountPage() {
               {/* Email Address (Read Only - Google OAuth) */}
               <div>
                 <label className="block text-sm font-medium text-zinc-300 mb-2" htmlFor="emailAddress">
-                  Email Address
+                  {t('email')}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -106,7 +108,7 @@ export default function AccountPage() {
                   />
                 </div>
                 <p className="text-xs text-zinc-500 mt-2">
-                  Your email is managed by your Google account.
+                  {t('managedViaGoogle')}
                 </p>
               </div>
 
@@ -138,7 +140,7 @@ export default function AccountPage() {
                   ) : (
                     <Save size={18} />
                   )}
-                  {isSaving ? 'Saving...' : 'Save Changes'}
+                  {isSaving ? "Saving..." : t('saveChanges')}
                 </button>
               </div>
             </form>
