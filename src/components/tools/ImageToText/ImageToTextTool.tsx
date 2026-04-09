@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -26,7 +26,7 @@ interface ImageFile {
   error?: string;
 }
 
-import Image from 'next/image';
+
 
 export default function ImageToTextTool() {
   const t = useTranslations('Common');
@@ -146,12 +146,10 @@ export default function ImageToTextTool() {
           {/* Image Preview & Controls */}
           <div className="space-y-6">
             <div className="relative aspect-square rounded-[32px] overflow-hidden bg-black/40 border border-white/10 group">
-              <Image 
+              <img 
                 src={images[0].preview} 
                 alt="Original" 
-                fill
-                className="object-contain"
-                unoptimized
+                className="w-full h-full object-contain"
               />
               <button 
                 onClick={() => removeImage(images[0].id)}

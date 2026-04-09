@@ -13,11 +13,10 @@ import {
   Zap,
   RefreshCw,
   FileArchive,
-  Settings,
   Image as ImageIcon,
   Maximize2
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import JSZip from 'jszip';
 
 type OutputFormat = 'png' | 'jpeg';
@@ -33,11 +32,10 @@ interface SvgFile {
   height?: number;
 }
 
-import Image from 'next/image';
+
 
 export default function SvgConverterTool() {
   const t = useTranslations('Common');
-  const tt = useTranslations('Tools');
   const [files, setFiles] = useState<SvgFile[]>([]);
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('png');
   const [scale, setScale] = useState(2); // Default 2x scale for better quality
@@ -284,8 +282,8 @@ export default function SvgConverterTool() {
                     key={item.id}
                     className="bg-black/40 border border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
                   >
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-white shrink-0 border border-gray-800 p-2 relative">
-                      <Image src={item.preview} alt="preview" fill className="object-contain" unoptimized />
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-white shrink-0 border border-gray-800 p-2">
+                      <img src={item.preview} alt="preview" className="w-full h-full object-contain" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{item.file.name}</p>

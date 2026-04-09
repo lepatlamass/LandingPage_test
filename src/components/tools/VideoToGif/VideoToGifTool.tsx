@@ -12,12 +12,11 @@ import {
   Video,
   ShieldCheck,
   Zap,
-  Play,
   RefreshCw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile, toBlobURL } from '@ffmpeg/util';
+import { toBlobURL } from '@ffmpeg/util';
 
 interface VideoFile {
   file: File;
@@ -29,7 +28,7 @@ interface VideoFile {
   previewUrl?: string;
 }
 
-import Image from 'next/image';
+
 
 export default function VideoToGifTool() {
   const t = useTranslations('Common');
@@ -159,7 +158,7 @@ export default function VideoToGifTool() {
       ]);
 
       const data = await ffmpeg.readFile(outputName);
-      const blob = new Blob([data], { type: 'image/gif' });
+      const blob = new Blob([data as unknown as ArrayBuffer], { type: 'image/gif' });
       const resultUrl = URL.createObjectURL(blob);
       
       setVideo(prev => prev ? { 
@@ -352,12 +351,10 @@ export default function VideoToGifTool() {
               <div className="p-8">
                 <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 group">
                   {video.status === 'completed' && video.resultUrl ? (
-                    <Image 
+                    <img 
                       src={video.resultUrl} 
                       alt="GIF Result" 
-                      fill
-                      className="object-contain"
-                      unoptimized
+                      className="w-full h-full object-contain"
                     />
                   ) : video.previewUrl ? (
                     <video 

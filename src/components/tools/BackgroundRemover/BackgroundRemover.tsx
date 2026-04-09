@@ -1,17 +1,14 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Upload, 
-  X, 
   Sparkles, 
   Image as ImageIcon, 
   Download, 
   Loader2, 
   CheckCircle2, 
-  AlertCircle,
-  ArrowRight,
   RefreshCw,
   LayoutGrid
 } from 'lucide-react';
@@ -27,7 +24,7 @@ interface ProcessedImage {
   error?: string;
 }
 
-import Image from 'next/image';
+
 
 export default function BackgroundRemover() {
   const t = useTranslations('Tools');
@@ -80,9 +77,6 @@ export default function BackgroundRemover() {
     reader.readAsDataURL(file);
   };
 
-  const removeImage = (id: string) => {
-    setImages(prev => prev.filter(img => img.id !== id));
-  };
 
   const resizeImage = (base64: string, maxWidth = 1024, maxHeight = 1024): Promise<string> => {
     return new Promise((resolve) => {
@@ -298,7 +292,7 @@ export default function BackgroundRemover() {
                         selectedPreset === p.id ? "border-[#d4ff33]" : "border-transparent hover:border-gray-600"
                       )}
                     >
-                      <Image src={p.url} alt={p.name} fill className="object-cover" unoptimized />
+                      <img src={p.url} alt={p.name} className="absolute inset-0 w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/40 flex items-end p-2">
                         <span className="text-[10px] font-bold text-white">{p.name}</span>
                       </div>
@@ -328,7 +322,7 @@ export default function BackgroundRemover() {
                     className="hidden" 
                   />
                   {customBg ? (
-                    <Image src={customBg} alt="Custom Background" fill className="object-cover" unoptimized />
+                    <img src={customBg} alt="Custom Background" className="absolute inset-0 w-full h-full object-cover" />
                   ) : (
                     <div className="flex flex-col items-center gap-2">
                       <Upload size={24} className="text-gray-600 group-hover:text-[#d4ff33]" />
@@ -399,13 +393,13 @@ export default function BackgroundRemover() {
                       <div key={img.id} className="bg-gray-50 rounded-xl p-3 border border-gray-100 space-y-3">
                         <div className="flex gap-2">
                           <div className="relative flex-1 aspect-square rounded-lg overflow-hidden border border-gray-200">
-                            <Image src={img.original} alt="Original" fill className="object-cover" unoptimized />
+                            <img src={img.original} alt="Original" className="absolute inset-0 w-full h-full object-cover" />
                             <div className="absolute top-1 left-1 bg-black/60 px-1.5 py-0.5 rounded text-[8px] font-bold text-white uppercase">{t('bg-remover-original')}</div>
                           </div>
                           <div className="relative flex-1 aspect-square rounded-lg overflow-hidden border border-gray-200 bg-gray-200 flex items-center justify-center">
                             {img.status === 'completed' && img.processed ? (
                               <>
-                                <Image src={img.processed} alt="Processed" fill className="object-cover" unoptimized />
+                                <img src={img.processed} alt="Processed" className="absolute inset-0 w-full h-full object-cover" />
                                 <div className="absolute top-1 left-1 bg-[#d4ff33] px-1.5 py-0.5 rounded text-[8px] font-bold text-black uppercase">{t('bg-remover-result')}</div>
                               </>
                             ) : img.status === 'processing' ? (

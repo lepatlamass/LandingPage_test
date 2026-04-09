@@ -4,16 +4,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Upload, 
-  X, 
-  Sparkles, 
   Image as ImageIcon, 
   Download, 
   Loader2, 
-  CheckCircle2, 
   AlertCircle,
   Eraser,
-  Undo,
-  RefreshCw
+  Undo
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
@@ -27,7 +23,7 @@ interface ProcessedImage {
   error?: string;
 }
 
-import Image from 'next/image';
+
 
 export default function WatermarkRemoverTool() {
   const t = useTranslations('Tools');
@@ -242,8 +238,8 @@ export default function WatermarkRemoverTool() {
                 </>
               ) : (
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-700 relative">
-                    <Image src={images[0].original} alt="Original" fill className="object-cover" unoptimized />
+                  <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-700">
+                    <img src={images[0].original} alt="Original" className="w-full h-full object-cover" />
                   </div>
                   <div className="text-left">
                     <p className="text-sm font-bold text-white">Image Uploaded</p>
@@ -354,7 +350,7 @@ export default function WatermarkRemoverTool() {
                     className="w-full h-full flex flex-col items-center justify-center p-4 relative"
                   >
                     <div className="relative group w-full h-full flex items-center justify-center">
-                      <Image src={images[0].processed} alt="Result" fill className="object-contain rounded-lg shadow-2xl" unoptimized />
+                      <img src={images[0].processed} alt="Result" className="max-w-full max-h-full object-contain rounded-lg shadow-2xl" />
                       <div className="absolute top-4 left-4 bg-[#d4ff33] px-3 py-1 rounded-full text-[10px] font-bold text-black uppercase shadow-lg z-10">
                         Cleaned Result
                       </div>

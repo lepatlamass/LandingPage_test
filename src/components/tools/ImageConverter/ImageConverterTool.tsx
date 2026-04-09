@@ -30,7 +30,7 @@ interface ImageFile {
   error?: string;
 }
 
-import Image from 'next/image';
+
 
 export default function ImageConverterTool() {
   const t = useTranslations('Common');
@@ -254,8 +254,8 @@ export default function ImageConverterTool() {
                     key={img.id}
                     className="bg-black/40 border border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
                   >
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-800 relative">
-                      <Image src={img.preview} alt="preview" fill className="object-cover" unoptimized />
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-800">
+                      <img src={img.preview} alt="preview" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{img.file.name}</p>
