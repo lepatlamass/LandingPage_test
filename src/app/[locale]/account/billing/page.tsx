@@ -3,12 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../../providers/AuthProvider';
 import { getBillingProfile, updateBillingProfile, BillingProfile } from '../../../../lib/firestore/billing';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { getCountryList } from '../../../../lib/countries';
 import { Mail, Check, CreditCard } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function BillingPage() {
   const t = useTranslations('Account.pages.billing');
+  const locale = useLocale();
+  const countryList = getCountryList(locale);
   const { user, loading: authLoading } = useAuth();
   
   const [dataLoading, setDataLoading] = useState(true);
@@ -19,7 +22,7 @@ export default function BillingPage() {
     lastName: '',
     companyName: '',
     phoneNumber: '',
-    country: 'United States',
+    country: 'US',
     postalCode: '',
     state: '',
     city: '',
@@ -54,7 +57,7 @@ export default function BillingPage() {
             lastName: profile.lastName || '',
             companyName: profile.companyName || '',
             phoneNumber: profile.phoneNumber || '',
-            country: profile.country || 'United States',
+            country: profile.country || 'US',
             postalCode: profile.postalCode || '',
             state: profile.state || '',
             city: profile.city || '',
@@ -234,12 +237,11 @@ export default function BillingPage() {
                     onChange={(e) => setAddressData({...addressData, country: e.target.value})}
                     className="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all appearance-none"
                   >
-                    <option value="United States">United States</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Australia">Australia</option>
-                    <option value="France">France</option>
-                    <option value="Germany">Germany</option>
+                    {countryList.map((c) => (
+                      <option key={c.value} value={c.value}>
+                        {c.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>

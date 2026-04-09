@@ -566,6 +566,41 @@
         "emailInvoicesTo": "Enviar faturas por email para",
         "save": "Guardar",
         "close": "Fechar"
+      },
+      "settings": {
+        "title": "Settings",
+        "preferences": {
+          "title": "Preferences",
+          "language": {
+            "label": "Language",
+            "change": "Change",
+            "disclaimer": "Changing language will automatically reload the page in your preferred locale."
+          },
+          "emailNotifications": {
+            "label": "Email Notifications",
+            "description": "No longer wish to receive promotional emails from us? You can do so here.",
+            "disable": "Disable Emails",
+            "enable": "Enable Emails"
+          }
+        },
+        "manageAccount": {
+          "label": "Manage account",
+          "deleteAccount": "Delete account",
+          "deleteTitle": "Delete Account Confirmation",
+          "deleteDescription": "This action cannot be undone. This will permanently delete your account and all associated data.",
+          "deleteConfirm": "Delete my account",
+          "deleteCancel": "Cancel",
+          "deleteWarning": "Are you absolutely sure?"
+        },
+        "success": {
+          "emailPreferencesUpdated": "Email preferences updated.",
+          "accountDeleted": "Account deleted successfully."
+        },
+        "error": {
+          "updateFailed": "Failed to update settings.",
+          "deleteFailed": "Failed to delete account.",
+          "requiresReauth": "Please sign in again to delete your account."
+        }
       }
     }
   }

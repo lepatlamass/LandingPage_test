@@ -14,7 +14,7 @@ export default function AccountSidebar() {
     { name: t('account'), href: '/account', icon: User },
     { name: t('subscription'), href: '/account/subscription', icon: Crown },
     { name: t('billing'), href: '/account/billing', icon: CreditCard },
-    { name: t('settings'), href: '/account/preferences', icon: Settings },
+    { name: t('settings'), href: '/account/settings', icon: Settings },
   ];
 
   return (
