@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -27,6 +29,7 @@ interface WordToPdfFile {
 export default function WordToPdfTool() {
   const t = useTranslations('Tools');
   const tCommon = useTranslations('Common');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [files, setFiles] = useState<WordToPdfFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -217,15 +220,16 @@ export default function WordToPdfTool() {
 
   const downloadFile = (fileObj: WordToPdfFile) => {
     if (!fileObj.pdfBlob) return;
-    
-    const url = URL.createObjectURL(fileObj.pdfBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileObj.file.name.replace(/\.docx$/i, '.pdf');
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(fileObj.pdfBlob!);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileObj.file.name.replace(/\.docx$/i, '.pdf');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
   };
 
   const downloadAll = () => {
@@ -389,6 +393,7 @@ export default function WordToPdfTool() {
           </div>
         </motion.div>
       )}
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

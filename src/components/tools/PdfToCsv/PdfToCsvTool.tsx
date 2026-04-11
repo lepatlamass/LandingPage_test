@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -17,6 +19,7 @@ import {
   Table
 } from 'lucide-react';
 import { motion } from 'motion/react';
+// @ts-ignore
 import Papa from 'papaparse';
 import { extractTableFromPdf } from '@/lib/pdf_js_csv';
 
@@ -32,6 +35,7 @@ interface PdfToCsvFile {
 
 export default function PdfToCsvTool() {
   const t = useTranslations('Common');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [pdfFile, setPdfFile] = useState<PdfToCsvFile | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -102,13 +106,15 @@ export default function PdfToCsvTool() {
 
   const downloadCsv = () => {
     if (!pdfFile?.csvData) return;
-    const blob = new Blob([pdfFile.csvData], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${pdfFile.file.name.split('.')[0]}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const blob = new Blob([pdfFile!.csvData!], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${pdfFile!.file.name.split('.')[0]}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
   };
 
   return (
@@ -287,6 +293,7 @@ export default function PdfToCsvTool() {
           </p>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

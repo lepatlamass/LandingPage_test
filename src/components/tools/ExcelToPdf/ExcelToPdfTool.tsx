@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -87,6 +89,7 @@ const wrapText = (text: string, maxWidth: number, font: any, fontSize: number): 
 export default function ExcelToPdfTool() {
   const t = useTranslations('Tools');
   const commonT = useTranslations('Common');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [excelFile, setExcelFile] = useState<ExcelToPdfFile | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -245,12 +248,14 @@ export default function ExcelToPdfTool() {
 
   const downloadPdf = () => {
     if (!excelFile?.resultPdf) return;
-    const url = URL.createObjectURL(excelFile.resultPdf);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${excelFile.file.name.split('.')[0]}.pdf`;
-    link.click();
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(excelFile!.resultPdf!);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${excelFile!.file.name.split('.')[0]}.pdf`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
   };
 
   return (
@@ -407,6 +412,7 @@ export default function ExcelToPdfTool() {
           </p>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

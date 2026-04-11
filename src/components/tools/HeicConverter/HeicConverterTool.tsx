@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -34,6 +36,7 @@ interface HeicFile {
 export default function HeicConverterTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [files, setFiles] = useState<HeicFile[]>([]);
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('jpeg');
   const [quality, setQuality] = useState(0.8);
@@ -112,41 +115,39 @@ export default function HeicConverterTool() {
     setIsProcessing(false);
   };
 
-  const downloadAll = async () => {
+  const downloadAll = () => {
     const completedFiles = files.filter(f => f.status === 'completed' && f.resultBlob);
     if (completedFiles.length === 0) return;
 
     if (completedFiles.length === 1) {
-      const item = completedFiles[0];
+      downloadSingle(completedFiles[0]);
+    } else {
+      guardedDownload(async () => {
+        const zip = new JSZip();
+        completedFiles.forEach((item) => {
+          zip.file(`${item.file.name.split('.')[0]}.${outputFormat}`, item.resultBlob!);
+        });
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `heic-converted.zip`;
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+  };
+
+  const downloadSingle = (item: HeicFile) => {
+    if (!item.resultBlob) return;
+    guardedDownload(() => {
       const url = URL.createObjectURL(item.resultBlob!);
       const link = document.createElement('a');
       link.href = url;
       link.download = `${item.file.name.split('.')[0]}.${outputFormat}`;
       link.click();
       URL.revokeObjectURL(url);
-    } else {
-      const zip = new JSZip();
-      completedFiles.forEach((item) => {
-        zip.file(`${item.file.name.split('.')[0]}.${outputFormat}`, item.resultBlob!);
-      });
-      const content = await zip.generateAsync({ type: 'blob' });
-      const url = URL.createObjectURL(content);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `heic-converted.zip`;
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-  };
-
-  const downloadSingle = (item: HeicFile) => {
-    if (!item.resultBlob) return;
-    const url = URL.createObjectURL(item.resultBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${item.file.name.split('.')[0]}.${outputFormat}`;
-    link.click();
-    URL.revokeObjectURL(url);
+    });
   };
 
   return (
@@ -368,6 +369,7 @@ export default function HeicConverterTool() {
           </p>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

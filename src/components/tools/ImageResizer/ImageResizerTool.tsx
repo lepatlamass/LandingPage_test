@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -34,6 +36,7 @@ interface ResizableImage {
 export default function ImageResizerTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [images, setImages] = useState<ResizableImage[]>([]);
   const [lockAspectRatio, setLockAspectRatio] = useState(true);
   const [globalWidth, setGlobalWidth] = useState<number>(1920);
@@ -182,12 +185,14 @@ export default function ImageResizerTool() {
 
   const downloadImage = (img: ResizableImage) => {
     if (!img.result) return;
-    const link = document.createElement('a');
-    link.href = img.result;
-    link.download = `resized-${img.file.name}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    guardedDownload(() => {
+      const link = document.createElement('a');
+      link.href = img.result!;
+      link.download = `resized-${img.file.name}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   };
 
   return (
@@ -370,6 +375,7 @@ export default function ImageResizerTool() {
           </div>
         </div>
       )}
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

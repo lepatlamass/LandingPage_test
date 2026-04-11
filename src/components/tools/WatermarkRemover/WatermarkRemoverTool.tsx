@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
+import { useAIGate } from '@/hooks/useAIGate';
+import AIGateModal from '@/components/auth/AIGateModal';
 import { processWatermarkRemoval } from '@/lib/ai/gemini';
 
 interface ProcessedImage {
@@ -27,6 +29,8 @@ interface ProcessedImage {
 
 export default function WatermarkRemoverTool() {
   const t = useTranslations('Tools');
+  const commonT = useTranslations('Common');
+  const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
   const [images, setImages] = useState<ProcessedImage[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [brushSize, setBrushSize] = useState(30);
@@ -164,33 +168,34 @@ export default function WatermarkRemoverTool() {
     setHasDrawn(false);
   };
 
-  const startProcessing = async () => {
-    if (images.length === 0 || !hasDrawn) return;
-
-    setIsProcessing(true);
-    
-    try {
-      setImages(prev => [{ ...prev[0], status: 'processing' }]);
-
-      // Get mask as base64
-      const maskBase64 = maskCanvasRef.current?.toDataURL('image/png');
-      if (!maskBase64) throw new Error('Failed to generate mask');
+  const handleProcess = async () => {
+    guardedAction(async () => {
+      if (images.length === 0 || isProcessing) return;
+      setIsProcessing(true);
       
-      // Call Gemini AI directly from the client
-      const cleanedImageUri = await processWatermarkRemoval(images[0].original, maskBase64);
+      try {
+        setImages(prev => [{ ...prev[0], status: 'processing' }]);
 
-      setImages(prev => [{ 
-        ...prev[0], 
-        status: 'completed', 
-        processed: cleanedImageUri
-      }]);
-    } catch (error: any) {
-      console.error("Processing error:", error);
-      const errorMessage = error.message || "Failed to remove watermark";
-      setImages(prev => [{ ...prev[0], status: 'error', error: errorMessage }]);
-    } finally {
-      setIsProcessing(false);
-    }
+        // Get mask as base64
+        const maskBase64 = maskCanvasRef.current?.toDataURL('image/png');
+        if (!maskBase64) throw new Error('Failed to generate mask');
+        
+        // Call Gemini AI directly from the client
+        const cleanedImageUri = await processWatermarkRemoval(images[0].original, maskBase64);
+
+        setImages(prev => [{ 
+          ...prev[0], 
+          status: 'completed', 
+          processed: cleanedImageUri
+        }]);
+      } catch (error: any) {
+        console.error("Processing error:", error);
+        const errorMessage = error.message || "Failed to remove watermark";
+        setImages(prev => [{ ...prev[0], status: 'error', error: errorMessage }]);
+      } finally {
+        setIsProcessing(false);
+      }
+    });
   };
 
   const downloadImage = (base64: string, filename: string) => {
@@ -295,7 +300,7 @@ export default function WatermarkRemoverTool() {
                       Reset Brush
                     </button>
                     <button 
-                      onClick={startProcessing}
+                      onClick={handleProcess}
                       disabled={isProcessing || !hasDrawn}
                       className={cn(
                         "flex-[2] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-xs",
@@ -417,6 +422,7 @@ export default function WatermarkRemoverTool() {
           </div>
         </div>
       </div>
+      <AIGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -28,6 +30,7 @@ interface ExcelToCsvFile {
 
 export default function ExcelToCsvTool() {
   const t = useTranslations('Common');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [excelFile, setExcelFile] = useState<ExcelToCsvFile | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -82,13 +85,15 @@ export default function ExcelToCsvTool() {
 
   const downloadCsv = () => {
     if (!excelFile?.csvData) return;
-    const blob = new Blob([excelFile.csvData], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${excelFile.file.name.split('.')[0]}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const blob = new Blob([excelFile!.csvData!], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${excelFile!.file.name.split('.')[0]}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
   };
 
   return (
@@ -245,6 +250,7 @@ export default function ExcelToCsvTool() {
           </p>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -34,6 +36,7 @@ interface VideoFile {
 export default function CompressVideoTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [video, setVideo] = useState<VideoFile | null>(null);
   const [resolution, setResolution] = useState<Resolution>('original');
   const [format, setFormat] = useState<Format>('mp4');
@@ -207,14 +210,16 @@ export default function CompressVideoTool() {
 
   const downloadVideo = () => {
     if (!video?.resultBlob) return;
-    const url = URL.createObjectURL(video.resultBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `compressed-${video.file.name.split('.')[0]}.${format}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(video!.resultBlob!);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `compressed-${video!.file.name.split('.')[0]}.${format}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
   };
 
   const formatSize = (bytes: number) => {
@@ -485,6 +490,7 @@ export default function CompressVideoTool() {
           </div>
         </div>
       )}
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

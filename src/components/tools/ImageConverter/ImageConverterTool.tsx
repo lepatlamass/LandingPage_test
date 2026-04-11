@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -35,6 +37,7 @@ interface ImageFile {
 export default function ImageConverterTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [images, setImages] = useState<ImageFile[]>([]);
   const [targetFormat, setTargetFormat] = useState<TargetFormat>('png');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -138,41 +141,39 @@ export default function ImageConverterTool() {
     setIsProcessing(false);
   };
 
-  const downloadAll = async () => {
+  const downloadAll = () => {
     const completedImages = images.filter(img => img.status === 'completed' && img.resultBlob);
     if (completedImages.length === 0) return;
 
     if (completedImages.length === 1) {
-      const img = completedImages[0];
+      downloadSingle(completedImages[0]);
+    } else {
+      guardedDownload(async () => {
+        const zip = new JSZip();
+        completedImages.forEach((img) => {
+          zip.file(`${img.file.name.split('.')[0]}.${targetFormat}`, img.resultBlob!);
+        });
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `converted-images.zip`;
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+  };
+
+  const downloadSingle = (img: ImageFile) => {
+    if (!img.resultBlob) return;
+    guardedDownload(() => {
       const url = URL.createObjectURL(img.resultBlob!);
       const link = document.createElement('a');
       link.href = url;
       link.download = `${img.file.name.split('.')[0]}.${targetFormat}`;
       link.click();
       URL.revokeObjectURL(url);
-    } else {
-      const zip = new JSZip();
-      completedImages.forEach((img) => {
-        zip.file(`${img.file.name.split('.')[0]}.${targetFormat}`, img.resultBlob!);
-      });
-      const content = await zip.generateAsync({ type: 'blob' });
-      const url = URL.createObjectURL(content);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `converted-images.zip`;
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-  };
-
-  const downloadSingle = (img: ImageFile) => {
-    if (!img.resultBlob) return;
-    const url = URL.createObjectURL(img.resultBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${img.file.name.split('.')[0]}.${targetFormat}`;
-    link.click();
-    URL.revokeObjectURL(url);
+    });
   };
 
   return (
@@ -371,6 +372,7 @@ export default function ImageConverterTool() {
           </p>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

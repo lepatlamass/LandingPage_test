@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -91,6 +93,7 @@ interface CsvToPdfFile {
 
 export default function CsvToPdfTool() {
   const t = useTranslations('Common');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [csvFile, setCsvFile] = useState<CsvToPdfFile | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -231,12 +234,14 @@ export default function CsvToPdfTool() {
 
   const downloadPdf = () => {
     if (!csvFile?.resultPdf) return;
-    const url = URL.createObjectURL(csvFile.resultPdf);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${csvFile.file.name.split('.')[0]}.pdf`;
-    link.click();
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(csvFile!.resultPdf!);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${csvFile!.file.name.split('.')[0]}.pdf`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
   };
 
   return (
@@ -393,6 +398,7 @@ export default function CsvToPdfTool() {
           </p>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

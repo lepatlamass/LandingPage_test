@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -33,6 +35,7 @@ interface VideoFile {
 export default function VideoToGifTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [video, setVideo] = useState<VideoFile | null>(null);
   const [fps, setFps] = useState(10);
   const [scale, setScale] = useState(320);
@@ -181,12 +184,14 @@ export default function VideoToGifTool() {
 
   const downloadGif = () => {
     if (!video?.resultUrl) return;
-    const link = document.createElement('a');
-    link.href = video.resultUrl;
-    link.download = `${video.file.name.split('.')[0]}.gif`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    guardedDownload(() => {
+      const link = document.createElement('a');
+      link.href = video!.resultUrl!;
+      link.download = `${video!.file.name.split('.')[0]}.gif`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   };
 
   return (
@@ -417,6 +422,7 @@ export default function VideoToGifTool() {
           </div>
         </div>
       )}
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

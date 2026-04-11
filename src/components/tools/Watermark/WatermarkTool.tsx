@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -40,6 +42,7 @@ interface UploadedFile {
 
 export default function WatermarkTool() {
   const t = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [watermarkType, setWatermarkType] = useState<'image' | 'text'>('image');
   const [watermark, setWatermark] = useState<string | null>(null);
@@ -307,12 +310,14 @@ export default function WatermarkTool() {
   };
 
   const downloadFile = (url: string, filename: string) => {
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    guardedDownload(() => {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   };
 
   return (
@@ -623,6 +628,7 @@ export default function WatermarkTool() {
           </div>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

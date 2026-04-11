@@ -15,7 +15,11 @@ import {
   Search
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { cn } from '@/lib/utils';
 import { processImageToText } from '@/lib/ai/gemini';
+// import ReactMarkdown from 'react-markdown';
+import { useAIGate } from '@/hooks/useAIGate';
+import AIGateModal from '@/components/auth/AIGateModal';
 
 interface ImageFile {
   id: string;
@@ -26,10 +30,10 @@ interface ImageFile {
   error?: string;
 }
 
-
-
 export default function ImageToTextTool() {
-  const t = useTranslations('Common');
+  const t = useTranslations('Tools');
+  const commonT = useTranslations('Common');
+  const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
   const [images, setImages] = useState<ImageFile[]>([]);
   const [mode, setMode] = useState<'extract' | 'caption'>('extract');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -60,39 +64,41 @@ export default function ImageToTextTool() {
     });
   };
 
-  const startProcessing = async () => {
-    if (images.length === 0 || isProcessing) return;
+  const handleExtractText = async () => {
+    guardedAction(async () => {
+      if (images.length === 0 || isProcessing) return;
 
-    setIsProcessing(true);
-    const image = images[0];
-
-    setImages(prev => prev.map(img => 
-      img.id === image.id ? { ...img, status: 'processing', error: undefined } : img
-    ));
-
-    try {
-      // Convert file to base64
-      const reader = new FileReader();
-      const base64Promise = new Promise<string>((resolve, reject) => {
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(image.file);
-      });
-
-      const base64 = await base64Promise;
-      const result = await processImageToText(base64, image.file.type, mode);
+      setIsProcessing(true);
+      const image = images[0];
 
       setImages(prev => prev.map(img => 
-        img.id === image.id ? { ...img, status: 'completed', result } : img
+        img.id === image.id ? { ...img, status: 'processing', error: undefined } : img
       ));
-    } catch (error: any) {
-      console.error("Processing error:", error);
-      setImages(prev => prev.map(img => 
-        img.id === image.id ? { ...img, status: 'error', error: error.message || "Failed to process image" } : img
-      ));
-    } finally {
-      setIsProcessing(false);
-    }
+
+      try {
+        // Convert file to base64
+        const reader = new FileReader();
+        const base64Promise = new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(image.file);
+        });
+
+        const base64 = await base64Promise;
+        const result = await processImageToText(base64, image.file.type, mode);
+
+        setImages(prev => prev.map(img => 
+          img.id === image.id ? { ...img, status: 'completed', result } : img
+        ));
+      } catch (error: any) {
+        console.error("Processing error:", error);
+        setImages(prev => prev.map(img => 
+          img.id === image.id ? { ...img, status: 'error', error: error.message || "Failed to process image" } : img
+        ));
+      } finally {
+        setIsProcessing(false);
+      }
+    });
   };
 
   const copyToClipboard = () => {
@@ -190,9 +196,9 @@ export default function ImageToTextTool() {
               </div>
 
               <button
-                onClick={startProcessing}
-                disabled={isProcessing}
-                className="w-full mt-6 bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleExtractText}
+                disabled={isProcessing || images[0].status === 'completed'}
+                className="flex-1 w-full mt-6 py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 uppercase tracking-wide text-sm"
               >
                 {isProcessing ? (
                   <>
@@ -277,8 +283,8 @@ export default function ImageToTextTool() {
                       <p className="text-white font-bold">Processing Failed</p>
                       <p className="text-red-400/80 text-sm mt-2">{images[0].error}</p>
                       <button 
-                        onClick={startProcessing}
-                        className="mt-6 text-[#d4ff33] text-sm font-bold hover:underline"
+                        onClick={handleExtractText}
+                        className="mt-6 text-[#d4ff33] hover:text-[#c8f020] text-sm font-bold underline underline-offset-4"
                       >
                         Try Again
                       </button>
@@ -306,6 +312,7 @@ export default function ImageToTextTool() {
           </div>
         </div>
       )}
+      <AIGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { Upload, FileText, Download, Loader2, X, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -8,6 +10,7 @@ import JSZip from 'jszip';
 
 const PdfToImageTool = () => {
   const t = useTranslations('Common');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -78,14 +81,16 @@ const PdfToImageTool = () => {
 
   const downloadZip = () => {
     if (!resultZip) return;
-    const url = URL.createObjectURL(resultZip);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${file?.name.replace('.pdf', '') || 'pdf-images'}.zip`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(resultZip!);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${file?.name.replace('.pdf', '') || 'pdf-images'}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
   };
 
   const reset = () => {
@@ -214,6 +219,7 @@ const PdfToImageTool = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 };

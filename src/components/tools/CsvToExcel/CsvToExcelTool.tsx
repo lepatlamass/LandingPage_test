@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -17,6 +19,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
+// @ts-ignore
 import Papa from 'papaparse';
 
 interface CsvToExcelFile {
@@ -29,6 +32,7 @@ interface CsvToExcelFile {
 
 export default function CsvToExcelTool() {
   const t = useTranslations('Common');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [csvFile, setCsvFile] = useState<CsvToExcelFile | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -87,12 +91,14 @@ export default function CsvToExcelTool() {
 
   const downloadExcel = () => {
     if (!csvFile?.excelData) return;
-    const url = URL.createObjectURL(csvFile.excelData);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${csvFile.file.name.split('.')[0]}.xlsx`;
-    link.click();
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(csvFile!.excelData!);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${csvFile!.file.name.split('.')[0]}.xlsx`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
   };
 
   return (
@@ -249,6 +255,7 @@ export default function CsvToExcelTool() {
           </p>
         </div>
       </div>
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -11,8 +13,6 @@ import {
   CheckCircle2,
   AlertCircle,
   FileText,
-  ShieldCheck,
-  Zap,
   Minimize
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -32,6 +32,7 @@ interface PdfFile {
 export default function CompressPdfTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [pdf, setPdf] = useState<PdfFile | null>(null);
   const [level, setLevel] = useState<CompressionLevel>('recommended');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -96,14 +97,16 @@ export default function CompressPdfTool() {
 
   const downloadPdf = () => {
     if (!pdf?.resultBlob) return;
-    const url = URL.createObjectURL(pdf.resultBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `compressed-${pdf.file.name}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(pdf!.resultBlob!);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `compressed-${pdf!.file.name}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
   };
 
   const formatSize = (bytes: number) => {
@@ -363,6 +366,7 @@ export default function CompressPdfTool() {
           </div>
         </div>
       )}
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

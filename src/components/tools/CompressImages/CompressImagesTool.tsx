@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import { useDownloadGate } from '@/hooks/useDownloadGate';
+import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
 import { 
   Upload, 
@@ -31,6 +33,7 @@ interface CompressibleImage {
 export default function CompressImagesTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
+  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
   const [images, setImages] = useState<CompressibleImage[]>([]);
   const [quality, setQuality] = useState<number>(80);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -137,17 +140,19 @@ export default function CompressImagesTool() {
 
   const downloadSingle = (img: CompressibleImage) => {
     if (!img.resultBlob) return;
-    const url = URL.createObjectURL(img.resultBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `compressed-${img.file.name}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    guardedDownload(() => {
+      const url = URL.createObjectURL(img.resultBlob!);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `compressed-${img.file.name}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
   };
 
-  const downloadAll = async () => {
+  const downloadAll = () => {
     const completedImages = images.filter(img => img.status === 'completed' && img.resultBlob);
     if (completedImages.length === 0) return;
 
@@ -156,22 +161,23 @@ export default function CompressImagesTool() {
       return;
     }
 
-    const zip = new JSZip();
-    completedImages.forEach(img => {
-      if (img.resultBlob) {
-        zip.file(`compressed-${img.file.name}`, img.resultBlob);
-      }
+    guardedDownload(async () => {
+      const zip = new JSZip();
+      completedImages.forEach(img => {
+        if (img.resultBlob) {
+          zip.file(`compressed-${img.file.name}`, img.resultBlob);
+        }
+      });
+      const content = await zip.generateAsync({ type: "blob" });
+      const url = URL.createObjectURL(content);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = "compressed-images.zip";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     });
-
-    const content = await zip.generateAsync({ type: "blob" });
-    const url = URL.createObjectURL(content);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = "compressed-images.zip";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
   };
 
   const formatSize = (bytes: number) => {
@@ -369,6 +375,7 @@ export default function CompressImagesTool() {
           </div>
         </div>
       )}
+      <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }

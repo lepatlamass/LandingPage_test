@@ -15,6 +15,8 @@ import {
 import { cn } from '@/lib/utils';
 import { processBackgroundRemoval } from '@/lib/ai/gemini';
 import { useTranslations } from 'next-intl';
+import { useAIGate } from '@/hooks/useAIGate';
+import AIGateModal from '@/components/auth/AIGateModal';
 
 interface ProcessedImage {
   id: string;
@@ -28,6 +30,7 @@ interface ProcessedImage {
 
 export default function BackgroundRemover() {
   const t = useTranslations('Tools');
+  const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
   const [images, setImages] = useState<ProcessedImage[]>([]);
   const [mode, setMode] = useState<'prompt' | 'preset' | 'custom'>('prompt');
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
@@ -108,31 +111,21 @@ export default function BackgroundRemover() {
     });
   };
 
-  const startProcessing = async () => {
-    if (images.length === 0) return;
+  const handleProcess = async () => {
+    guardedAction(async () => {
+      if (images.length === 0 || isProcessing) return;
+      setIsProcessing(true);
 
-    // Check for API Key if using gemini-3.1-flash-image-preview
-    if (typeof window !== 'undefined' && (window as any).aistudio) {
-      const hasKey = await (window as any).aistudio.hasSelectedApiKey();
-      if (!hasKey) {
-        await (window as any).aistudio.openSelectKey();
-        // After opening the dialog, we assume the user will select a key.
-        // The app will rebuild or the next call will use the new key.
-        return;
-      }
-    }
+      const updatedImages = [...images];
+      
+      for (let i = 0; i < updatedImages.length; i++) {
+        if (updatedImages[i].status === 'completed') continue;
 
-    setIsProcessing(true);
-
-    const updatedImages = [...images];
-
-    for (let i = 0; i < updatedImages.length; i++) {
-      if (updatedImages[i].status === 'completed') continue;
-
-      try {
-        setImages(prev => prev.map((img, idx) => 
-          idx === i ? { ...img, status: 'processing' } : img
-        ));
+        try {
+          // Update status to processing
+          setImages(prev => prev.map((img, idx) => 
+            idx === i ? { ...img, status: 'processing', error: undefined } : img
+          ));
 
         const mimeType = updatedImages[i].original.split(';')[0].split(':')[1];
         
@@ -180,6 +173,7 @@ export default function BackgroundRemover() {
     }
 
     setIsProcessing(false);
+    });
   };
 
   const downloadImage = (base64: string, filename: string) => {
@@ -338,7 +332,7 @@ export default function BackgroundRemover() {
               )}
 
               <button 
-                onClick={startProcessing}
+                onClick={handleProcess}
                 disabled={isProcessing || images.length === 0 || (mode === 'prompt' && !prompt) || (mode === 'custom' && !customBg) || (mode === 'preset' && !selectedPreset)}
                 className={cn(
                   "w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-sm",
@@ -443,6 +437,7 @@ export default function BackgroundRemover() {
           </div>
         </div>
       </div>
+      <AIGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />
     </div>
   );
 }
