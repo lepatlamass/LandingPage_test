@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Download, Sparkles, CheckCircle2, ArrowRight, Zap, Shield, Infinity } from 'lucide-react';
-import { signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 import { useRouter } from '@/navigation';
 import type { DownloadGateModalState } from '@/hooks/useDownloadGate';
+import { signInWithGoogle } from '@/lib/auth-utils';
 
 interface DownloadGateModalProps {
   state: DownloadGateModalState;
@@ -26,16 +26,20 @@ export default function DownloadGateModal({ state, onClose, onLoginSuccess }: Do
     setIsSigning(true);
     setSignError(null);
     try {
-      await signInWithPopup(auth, googleProvider);
-      onLoginSuccess();
-    } catch (error: any) {
-      if (error?.code === 'auth/popup-blocked') {
-        await signInWithRedirect(auth, googleProvider);
-      } else {
-        console.error('Sign-in error:', error);
-        setSignError('Sign-in failed. Please try again.');
+      const result = await signInWithGoogle(auth, googleProvider);
+      
+      if (result === null) {
         setIsSigning(false);
+        return;
       }
+
+      if (result) {
+        onLoginSuccess();
+      }
+    } catch (error: any) {
+      console.error('Sign-in error:', error);
+      setSignError('Sign-in failed. Please try again.');
+      setIsSigning(false);
     }
   };
 

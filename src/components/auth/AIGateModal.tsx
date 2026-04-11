@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, CheckCircle2, ArrowRight, Zap, Shield, Infinity as InfinityIcon } from 'lucide-react';
-import { signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 import { useRouter } from '@/navigation';
 import type { AIGateModalState } from '@/hooks/useAIGate';
+import { signInWithGoogle } from '@/lib/auth-utils';
 
 interface AIGateModalProps {
   state: AIGateModalState;
@@ -26,16 +26,19 @@ export default function AIGateModal({ state, onClose, onLoginSuccess }: AIGateMo
     setIsSigning(true);
     setSignError(null);
     try {
-      await signInWithPopup(auth, googleProvider);
-      onLoginSuccess();
-    } catch (error: any) {
-      if (error?.code === 'auth/popup-blocked') {
-        await signInWithRedirect(auth, googleProvider);
-      } else {
-        console.error('Sign-in error:', error);
-        setSignError('Sign-in failed. Please try again.');
+      const result = await signInWithGoogle(auth, googleProvider);
+      if (result === null) {
         setIsSigning(false);
+        return;
       }
+      // If result exists, we are logged in. Redirect will handle its own state.
+      if (result) {
+        onLoginSuccess();
+      }
+    } catch (error: any) {
+      console.error('Sign-in error:', error);
+      setSignError('Sign-in failed. Please try again.');
+      setIsSigning(false);
     }
   };
 

@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { auth, googleProvider } from '../../lib/firebase';
 import { useAuth } from '../../providers/AuthProvider';
 import { useRouter } from '../../navigation';
+import { signInWithGoogle } from '../../lib/auth-utils';
 
 export default function GoogleSignInButton() {
   const { loading } = useAuth();
@@ -15,17 +15,19 @@ export default function GoogleSignInButton() {
     if (isSigningIn) return;
     setIsSigningIn(true);
     try {
-      await signInWithPopup(auth, googleProvider);
-      router.replace('/tools'); // Or previous page
-    } catch (error: unknown) {
-      const firebaseError = error as { code?: string };
-      // Popup blocked (common on mobile/Safari) — fallback to redirect
-      if (firebaseError.code === 'auth/popup-blocked') {
-        await signInWithRedirect(auth, googleProvider);
-      } else {
-        console.error('Sign-in error:', error);
+      const result = await signInWithGoogle(auth, googleProvider);
+      // If result is null, it was cancelled by user or browser (popup closed)
+      if (result === null) {
         setIsSigningIn(false);
+        return;
       }
+      // Success or redirect started
+      if (result) {
+        router.replace('/tools');
+      }
+    } catch (error: unknown) {
+      console.error('Sign-in error:', error);
+      setIsSigningIn(false);
     }
   }
 
