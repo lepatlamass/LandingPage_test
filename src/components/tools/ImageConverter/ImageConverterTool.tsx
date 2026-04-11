@@ -20,26 +20,31 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import JSZip from 'jszip';
+import { useToolState } from '@/hooks/useToolState';
 
 type TargetFormat = 'png' | 'jpeg' | 'webp' | 'avif';
 
 interface ImageFile {
   id: string;
   file: File;
+  /** object URL — valid only in the current session */
   preview: string;
   status: 'idle' | 'processing' | 'completed' | 'error';
-  resultBlob?: Blob;
+  /** data URL — serializable and survives page reloads */
+  resultDataUrl?: string;
+  /** cached file metadata for display after reload */
+  fileName: string;
+  fileSize: number;
+  fileType: string;
   error?: string;
 }
-
-
 
 export default function ImageConverterTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
   const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
-  const [images, setImages] = useState<ImageFile[]>([]);
-  const [targetFormat, setTargetFormat] = useState<TargetFormat>('png');
+  const [images, setImages, clearImages] = useToolState<ImageFile[]>('image-converter-images', []);
+  const [targetFormat, setTargetFormat, ] = useToolState<TargetFormat>('image-converter-format', 'png');
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -55,6 +60,9 @@ export default function ImageConverterTool() {
         id: Math.random().toString(36).substr(2, 9),
         file,
         preview: URL.createObjectURL(file),
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type,
         status: 'idle'
       }));
 
@@ -71,8 +79,8 @@ export default function ImageConverterTool() {
   };
 
   const clearAll = () => {
-    images.forEach(img => URL.revokeObjectURL(img.preview));
-    setImages([]);
+    images.forEach(img => { if (img.preview) URL.revokeObjectURL(img.preview); });
+    clearImages();
     setIsProcessing(false);
   };
 
@@ -127,12 +135,17 @@ export default function ImageConverterTool() {
         ));
 
         const resultBlob = await convertImage(img, targetFormat);
-        
-        setImages(prev => prev.map(item => 
-          item.id === img.id ? { ...item, status: 'completed', resultBlob } : item
+        // Convert to data URL so it survives locale-change page reloads
+        const resultDataUrl = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(resultBlob);
+        });
+        setImages(prev => prev.map(item =>
+          item.id === img.id ? { ...item, status: 'completed', resultDataUrl } : item
         ));
       } catch (error) {
-        setImages(prev => prev.map(item => 
+        setImages(prev => prev.map(item =>
           item.id === img.id ? { ...item, status: 'error', error: 'Failed' } : item
         ));
       }
@@ -142,7 +155,7 @@ export default function ImageConverterTool() {
   };
 
   const downloadAll = () => {
-    const completedImages = images.filter(img => img.status === 'completed' && img.resultBlob);
+    const completedImages = images.filter(img => img.status === 'completed' && img.resultDataUrl);
     if (completedImages.length === 0) return;
 
     if (completedImages.length === 1) {
@@ -150,9 +163,10 @@ export default function ImageConverterTool() {
     } else {
       guardedDownload(async () => {
         const zip = new JSZip();
-        completedImages.forEach((img) => {
-          zip.file(`${img.file.name.split('.')[0]}.${targetFormat}`, img.resultBlob!);
-        });
+        await Promise.all(completedImages.map(async (img) => {
+          const blob = await fetch(img.resultDataUrl!).then(r => r.blob());
+          zip.file(`${img.fileName.split('.')[0]}.${targetFormat}`, blob);
+        }));
         const content = await zip.generateAsync({ type: 'blob' });
         const url = URL.createObjectURL(content);
         const link = document.createElement('a');
@@ -165,14 +179,18 @@ export default function ImageConverterTool() {
   };
 
   const downloadSingle = (img: ImageFile) => {
-    if (!img.resultBlob) return;
+    if (!img.resultDataUrl) return;
     guardedDownload(() => {
-      const url = URL.createObjectURL(img.resultBlob!);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${img.file.name.split('.')[0]}.${targetFormat}`;
-      link.click();
-      URL.revokeObjectURL(url);
+      fetch(img.resultDataUrl!)
+        .then(r => r.blob())
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `${img.fileName.split('.')[0]}.${targetFormat}`;
+          link.click();
+          URL.revokeObjectURL(url);
+        });
     });
   };
 
@@ -259,9 +277,9 @@ export default function ImageConverterTool() {
                       <img src={img.preview} alt="preview" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{img.file.name}</p>
+                      <p className="text-sm font-medium text-white truncate">{img.fileName}</p>
                       <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">
-                        {(img.file.size / 1024).toFixed(1)} KB • {img.file.type.split('/')[1]}
+                        {(img.fileSize / 1024).toFixed(1)} KB • {img.fileType.split('/')[1]}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">

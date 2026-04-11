@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDownloadGate } from '@/hooks/useDownloadGate';
 import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
@@ -17,15 +17,18 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PDFDocument } from 'pdf-lib';
+import { useToolState } from '@/hooks/useToolState';
 
 type CompressionLevel = 'recommended' | 'extreme' | 'low';
 
-interface PdfFile {
-  file: File;
+/** Serializable snapshot — no File / Blob references */
+interface PdfState {
+  fileName: string;
   originalSize: number;
   compressedSize?: number;
   status: 'idle' | 'processing' | 'completed' | 'error';
-  resultBlob?: Blob;
+  /** Base64 data URL of the compressed result */
+  resultDataUrl?: string;
   error?: string;
 }
 
@@ -33,38 +36,39 @@ export default function CompressPdfTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
   const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
-  const [pdf, setPdf] = useState<PdfFile | null>(null);
-  const [level, setLevel] = useState<CompressionLevel>('recommended');
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [pdfState, setPdfState, resetPdfState] = useToolState<PdfState | null>('compress-pdf', null);
+  const [level, setLevel, ] = useToolState<CompressionLevel>('compress-pdf-level', 'recommended');
+  const [isProcessing, setIsProcessing] = React.useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Keep a live File reference for the current session (not persisted)
+  const fileRef = useRef<File | null>(null);
 
   const onFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    setPdf({
-      file,
+    fileRef.current = file;
+    setPdfState({
+      fileName: file.name,
       originalSize: file.size,
       status: 'idle'
     });
   };
 
   const compressPdf = async () => {
-    if (!pdf || isProcessing) return;
+    const file = fileRef.current;
+    if (!pdfState || !file || isProcessing) return;
 
     setIsProcessing(true);
-    setPdf(prev => prev ? { ...prev, status: 'processing' } : null);
+    setPdfState(prev => prev ? { ...prev, status: 'processing' } : null);
 
     try {
-      const arrayBuffer = await pdf.file.arrayBuffer();
+      const arrayBuffer = await file.arrayBuffer();
       const pdfDoc = await PDFDocument.load(arrayBuffer);
       
-      // Create a new document to copy pages into, which helps strip unused objects and overhead
       const compressedDoc = await PDFDocument.create();
       const copiedPages = await compressedDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
       copiedPages.forEach((page) => compressedDoc.addPage(page));
 
-      // Strip metadata to save space
       compressedDoc.setTitle('');
       compressedDoc.setAuthor('');
       compressedDoc.setSubject('');
@@ -72,40 +76,50 @@ export default function CompressPdfTool() {
       compressedDoc.setProducer('');
       compressedDoc.setCreator('');
       
-      // Use object streams for more efficient storage
       const compressedBytes = await compressedDoc.save({
         useObjectStreams: true,
         addDefaultPage: false,
         updateFieldAppearances: false,
-        objectsPerTick: 50 // Helps with performance during save
+        objectsPerTick: 50
       });
 
+      // Convert to base64 data URL for persistence across locale changes
       const blob = new Blob([compressedBytes], { type: 'application/pdf' });
-      
-      setPdf(prev => prev ? { 
-        ...prev, 
-        status: 'completed', 
-        resultBlob: blob,
-        compressedSize: blob.size 
+      const resultDataUrl = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+
+      setPdfState(prev => prev ? {
+        ...prev,
+        status: 'completed',
+        resultDataUrl,
+        compressedSize: blob.size
       } : null);
     } catch (error: any) {
-      setPdf(prev => prev ? { ...prev, status: 'error', error: error.message } : null);
+      setPdfState(prev => prev ? { ...prev, status: 'error', error: error.message } : null);
     } finally {
       setIsProcessing(false);
     }
   };
 
   const downloadPdf = () => {
-    if (!pdf?.resultBlob) return;
+    if (!pdfState?.resultDataUrl) return;
     guardedDownload(() => {
-      const url = URL.createObjectURL(pdf!.resultBlob!);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `compressed-${pdf!.file.name}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Re-create Blob from the persisted data URL
+      fetch(pdfState.resultDataUrl!)
+        .then(r => r.blob())
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `compressed-${pdfState.fileName}`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        });
     });
   };
 
@@ -125,7 +139,7 @@ export default function CompressPdfTool() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
-      {!pdf ? (
+      {!pdfState ? (
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -136,7 +150,8 @@ export default function CompressPdfTool() {
             e.preventDefault();
             const file = e.dataTransfer.files[0];
             if (file && file.type === 'application/pdf') {
-              setPdf({ file, originalSize: file.size, status: 'idle' });
+              fileRef.current = file;
+              setPdfState({ fileName: file.name, originalSize: file.size, status: 'idle' });
             }
           }}
         >
@@ -197,9 +212,9 @@ export default function CompressPdfTool() {
                 <div className="pt-4 space-y-3">
                   <button
                     onClick={compressPdf}
-                    disabled={isProcessing || pdf.status === 'completed'}
+                    disabled={isProcessing || pdfState.status === 'completed'}
                     className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all ${
-                      pdf.status === 'completed'
+                      pdfState.status === 'completed'
                         ? 'bg-green-500 text-white cursor-default'
                         : 'bg-red-400 text-white hover:bg-red-500 shadow-lg shadow-red-400/20 disabled:opacity-50 disabled:cursor-not-allowed'
                     }`}
@@ -209,7 +224,7 @@ export default function CompressPdfTool() {
                         <Loader2 size={20} className="animate-spin" />
                         {tt('compress-pdf-processing')}
                       </>
-                    ) : pdf.status === 'completed' ? (
+                    ) : pdfState.status === 'completed' ? (
                       <>
                         <CheckCircle2 size={20} />
                         {tt('compress-pdf-ready')}
@@ -222,7 +237,7 @@ export default function CompressPdfTool() {
                     )}
                   </button>
 
-                  {pdf.status === 'completed' && (
+                  {pdfState.status === 'completed' && (
                     <button
                       onClick={downloadPdf}
                       className="w-full py-4 rounded-2xl bg-white text-black font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-all"
@@ -233,7 +248,7 @@ export default function CompressPdfTool() {
                   )}
 
                   <button
-                    onClick={() => setPdf(null)}
+                    onClick={resetPdfState}
                     className="w-full py-4 rounded-2xl bg-white/5 text-gray-400 font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
                   >
                     <X size={20} />
@@ -253,20 +268,20 @@ export default function CompressPdfTool() {
                     <FileText size={20} />
                   </div>
                   <div>
-                    <h4 className="text-white font-bold text-sm">{pdf.file.name}</h4>
+                    <h4 className="text-white font-bold text-sm">{pdfState.fileName}</h4>
                     <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">
-                      {formatSize(pdf.originalSize)}
+                      {formatSize(pdfState.originalSize)}
                     </p>
                   </div>
                 </div>
-                {pdf.status === 'completed' && pdf.compressedSize && (
+                {pdfState.status === 'completed' && pdfState.compressedSize && (
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">New Size</p>
-                      <p className="text-green-400 font-mono font-bold">{formatSize(pdf.compressedSize)}</p>
+                      <p className="text-green-400 font-mono font-bold">{formatSize(pdfState.compressedSize)}</p>
                     </div>
                     <div className="bg-green-400/10 text-green-400 px-3 py-1 rounded-full text-xs font-bold border border-green-400/20">
-                      -{calculateSavings(pdf.originalSize, pdf.compressedSize)}%
+                      -{calculateSavings(pdfState.originalSize, pdfState.compressedSize)}%
                     </div>
                   </div>
                 )}
@@ -274,7 +289,7 @@ export default function CompressPdfTool() {
 
               <div className="p-12 flex flex-col items-center justify-center text-center">
                 <AnimatePresence mode="wait">
-                  {pdf.status === 'idle' && (
+                  {pdfState.status === 'idle' && (
                     <motion.div
                       key="idle"
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -291,7 +306,7 @@ export default function CompressPdfTool() {
                     </motion.div>
                   )}
 
-                  {pdf.status === 'processing' && (
+                  {pdfState.status === 'processing' && (
                     <motion.div
                       key="processing"
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -312,7 +327,7 @@ export default function CompressPdfTool() {
                     </motion.div>
                   )}
 
-                  {pdf.status === 'completed' && (
+                  {pdfState.status === 'completed' && (
                     <motion.div
                       key="completed"
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -337,7 +352,7 @@ export default function CompressPdfTool() {
                     </motion.div>
                   )}
 
-                  {pdf.status === 'error' && (
+                  {pdfState.status === 'error' && (
                     <motion.div
                       key="error"
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -350,10 +365,10 @@ export default function CompressPdfTool() {
                       </div>
                       <div className="space-y-2">
                         <p className="text-white font-bold">Compression Failed</p>
-                        <p className="text-red-400/70 text-xs">{pdf.error}</p>
+                        <p className="text-red-400/70 text-xs">{pdfState.error}</p>
                       </div>
                       <button
-                        onClick={() => setPdf(prev => prev ? { ...prev, status: 'idle' } : null)}
+                        onClick={() => setPdfState(prev => prev ? { ...prev, status: 'idle' } : null)}
                         className="text-gray-400 hover:text-white text-sm font-bold underline underline-offset-4"
                       >
                         Try Again

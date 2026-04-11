@@ -17,6 +17,7 @@ import { processBackgroundRemoval } from '@/lib/ai/gemini';
 import { useTranslations } from 'next-intl';
 import { useAIGate } from '@/hooks/useAIGate';
 import AIGateModal from '@/components/auth/AIGateModal';
+import { useToolState } from '@/hooks/useToolState';
 
 interface ProcessedImage {
   id: string;
@@ -31,10 +32,10 @@ interface ProcessedImage {
 export default function BackgroundRemover() {
   const t = useTranslations('Tools');
   const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
-  const [images, setImages] = useState<ProcessedImage[]>([]);
-  const [mode, setMode] = useState<'prompt' | 'preset' | 'custom'>('prompt');
-  const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
-  const [prompt, setPrompt] = useState('');
+  const [images, setImages] = useToolState<ProcessedImage[]>('bg-remover-images', []);
+  const [mode, setMode] = useToolState<'prompt' | 'preset' | 'custom'>('bg-remover-mode', 'prompt');
+  const [selectedPreset, setSelectedPreset] = useToolState<string | null>('bg-remover-preset', null);
+  const [prompt, setPrompt] = useToolState<string>('bg-remover-prompt', '');
   const [customBg, setCustomBg] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);

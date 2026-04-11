@@ -20,6 +20,7 @@ import { processImageToText } from '@/lib/ai/gemini';
 // import ReactMarkdown from 'react-markdown';
 import { useAIGate } from '@/hooks/useAIGate';
 import AIGateModal from '@/components/auth/AIGateModal';
+import { useToolState } from '@/hooks/useToolState';
 
 interface ImageFile {
   id: string;
@@ -34,8 +35,10 @@ export default function ImageToTextTool() {
   const t = useTranslations('Tools');
   const commonT = useTranslations('Common');
   const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
-  const [images, setImages] = useState<ImageFile[]>([]);
-  const [mode, setMode] = useState<'extract' | 'caption'>('extract');
+  // Persisted: the image extraction result survives locale changes
+  const [images, setImages] = useToolState<ImageFile[]>('image-to-text-images', []);
+  const [mode, setMode] = useToolState<'extract' | 'caption'>('image-to-text-mode', 'extract');
+  // Not persisted: transient UI state
   const [isProcessing, setIsProcessing] = useState(false);
   const [copied, setCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);

@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import React from 'react';
 import { AuthProvider } from '../../providers/AuthProvider';
+import { ToolStateProvider } from '../../providers/ToolStateProvider';
 
 export default async function LocaleLayout({
   children,
@@ -16,11 +17,13 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <AuthProvider>
-        <div className="min-h-screen flex flex-col">
-          <main className="flex-grow">
-            {children}
-          </main>
-        </div>
+        <ToolStateProvider>
+          <div className="min-h-screen flex flex-col">
+            <main className="flex-grow">
+              {children}
+            </main>
+          </div>
+        </ToolStateProvider>
       </AuthProvider>
     </NextIntlClientProvider>
   );

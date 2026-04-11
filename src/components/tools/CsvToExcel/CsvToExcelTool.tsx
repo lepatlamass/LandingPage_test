@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDownloadGate } from '@/hooks/useDownloadGate';
 import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
@@ -21,83 +21,87 @@ import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
 // @ts-ignore
 import Papa from 'papaparse';
+import { useToolState } from '@/hooks/useToolState';
 
-interface CsvToExcelFile {
-  id: string;
-  file: File;
+interface CsvFileState {
+  fileName: string;
+  fileSize: number;
   status: 'idle' | 'processing' | 'completed' | 'error';
-  excelData?: Blob;
+  resultDataUrl?: string;
   error?: string;
 }
 
 export default function CsvToExcelTool() {
   const t = useTranslations('Common');
   const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
-  const [csvFile, setCsvFile] = useState<CsvToExcelFile | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [csvState, setCsvState, resetCsvState] = useToolState<CsvFileState | null>('csv-to-excel', null);
+  const [isProcessing, setIsProcessing] = React.useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Live File reference for the current session — not persisted
+  const fileRef = useRef<File | null>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    if (files.length > 0) {
-      addFile(files[0]);
-    }
+    if (files.length > 0) addFile(files[0]);
   };
 
   const addFile = (file: File) => {
     if (!file.name.match(/\.csv$/i)) return;
-
-    setCsvFile({
-      id: Math.random().toString(36).substring(2, 11),
-      file,
-      status: 'idle'
-    });
+    fileRef.current = file;
+    setCsvState({ fileName: file.name, fileSize: file.size, status: 'idle' });
   };
 
   const removeFile = () => {
-    setCsvFile(null);
+    fileRef.current = null;
+    resetCsvState();
     setIsProcessing(false);
   };
 
   const processCsv = async () => {
-    if (!csvFile || isProcessing) return;
+    const file = fileRef.current;
+    if (!csvState || !file || isProcessing) return;
     setIsProcessing(true);
 
     try {
-      setCsvFile(prev => prev ? { ...prev, status: 'processing' } : null);
+      setCsvState(prev => prev ? { ...prev, status: 'processing' } : null);
 
-      const text = await csvFile.file.text();
-      
-      // Parse CSV
+      const text = await file.text();
       const parsed = Papa.parse(text, { skipEmptyLines: true });
-      
-      // Create workbook
       const worksheet = XLSX.utils.aoa_to_sheet(parsed.data as any[][]);
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-      
-      // Write to array buffer
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
       const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      
-      setCsvFile(prev => prev ? { ...prev, status: 'completed', excelData: blob } : null);
+
+      // Store as data URL so it survives locale-change reloads
+      const resultDataUrl = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+
+      setCsvState(prev => prev ? { ...prev, status: 'completed', resultDataUrl } : null);
     } catch (error) {
       console.error('CSV to Excel error:', error);
-      setCsvFile(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
+      setCsvState(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
     } finally {
       setIsProcessing(false);
     }
   };
 
   const downloadExcel = () => {
-    if (!csvFile?.excelData) return;
+    if (!csvState?.resultDataUrl) return;
     guardedDownload(() => {
-      const url = URL.createObjectURL(csvFile!.excelData!);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${csvFile!.file.name.split('.')[0]}.xlsx`;
-      link.click();
-      URL.revokeObjectURL(url);
+      fetch(csvState.resultDataUrl!)
+        .then(r => r.blob())
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `${csvState.fileName.split('.')[0]}.xlsx`;
+          link.click();
+          URL.revokeObjectURL(url);
+        });
     });
   };
 
@@ -114,7 +118,7 @@ export default function CsvToExcelTool() {
               <p className="text-gray-500 text-sm">Convert CSV files to Excel spreadsheets</p>
             </div>
           </div>
-          {csvFile && (
+          {csvState && (
             <button 
               onClick={removeFile}
               className="p-2 text-gray-500 hover:text-emerald-400 transition-colors"
@@ -126,7 +130,7 @@ export default function CsvToExcelTool() {
         </div>
 
         <div className="p-8">
-          {!csvFile ? (
+          {!csvState ? (
             <div 
               onClick={() => fileInputRef.current?.click()}
               onDragOver={(e) => e.preventDefault()}
@@ -165,14 +169,14 @@ export default function CsvToExcelTool() {
                   <FileCode size={32} className="text-emerald-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-lg font-bold text-white truncate">{csvFile.file.name}</p>
+                  <p className="text-lg font-bold text-white truncate">{csvState.fileName}</p>
                   <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">
-                    {(csvFile.file.size / (1024 * 1024)).toFixed(2)} MB
+                    {(csvState.fileSize / (1024 * 1024)).toFixed(2)} MB
                   </p>
                 </div>
                 
                 <div className="flex items-center gap-3">
-                  {csvFile.status === 'completed' ? (
+                  {csvState.status === 'completed' ? (
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2 text-green-400 font-bold text-sm">
                         <CheckCircle2 size={20} />
@@ -185,7 +189,7 @@ export default function CsvToExcelTool() {
                         <Download size={18} /> Download Excel
                       </button>
                     </div>
-                  ) : csvFile.status === 'error' ? (
+                  ) : csvState.status === 'error' ? (
                     <div className="flex items-center gap-2 text-red-400 font-bold text-sm">
                       <AlertCircle size={20} />
                       Failed
@@ -249,7 +253,7 @@ export default function CsvToExcelTool() {
           <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 mb-6">
             <ShieldCheck size={24} />
           </div>
-          <h4 className="text-white font-bold mb-4">Secure & Private</h4>
+          <h4 className="text-white font-bold mb-4">Secure &amp; Private</h4>
           <p className="text-gray-500 text-sm leading-relaxed">
             No data is uploaded to our servers. All conversion happens locally on your machine.
           </p>
