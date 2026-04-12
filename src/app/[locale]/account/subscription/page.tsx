@@ -1,13 +1,19 @@
 'use client';
 
 import React from 'react';
-import { Link } from '../../../../navigation';
 import { useTranslations } from 'next-intl';
 import { CreditCard, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useAuth } from '@/providers/AuthProvider';
+import { Link } from '../../../../navigation';
+import LicenseActivation, { AICreditsBar } from '@/components/billing/LicenseActivation';
 
 export default function SubscriptionPage() {
   const t = useTranslations('Account.pages.subscription');
+  const { user, loading, hasActiveLicense, aiCreditsRemaining, aiCreditsTotal } = useAuth();
+
+  if (loading) return null;
+
   return (
     <div className="p-8 max-w-4xl mx-auto w-full">
       <div className="mb-8">
@@ -17,7 +23,7 @@ export default function SubscriptionPage() {
 
       <div className="space-y-6">
         {/* Info Box (Callout) */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden p-6"
@@ -30,7 +36,7 @@ export default function SubscriptionPage() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 shrink-0">
-              <Link 
+              <Link
                 href="#"
                 className="text-sm font-medium text-[#d4ff33] hover:text-[#c2eb2e] hover:underline transition-colors flex items-center justify-center pt-2 sm:pt-0"
               >
@@ -47,28 +53,63 @@ export default function SubscriptionPage() {
         </motion.div>
 
         {/* Subscription Status Card */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-          <div className="px-6 py-5 border-b border-zinc-800 flex items-center gap-3">
-            <CreditCard className="text-zinc-500 h-5 w-5" />
-            <h2 className="text-lg font-semibold text-white">Current Plan</h2>
-          </div>
-          
-          <div className="p-8 flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-zinc-950 border border-zinc-800 rounded-full flex items-center justify-center mb-4">
-              <CreditCard className="text-zinc-500 h-8 w-8" />
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">No Active Subscription</h3>
-            <p className="text-zinc-400 mb-8 max-w-sm">
-              {t('noSubscription')}
-            </p>
-            
-            <button
-              className="inline-flex items-center justify-center gap-2 bg-[#d4ff33] text-black px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#c2eb2e] transition-colors active:scale-[0.98]"
+        {hasActiveLicense ? (
+          <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
             >
-              {t('tryFree')} <ArrowRight size={16} />
-            </button>
+              <LicenseActivation userId={user?.uid} />
+            </motion.div>
+
+            {/* AI Credits Usage Bar */}
+            {aiCreditsRemaining !== undefined && aiCreditsTotal !== undefined && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <AICreditsBar remaining={aiCreditsRemaining} total={aiCreditsTotal} />
+              </motion.div>
+            )}
           </div>
-        </div>
+        ) : (
+          <div className="space-y-6">
+            {/* "No Active Subscription" card — existing design, unchanged */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+              <div className="px-6 py-5 border-b border-zinc-800 flex items-center gap-3">
+                <CreditCard className="text-zinc-500 h-5 w-5" />
+                <h2 className="text-lg font-semibold text-white">Current Plan</h2>
+              </div>
+
+              <div className="p-8 flex flex-col items-center text-center">
+                <div className="w-16 h-16 bg-zinc-950 border border-zinc-800 rounded-full flex items-center justify-center mb-4">
+                  <CreditCard className="text-zinc-500 h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">No Active Subscription</h3>
+                <p className="text-zinc-400 mb-8 max-w-sm">
+                  {t('noSubscription')}
+                </p>
+
+                <a
+                  href="#activate-form"
+                  className="inline-flex items-center justify-center gap-2 bg-[#d4ff33] text-black px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#c2eb2e] transition-colors active:scale-[0.98]"
+                >
+                  {t('tryFree')} <ArrowRight size={16} />
+                </a>
+              </div>
+            </div>
+
+            {/* License Activation Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <LicenseActivation userId={user?.uid} />
+            </motion.div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -626,7 +626,10 @@
         "switchToTeamPlan": "Passer au forfait Équipe",
         "tellYourBoss": "Dites-le à votre patron",
         "noSubscription": "Vous n'avez pas d'abonnement.",
-        "tryFree": "Essayer gratuitement 7 jours"
+        "tryFree": "Essayer gratuitement 7 jours",
+        "activateLicense": "Activer la Licence",
+        "activateLicenseButton": "Activer",
+        "activating": "Activation en cours..."
       },
       "billing": {
         "title": "Facturation",

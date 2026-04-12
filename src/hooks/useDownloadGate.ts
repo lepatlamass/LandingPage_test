@@ -23,16 +23,15 @@ export interface UseDownloadGateReturn {
  *   - Returning non-sub   → show subscribe modal (localStorage key present, not subscribed)
  */
 export function useDownloadGate(): UseDownloadGateReturn {
-  const { user, isSubscribed } = useAuth();
+  const { user, hasActiveLicense } = useAuth();
   const [modalState, setModalState] = useState<DownloadGateModalState>('none');
   // Store the pending download function so we can auto-run it after login
   const pendingDownload = useRef<(() => void) | null>(null);
 
   const guardedDownload = useCallback(
     (downloadFn: () => void) => {
-      // Subscribed or we also allow logged-in-but-not-subscribed on first?
-      // Per spec: subscribed → instant; not subscribed → gate.
-      if (isSubscribed) {
+      // Has active license → download immediately.
+      if (hasActiveLicense) {
         downloadFn();
         return;
       }
@@ -50,11 +49,11 @@ export function useDownloadGate(): UseDownloadGateReturn {
         // First time ever — show login gate
         setModalState('login');
       } else {
-        // Has logged in before but not subscribed — show subscribe gate
+        // Has logged in before but no license — show subscribe gate
         setModalState('subscribe');
       }
     },
-    [isSubscribed]
+    [hasActiveLicense]
   );
 
   const closeModal = useCallback(() => {

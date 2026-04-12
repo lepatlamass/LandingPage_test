@@ -566,7 +566,7 @@
     "foundryProPeriod": "/mo",
     "bestForOccasional": "Best for: Occasional users",
     "unlimitedDownloads": "Unlimited Downloads (or specify limit if applicable)",
-    "creditsDesc": "10 credits for our background changer and watermarker remover",
+    "creditsDesc": "10 AI credits per month (use on any AI feature)",
     "priorityProcessing": "Priority Processing",
     "noWatermarks": "No Watermarks",
     "startMonthly": "Start Monthly Plan",
@@ -576,7 +576,7 @@
     "saveAmount": "(Save $11)",
     "bestForPower": "Best for: Power users & businesses",
     "everythingInPro": "Everything in Pro",
-    "yearlyCredits": "120 credits for our background changer and watermarker remover",
+    "yearlyCredits": "20 AI credits per month (240/year) for any AI feature",
     "getYearly": "Get Yearly Access",
     "premiumQuality": "Premium Quality at an Unbeatable Price",
     "lightningFast": "Lightning Fast",
@@ -627,7 +627,10 @@
         "switchToTeamPlan": "Switch to a Team plan",
         "tellYourBoss": "Tell your boss",
         "noSubscription": "You do not have a subscription.",
-        "tryFree": "Try 7 days free"
+        "tryFree": "Try 7 days free",
+        "activateLicense": "Activate License",
+        "activateLicenseButton": "Activate",
+        "activating": "Activating..."
       },
       "billing": {
         "title": "Billing",

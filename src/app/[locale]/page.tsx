@@ -1,14 +1,47 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '../../navigation';
 import Image from 'next/image';
-import { ArrowRight, Check, ChevronDown, FileText, Image as ImageIcon, Video, Zap, Shield, TrendingUp, CloudDownload, Twitter, Linkedin, Minimize, RefreshCw, Eraser, Droplets, Type, Maximize, FileSpreadsheet, FileCode, FileVideo } from 'lucide-react';
+import { ArrowRight, ChevronDown, FileText, Image as ImageIcon, Video, Zap, Shield, TrendingUp, CloudDownload, Twitter, Linkedin, Minimize, RefreshCw, Eraser, Droplets, Type, Maximize, FileSpreadsheet, FileCode, FileVideo } from 'lucide-react';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import NavigationLoginButton from '../../components/auth/NavigationLoginButton';
+import PricingButtons from '../../components/billing/PricingButtons';
+import { getProduct } from '../../lib/chariow';
 
-export default async function Page() {
+const MONTHLY_PRODUCT_ID = 'prd_zvd1cf';
+const YEARLY_PRODUCT_ID = 'prd_ge7e1g';
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const t = await getTranslations('Home');
   const tCommon = await getTranslations('Common');
   const tTools = await getTranslations('Tools');
+
+  // Fetch live prices from Chariow
+  let monthlyPrice: { value: number; formatted: string; currency: string } | null = null;
+  let yearlyPrice: { value: number; formatted: string; currency: string } | null = null;
+  let monthlySale: string | null = null;
+  let yearlySale: string | null = null;
+  let monthlyName: string | null = null;
+  let yearlyName: string | null = null;
+
+  try {
+    const [monthly, yearly] = await Promise.all([
+      getProduct(MONTHLY_PRODUCT_ID),
+      getProduct(YEARLY_PRODUCT_ID),
+    ]);
+    monthlyPrice = monthly.currentPrice;
+    yearlyPrice = yearly.currentPrice;
+    monthlySale = monthly.priceOff ?? null;
+    yearlySale = yearly.priceOff ?? null;
+    monthlyName = monthly.name;
+    yearlyName = yearly.name;
+  } catch {
+    // If Chariow API is unavailable, prices will remain null and use fallbacks
+  }
 
   const toolDirectory = [
     {
@@ -341,78 +374,33 @@ export default async function Page() {
                   {t('pricingSubtitle')}
                 </p>
               </div>
-
-              <div className="lg:w-2/3 flex flex-col sm:flex-row gap-8 w-full items-stretch">
-                {/* Monthly Plan */}
-                <div className="flex-1 rounded-[32px] border-[2px] border-[#d4ff33] bg-[#111111] p-8 relative flex flex-col shadow-2xl shadow-[#d4ff33]/5 min-h-[500px]">
-                  <div className="absolute -top-[2px] right-8 bg-[#d4ff33] text-black text-[10px] font-black px-6 py-2 rounded-b-xl uppercase tracking-widest">
-                    Recommended
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3 text-white">{t('foundryPro')}</h3>
-                  <div className="flex items-baseline gap-1 mb-6">
-                    <span className="text-5xl font-bold text-white">{t('foundryProPrice')}</span>
-                    <span className="text-gray-500 text-xl">{t('foundryProPeriod')}</span>
-                  </div>
-                  <div className="text-xs text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t('bestForOccasional')}</div>
-
-                  <ul className="space-y-4 mb-10 flex-1">
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('unlimitedDownloads')}</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('creditsDesc')}</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('priorityProcessing')}</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('noWatermarks')}</span>
-                    </li>
-                  </ul>
-
-                  <button className="w-full py-4 rounded-xl bg-[#d4ff33] text-black font-black text-base hover:bg-[#bce622] transition-all hover:scale-[1.02] active:scale-[0.98]">
-                    {t('startMonthly')}
-                  </button>
-                </div>
-
-                {/* Yearly Plan */}
-                <div className="flex-1 rounded-[32px] bg-[#1a1c21] p-8 flex flex-col shadow-xl min-h-[500px]">
-                  <h3 className="text-2xl font-bold mb-3 text-white">{t('yearlyBestValue')}</h3>
-                  <div className="flex items-baseline gap-2 mb-6">
-                    <span className="text-5xl font-bold text-white">{t('yearlyPrice')}</span>
-                    <span className="text-gray-500 text-xl">{t('yearlyPeriod')}</span>
-                    <span className="text-[#d4ff33] text-lg font-bold ml-2">{t('saveAmount')}</span>
-                  </div>
-                  <div className="text-xs text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t('bestForPower')}</div>
-
-                  <ul className="space-y-4 mb-10 flex-1">
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('everythingInPro')}</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('yearlyCredits')}</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('priorityProcessing')}</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-[14px] text-gray-300">
-                      <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-                      <span className="leading-tight">{t('noWatermarks')}</span>
-                    </li>
-                  </ul>
-
-                  <button className="w-full py-4 rounded-xl bg-[#2a2d35] text-white font-black text-base hover:bg-[#353943] transition-all hover:scale-[1.02] active:scale-[0.98]">
-                    {t('getYearly')}
-                  </button>
-                </div>
-              </div>
+              <PricingButtons
+                t={{
+                  foundryPro: t('foundryPro'),
+                  foundryProPrice: t('foundryProPrice'),
+                  foundryProPeriod: t('foundryProPeriod'),
+                  bestForOccasional: t('bestForOccasional'),
+                  unlimitedDownloads: t('unlimitedDownloads'),
+                  creditsDesc: t('creditsDesc'),
+                  priorityProcessing: t('priorityProcessing'),
+                  noWatermarks: t('noWatermarks'),
+                  startMonthly: t('startMonthly'),
+                  yearlyBestValue: t('yearlyBestValue'),
+                  yearlyPrice: t('yearlyPrice'),
+                  yearlyPeriod: t('yearlyPeriod'),
+                  saveAmount: t('saveAmount'),
+                  bestForPower: t('bestForPower'),
+                  everythingInPro: t('everythingInPro'),
+                  yearlyCredits: t('yearlyCredits'),
+                  getYearly: t('getYearly'),
+                }}
+                monthlyPrice={monthlyPrice}
+                yearlyPrice={yearlyPrice}
+                monthlySale={monthlySale}
+                yearlySale={yearlySale}
+                monthlyName={monthlyName}
+                yearlyName={yearlyName}
+              />
             </div>
           </div>
         </section>

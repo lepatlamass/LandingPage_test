@@ -4,24 +4,30 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import type { User } from 'firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../lib/firebase';
-import { getUserSubscriptionStatus } from '../lib/firestore/subscriptions';
+import { getUserLicenseStatus } from '../lib/firestore/licenses';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  isSubscribed: boolean;
+  hasActiveLicense: boolean;
+  aiCreditsRemaining?: number;
+  aiCreditsTotal?: number;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
-  isSubscribed: false,
+  hasActiveLicense: false,
+  aiCreditsRemaining: undefined,
+  aiCreditsTotal: undefined,
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [hasActiveLicense, setHasActiveLicense] = useState(false);
+  const [aiCreditsRemaining, setAICreditsRemaining] = useState<number | undefined>();
+  const [aiCreditsTotal, setAICreditsTotal] = useState<number | undefined>();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -32,11 +38,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (typeof window !== 'undefined') {
           localStorage.setItem('refindocs_has_logged_in', 'true');
         }
-        // Fetch subscription status
-        const status = await getUserSubscriptionStatus(firebaseUser.uid);
-        setIsSubscribed(status.isActive);
+        // Fetch license status
+        const licenseStatus = await getUserLicenseStatus(firebaseUser.uid);
+        setHasActiveLicense(licenseStatus.isActive);
+        setAICreditsRemaining(licenseStatus.aiCreditsRemaining);
+        setAICreditsTotal(licenseStatus.aiCreditsTotal);
       } else {
-        setIsSubscribed(false);
+        setHasActiveLicense(false);
+        setAICreditsRemaining(undefined);
+        setAICreditsTotal(undefined);
       }
 
       setLoading(false);
@@ -46,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, isSubscribed }}>
+    <AuthContext.Provider value={{ user, loading, hasActiveLicense, aiCreditsRemaining, aiCreditsTotal }}>
       {children}
     </AuthContext.Provider>
   );

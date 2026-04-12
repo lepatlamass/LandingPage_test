@@ -23,15 +23,15 @@ export interface UseAIGateReturn {
  *   - Logged in, not sub  → show subscribe modal (AI requires subscription)
  */
 export function useAIGate(): UseAIGateReturn {
-  const { user, isSubscribed } = useAuth();
+  const { user, hasActiveLicense } = useAuth();
   const [modalState, setModalState] = useState<AIGateModalState>('none');
   // Store the pending action function so we can auto-run it after login or just hold it
   const pendingAction = useRef<(() => void | Promise<void>) | null>(null);
 
   const guardedAction = useCallback(
     (actionFn: () => void | Promise<void>) => {
-      // If user is explicitly subscribed, allow access immediately.
-      if (isSubscribed) {
+      // If user has an active license, allow access immediately.
+      if (hasActiveLicense) {
         actionFn();
         return;
       }
@@ -43,11 +43,11 @@ export function useAIGate(): UseAIGateReturn {
         // Not logged in — show login gate.
         setModalState('login');
       } else {
-        // Logged in but not subscribed — show subscribe gate.
+        // Logged in but no license — show subscribe gate.
         setModalState('subscribe');
       }
     },
-    [user, isSubscribed]
+    [user, hasActiveLicense]
   );
 
   const closeModal = useCallback(() => {
