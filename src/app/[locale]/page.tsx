@@ -287,7 +287,7 @@ export default async function Page({
                 <div className="flex-1 relative w-full aspect-square max-w-md">
                   <Image
                     src="/Business.svg"
-                    alt="For Businesses"
+                    alt={tCommon('alt.forBusinesses')}
                     fill
                     className="object-cover rounded-2xl"
                     referrerPolicy="no-referrer"
@@ -309,7 +309,7 @@ export default async function Page({
                 <div className="flex-1 relative w-full aspect-square max-w-md">
                   <Image
                     src="/Accountant.svg"
-                    alt="For Accountants"
+                    alt={tCommon('alt.forAccountants')}
                     fill
                     className="object-cover rounded-2xl"
                     referrerPolicy="no-referrer"
@@ -331,7 +331,7 @@ export default async function Page({
                 <div className="flex-1 relative w-full aspect-square max-w-md">
                   <Image
                     src="/Student.svg"
-                    alt="For Students"
+                    alt={tCommon('alt.forStudents')}
                     fill
                     className="object-cover rounded-2xl"
                     referrerPolicy="no-referrer"
@@ -353,7 +353,7 @@ export default async function Page({
                 <div className="flex-1 relative w-full aspect-square max-w-md">
                   <Image
                     src="/design.svg"
-                    alt="For Designers"
+                    alt={tCommon('alt.forDesigners')}
                     fill
                     className="object-cover rounded-2xl"
                     referrerPolicy="no-referrer"
@@ -481,7 +481,7 @@ export default async function Page({
                 <div className="relative w-64 h-64">
                   <Image
                     src="/Happy.svg"
-                    alt="Globe Illustration"
+                    alt={tCommon('alt.globeIllustration')}
                     fill
                     className="object-contain"
                     referrerPolicy="no-referrer"

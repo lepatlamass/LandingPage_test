@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { activateLicense } from '@/lib/chariow';
-import { saveUserLicense, getPlanType, getAICreditAllowance, getNextResetAt } from '@/lib/firestore/licenses';
+import { getPlanType, getAICreditAllowance, getNextResetAt, buildInitialPerToolCredits } from '@/lib/firestore/licenses';
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,35 +23,29 @@ export async function POST(req: NextRequest) {
     const result = await activateLicense(licenseKey);
 
     // Step 2: Determine plan type and AI credits
-    const planType = getPlanType(result.data.product?.name);
+    const productName = result.data.product?.name || '';
+    const planType = getPlanType(productName);
     const aiCreditsTotal = getAICreditAllowance(planType);
+    const perToolCredits = buildInitialPerToolCredits(planType);
 
-    // Step 3: Store in Firestore
-    await saveUserLicense(userId, {
-      licenseKey: result.data.license_key,
-      chariowLicenseId: result.data.id,
-      status: result.data.status,
-      expiresAt: result.data.expires_at,
-      activatedAt: new Date().toISOString(),
-      activationCount: result.data.activation_count,
-      maxActivations: result.data.max_activations,
-      activationsRemaining: result.data.activations_remaining,
-      productName: result.data.product?.name,
-      planType,
-      aiCreditsTotal,
-      aiCreditsRemaining: aiCreditsTotal,
-      aiCreditsResetAt: getNextResetAt(),
-    });
-
+    // Step 3: Return all data so the client can save to Firestore
+    // (The client has the authenticated Firebase session needed for write permissions)
     return NextResponse.json({
       message: 'License activated successfully',
       data: {
-        expiresAt: result.data.expires_at,
-        productName: result.data.product?.name,
-        activationsRemaining: result.data.activations_remaining,
-        aiCreditsRemaining: aiCreditsTotal,
-        aiCreditsTotal,
+        chariowLicenseId: result.data.id,
+        licenseKey: result.data.license_key || licenseKey,
+        status: result.data.status || 'active',
+        expiresAt: result.data.expires_at || '',
+        activationCount: result.data.activation_count ?? 1,
+        maxActivations: result.data.max_activations ?? 1,
+        activationsRemaining: result.data.activations_remaining ?? 0,
+        productName,
         planType,
+        aiCreditsTotal,
+        aiCreditsRemaining: aiCreditsTotal,
+        aiCreditsResetAt: getNextResetAt(),
+        perToolCredits,
       },
     });
   } catch (error: any) {

@@ -43,7 +43,46 @@
     "directoryConvertFromPdf": "Convertir depuis PDF",
     "directoryConvertToPdf": "Convertir en PDF",
     "directorySpreadsheet": "Feuille de calcul",
-    "directoryMedia": "Média"
+    "directoryMedia": "Média",
+    "alt": {
+      "processGuide": "Process guide",
+      "forBusinesses": "For Businesses",
+      "forAccountants": "For Accountants",
+      "forStudents": "For Students",
+      "forDesigners": "For Designers",
+      "globeIllustration": "Globe Illustration",
+      "gifResult": "GIF Result",
+      "original": "Original",
+      "result": "Result",
+      "sourceFile": "Source File",
+      "convertedFile": "Converted File",
+      "filePreview": "File Preview",
+      "uploadedFile": "Uploaded File",
+      "processedFile": "Processed File"
+    },
+    "placeholder": {
+      "yourName": "Your name",
+      "yourEmail": "Your email",
+      "howCanWeHelp": "How can we help?",
+      "enterFullName": "Enter your full name",
+      "enterFirstName": "Enter first name",
+      "enterLastName": "Enter last name",
+      "acmeCorp": "ACME Corp",
+      "phoneNumber": "+1 (555) 000-0000",
+      "zipPostalCode": "ZIP / Postal code",
+      "selectEnterState": "Select or enter state",
+      "enterCity": "Enter city",
+      "streetAddress": "Street address, P.O. box, etc.",
+      "billingEmail": "billing@company.com",
+      "vatNumber": "e.g. GB123456789",
+      "sendMesage": "Send Message"
+    },
+    "label": {
+      "saving": "Saving...",
+      "saved": "Saved",
+      "loadingBilling": "Loading billing data...",
+      "loadingSettings": "Loading settings..."
+    }
   },
   "Tools": {
     "bg-remover": "Suppresseur d'arrière-plan",
@@ -381,6 +420,7 @@
     "video-to-gif-processing": "Conversion en GIF...",
     "video-to-gif-ready": "Votre GIF est prêt !",
     "video-to-gif-download": "Télécharger le GIF",
+    "video-to-gif-error-large": "Le fichier vidéo est trop volumineux (>100 Mo). La conversion basée sur le navigateur est limitée par la mémoire.",
     "compress-images": "Compresser les images",
     "compress-images-title": "Compresser",
     "compress-images-accent": "Images",
@@ -534,7 +574,12 @@
     "svg-to-png-faq1-q": "Prend-il en charge les SVG complexes ?",
     "svg-to-png-faq1-a": "Oui, notre moteur gère les tracés complexes, les dégradés et les masques.",
     "svg-to-png-faq2-q": "Puis-je convertir des SVG par lots ?",
-    "svg-to-png-faq2-a": "Oui, vous pouvez télécharger plusieurs fichiers SVG et les convertir tous en même temps."
+    "svg-to-png-faq2-a": "Oui, vous pouvez télécharger plusieurs fichiers SVG et les convertir tous en même temps.",
+    "alt": {
+      "watermark": "Watermark"
+    },
+    "chooseFiles": "CHOOSE FILES",
+    "dropFilesHere": "or drop files here"
   },
   "Home": {
     "home": "Accueil",
@@ -618,7 +663,10 @@
         "name": "Nom",
         "firstName": "Prénom",
         "lastName": "Nom de famille",
-        "saveChanges": "Enregistrer"
+        "saveChanges": "Enregistrer",
+        "placeholder": {
+          "enterFullName": "Enter your full name"
+        }
       },
       "subscription": {
         "title": "Abonnement",
@@ -629,7 +677,10 @@
         "tryFree": "Essayer gratuitement 7 jours",
         "activateLicense": "Activer la Licence",
         "activateLicenseButton": "Activer",
-        "activating": "Activation en cours..."
+        "activating": "Activation en cours...",
+        "placeholder": {
+          "licenseKey": "XXXX-XXXX-XXXX-XXXX"
+        }
       },
       "billing": {
         "title": "Facturation",
@@ -648,41 +699,56 @@
         "street": "Rue",
         "emailInvoicesTo": "Envoyer les factures à",
         "save": "Enregistrer",
-        "close": "Fermer"
+        "close": "Fermer",
+        "placeholder": {
+          "enterFirstName": "Enter first name",
+          "enterLastName": "Enter last name",
+          "acmeCorp": "ACME Corp",
+          "phoneNumber": "+1 (555) 000-0000",
+          "zipPostalCode": "ZIP / Postal code",
+          "selectEnterState": "Select or enter state",
+          "enterCity": "Enter city",
+          "streetAddress": "Street address, P.O. box, etc.",
+          "billingEmail": "billing@company.com",
+          "vatNumber": "e.g. GB123456789"
+        }
       },
       "settings": {
-        "title": "Settings",
+        "title": "Paramètres",
         "preferences": {
-          "title": "Preferences",
+          "title": "Préférences",
           "language": {
-            "label": "Language",
-            "change": "Change",
-            "disclaimer": "Changing language will automatically reload the page in your preferred locale."
+            "label": "Langue",
+            "change": "Modifier",
+            "disclaimer": "Changer la langue rechargera automatiquement la page dans votre langue préférée."
           },
           "emailNotifications": {
-            "label": "Email Notifications",
-            "description": "No longer wish to receive promotional emails from us? You can do so here.",
-            "disable": "Disable Emails",
-            "enable": "Enable Emails"
+            "label": "Notifications par Email",
+            "description": "Vous ne souhaitez plus recevoir d'emails promotionnels de notre part ? Vous pouvez le faire ici.",
+            "disable": "Désactiver Emails",
+            "enable": "Activer Emails"
           }
         },
         "manageAccount": {
-          "label": "Manage account",
-          "deleteAccount": "Delete account",
-          "deleteTitle": "Delete Account Confirmation",
-          "deleteDescription": "This action cannot be undone. This will permanently delete your account and all associated data.",
-          "deleteConfirm": "Delete my account",
-          "deleteCancel": "Cancel",
-          "deleteWarning": "Are you absolutely sure?"
+          "label": "Gérer le compte",
+          "deleteAccount": "Supprimer le compte",
+          "deleteTitle": "Confirmation de Suppression du Compte",
+          "deleteDescription": "Cette action ne peut pas être annulée. Cela supprimera définitivement votre compte et toutes les données associées.",
+          "deleteConfirm": "Supprimer mon compte",
+          "deleteCancel": "Annuler",
+          "deleteWarning": "Êtes-vous absolument sûr ?",
+          "placeholder": {
+            "deleteMyAccount": "delete my account"
+          }
         },
         "success": {
-          "emailPreferencesUpdated": "Email preferences updated.",
-          "accountDeleted": "Account deleted successfully."
+          "emailPreferencesUpdated": "Préférences email mises à jour.",
+          "accountDeleted": "Compte supprimé avec succès."
         },
         "error": {
-          "updateFailed": "Failed to update settings.",
-          "deleteFailed": "Failed to delete account.",
-          "requiresReauth": "Please sign in again to delete your account."
+          "updateFailed": "Échec de la mise à jour des paramètres.",
+          "deleteFailed": "Échec de la suppression du compte.",
+          "requiresReauth": "Veuillez vous reconnecter pour supprimer votre compte."
         }
       }
     }

@@ -16,12 +16,20 @@ export default function GoogleSignInButton() {
     setIsSigningIn(true);
     try {
       const result = await signInWithGoogle(auth, googleProvider);
+      
       // If result is null, it was cancelled by user or browser (popup closed)
       if (result === null) {
         setIsSigningIn(false);
         return;
       }
-      // Success or redirect started
+      
+      // For redirect flow, result is void - don't navigate, let the redirect happen
+      if (result === undefined) {
+        // Redirect is happening automatically
+        return;
+      }
+      
+      // For popup flow, navigate on success
       if (result) {
         router.replace('/tools');
       }

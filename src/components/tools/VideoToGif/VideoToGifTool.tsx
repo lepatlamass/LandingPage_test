@@ -356,9 +356,9 @@ export default function VideoToGifTool() {
               <div className="p-8">
                 <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 group">
                   {video.status === 'completed' && video.resultUrl ? (
-                    <img 
-                      src={video.resultUrl} 
-                      alt="GIF Result" 
+                    <img
+                      src={video.resultUrl}
+                      alt={t('alt.gifResult')}
                       className="w-full h-full object-contain"
                     />
                   ) : video.previewUrl ? (

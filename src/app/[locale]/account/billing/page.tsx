@@ -188,7 +188,7 @@ export default function BillingPage() {
                     value={addressData.firstName}
                     onChange={(e) => setAddressData({...addressData, firstName: e.target.value})}
                     className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="Enter first name"
+                    placeholder={t('placeholder.enterFirstName')}
                   />
                 </div>
                 <div>
@@ -199,7 +199,7 @@ export default function BillingPage() {
                     value={addressData.lastName}
                     onChange={(e) => setAddressData({...addressData, lastName: e.target.value})}
                     className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="Enter last name"
+                    placeholder={t('placeholder.enterLastName')}
                   />
                 </div>
               </div>
@@ -212,7 +212,7 @@ export default function BillingPage() {
                   value={addressData.companyName}
                   onChange={(e) => setAddressData({...addressData, companyName: e.target.value})}
                   className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                  placeholder="ACME Corp"
+                  placeholder={t('placeholder.acmeCorp')}
                 />
               </div>
 
@@ -224,7 +224,7 @@ export default function BillingPage() {
                   value={addressData.phoneNumber}
                   onChange={(e) => setAddressData({...addressData, phoneNumber: e.target.value})}
                   className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                  placeholder="+1 (555) 000-0000"
+                  placeholder={t('placeholder.phoneNumber')}
                 />
               </div>
 
@@ -252,7 +252,7 @@ export default function BillingPage() {
                     value={addressData.postalCode}
                     onChange={(e) => setAddressData({...addressData, postalCode: e.target.value})}
                     className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="ZIP / Postal code"
+                    placeholder={t('placeholder.zipPostalCode')}
                   />
                 </div>
               </div>
@@ -266,7 +266,7 @@ export default function BillingPage() {
                     value={addressData.state}
                     onChange={(e) => setAddressData({...addressData, state: e.target.value})}
                     className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="Select or enter state"
+                    placeholder={t('placeholder.selectEnterState')}
                   />
                 </div>
                 <div>
@@ -277,7 +277,7 @@ export default function BillingPage() {
                     value={addressData.city}
                     onChange={(e) => setAddressData({...addressData, city: e.target.value})}
                     className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="Enter city"
+                    placeholder={t('placeholder.enterCity')}
                   />
                 </div>
               </div>
@@ -290,7 +290,7 @@ export default function BillingPage() {
                   value={addressData.street}
                   onChange={(e) => setAddressData({...addressData, street: e.target.value})}
                   className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                  placeholder="Street address, P.O. box, etc."
+                  placeholder={t('placeholder.streetAddress')}
                 />
               </div>
 
@@ -341,7 +341,7 @@ export default function BillingPage() {
                     value={billingEmail}
                     onChange={(e) => setBillingEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="billing@company.com"
+                    placeholder={t('placeholder.billingEmail')}
                   />
                 </div>
               </div>
@@ -393,7 +393,7 @@ export default function BillingPage() {
                     value={vatNumber}
                     onChange={(e) => setVatNumber(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="e.g. GB123456789"
+                    placeholder={t('placeholder.vatNumber')}
                   />
                 </div>
               </div>

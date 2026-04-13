@@ -43,7 +43,46 @@
     "directoryConvertFromPdf": "Convert from PDF",
     "directoryConvertToPdf": "Convert to PDF",
     "directorySpreadsheet": "Spreadsheet",
-    "directoryMedia": "Media"
+    "directoryMedia": "Media",
+    "alt": {
+      "processGuide": "Process guide",
+      "forBusinesses": "For Businesses",
+      "forAccountants": "For Accountants",
+      "forStudents": "For Students",
+      "forDesigners": "For Designers",
+      "globeIllustration": "Globe Illustration",
+      "gifResult": "GIF Result",
+      "original": "Original",
+      "result": "Result",
+      "sourceFile": "Source File",
+      "convertedFile": "Converted File",
+      "filePreview": "File Preview",
+      "uploadedFile": "Uploaded File",
+      "processedFile": "Processed File"
+    },
+    "placeholder": {
+      "yourName": "Your name",
+      "yourEmail": "Your email",
+      "howCanWeHelp": "How can we help?",
+      "enterFullName": "Enter your full name",
+      "enterFirstName": "Enter first name",
+      "enterLastName": "Enter last name",
+      "acmeCorp": "ACME Corp",
+      "phoneNumber": "+1 (555) 000-0000",
+      "zipPostalCode": "ZIP / Postal code",
+      "selectEnterState": "Select or enter state",
+      "enterCity": "Enter city",
+      "streetAddress": "Street address, P.O. box, etc.",
+      "billingEmail": "billing@company.com",
+      "vatNumber": "e.g. GB123456789",
+      "sendMesage": "Send Message"
+    },
+    "label": {
+      "saving": "Saving...",
+      "saved": "Saved",
+      "loadingBilling": "Loading billing data...",
+      "loadingSettings": "Loading settings..."
+    }
   },
   "Tools": {
     "bg-remover": "Background Remover",
@@ -535,7 +574,12 @@
     "svg-to-png-faq1-q": "Does it support complex SVGs?",
     "svg-to-png-faq1-a": "Yes, our engine handles complex paths, gradients, and masks.",
     "svg-to-png-faq2-q": "Can I batch convert SVGs?",
-    "svg-to-png-faq2-a": "Yes, you can upload multiple SVG files and convert them all at once."
+    "svg-to-png-faq2-a": "Yes, you can upload multiple SVG files and convert them all at once.",
+    "alt": {
+      "watermark": "Watermark"
+    },
+    "chooseFiles": "CHOOSE FILES",
+    "dropFilesHere": "or drop files here"
   },
   "Home": {
     "home": "Home",
@@ -619,7 +663,10 @@
         "name": "Name",
         "firstName": "First name",
         "lastName": "Last name",
-        "saveChanges": "Save Changes"
+        "saveChanges": "Save Changes",
+        "placeholder": {
+          "enterFullName": "Enter your full name"
+        }
       },
       "subscription": {
         "title": "Subscription",
@@ -630,7 +677,10 @@
         "tryFree": "Try 7 days free",
         "activateLicense": "Activate License",
         "activateLicenseButton": "Activate",
-        "activating": "Activating..."
+        "activating": "Activating...",
+        "placeholder": {
+          "licenseKey": "XXXX-XXXX-XXXX-XXXX"
+        }
       },
       "billing": {
         "title": "Billing",
@@ -649,7 +699,19 @@
         "street": "Street",
         "emailInvoicesTo": "Email invoices to",
         "save": "Save",
-        "close": "Close"
+        "close": "Close",
+        "placeholder": {
+          "enterFirstName": "Enter first name",
+          "enterLastName": "Enter last name",
+          "acmeCorp": "ACME Corp",
+          "phoneNumber": "+1 (555) 000-0000",
+          "zipPostalCode": "ZIP / Postal code",
+          "selectEnterState": "Select or enter state",
+          "enterCity": "Enter city",
+          "streetAddress": "Street address, P.O. box, etc.",
+          "billingEmail": "billing@company.com",
+          "vatNumber": "e.g. GB123456789"
+        }
       },
       "settings": {
         "title": "Settings",
@@ -674,7 +736,10 @@
           "deleteDescription": "This action cannot be undone. This will permanently delete your account and all associated data.",
           "deleteConfirm": "Delete my account",
           "deleteCancel": "Cancel",
-          "deleteWarning": "Are you absolutely sure?"
+          "deleteWarning": "Are you absolutely sure?",
+          "placeholder": {
+            "deleteMyAccount": "delete my account"
+          }
         },
         "success": {
           "emailPreferencesUpdated": "Email preferences updated.",

@@ -783,9 +783,9 @@ export default function App() {
             <div className="relative group">
               <div className="absolute -inset-4 bg-lime-400/20 rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative rounded-[32px] overflow-hidden border border-white/10 aspect-[4/3] bg-white/5 flex items-center justify-center">
-                <Image 
+                <Image
                   src="/amico.svg"
-                  alt="Process guide" 
+                  alt={t('alt.processGuide')}
                   fill
                   className="object-contain p-8"
                   referrerPolicy="no-referrer"

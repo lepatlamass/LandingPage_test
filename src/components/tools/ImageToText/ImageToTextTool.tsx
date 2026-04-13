@@ -21,6 +21,8 @@ import { processImageToText } from '@/lib/ai/gemini';
 import { useAIGate } from '@/hooks/useAIGate';
 import AIGateModal from '@/components/auth/AIGateModal';
 import { useToolState } from '@/hooks/useToolState';
+import { consumeAICredit } from '@/lib/firestore/licenses';
+import { auth } from '@/lib/firebase';
 
 interface ImageFile {
   id: string;
@@ -90,9 +92,15 @@ export default function ImageToTextTool() {
         const base64 = await base64Promise;
         const result = await processImageToText(base64, image.file.type, mode);
 
-        setImages(prev => prev.map(img => 
+        setImages(prev => prev.map(img =>
           img.id === image.id ? { ...img, status: 'completed', result } : img
         ));
+
+        // Consume AI credit for this tool
+        const user = auth.currentUser;
+        if (user) {
+          await consumeAICredit(user.uid, 'image-to-text');
+        }
       } catch (error: any) {
         console.error("Processing error:", error);
         setImages(prev => prev.map(img => 
@@ -155,9 +163,9 @@ export default function ImageToTextTool() {
           {/* Image Preview & Controls */}
           <div className="space-y-6">
             <div className="relative aspect-square rounded-[32px] overflow-hidden bg-black/40 border border-white/10 group">
-              <img 
-                src={images[0].preview} 
-                alt="Original" 
+              <img
+                src={images[0].preview}
+                alt={commonT('alt.original')}
                 className="w-full h-full object-contain"
               />
               <button 

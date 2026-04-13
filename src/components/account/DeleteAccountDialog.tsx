@@ -100,7 +100,7 @@ export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogP
                 value={confirmText}
                 onChange={(e) => setConfirmText(e.target.value)}
                 className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
-                placeholder="delete my account"
+                placeholder={t('manageAccount.placeholder.deleteMyAccount')}
                 disabled={deleting}
               />
             </div>

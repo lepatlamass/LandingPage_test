@@ -22,7 +22,63 @@ import { motion, AnimatePresence } from 'framer-motion';
 import JSZip from 'jszip';
 import { useToolState } from '@/hooks/useToolState';
 
-type TargetFormat = 'png' | 'jpeg' | 'webp' | 'avif';
+type TargetFormat = 'png' | 'jpeg' | 'webp' | 'avif' | 'ico';
+
+/** Standard favicon sizes baked into an ICO file. */
+const ICO_SIZES = [16, 32, 48];
+
+/**
+ * Build a standards-compliant ICO file (ICONDIR + ICONDIRENTRY[] + PNG payloads)
+ * from the given source image element.
+ */
+async function buildIco(sourceImg: HTMLImageElement): Promise<Blob> {
+  // Render the source at each target size and export as PNG blobs
+  const pngBuffers: ArrayBuffer[] = [];
+  for (const size of ICO_SIZES) {
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(sourceImg, 0, 0, size, size);
+    const blob: Blob = await new Promise((res, rej) =>
+      canvas.toBlob((b) => (b ? res(b) : rej(new Error('PNG export failed'))), 'image/png')
+    );
+    pngBuffers.push(await blob.arrayBuffer());
+  }
+
+  // ICO header sizes (in bytes)
+  const ICONDIR_SIZE = 6;
+  const ICONDIRENTRY_SIZE = 16;
+  const headerSize = ICONDIR_SIZE + ICONDIRENTRY_SIZE * pngBuffers.length;
+  const totalPayload = pngBuffers.reduce((s, b) => s + b.byteLength, 0);
+  const buffer = new ArrayBuffer(headerSize + totalPayload);
+  const view = new DataView(buffer);
+
+  // ICONDIR
+  view.setUint16(0, 0, true);              // reserved
+  view.setUint16(2, 1, true);              // type = 1 (ICO)
+  view.setUint16(4, pngBuffers.length, true); // image count
+
+  // ICONDIRENTRY for each size, followed by raw PNG data
+  let dataOffset = headerSize;
+  for (let i = 0; i < pngBuffers.length; i++) {
+    const size = ICO_SIZES[i];
+    const entryOffset = ICONDIR_SIZE + i * ICONDIRENTRY_SIZE;
+    view.setUint8(entryOffset + 0, size < 256 ? size : 0);  // width
+    view.setUint8(entryOffset + 1, size < 256 ? size : 0);  // height
+    view.setUint8(entryOffset + 2, 0);    // color palette
+    view.setUint8(entryOffset + 3, 0);    // reserved
+    view.setUint16(entryOffset + 4, 1, true);   // color planes
+    view.setUint16(entryOffset + 6, 32, true);  // bits per pixel
+    view.setUint32(entryOffset + 8, pngBuffers[i].byteLength, true); // data size
+    view.setUint32(entryOffset + 12, dataOffset, true);              // data offset
+
+    new Uint8Array(buffer, dataOffset).set(new Uint8Array(pngBuffers[i]));
+    dataOffset += pngBuffers[i].byteLength;
+  }
+
+  return new Blob([buffer], { type: 'image/x-icon' });
+}
 
 interface ImageFile {
   id: string;
@@ -87,7 +143,17 @@ export default function ImageConverterTool() {
   const convertImage = async (image: ImageFile, format: TargetFormat): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.onload = () => {
+      img.onload = async () => {
+        // ICO path — build a multi-size ICO binary
+        if (format === 'ico') {
+          try {
+            resolve(await buildIco(img));
+          } catch (err) {
+            reject(err);
+          }
+          return;
+        }
+
         const canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
@@ -165,7 +231,7 @@ export default function ImageConverterTool() {
         const zip = new JSZip();
         await Promise.all(completedImages.map(async (img) => {
           const blob = await fetch(img.resultDataUrl!).then(r => r.blob());
-          zip.file(`${img.fileName.split('.')[0]}.${targetFormat}`, blob);
+          zip.file(`${img.fileName.split('.')[0]}.${targetFormat === 'ico' ? 'ico' : targetFormat}`, blob);
         }));
         const content = await zip.generateAsync({ type: 'blob' });
         const url = URL.createObjectURL(content);
@@ -187,7 +253,7 @@ export default function ImageConverterTool() {
           const url = URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          link.download = `${img.fileName.split('.')[0]}.${targetFormat}`;
+          link.download = `${img.fileName.split('.')[0]}.${targetFormat === 'ico' ? 'ico' : targetFormat}`;
           link.click();
           URL.revokeObjectURL(url);
         });
@@ -204,12 +270,12 @@ export default function ImageConverterTool() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white">Image Converter</h3>
-              <p className="text-gray-500 text-sm">Convert your images to PNG, JPEG, WebP or AVIF</p>
+              <p className="text-gray-500 text-sm">Convert your images to PNG, JPEG, WebP, AVIF or Favicon ICO</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex bg-black/40 p-1 rounded-xl border border-gray-800">
-              {(['png', 'jpeg', 'webp', 'avif'] as TargetFormat[]).map((f) => (
+            <div className="flex flex-wrap bg-black/40 p-1 rounded-xl border border-gray-800">
+              {(['png', 'jpeg', 'webp', 'avif', 'ico'] as TargetFormat[]).map((f) => (
                 <button
                   key={f}
                   onClick={() => setTargetFormat(f)}
@@ -219,7 +285,7 @@ export default function ImageConverterTool() {
                       : 'text-gray-500 hover:text-gray-300'
                   }`}
                 >
-                  {f.toUpperCase()}
+                  {f === 'ico' ? 'ICO' : f.toUpperCase()}
                 </button>
               ))}
             </div>
@@ -386,7 +452,7 @@ export default function ImageConverterTool() {
           </div>
           <h4 className="text-white font-bold mb-4">Multiple Formats</h4>
           <p className="text-gray-500 text-sm leading-relaxed">
-            Convert between PNG, JPEG, WebP, and AVIF formats seamlessly. Perfect for optimizing images for web performance.
+            Convert between PNG, JPEG, WebP, AVIF, and Favicon ICO formats seamlessly. Perfect for optimizing images for web performance.
           </p>
         </div>
       </div>

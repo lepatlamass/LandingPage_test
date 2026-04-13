@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Key, Loader2, CheckCircle, CreditCard, Sparkles, Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { saveUserLicense } from '@/lib/firestore/licenses';
 
 const CREDITS_CHECKOUT =
   process.env.NEXT_PUBLIC_CHARIOW_CREDITS_CHECKOUT || '#';
@@ -89,20 +90,36 @@ export function AICreditsBar({
 
 export default function LicenseActivation({
   userId,
+  isActive = false,
+  licenseInfo: externalLicenseInfo,
 }: {
   userId?: string;
+  isActive?: boolean;
+  licenseInfo?: {
+    productName: string;
+    expiresAt: string;
+    aiCreditsRemaining?: number;
+  } | null;
 }) {
   const t = useTranslations('Account.pages.subscription');
   const [licenseKey, setLicenseKey] = useState('');
   const [loading, setLoading] = useState(false);
   const [validating, setValidating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(isActive);
   const [licenseInfo, setLicenseInfo] = useState<{
     productName: string;
     expiresAt: string;
     aiCreditsRemaining?: number;
-  } | null>(null);
+  } | null>(externalLicenseInfo || null);
+
+  // Sync with external license info when props change (e.g., after page reload)
+  useEffect(() => {
+    if (isActive && externalLicenseInfo) {
+      setSuccess(true);
+      setLicenseInfo(externalLicenseInfo);
+    }
+  }, [isActive, externalLicenseInfo]);
 
   const handleValidate = async () => {
     if (!licenseKey) return;
@@ -159,6 +176,24 @@ export default function LicenseActivation({
         throw new Error(data.error || 'Activation failed');
       }
 
+      // Save to Firestore client-side (where Firebase Auth session exists)
+      await saveUserLicense(userId, {
+        licenseKey: data.data.licenseKey,
+        chariowLicenseId: data.data.chariowLicenseId,
+        status: data.data.status,
+        expiresAt: data.data.expiresAt,
+        activatedAt: new Date().toISOString(),
+        activationCount: data.data.activationCount,
+        maxActivations: data.data.maxActivations,
+        activationsRemaining: data.data.activationsRemaining,
+        productName: data.data.productName,
+        planType: data.data.planType,
+        aiCreditsTotal: data.data.aiCreditsTotal,
+        aiCreditsRemaining: data.data.aiCreditsRemaining,
+        aiCreditsResetAt: data.data.aiCreditsResetAt,
+        perToolCredits: data.data.perToolCredits,
+      });
+
       setSuccess(true);
       setLicenseInfo({
         productName: data.data.productName,
@@ -175,9 +210,17 @@ export default function LicenseActivation({
   if (success) {
     return (
       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-        <div className="px-6 py-5 border-b border-zinc-800 flex items-center gap-3">
-          <CreditCard className="text-[#d4ff33] h-5 w-5" />
-          <h2 className="text-lg font-semibold text-white">Current Plan</h2>
+        <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <CreditCard className="text-[#d4ff33] h-5 w-5" />
+            <h2 className="text-lg font-semibold text-white">Current Plan</h2>
+          </div>
+          <button
+            onClick={() => { setSuccess(false); setLicenseInfo(null); setLicenseKey(''); }}
+            className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors"
+          >
+            Switch License
+          </button>
         </div>
         <div className="p-8 flex flex-col items-center text-center">
           <div className="w-16 h-16 bg-zinc-950 border border-zinc-800 rounded-full flex items-center justify-center mb-4">
@@ -231,7 +274,7 @@ export default function LicenseActivation({
               onBlur={() => {
                 if (licenseKey.length > 8) handleValidate();
               }}
-              placeholder="XXXX-XXXX-XXXX-XXXX"
+              placeholder={t('placeholder.licenseKey')}
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:ring-2 focus:ring-[#d4ff33]/30 focus:border-[#d4ff33] outline-none font-mono uppercase text-sm"
               required
             />

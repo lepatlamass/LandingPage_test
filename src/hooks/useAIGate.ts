@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { useAuth } from '../providers/AuthProvider';
 
-export type AIGateModalState = 'none' | 'login' | 'subscribe';
+export type AIGateModalState = 'none' | 'login' | 'subscribe' | 'noCredits' | 'buyCredits';
 
 export interface UseAIGateReturn {
   /** Wrap any AI process function with this to apply the gate. */
@@ -23,16 +23,31 @@ export interface UseAIGateReturn {
  *   - Logged in, not sub  → show subscribe modal (AI requires subscription)
  */
 export function useAIGate(): UseAIGateReturn {
-  const { user, hasActiveLicense } = useAuth();
+  const { user, hasActiveLicense, aiCreditsRemaining, perToolCredits } = useAuth();
   const [modalState, setModalState] = useState<AIGateModalState>('none');
   // Store the pending action function so we can auto-run it after login or just hold it
   const pendingAction = useRef<(() => void | Promise<void>) | null>(null);
 
   const guardedAction = useCallback(
     (actionFn: () => void | Promise<void>) => {
-      // If user has an active license, allow access immediately.
+      console.log(`[useAIGate] guardedAction called. hasActiveLicense=${hasActiveLicense}, user=${user?.email || 'none'}, aiCreditsRemaining=${aiCreditsRemaining}, perToolCredits=${JSON.stringify(perToolCredits)}`);
+      // If user has an active license, check credits.
       if (hasActiveLicense) {
-        actionFn();
+        // Check if any credits are available (per-tool or aggregate)
+        const hasPerToolCredits = perToolCredits && Object.values(perToolCredits).some(c => c.remaining > 0);
+        const hasAggregateCredits = (aiCreditsRemaining ?? 0) > 0;
+        console.log(`[useAIGate] hasPerToolCredits=${hasPerToolCredits}, hasAggregateCredits=${hasAggregateCredits}`);
+
+        if (hasPerToolCredits || hasAggregateCredits) {
+          console.log(`[useAIGate] Running action immediately`);
+          actionFn();
+          return;
+        }
+
+        // No credits left — show buy credits modal
+        console.log(`[useAIGate] No credits, showing buyCredits modal`);
+        pendingAction.current = actionFn;
+        setModalState('buyCredits');
         return;
       }
 
@@ -41,13 +56,15 @@ export function useAIGate(): UseAIGateReturn {
 
       if (!user) {
         // Not logged in — show login gate.
+        console.log(`[useAIGate] No user, showing login modal`);
         setModalState('login');
       } else {
         // Logged in but no license — show subscribe gate.
+        console.log(`[useAIGate] User exists but no license, showing subscribe modal`);
         setModalState('subscribe');
       }
     },
-    [user, hasActiveLicense]
+    [user, hasActiveLicense, aiCreditsRemaining, perToolCredits]
   );
 
   const closeModal = useCallback(() => {

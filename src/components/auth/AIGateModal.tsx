@@ -8,6 +8,8 @@ import { useRouter } from '@/navigation';
 import type { AIGateModalState } from '@/hooks/useAIGate';
 import { signInWithGoogle } from '@/lib/auth-utils';
 
+const CREDITS_CHECKOUT = process.env.NEXT_PUBLIC_CHARIOW_CREDITS_CHECKOUT || '/account/subscription';
+
 interface AIGateModalProps {
   state: AIGateModalState;
   onClose: () => void;
@@ -94,8 +96,10 @@ export default function AIGateModal({ state, onClose, onLoginSuccess }: AIGateMo
                     signError={signError}
                     onSignIn={handleGoogleSignIn}
                   />
-                ) : (
+                ) : state === 'subscribe' ? (
                   <SubscribeView onSubscribe={handleSubscribe} onClose={onClose} />
+                ) : (
+                  <BuyCreditsView onClose={onClose} />
                 )}
               </div>
             </div>
@@ -233,6 +237,82 @@ function SubscribeView({
       >
         View Plans
         <ArrowRight size={18} />
+      </button>
+
+      <button
+        onClick={onClose}
+        className="mt-3 w-full py-3 text-sm text-gray-500 hover:text-gray-300 transition-colors font-medium"
+      >
+        Back to tool
+      </button>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────── */
+/* Buy Credits View                            */
+/* ─────────────────────────────────────────── */
+
+function BuyCreditsView({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
+  const router = useRouter();
+
+  const handleBuyCredits = () => {
+    onClose();
+    if (CREDITS_CHECKOUT.startsWith('http')) {
+      window.open(CREDITS_CHECKOUT, '_blank');
+    } else {
+      router.push(CREDITS_CHECKOUT);
+    }
+  };
+
+  return (
+    <div className="text-center">
+      {/* Icon */}
+      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-transparent flex items-center justify-center">
+        <Zap size={28} className="text-amber-400" />
+      </div>
+
+      {/* Badge */}
+      <div className="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
+        <Zap size={12} />
+        Credits Depleted
+      </div>
+
+      {/* Headline */}
+      <h2 className="text-2xl font-bold text-white mb-2">
+        Out of AI Credits
+      </h2>
+      <p className="text-gray-400 text-sm mb-7 leading-relaxed">
+        You&apos;ve used all your AI credits for this billing period. Purchase more credits to continue using AI features.
+      </p>
+
+      {/* Perks list */}
+      <div className="text-left space-y-3 mb-8 bg-white/[0.03] p-5 rounded-2xl border border-white/[0.05]">
+        {[
+          'Instant credit top-up',
+          'Credits never expire',
+          'Use across all AI tools',
+        ].map((perk) => (
+          <div key={perk} className="flex items-center gap-3">
+            <div className="w-5 h-5 rounded-full bg-[#d4ff33]/10 flex items-center justify-center shrink-0">
+              <CheckCircle2 size={14} className="text-[#d4ff33]" />
+            </div>
+            <span className="text-sm text-gray-300 font-medium">{perk}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <button
+        onClick={handleBuyCredits}
+        className="w-full py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black font-bold rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#d4ff33]/20"
+      >
+        <Zap size={18} />
+        Buy More Credits
       </button>
 
       <button

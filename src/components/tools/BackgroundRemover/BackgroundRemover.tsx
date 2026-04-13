@@ -18,6 +18,8 @@ import { useTranslations } from 'next-intl';
 import { useAIGate } from '@/hooks/useAIGate';
 import AIGateModal from '@/components/auth/AIGateModal';
 import { useToolState } from '@/hooks/useToolState';
+import { consumeAICredit } from '@/lib/firestore/licenses';
+import { auth } from '@/lib/firebase';
 
 interface ProcessedImage {
   id: string;
@@ -31,6 +33,7 @@ interface ProcessedImage {
 
 export default function BackgroundRemover() {
   const t = useTranslations('Tools');
+  const commonT = useTranslations('Common');
   const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
   const [images, setImages] = useToolState<ProcessedImage[]>('bg-remover-images', []);
   const [mode, setMode] = useToolState<'prompt' | 'preset' | 'custom'>('bg-remover-mode', 'prompt');
@@ -113,8 +116,13 @@ export default function BackgroundRemover() {
   };
 
   const handleProcess = async () => {
+    console.log('[bg-remover] handleProcess called');
     guardedAction(async () => {
-      if (images.length === 0 || isProcessing) return;
+      console.log('[bg-remover] Inside guardedAction callback');
+      if (images.length === 0 || isProcessing) {
+        console.log(`[bg-remover] Early return: images.length=${images.length}, isProcessing=${isProcessing}`);
+        return;
+      }
       setIsProcessing(true);
 
       const updatedImages = [...images];
@@ -161,9 +169,17 @@ export default function BackgroundRemover() {
           }
         );
 
-        setImages(prev => prev.map((img, idx) => 
+        setImages(prev => prev.map((img, idx) =>
           idx === i ? { ...img, status: 'completed', processed: result } : img
         ));
+
+        // Consume AI credit for this tool
+        const user = auth.currentUser;
+        console.log(`[bg-remover] Attempting to consume credit. User: ${user?.uid || 'none'}`);
+        if (user) {
+          const result = await consumeAICredit(user.uid, 'bg-remover');
+          console.log(`[bg-remover] Credit consumption result: ${result}`);
+        }
       } catch (error: any) {
         console.error("Processing error:", error);
         const errorMessage = error.message || "Failed to process image";
@@ -317,7 +333,7 @@ export default function BackgroundRemover() {
                     className="hidden" 
                   />
                   {customBg ? (
-                    <img src={customBg} alt="Custom Background" className="absolute inset-0 w-full h-full object-cover" />
+                    <img src={customBg} alt={commonT('alt.uploadedFile')} className="absolute inset-0 w-full h-full object-cover" />
                   ) : (
                     <div className="flex flex-col items-center gap-2">
                       <Upload size={24} className="text-gray-600 group-hover:text-[#d4ff33]" />
@@ -388,13 +404,13 @@ export default function BackgroundRemover() {
                       <div key={img.id} className="bg-gray-50 rounded-xl p-3 border border-gray-100 space-y-3">
                         <div className="flex gap-2">
                           <div className="relative flex-1 aspect-square rounded-lg overflow-hidden border border-gray-200">
-                            <img src={img.original} alt="Original" className="absolute inset-0 w-full h-full object-cover" />
+                            <img src={img.original} alt={commonT('alt.original')} className="absolute inset-0 w-full h-full object-cover" />
                             <div className="absolute top-1 left-1 bg-black/60 px-1.5 py-0.5 rounded text-[8px] font-bold text-white uppercase">{t('bg-remover-original')}</div>
                           </div>
                           <div className="relative flex-1 aspect-square rounded-lg overflow-hidden border border-gray-200 bg-gray-200 flex items-center justify-center">
                             {img.status === 'completed' && img.processed ? (
                               <>
-                                <img src={img.processed} alt="Processed" className="absolute inset-0 w-full h-full object-cover" />
+                                <img src={img.processed} alt={commonT('alt.processedFile')} className="absolute inset-0 w-full h-full object-cover" />
                                 <div className="absolute top-1 left-1 bg-[#d4ff33] px-1.5 py-0.5 rounded text-[8px] font-bold text-black uppercase">{t('bg-remover-result')}</div>
                               </>
                             ) : img.status === 'processing' ? (

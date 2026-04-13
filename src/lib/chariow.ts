@@ -97,8 +97,14 @@ export async function activateLicense(
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
+    console.error('Chariow activation error:', {
+      status: res.status,
+      statusText: res.statusText,
+      licenseKey: licenseKey.substring(0, 10) + '...',
+      responseBody: JSON.stringify(errorData),
+    });
     throw new Error(
-      errorData.errors?.[0] || `Chariow API error: ${res.status}`
+      errorData.errors?.[0] || errorData.message || `Chariow API error: ${res.status}`
     );
   }
 
@@ -125,13 +131,17 @@ export async function validateLicense(licenseKey: string) {
   if (license.status === 'revoked') {
     return { isValid: false, error: 'This license has been revoked' };
   }
-  if (
-    license.status === 'expired' ||
-    new Date(license.expires_at) < new Date()
-  ) {
+  if (license.status === 'expired') {
     return { isValid: false, error: 'This license has expired' };
   }
-  if (!license.can_activate && license.status === 'pending_activation') {
+  // For already-activated licenses, check if they've expired by date
+  if (license.status === 'active' && license.expires_at) {
+    if (new Date(license.expires_at) < new Date()) {
+      return { isValid: false, error: 'This license has expired' };
+    }
+  }
+  // For pending_activation, only check if it's actually activatable
+  if (license.status === 'pending_activation' && !license.can_activate) {
     return { isValid: false, error: 'License cannot be activated' };
   }
 

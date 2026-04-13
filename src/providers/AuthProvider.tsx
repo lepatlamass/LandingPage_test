@@ -1,10 +1,13 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { User } from 'firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../lib/firebase';
-import { getUserLicenseStatus } from '../lib/firestore/licenses';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
+import { getUserLicenseStatus, resetCreditsIfNeeded } from '../lib/firestore/licenses';
+import type { PerToolCredits } from '../lib/firestore/licenses';
+import { handleRedirectResult } from '../lib/auth-utils';
 
 interface AuthContextType {
   user: User | null;
@@ -12,6 +15,14 @@ interface AuthContextType {
   hasActiveLicense: boolean;
   aiCreditsRemaining?: number;
   aiCreditsTotal?: number;
+  perToolCredits?: PerToolCredits;
+  licenseInfo?: {
+    licenseKey: string;
+    expiresAt: string;
+    status: string;
+    planType: 'monthly' | 'yearly';
+    productName?: string;
+  } | null;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -20,6 +31,8 @@ const AuthContext = createContext<AuthContextType>({
   hasActiveLicense: false,
   aiCreditsRemaining: undefined,
   aiCreditsTotal: undefined,
+  perToolCredits: undefined,
+  licenseInfo: null,
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -28,8 +41,71 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [hasActiveLicense, setHasActiveLicense] = useState(false);
   const [aiCreditsRemaining, setAICreditsRemaining] = useState<number | undefined>();
   const [aiCreditsTotal, setAICreditsTotal] = useState<number | undefined>();
+  const [perToolCredits, setPerToolCredits] = useState<PerToolCredits | undefined>();
+  const [licenseInfo, setLicenseInfo] = useState<{
+    licenseKey: string;
+    expiresAt: string;
+    status: string;
+    planType: 'monthly' | 'yearly';
+    productName?: string;
+  } | null>(null);
+
+  // Firestore real-time listener unsubscribe function
+  const licenseUnsubscribe = useRef<(() => void) | null>(null);
+
+  // Set up real-time listener for license document changes (credits, etc.)
+  useEffect(() => {
+    if (!user) {
+      // Clean up listener when user signs out
+      licenseUnsubscribe.current?.();
+      licenseUnsubscribe.current = null;
+      return;
+    }
+
+    const docRef = doc(db, 'users', user.uid, 'licenses', 'active');
+    licenseUnsubscribe.current?.();
+
+    licenseUnsubscribe.current = onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        console.log(`[AuthProvider] License doc updated: aiCreditsRemaining=${data.aiCreditsRemaining}, perToolCredits=${JSON.stringify(data.perToolCredits)}`);
+        setAICreditsRemaining(data.aiCreditsRemaining);
+        setAICreditsTotal(data.aiCreditsTotal);
+        setPerToolCredits(data.perToolCredits);
+        setHasActiveLicense(data.isActive && (!data.expiresAt || new Date(data.expiresAt) > new Date()));
+        if (data.isActive && data.licenseKey) {
+          setLicenseInfo({
+            licenseKey: data.licenseKey,
+            expiresAt: data.expiresAt || '',
+            status: 'active',
+            planType: data.planType || 'monthly',
+          });
+        }
+      } else {
+        setAICreditsRemaining(undefined);
+        setAICreditsTotal(undefined);
+        setPerToolCredits(undefined);
+        setHasActiveLicense(false);
+        setLicenseInfo(null);
+      }
+    }, (error) => {
+      console.error('[AuthProvider] License listener error:', error);
+    });
+
+    return () => {
+      licenseUnsubscribe.current?.();
+      licenseUnsubscribe.current = null;
+    };
+  }, [user]);
 
   useEffect(() => {
+    // Handle redirect result first (in case user is returning from signInWithRedirect)
+    handleRedirectResult(auth).then((result) => {
+      if (result) {
+        console.log('Successfully signed in via redirect');
+      }
+    });
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
 
@@ -38,15 +114,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (typeof window !== 'undefined') {
           localStorage.setItem('refindocs_has_logged_in', 'true');
         }
-        // Fetch license status
+        // Check if credits need to be reset (monthly reset)
+        await resetCreditsIfNeeded(firebaseUser.uid);
+
+        // Fetch license status (after potential reset)
         const licenseStatus = await getUserLicenseStatus(firebaseUser.uid);
         setHasActiveLicense(licenseStatus.isActive);
         setAICreditsRemaining(licenseStatus.aiCreditsRemaining);
         setAICreditsTotal(licenseStatus.aiCreditsTotal);
+        setPerToolCredits(licenseStatus.perToolCredits);
+        if (licenseStatus.isActive && licenseStatus.licenseKey) {
+          setLicenseInfo({
+            licenseKey: licenseStatus.licenseKey,
+            expiresAt: licenseStatus.expiresAt || '',
+            status: 'active',
+            planType: licenseStatus.planType || 'monthly',
+          });
+        } else {
+          setLicenseInfo(null);
+        }
       } else {
         setHasActiveLicense(false);
         setAICreditsRemaining(undefined);
         setAICreditsTotal(undefined);
+        setPerToolCredits(undefined);
+        setLicenseInfo(null);
       }
 
       setLoading(false);
@@ -56,7 +148,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, hasActiveLicense, aiCreditsRemaining, aiCreditsTotal }}>
+    <AuthContext.Provider value={{ user, loading, hasActiveLicense, aiCreditsRemaining, aiCreditsTotal, perToolCredits, licenseInfo }}>
       {children}
     </AuthContext.Provider>
   );

@@ -396,7 +396,7 @@ export default function WatermarkTool() {
                   />
                   {watermark ? (
                     <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-gray-800">
-                      <img src={watermark} alt="Watermark" className="w-full h-full object-contain" />
+                      <img src={watermark} alt={t('alt.watermark')} className="w-full h-full object-contain" />
                       <button 
                         onClick={(e) => { e.stopPropagation(); setWatermark(null); }}
                         className="absolute top-1 right-1 bg-black/60 p-1 rounded-full text-white hover:bg-red-500 transition-colors"

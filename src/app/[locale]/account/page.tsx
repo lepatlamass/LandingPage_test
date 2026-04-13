@@ -85,7 +85,7 @@ export default function AccountPage() {
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
-                    placeholder="Enter your full name"
+                    placeholder={t('placeholder.enterFullName')}
                   />
                 </div>
               </div>

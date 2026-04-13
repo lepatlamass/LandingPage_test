@@ -43,7 +43,46 @@
     "directoryConvertFromPdf": "Converter de PDF",
     "directoryConvertToPdf": "Converter para PDF",
     "directorySpreadsheet": "Folha de cálculo",
-    "directoryMedia": "Média"
+    "directoryMedia": "Média",
+    "alt": {
+      "processGuide": "Process guide",
+      "forBusinesses": "For Businesses",
+      "forAccountants": "For Accountants",
+      "forStudents": "For Students",
+      "forDesigners": "For Designers",
+      "globeIllustration": "Globe Illustration",
+      "gifResult": "GIF Result",
+      "original": "Original",
+      "result": "Result",
+      "sourceFile": "Source File",
+      "convertedFile": "Converted File",
+      "filePreview": "File Preview",
+      "uploadedFile": "Uploaded File",
+      "processedFile": "Processed File"
+    },
+    "placeholder": {
+      "yourName": "Your name",
+      "yourEmail": "Your email",
+      "howCanWeHelp": "How can we help?",
+      "enterFullName": "Enter your full name",
+      "enterFirstName": "Enter first name",
+      "enterLastName": "Enter last name",
+      "acmeCorp": "ACME Corp",
+      "phoneNumber": "+1 (555) 000-0000",
+      "zipPostalCode": "ZIP / Postal code",
+      "selectEnterState": "Select or enter state",
+      "enterCity": "Enter city",
+      "streetAddress": "Street address, P.O. box, etc.",
+      "billingEmail": "billing@company.com",
+      "vatNumber": "e.g. GB123456789",
+      "sendMesage": "Send Message"
+    },
+    "label": {
+      "saving": "Saving...",
+      "saved": "Saved",
+      "loadingBilling": "Loading billing data...",
+      "loadingSettings": "Loading settings..."
+    }
   },
   "Tools": {
     "bg-remover": "Removedor de Fundo",
@@ -66,6 +105,28 @@
     "bg-remover-faq2-a": "Suportamos todos os principais formatos de imagem, incluindo JPG, PNG e WebP.",
     "bg-remover-faq3-q": "Os meus dados estão seguros?",
     "bg-remover-faq3-a": "Com certeza. As suas imagens são processadas de forma segura e eliminadas dos nossos servidores após o processamento.",
+    "bg-remover-upload-step": "1. Carregue o seu sujeito(s)",
+    "bg-remover-click-to-upload": "Clique para carregar",
+    "bg-remover-or-drag-drop": "ou arraste e largue",
+    "bg-remover-formats": "PNG, JPG ou WEBP (MÁX. 15MB, até 5 imagens)",
+    "bg-remover-mode-prompt": "A partir de Prompt",
+    "bg-remover-mode-preset": "A partir de Predefinição",
+    "bg-remover-mode-custom": "A partir da Sua Imagem",
+    "bg-remover-step2-prompt": "2. Descreva o novo fundo",
+    "bg-remover-step2-preset": "2. Escolha uma predefinição",
+    "bg-remover-step2-custom": "2. Carregue o seu fundo",
+    "bg-remover-prompt-placeholder": "ex. Uma bela praia ao pôr do sol, uma paisagem urbana futurista...",
+    "bg-remover-select-bg": "Selecionar Fundo",
+    "bg-remover-generate": "Gerar Fundo",
+    "bg-remover-generating": "A gerar...",
+    "bg-remover-preview": "Pré-visualização",
+    "bg-remover-empty-preview": "O seu ficheiro aparecerá aqui",
+    "bg-remover-clear-all": "Limpar tudo",
+    "bg-remover-original": "Original",
+    "bg-remover-result": "Resultado",
+    "bg-remover-status-completed": "Concluído",
+    "bg-remover-status-processing": "A processar",
+    "bg-remover-status-pending": "Pendente",
     "watermark": "Marca de Água",
     "watermark-title": "Adicionar",
     "watermark-accent": "Marca de Água",
@@ -84,6 +145,27 @@
     "watermark-faq1-a": "Sim, pode adicionar marcas de água de texto e de imagem ao mesmo ficheiro.",
     "watermark-faq2-q": "Suporta marcação em lote?",
     "watermark-faq2-a": "Sim, pode carregar várias imagens e aplicar a mesma marca de água a todas.",
+    "watermark-upload-subject": "1. Carregue o seu documento (Imagem ou PDF)",
+    "watermark-upload-watermark": "2. Configure a sua marca de água",
+    "watermark-type": "Tipo de marca de água",
+    "watermark-type-image": "Imagem",
+    "watermark-type-text": "Texto",
+    "watermark-text-label": "Texto da marca de água",
+    "watermark-text-placeholder": "Escreva o seu texto de marca de água aqui...",
+    "watermark-customization": "3. Personalização",
+    "watermark-position": "Posição",
+    "watermark-size": "Tamanho",
+    "watermark-opacity": "Opacidade",
+    "watermark-color": "Cor do texto",
+    "watermark-apply": "Aplicar marca de água",
+    "watermark-processing": "A processar...",
+    "watermark-preview": "Pré-visualização",
+    "watermark-empty-preview": "Os seus ficheiros aparecerão aqui",
+    "watermark-download": "Descarregar resultado",
+    "watermark-clear-all": "Limpar tudo",
+    "watermark-select-watermark": "Selecionar marca de água",
+    "watermark-click-to-upload": "Clique para carregar",
+    "watermark-or-drag-drop": "ou arraste e largue",
     "watermark-remover": "Removedor de Marca de Água",
     "watermark-remover-title": "Remover",
     "watermark-remover-accent": "Marca de Água",
@@ -224,6 +306,13 @@
     "pdf-to-excel-faq2-a": "Sim, a nossa funcionalidade de conversão em lote permite-lhe processar vários ficheiros.",
     "pdf-to-excel-faq3-q": "Os meus dados estão seguros?",
     "pdf-to-excel-faq3-a": "Com certeza. Utilizamos encriptação SSL e eliminamos os ficheiros após 1 hora.",
+    "pdf-to-excel-status-processing": "A processar PDF...",
+    "pdf-to-excel-status-completed": "Concluído",
+    "pdf-to-excel-download": "Descarregar Excel",
+    "pdf-to-excel-status-error": "Erro",
+    "pdf-to-excel-extracting": "A extrair...",
+    "pdf-to-excel-apply": "Converter para Excel",
+    "pdf-to-excel-info-desc": "O nosso conversor de PDF para Excel extrai com precisão as tabelas dos seus documentos PDF e converte-as em folhas de cálculo Excel editáveis. Mantém a estrutura original da tabela e a formatação dos dados.",
     "pdf-to-excel-select-file-desc": "Selecione um ficheiro PDF para extrair tabelas para o Excel",
     "excel-to-csv": "Excel para CSV",
     "csv-to-excel": "CSV para Excel",
@@ -330,6 +419,7 @@
     "video-to-gif-processing": "A converter para GIF...",
     "video-to-gif-ready": "O seu GIF está pronto!",
     "video-to-gif-download": "Descarregar GIF",
+    "video-to-gif-error-large": "O ficheiro de vídeo é demasiado grande (>100MB). A conversão baseada no navegador é limitada pela memória.",
     "compress-images": "Comprimir Imagens",
     "compress-images-title": "Comprimir",
     "compress-images-accent": "Imagens",
@@ -480,7 +570,16 @@
     "svg-to-png-step1": "Carregue os seus ficheiros vetoriais SVG.",
     "svg-to-png-step2": "Selecione PNG ou JPG e defina a largura/altezza desejada.",
     "svg-to-png-step3": "Aguarde a conclusão do processo de renderização.",
-    "svg-to-png-step4": "Descarregue as suas novas imagens raster."
+    "svg-to-png-step4": "Descarregue as suas novas imagens raster.",
+    "svg-to-png-faq1-q": "Suporta SVG complexos?",
+    "svg-to-png-faq1-a": "Sim, o nosso motor suporta caminhos complexos, gradientes e máscaras.",
+    "svg-to-png-faq2-q": "Posso converter SVG em lote?",
+    "svg-to-png-faq2-a": "Sim, pode carregar vários ficheiros SVG e convertê-los todos de uma vez.",
+    "alt": {
+      "watermark": "Watermark"
+    },
+    "chooseFiles": "CHOOSE FILES",
+    "dropFilesHere": "or drop files here"
   },
   "Home": {
     "home": "Início",
@@ -564,7 +663,10 @@
         "name": "Nome",
         "firstName": "Nome",
         "lastName": "Apelido",
-        "saveChanges": "Guardar alterações"
+        "saveChanges": "Guardar alterações",
+        "placeholder": {
+          "enterFullName": "Enter your full name"
+        }
       },
       "subscription": {
         "title": "Assinatura",
@@ -575,7 +677,10 @@
         "tryFree": "Experimente grátis 7 dias",
         "activateLicense": "Ativar Licença",
         "activateLicenseButton": "Ativar",
-        "activating": "A ativar..."
+        "activating": "A ativar...",
+        "placeholder": {
+          "licenseKey": "XXXX-XXXX-XXXX-XXXX"
+        }
       },
       "billing": {
         "title": "Faturação",
@@ -594,41 +699,56 @@
         "street": "Rua",
         "emailInvoicesTo": "Enviar faturas por email para",
         "save": "Guardar",
-        "close": "Fechar"
+        "close": "Fechar",
+        "placeholder": {
+          "enterFirstName": "Enter first name",
+          "enterLastName": "Enter last name",
+          "acmeCorp": "ACME Corp",
+          "phoneNumber": "+1 (555) 000-0000",
+          "zipPostalCode": "ZIP / Postal code",
+          "selectEnterState": "Select or enter state",
+          "enterCity": "Enter city",
+          "streetAddress": "Street address, P.O. box, etc.",
+          "billingEmail": "billing@company.com",
+          "vatNumber": "e.g. GB123456789"
+        }
       },
       "settings": {
-        "title": "Settings",
+        "title": "Definições",
         "preferences": {
-          "title": "Preferences",
+          "title": "Preferências",
           "language": {
-            "label": "Language",
-            "change": "Change",
-            "disclaimer": "Changing language will automatically reload the page in your preferred locale."
+            "label": "Idioma",
+            "change": "Alterar",
+            "disclaimer": "Alterar o idioma irá recarregar automaticamente a página no seu local preferido."
           },
           "emailNotifications": {
-            "label": "Email Notifications",
-            "description": "No longer wish to receive promotional emails from us? You can do so here.",
-            "disable": "Disable Emails",
-            "enable": "Enable Emails"
+            "label": "Notificações por Email",
+            "description": "Já não deseja receber emails promocionais nossas? Pode fazê-lo aqui.",
+            "disable": "Desativar Emails",
+            "enable": "Ativar Emails"
           }
         },
         "manageAccount": {
-          "label": "Manage account",
-          "deleteAccount": "Delete account",
-          "deleteTitle": "Delete Account Confirmation",
-          "deleteDescription": "This action cannot be undone. This will permanently delete your account and all associated data.",
-          "deleteConfirm": "Delete my account",
-          "deleteCancel": "Cancel",
-          "deleteWarning": "Are you absolutely sure?"
+          "label": "Gerir conta",
+          "deleteAccount": "Eliminar conta",
+          "deleteTitle": "Confirmação de Eliminação de Conta",
+          "deleteDescription": "Esta ação não pode ser desfeita. Isto irá eliminar permanentemente a sua conta e todos os dados associados.",
+          "deleteConfirm": "Eliminar a minha conta",
+          "deleteCancel": "Cancelar",
+          "deleteWarning": "Tem a certeza absoluta?",
+          "placeholder": {
+            "deleteMyAccount": "delete my account"
+          }
         },
         "success": {
-          "emailPreferencesUpdated": "Email preferences updated.",
-          "accountDeleted": "Account deleted successfully."
+          "emailPreferencesUpdated": "Preferências de email atualizadas.",
+          "accountDeleted": "Conta eliminada com sucesso."
         },
         "error": {
-          "updateFailed": "Failed to update settings.",
-          "deleteFailed": "Failed to delete account.",
-          "requiresReauth": "Please sign in again to delete your account."
+          "updateFailed": "Falha ao atualizar as definições.",
+          "deleteFailed": "Falha ao eliminar a conta.",
+          "requiresReauth": "Inicie sessão novamente para eliminar a sua conta."
         }
       }
     }

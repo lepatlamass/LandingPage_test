@@ -9,16 +9,19 @@ export const getAi = () => {
 export const generateContent = async (prompt: string, modelName: string = "gemini-3-flash-preview") => {
   const ai = getAi();
   if (!ai) return null;
-  
+
   const response = await ai.models.generateContent({
     model: modelName,
     contents: prompt,
   });
-  
+
   return response.text;
 };
 
-export const processBackgroundRemoval = async (
+/**
+ * Server-side background removal (for use in API routes or server components).
+ */
+export const processBackgroundRemovalServer = async (
   base64Image: string,
   mimeType: string,
   options: { prompt?: string; backgroundImageBase64?: string; backgroundMimeType?: string }
@@ -63,6 +66,29 @@ export const processBackgroundRemoval = async (
   }
 
   throw new Error("No image returned from AI");
+};
+
+/**
+ * Client-side background removal (proxies through API route to avoid COOP/COEP issues).
+ */
+export const processBackgroundRemoval = async (
+  base64Image: string,
+  _mimeType: string,
+  options: { prompt?: string; backgroundImageBase64?: string; backgroundMimeType?: string }
+): Promise<string> => {
+  const response = await fetch('/api/tools/background-removal', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ base64Image, mimeType: _mimeType, options }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to process image');
+  }
+
+  return data.result;
 };
 
 export const processImageToText = async (base64: string, mimeType: string, mode: string) => {
