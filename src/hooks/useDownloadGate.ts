@@ -42,7 +42,7 @@ export function useDownloadGate(): UseDownloadGateReturn {
       // Check localStorage for previous login
       const hasLoggedInBefore =
         typeof window !== 'undefined'
-          ? localStorage.getItem('refindocs_has_logged_in') === 'true'
+          ? localStorage.getItem('refinedocs_has_logged_in') === 'true'
           : false;
 
       if (!hasLoggedInBefore) {

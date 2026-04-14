@@ -45,7 +45,7 @@ export default function MainSidebar({ activeTool, onToolSelect }: MainSidebarPro
         <div className="w-8 h-8 bg-[#d4ff33] rounded-lg flex items-center justify-center text-black font-bold text-xl">
           R
         </div>
-        <span className="text-white font-bold text-xl tracking-tight">Refindocs</span>
+        <span className="text-white font-bold text-xl tracking-tight">Refinedocs</span>
       </div>
 
       <div className="px-4 mb-4">

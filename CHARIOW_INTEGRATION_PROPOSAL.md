@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines how to integrate **Chariow's hosted checkout + license system** into your existing Next.js app (`refindocs`). The key principle is **minimal disruption**: we reuse your existing account/subscription page design and landing page pricing section, wiring up the Chariow flow without creating new pages or breaking the current UI.
+This document outlines how to integrate **Chariow's hosted checkout + license system** into your existing Next.js app (`refinedocs`). The key principle is **minimal disruption**: we reuse your existing account/subscription page design and landing page pricing section, wiring up the Chariow flow without creating new pages or breaking the current UI.
 
 **Key principle:** The license *is* the access control. No webhooks. No subscription tracking. Buy → Get Key → Activate → Access.
 
@@ -949,7 +949,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (firebaseUser) {
         if (typeof window !== 'undefined') {
-          localStorage.setItem('refindocs_has_logged_in', 'true');
+          localStorage.setItem('refinedocs_has_logged_in', 'true');
         }
         const licenseStatus = await getUserLicenseStatus(firebaseUser.uid);
         setHasActiveLicense(licenseStatus.isActive);

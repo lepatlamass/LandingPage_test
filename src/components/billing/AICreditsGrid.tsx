@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react';
 import { Eraser, Droplets, Type, Sparkles, Zap, ShoppingCart } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { PerToolCredits, AISolutionId } from '@/lib/firestore/licenses';
 import { AI_SOLUTION_IDS, AI_SOLUTION_META } from '@/lib/firestore/licenses';
 
@@ -87,6 +88,7 @@ function AIToolCreditCard({
   total: number;
   index: number;
 }) {
+  const t = useTranslations('Account.pages.subscription');
   const meta = AI_SOLUTION_META[toolId];
   const IconComponent = ICON_MAP[meta.icon] || Sparkles;
   const pct = total > 0 ? Math.round((remaining / total) * 100) : 0;
@@ -150,7 +152,7 @@ function AIToolCreditCard({
               {remaining}
             </span>
             <span className="text-xs text-zinc-500 font-medium">
-              / {total} credits
+              / {total} {t('credits')}
             </span>
           </div>
 
@@ -158,15 +160,15 @@ function AIToolCreditCard({
           <div className="mt-1.5">
             {isEmpty ? (
               <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-red-400 bg-red-400/10 px-2 py-0.5 rounded-full">
-                Depleted
+                {t('depleted')}
               </span>
             ) : isLow ? (
               <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">
-                <Zap className="w-2.5 h-2.5" /> Low
+                <Zap className="w-2.5 h-2.5" /> {t('low')}
               </span>
             ) : (
               <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">
-                {pct}% remaining
+                {t('percentRemaining', { percent: pct })}
               </span>
             )}
           </div>
@@ -197,6 +199,7 @@ export default function AICreditsGrid({
   perToolCredits: PerToolCredits;
   planType?: 'monthly' | 'yearly';
 }) {
+  const t = useTranslations('Account.pages.subscription');
   // Calculate aggregate stats
   const totalCreditsUsed = AI_SOLUTION_IDS.reduce((sum, id) => {
     const tool = perToolCredits[id];
@@ -224,11 +227,11 @@ export default function AICreditsGrid({
             <Sparkles className="text-[#d4ff33] h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-white">AI Credits</h2>
+            <h2 className="text-lg font-semibold text-white">{t('aiCredits')}</h2>
             <p className="text-xs text-zinc-500">
               {planType === 'yearly'
-                ? '20 credits per tool / month'
-                : '10 credits per tool / month'}
+                ? t('creditsPerToolYearly')
+                : t('creditsPerToolMonthly')}
             </p>
           </div>
         </div>
@@ -245,7 +248,7 @@ export default function AICreditsGrid({
             {totalRemaining} / {totalCreditsAll}
           </span>
           <p className="text-[10px] text-zinc-500 uppercase tracking-wider">
-            Total remaining
+            {t('totalRemaining')}
           </p>
         </div>
       </div>
@@ -273,7 +276,7 @@ export default function AICreditsGrid({
           className="w-full py-3 rounded-xl bg-zinc-800 text-white font-bold text-sm hover:bg-zinc-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]"
         >
           <ShoppingCart className="w-4 h-4 text-[#d4ff33]" />
-          Buy More Credits
+          {t('buyMoreCredits')}
         </button>
       </div>
     </motion.div>

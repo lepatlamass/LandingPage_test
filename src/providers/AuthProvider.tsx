@@ -68,7 +68,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     licenseUnsubscribe.current = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.data();
-        console.log(`[AuthProvider] License doc updated: aiCreditsRemaining=${data.aiCreditsRemaining}, perToolCredits=${JSON.stringify(data.perToolCredits)}`);
         setAICreditsRemaining(data.aiCreditsRemaining);
         setAICreditsTotal(data.aiCreditsTotal);
         setPerToolCredits(data.perToolCredits);
@@ -102,7 +101,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Handle redirect result first (in case user is returning from signInWithRedirect)
     handleRedirectResult(auth).then((result) => {
       if (result) {
-        console.log('Successfully signed in via redirect');
+        // Successfully signed in via redirect
       }
     });
 
@@ -112,7 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (firebaseUser) {
         // Mark that this browser has ever been authenticated (used for gate logic)
         if (typeof window !== 'undefined') {
-          localStorage.setItem('refindocs_has_logged_in', 'true');
+          localStorage.setItem('refinedocs_has_logged_in', 'true');
         }
         // Check if credits need to be reset (monthly reset)
         await resetCreditsIfNeeded(firebaseUser.uid);

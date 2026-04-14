@@ -20,7 +20,7 @@ export default async function LoginPage() {
             <div className="w-7 h-7 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-lg">
               R
             </div>
-            <span className="font-bold text-lg tracking-tight">Refindocs</span>
+            <span className="font-bold text-lg tracking-tight">Refinedocs</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-xs font-medium text-gray-400 hover:text-white transition-colors">
@@ -57,7 +57,7 @@ export default async function LoginPage() {
           <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
             <div className="bg-[#16181e] border border-white/5 shadow-2xl rounded-3xl p-10 relative overflow-hidden">
               <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
-                Log in to Refindocs
+                Log in to Refinedocs
               </h1>
               <p className="text-gray-400 text-sm mb-8">
                 Don&#39;t have an account?{' '}
@@ -69,7 +69,7 @@ export default async function LoginPage() {
               <GoogleSignInButton />
 
               <p className="mt-8 text-center text-[10px] text-gray-500 max-w-[240px] mx-auto leading-relaxed">
-                By continuing, you agree to Refindocs&#39;{' '}
+                By continuing, you agree to Refinedocs&#39;{' '}
                 <Link href="/terms" className="hover:text-gray-300 transition-colors">Terms of Service</Link>{' '}
                 and{' '}
                 <Link href="/privacy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>.
@@ -84,7 +84,7 @@ export default async function LoginPage() {
                 <span>★</span> PRO FEATURES
               </div>
               <h2 className="text-4xl md:text-5xl font-bold leading-[1.1] mb-10 text-white tracking-tight">
-                With Refindocs Pro,<br />you get:
+                With Refinedocs Pro,<br />you get:
               </h2>
 
               <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm font-medium text-gray-300 mb-12">

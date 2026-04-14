@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Name:** `refindocs`
+**Name:** `refinedocs`
 **Type:** Next.js 14 web application (AI Studio-generated landing page + tool suite)
 **Purpose:** A multi-language landing page for a document management/productivity tool, featuring AI-powered file conversion and document processing capabilities. The app serves as both a marketing landing site and a functional tool platform (e.g., PDF, image, and document conversion).
 

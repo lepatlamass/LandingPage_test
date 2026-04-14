@@ -18,7 +18,7 @@ export default function SubscriptionPage() {
     <div className="p-8 max-w-4xl mx-auto w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
-        <p className="text-zinc-400">Manage your plan and billing.</p>
+        <p className="text-zinc-400">{t('managePlan')}</p>
       </div>
 
       <div className="space-y-6">
@@ -30,9 +30,9 @@ export default function SubscriptionPage() {
         >
           <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
             <div className="space-y-2 flex-1">
-              <h3 className="text-lg font-semibold text-white">Upgrade to Pro Plan</h3>
+              <h3 className="text-lg font-semibold text-white">{t('upgradeToProTitle')}</h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                Save 20% with a Pro plan and unlock all features, including unlimited AI credits and priority processing.
+                {t('upgradeToProDescription')}
               </p>
             </div>
             <div className="shrink-0">
@@ -42,7 +42,7 @@ export default function SubscriptionPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-[#d4ff33] text-black px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#c2eb2e] transition-colors active:scale-[0.98]"
               >
-                Switch to Pro Plan <ArrowRight size={16} />
+                {t('switchToProPlan')} <ArrowRight size={16} />
               </a>
             </div>
           </div>
@@ -55,11 +55,11 @@ export default function SubscriptionPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <LicenseActivation 
-                userId={user?.uid} 
+              <LicenseActivation
+                userId={user?.uid}
                 isActive={hasActiveLicense}
                 licenseInfo={licenseInfo ? {
-                  productName: licenseInfo.productName || 'Pro Plan',
+                  productName: licenseInfo.productName || t('proPlan'),
                   expiresAt: new Date(licenseInfo.expiresAt).toLocaleDateString(),
                 } : null}
               />
@@ -82,7 +82,7 @@ export default function SubscriptionPage() {
                 className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden p-6 text-center"
               >
                 <p className="text-zinc-400 text-sm">
-                  Loading AI credits information…
+                  {t('loadingCredits')}
                 </p>
               </motion.div>
             )}
@@ -101,14 +101,14 @@ export default function SubscriptionPage() {
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
               <div className="px-6 py-5 border-b border-zinc-800 flex items-center gap-3">
                 <CreditCard className="text-zinc-500 h-5 w-5" />
-                <h2 className="text-lg font-semibold text-white">Current Plan</h2>
+                <h2 className="text-lg font-semibold text-white">{t('currentPlan')}</h2>
               </div>
 
               <div className="p-8 flex flex-col items-center text-center">
                 <div className="w-16 h-16 bg-zinc-950 border border-zinc-800 rounded-full flex items-center justify-center mb-4">
                   <CreditCard className="text-zinc-500 h-8 w-8" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">No Active Subscription</h3>
+                <h3 className="text-xl font-semibold text-white mb-2">{t('noActiveSubscription')}</h3>
                 <p className="text-zinc-400 mb-8 max-w-sm">
                   {t('noSubscription')}
                 </p>

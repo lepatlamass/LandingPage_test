@@ -19,6 +19,7 @@ export function AICreditsBar({
   remaining: number;
   total: number;
 }) {
+  const t = useTranslations('Account.pages.subscription');
   const pct = total > 0 ? Math.round((remaining / total) * 100) : 0;
   const isLow = remaining <= 3 && remaining > 0;
   const isEmpty = remaining === 0;
@@ -28,7 +29,7 @@ export function AICreditsBar({
       <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Sparkles className="text-[#d4ff33] h-5 w-5" />
-          <h2 className="text-lg font-semibold text-white">AI Credits</h2>
+          <h2 className="text-lg font-semibold text-white">{t('aiCredits')}</h2>
         </div>
         <span
           className={`text-sm font-bold ${
@@ -61,12 +62,12 @@ export function AICreditsBar({
         <div className="flex items-center justify-between text-sm">
           <span className="text-zinc-400">
             {isEmpty
-              ? 'No credits remaining'
-              : `${remaining} credit${remaining !== 1 ? 's' : ''} left`}
+              ? t('noCreditsRemaining')
+              : `${remaining} ${t('creditsLeft', { count: remaining })}`}
           </span>
           {isLow && (
             <span className="text-amber-400 font-medium flex items-center gap-1">
-              <Zap className="w-3 h-3" /> Running low
+              <Zap className="w-3 h-3" /> {t('runningLow')}
             </span>
           )}
         </div>
@@ -77,7 +78,7 @@ export function AICreditsBar({
           className="w-full py-3 rounded-xl bg-zinc-800 text-white font-bold text-sm hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
         >
           <Sparkles className="w-4 h-4 text-[#d4ff33]" />
-          Buy More Credits
+          {t('buyMoreCredits')}
         </button>
       </div>
     </div>
@@ -136,7 +137,7 @@ export default function LicenseActivation({
       const data = await res.json();
 
       if (!res.ok || !data.isValid) {
-        setError(data.error || 'Invalid license key');
+        setError(data.error || t('invalidLicenseKey'));
         setLicenseInfo(null);
         return;
       }
@@ -146,7 +147,7 @@ export default function LicenseActivation({
         expiresAt: new Date(data.data.expiresAt).toLocaleDateString(),
       });
     } catch {
-      setError('Validation failed. Please try again.');
+      setError(t('validationFailed'));
     } finally {
       setValidating(false);
     }
@@ -156,7 +157,7 @@ export default function LicenseActivation({
     e.preventDefault();
 
     if (!userId) {
-      setError('You must be logged in to activate a license.');
+      setError(t('mustBeLoggedIn'));
       return;
     }
 
@@ -213,13 +214,13 @@ export default function LicenseActivation({
         <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CreditCard className="text-[#d4ff33] h-5 w-5" />
-            <h2 className="text-lg font-semibold text-white">Current Plan</h2>
+            <h2 className="text-lg font-semibold text-white">{t('currentPlan')}</h2>
           </div>
           <button
             onClick={() => { setSuccess(false); setLicenseInfo(null); setLicenseKey(''); }}
             className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors"
           >
-            Switch License
+            {t('switchLicense')}
           </button>
         </div>
         <div className="p-8 flex flex-col items-center text-center">
@@ -227,23 +228,23 @@ export default function LicenseActivation({
             <CheckCircle className="text-[#d4ff33] h-8 w-8" />
           </div>
           <h3 className="text-xl font-semibold text-white mb-2">
-            License Activated
+            {t('licenseActivated')}
           </h3>
           {licenseInfo && (
             <>
               <p className="text-zinc-400 mb-1">
-                {licenseInfo.productName} — Valid until{' '}
+                {licenseInfo.productName} — {t('validUntil')}{' '}
                 {licenseInfo.expiresAt}
               </p>
               {licenseInfo.aiCreditsRemaining !== undefined && (
                 <p className="text-[#d4ff33] text-sm font-medium">
-                  {licenseInfo.aiCreditsRemaining} AI credits included
+                  {licenseInfo.aiCreditsRemaining} {t('aiCreditsIncluded')}
                 </p>
               )}
             </>
           )}
           <p className="text-zinc-500 text-sm mt-2">
-            You have full access to all features.
+            {t('fullAccessMessage')}
           </p>
         </div>
       </div>

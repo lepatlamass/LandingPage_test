@@ -61,6 +61,7 @@ import VideoToGifTool from './components/tools/VideoToGif/VideoToGifTool';
 import NavigationLoginButton from './components/auth/NavigationLoginButton';
 import MainSidebar from './components/layout/MainSidebar';
 import { sidebarTools } from './lib/sidebarData';
+import { useAuth } from './providers/AuthProvider';
 
 interface ToolPageContent {
   titleKey: string;
@@ -554,7 +555,8 @@ export default function App() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+  const { hasActiveLicense, loading: authLoading } = useAuth();
+
   const activeTool = searchParams.get('tool') || 'pdf-to-excel';
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
@@ -665,9 +667,11 @@ export default function App() {
             </div>
 
             <NavigationLoginButton />
-            <button className="bg-[#d4ff33] text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#c2eb2e] transition-colors">
-              {t('freeTrial')}
-            </button>
+            {!authLoading && !hasActiveLicense && (
+              <button className="bg-[#d4ff33] text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#c2eb2e] transition-colors">
+                {t('freeTrial')}
+              </button>
+            )}
           </div>
         </header>
 
@@ -845,9 +849,11 @@ export default function App() {
             <p className="text-black/70 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
               {t('documentWorkEasy')}
             </p>
-            <button className="bg-black text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-900 transition-all hover:scale-105 shadow-xl">
-              {t('try7DaysFree')}
-            </button>
+            {!authLoading && !hasActiveLicense && (
+              <button className="bg-black text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-900 transition-all hover:scale-105 shadow-xl">
+                {t('try7DaysFree')}
+              </button>
+            )}
           </div>
         </section>
 
@@ -860,7 +866,7 @@ export default function App() {
                   <div className="w-6 h-6 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-sm">
                     R
                   </div>
-                  <span className="text-white font-bold text-lg">Refindocs</span>
+                  <span className="text-white font-bold text-lg">Refinedocs</span>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {t('weMakePdfEasy')}

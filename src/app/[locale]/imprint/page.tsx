@@ -13,13 +13,13 @@ export default async function ImprintPage() {
         <h1 className="text-4xl font-bold mb-8">{tCommon('imprint')}</h1>
         <div className="prose prose-invert max-w-none">
           <p className="text-gray-300 leading-relaxed mb-6">
-            Refindocs GmbH<br />
+            Refinedocs GmbH<br />
             Musterstraße 123<br />
             12345 Berlin, Germany
           </p>
           <h2 className="text-2xl font-bold mb-4 text-white">Contact</h2>
           <p className="text-gray-300 leading-relaxed mb-6">
-            Email: contact@refindocs.com<br />
+            Email: contact@refinedocs.com<br />
             Phone: +49 123 456789
           </p>
           <h2 className="text-2xl font-bold mb-4 text-white">Representation</h2>

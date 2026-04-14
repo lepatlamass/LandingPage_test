@@ -37,7 +37,7 @@ npm install firebase
 1. Go to [https://console.firebase.google.com](https://console.firebase.google.com)
 2. Create a new project (or use an existing one)
 3. Click **"Add app"** → choose **Web** (`</>`)
-4. Register a name (e.g., `refindocs-web`) — copy the config object shown
+4. Register a name (e.g., `refinedocs-web`) — copy the config object shown
 5. In the left sidebar → **Authentication** → **Get started**
 6. Under **Sign-in method** → enable **Google**
 7. Add your authorized domain: `localhost` (already there) + your production domain

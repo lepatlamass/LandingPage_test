@@ -2,7 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useRef } from 'react';
 
-const SESSION_KEY_PREFIX = 'refindocs_tool_';
+const SESSION_KEY_PREFIX = 'refinedocs_tool_';
 
 // ── Context shape ──────────────────────────────────────────────────────────
 interface ToolStateContextType {

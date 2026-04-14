@@ -118,7 +118,7 @@ export default function UserMenuDropdown() {
             </div>
             <div className="flex flex-col flex-1 overflow-hidden">
               <span className="text-gray-100 font-bold text-base truncate">
-                {user.displayName || 'Refindocs User'}
+                {user.displayName || 'Refinedocs User'}
               </span>
               <span className="text-gray-400 text-sm truncate">
                 {user.email}

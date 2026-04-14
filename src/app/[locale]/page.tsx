@@ -5,6 +5,7 @@ import { ArrowRight, ChevronDown, FileText, Image as ImageIcon, Video, Zap, Shie
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import NavigationLoginButton from '../../components/auth/NavigationLoginButton';
 import PricingButtons from '../../components/billing/PricingButtons';
+import TrialSectionWrapper from '../../components/layout/TrialSectionWrapper';
 import { getProduct } from '../../lib/chariow';
 
 const MONTHLY_PRODUCT_ID = 'prd_zvd1cf';
@@ -116,7 +117,7 @@ export default async function Page({
             <div className="w-7 h-7 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-lg">
               R
             </div>
-            <span className="font-bold text-lg tracking-tight">Refindocs</span>
+            <span className="font-bold text-lg tracking-tight">Refinedocs</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-xs font-medium text-white transition-colors">
@@ -441,15 +442,17 @@ export default async function Page({
                 </p>
               </div>
 
-              <div className="flex flex-col items-start">
-                <div className="w-12 h-12 text-[#d4ff33] mb-6">
-                  <CloudDownload className="w-full h-full" fill="currentColor" />
+              <TrialSectionWrapper>
+                <div className="flex flex-col items-start">
+                  <div className="w-12 h-12 text-[#d4ff33] mb-6">
+                    <CloudDownload className="w-full h-full" fill="currentColor" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">{t('downloadTrial')}</h3>
+                  <p className="text-gray-400 leading-relaxed">
+                    {t('downloadTrialDesc')}
+                  </p>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">{t('downloadTrial')}</h3>
-                <p className="text-gray-400 leading-relaxed">
-                  {t('downloadTrialDesc')}
-                </p>
-              </div>
+              </TrialSectionWrapper>
             </div>
           </div>
         </section>
@@ -532,7 +535,7 @@ export default async function Page({
                   <div className="w-6 h-6 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-sm">
                     R
                   </div>
-                  <span className="text-white font-bold text-lg">Refindocs</span>
+                  <span className="text-white font-bold text-lg">Refinedocs</span>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {tCommon('weMakePdfEasy')}
