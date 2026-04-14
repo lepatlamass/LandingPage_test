@@ -1,11 +1,17 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '../../../navigation';
+import Navbar from '../../../components/layout/Navbar';
+import ToolsDirectory from '../../../components/layout/ToolsDirectory';
+import Footer from '../../../components/layout/Footer';
 
 export default async function PrivacyPage() {
   const tCommon = await getTranslations('Common');
   
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans py-20 px-6 sm:px-12">
+    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+      <Navbar />
+      
+      <main className="py-20 px-6 sm:px-12">
       <div className="max-w-4xl mx-auto">
         <Link href="/" className="text-[#d4ff33] hover:underline mb-12 inline-block text-sm">
           ← {tCommon('home')}
@@ -114,8 +120,12 @@ export default async function PrivacyPage() {
           <h4 id="faq-11">11. Contact us</h4>
           <p>If you have any queries, please contact DtempoLabs at <strong>Konwoubuntu@gmail.com</strong>.</p>
 
-      </div>
+        </div>
+        </div>
+      </main>
+
+      <ToolsDirectory />
+      <Footer />
     </div>
-  </div>
   );
 }

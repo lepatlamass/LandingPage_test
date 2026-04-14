@@ -1,11 +1,17 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '../../../navigation';
+import Navbar from '../../../components/layout/Navbar';
+import ToolsDirectory from '../../../components/layout/ToolsDirectory';
+import Footer from '../../../components/layout/Footer';
 
 export default async function TermsPage() {
   const tCommon = await getTranslations('Common');
   
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans py-20 px-6 sm:px-12">
+    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+      <Navbar />
+      
+      <main className="py-20 px-6 sm:px-12">
       <div className="max-w-4xl mx-auto">
         <Link href="/" className="text-[#d4ff33] hover:underline mb-12 inline-block text-sm">
           ← {tCommon('home')}
@@ -190,7 +196,11 @@ export default async function TermsPage() {
           <h3 id="16-dpa">16. Data Processing Agreement</h3>
           <p>The Data Processing Agreement (DPA) reflects our mutual agreement with respect to the Processing of Personal Data by us on behalf of you in connection with our services. The DPA is supplemental to, and forms an integral part of, these Terms of Service. In case of any conflict or inconsistency, the DPA will take precedence over these Terms to the extent of such conflict or inconsistency.</p>
         </div>
-      </div>
+        </div>
+      </main>
+
+      <ToolsDirectory />
+      <Footer />
     </div>
   );
 }

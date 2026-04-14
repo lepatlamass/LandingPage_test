@@ -1,9 +1,10 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '../../navigation';
 import Image from 'next/image';
-import { ArrowRight, ChevronDown, FileText, Image as ImageIcon, Video, Zap, Shield, TrendingUp, CloudDownload, Twitter, Linkedin, Minimize, RefreshCw, Eraser, Droplets, Type, Maximize, FileSpreadsheet, FileCode, FileVideo } from 'lucide-react';
-import LanguageSwitcher from '../../components/LanguageSwitcher';
-import NavigationLoginButton from '../../components/auth/NavigationLoginButton';
+import { ArrowRight, Zap, Shield, TrendingUp, CloudDownload } from 'lucide-react';
+import Navbar from '../../components/layout/Navbar';
+import ToolsDirectory from '../../components/layout/ToolsDirectory';
+import Footer from '../../components/layout/Footer';
 import PricingButtons from '../../components/billing/PricingButtons';
 import TrialSectionWrapper from '../../components/layout/TrialSectionWrapper';
 import { getProduct } from '../../lib/chariow';
@@ -44,107 +45,10 @@ export default async function Page({
     // If Chariow API is unavailable, prices will remain null and use fallbacks
   }
 
-  const toolDirectory = [
-    {
-      title: tCommon('directoryCompress'),
-      tools: [
-        { id: "compress-pdf", name: tTools('compress-pdf'), icon: Minimize },
-        { id: "compress-images", name: tTools('compress-images'), icon: ImageIcon },
-        { id: "compress-video", name: tTools('compress-video'), icon: Video },
-      ]
-    },
-    {
-      title: tCommon('directoryConvert'),
-      tools: [
-        { id: "image-converter", name: tTools('image-converter'), icon: RefreshCw },
-        { id: "heic-to-png", name: tTools('heic-to-png'), icon: ImageIcon },
-        { id: "pdf-to-image", name: tTools('pdf-to-image'), icon: FileText },
-        { id: "svg-to-png", name: tTools('svg-to-png'), icon: ImageIcon },
-      ]
-    },
-    {
-      title: tCommon('directoryAiTools'),
-      tools: [
-        { id: "bg-remover", name: tTools('bg-remover'), icon: Eraser },
-        { id: "watermark-remover", name: tTools('watermark-remover'), icon: Droplets },
-        { id: "image-to-text", name: tTools('image-to-text'), icon: Type },
-      ]
-    },
-    {
-      title: tCommon('directoryViewEdit'),
-      tools: [
-        { id: "watermark", name: tTools('watermark'), icon: Droplets },
-        { id: "resize", name: tTools('resize'), icon: Maximize },
-      ]
-    },
-    {
-      title: tCommon('directoryConvertFromPdf'),
-      tools: [
-        { id: "pdf-to-word", name: tTools('pdf-to-word'), icon: FileText },
-        { id: "pdf-to-excel", name: tTools('pdf-to-excel'), icon: FileSpreadsheet },
-        { id: "pdf-to-csv", name: tTools('pdf-to-csv'), icon: FileCode },
-      ]
-    },
-    {
-      title: tCommon('directoryConvertToPdf'),
-      tools: [
-        { id: "word-to-pdf", name: tTools('word-to-pdf'), icon: FileText },
-        { id: "excel-to-pdf", name: tTools('excel-to-pdf'), icon: FileSpreadsheet },
-        { id: "csv-to-pdf", name: tTools('csv-to-pdf'), icon: FileCode },
-      ]
-    },
-    {
-      title: tCommon('directorySpreadsheet'),
-      tools: [
-        { id: "excel-to-csv", name: tTools('excel-to-csv'), icon: FileSpreadsheet },
-        { id: "csv-to-excel", name: tTools('csv-to-excel'), icon: FileSpreadsheet },
-      ]
-    },
-    {
-      title: tCommon('directoryMedia'),
-      tools: [
-        { id: "video-to-gif", name: tTools('video-to-gif'), icon: FileVideo },
-      ]
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
-      {/* Navigation */}
-      <header className="h-16 border-b border-white/5 flex items-center justify-between px-6 bg-[#111111] sticky top-0 z-50">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-7 h-7 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-lg">
-              R
-            </div>
-            <span className="font-bold text-lg tracking-tight">Refinedocs</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-xs font-medium text-white transition-colors">
-              {tCommon('home')}
-            </Link>
-            <Link href="/tools" className="text-xs font-medium text-gray-300 hover:text-white transition-colors">
-              {tCommon('tools')}
-            </Link>
-            <a href="#faq" className="text-xs font-medium text-gray-300 hover:text-white transition-colors">
-              Faq
-            </a>
-            <a href="#price" className="text-xs font-medium text-gray-300 hover:text-white transition-colors">
-              Price
-            </a>
-          </nav>
-        </div>
-        <div className="flex items-center gap-4">
-          <LanguageSwitcher />
-          <NavigationLoginButton />
-          <Link
-            href="/tools"
-            className="px-4 py-1.5 bg-[#d4ff33] text-black text-xs font-bold rounded hover:bg-[#bce622] transition-colors"
-          >
-            Get Pro
-          </Link>
-        </div>
-      </header>
+      <Navbar />
 
       <main>
         {/* Hero Section */}
@@ -495,95 +399,8 @@ export default async function Page({
           </div>
         </section>
 
-        {/* Tools Directory Section */}
-        <section className="py-20 bg-[#0a0b0e] border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-2xl font-bold mb-12 text-white">{tCommon('allTools')}</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12">
-              {toolDirectory.map((category, idx) => (
-                <div key={idx} className="flex flex-col">
-                  <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest mb-6 border-b border-white/5 pb-2">
-                    {category.title}
-                  </h3>
-                  <ul className="space-y-4">
-                    {category.tools.map((tool, toolIdx) => (
-                      <li key={toolIdx}>
-                        <Link
-                          href={`/tools?tool=${tool.id}`}
-                          className="group flex items-center gap-3 text-gray-400 hover:text-[#d4ff33] transition-colors"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#d4ff33]/10 transition-colors">
-                            <tool.icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                          </div>
-                          <span className="text-sm font-medium">{tool.name}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="bg-black py-20 px-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20">
-              <div className="col-span-2 md:col-span-1">
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-6 h-6 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-sm">
-                    R
-                  </div>
-                  <span className="text-white font-bold text-lg">Refinedocs</span>
-                </div>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {tCommon('weMakePdfEasy')}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-white font-bold mb-6">{tCommon('solutions')}</h4>
-                <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{tCommon('sales')}</Link></li>
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{tCommon('finance')}</Link></li>
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{tCommon('realEstate')}</Link></li>
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{tCommon('education')}</Link></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-white font-bold mb-6">{tCommon('company')}</h4>
-                <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/#about" className="hover:text-white transition-colors">{tCommon('about')}</Link></li>
-                  <li><Link href="/#cta" className="hover:text-white transition-colors">{tCommon('help')}</Link></li>
-                  <li><Link href="/#about" className="hover:text-white transition-colors">{tCommon('blog')}</Link></li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-white font-bold mb-6">{tCommon('product')}</h4>
-                <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/#price" className="hover:text-white transition-colors">{tCommon('pricing')}</Link></li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="pt-10 border-t border-gray-900 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex items-center gap-6">
-                <a href="#" className="text-gray-600 hover:text-white transition-colors"><Linkedin size={20} /></a>
-                <a href="#" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-[11px] text-gray-600 uppercase tracking-widest font-bold">
-                <span>{tCommon('copyright')}</span>
-                <Link href="/privacy" className="hover:text-white transition-colors">{tCommon('privacyNotice')}</Link>
-                <Link href="/terms" className="hover:text-white transition-colors">{tCommon('termsConditions')}</Link>
-                <Link href="/imprint" className="hover:text-white transition-colors">{tCommon('imprint')}</Link>
-                <Link href="/contact" className="hover:text-white transition-colors">{tCommon('contactUs')}</Link>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <ToolsDirectory />
+        <Footer />
       </main>
     </div>
   );
