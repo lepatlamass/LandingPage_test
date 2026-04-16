@@ -84,7 +84,7 @@ export default function CompressPdfTool() {
       });
 
       // Convert to base64 data URL for persistence across locale changes
-      const blob = new Blob([compressedBytes], { type: 'application/pdf' });
+      const blob = new Blob([new Uint8Array(compressedBytes)], { type: 'application/pdf' });
       const resultDataUrl = await new Promise<string>((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result as string);

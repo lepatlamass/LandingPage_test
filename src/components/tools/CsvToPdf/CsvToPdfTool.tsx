@@ -222,7 +222,7 @@ export default function CsvToPdfTool() {
       }
 
       const pdfBytes = await pdfDoc.save();
-      const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const pdfBlob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
       setCsvFile(prev => prev ? { ...prev, status: 'completed', resultPdf: pdfBlob } : null);
     } catch (error) {
       console.error('CSV to PDF error:', error);

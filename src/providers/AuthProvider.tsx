@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { User } from 'firebase/auth';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, getAdditionalUserInfo } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 import { getUserLicenseStatus, resetCreditsIfNeeded } from '../lib/firestore/licenses';
@@ -102,6 +102,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     handleRedirectResult(auth).then((result) => {
       if (result) {
         // Successfully signed in via redirect
+        const additionalInfo = getAdditionalUserInfo(result);
+        if (additionalInfo?.isNewUser) {
+          fetch('/api/emails/welcome', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: result.user.email,
+              firstName: result.user.displayName?.split(' ')[0] || '',
+            }),
+          }).catch(e => console.error('Failed to send welcome email:', e));
+        }
       }
     });
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { getAdditionalUserInfo } from 'firebase/auth';
 import { auth, googleProvider } from '../../lib/firebase';
 import { useAuth } from '../../providers/AuthProvider';
 import { useRouter } from '../../navigation';
@@ -31,6 +32,21 @@ export default function GoogleSignInButton() {
       
       // For popup flow, navigate on success
       if (result) {
+        const additionalInfo = getAdditionalUserInfo(result);
+        if (additionalInfo?.isNewUser) {
+          try {
+            await fetch('/api/emails/welcome', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: result.user.email,
+                firstName: result.user.displayName?.split(' ')[0] || '',
+              }),
+            });
+          } catch (e) {
+            console.error('Failed to send welcome email:', e);
+          }
+        }
         router.replace('/tools');
       }
     } catch (error: unknown) {

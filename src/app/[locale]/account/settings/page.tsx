@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { useRouter, usePathname } from '../../../../navigation';
+import { useRouter, usePathname, locales } from '../../../../navigation';
+
+type Locale = (typeof locales)[number];
 import { useAuth } from '../../../../providers/AuthProvider';
 import { getUserPreferences, updateEmailPreferences } from '../../../../lib/firestore/userPreferences';
 import { UserPreferences } from '../../../../types/user-preferences';
@@ -53,7 +55,7 @@ export default function SettingsPage() {
       }
     }
     loadData();
-  }, [user]);
+  }, [user, t]);
 
   const showToast = (message: string, type: 'success' | 'error') => {
     setToastMsg({ message, type });
@@ -61,7 +63,7 @@ export default function SettingsPage() {
   };
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLocale = e.target.value;
+    const newLocale = e.target.value as Locale;
     setLanguage(newLocale);
     
     // Switch the app's routing namespace natively

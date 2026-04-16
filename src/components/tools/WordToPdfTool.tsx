@@ -192,7 +192,7 @@ export default function WordToPdfTool() {
 
       // 4. Output as Blob
       const pdfBytes = await pdfDoc.save();
-      const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const pdfBlob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
 
       setFiles(prev => prev.map(f => 
         f.id === fileObj.id ? { 

@@ -93,7 +93,7 @@ export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogP
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-300">
-                Type <span className="font-bold text-white">"delete my account"</span> to confirm
+                Type <span className="font-bold text-white">&quot;delete my account&quot;</span> to confirm
               </label>
               <input
                 type="text"

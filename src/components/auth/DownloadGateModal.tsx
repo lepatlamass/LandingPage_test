@@ -209,7 +209,7 @@ function SubscribeView({
       {/* Badge */}
       <div className="inline-flex items-center gap-1.5 bg-[#d4ff33]/10 border border-[#d4ff33]/20 text-[#d4ff33] text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
         <Sparkles size={12} />
-        You've used your free download
+        You&apos;ve used your free download
       </div>
 
       {/* Headline */}
