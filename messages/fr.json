@@ -780,5 +780,54 @@
         }
       }
     }
+  },
+  "Help": {
+    "title": "Aide Refinedocs",
+    "subtitle": "Trouvez des réponses aux questions les plus fréquemment posées sur la facturation, les fonctionnalités et la configuration.",
+    "categories": {
+      "account": "Compte et Facturation",
+      "payments": "Paiements",
+      "processing": "Fichiers et Sécurité"
+    },
+    "contactUs": "Vous avez encore des questions ?",
+    "contactButton": "Nous contacter",
+    "faqs": {
+      "q1": "Comment annuler ma licence Refinedocs Pro ?",
+      "a1": "Refinedocs Pro fonctionne avec un modèle de licence, il n'y a donc pas de renouvellement automatique. Une fois expirée, votre compte revient à la version gratuite.",
+      "q2": "Comment changer mon email ou mot de passe ?",
+      "a2": "Nous utilisons l'authentification Google, vous devez changer cela sur votre compte Google.",
+      "q3": "Pourquoi suis-je limité avec un compte payant ?",
+      "a3": "Vous êtes probablement connecté avec un mauvais compte Google. Vérifiez votre compte.",
+      "q4": "Quels sont les avantages d'une licence Pro ?",
+      "a4": "Accès illimité, conversion par lots, vitesse maximale et zéro publicité.",
+      "q5": "Puis-je utiliser Refinedocs pour mon entreprise ?",
+      "a5": "Absolument. Chiffrement sécurisé et traitement cloud rapide.",
+      "q6": "Comment fonctionne l'activation ?",
+      "a6": "Vous recevez une clé de licence sans aucuns frais cachés.",
+      "q7": "Quels modes de paiement acceptez-vous ?",
+      "a7": "Nous acceptons Visa, Mastercard et American Express.",
+      "q8": "Pourquoi ma carte a-t-elle été refusée ?",
+      "a8": "Le blocage international ou les fonds insuffisants en sont souvent la cause.",
+      "q9": "Mon compte se renouvelle-t-il automatiquement ?",
+      "a9": "Non, c'est strictement un système de licence sans surprise.",
+      "q10": "Où télécharger mes factures ?",
+      "a10": "Dans la page Facturation de votre compte.",
+      "q11": "Puis-je partager ma licence ?",
+      "a11": "Chaque licence est dédiée à un seul compte.",
+      "q12": "Je n'arrive pas à traiter mon fichier.",
+      "a12": "Les extensions de navigateur sont souvent en cause. Essayez de les désactiver.",
+      "q13": "Où est mon fichier téléchargé ?",
+      "a13": "Dans le dossier Téléchargements de votre appareil.",
+      "q14": "Refinedocs est-il sûr ?",
+      "a14": "Nous utilisons TLS et supprimons ou traitons localement les fichiers.",
+      "q15": "Mon document est différent après conversion.",
+      "a15": "Cela est souvent dû aux polices non standard.",
+      "q16": "Je dois compresser davantage un fichier.",
+      "a16": "Si le fichier est trop compressé à la source, il est impossible de réduire plus sans perte.",
+      "q17": "Mes polices ont changé.",
+      "a17": "Vous devez incorporer vos polices dans le document avant la conversion.",
+      "q18": "Puis-je réorganiser les pages PDF ?",
+      "a18": "Pas encore mais de nouveaux outils arrivent bientôt !"
+    }
   }
 }

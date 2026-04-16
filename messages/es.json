@@ -780,5 +780,54 @@
         }
       }
     }
+  },
+  "Help": {
+    "title": "Ayuda de Refinedocs",
+    "subtitle": "Encuentre respuestas a las preguntas más frecuentes sobre facturación, funciones y configuración de la cuenta.",
+    "categories": {
+      "account": "Cuenta y Facturación",
+      "payments": "Pagos",
+      "processing": "Procesamiento de Archivos y Seguridad"
+    },
+    "contactUs": "¿Aún tienes preguntas? Contacta con nuestro equipo de soporte.",
+    "contactButton": "Contáctanos",
+    "faqs": {
+      "q1": "¿Cómo cancelo mi licencia de Refinedocs Pro?",
+      "a1": "Refinedocs Pro opera con un modelo basado en licencias, lo que significa que no hay suscripciones con renovación automática que cancelar. Una vez que expire su período de licencia, su cuenta simplemente volverá al nivel gratuito.",
+      "q2": "¿Cómo cambio mi correo electrónico de inicio de sesión o contraseña?",
+      "a2": "Debido a que utilizamos la autenticación de Google, su correo y contraseña son administrados por su cuenta de Google. No puede cambiar esto directamente dentro de Refinedocs. Si desea usar un correo diferente, tendrá que cerrar sesión e iniciar sesión con su nueva cuenta.",
+      "q3": "¿Por qué sigo recibiendo un mensaje de limitación con una cuenta de pago?",
+      "a3": "Si ha pagado pero sigue recibiendo un mensaje de limitación al intentar usar nuestras herramientas, es probable que haya iniciado sesión en una cuenta incorrecta.",
+      "q4": "¿Cuáles son los beneficios de una licencia Pro?",
+      "a4": "Con una licencia Refinedocs Pro, desbloquea el acceso ilimitado a todas las herramientas, procesamiento por lotes, alta velocidad y una experiencia sin anuncios.",
+      "q5": "¿Puedo usar Refinedocs para mi negocio?",
+      "a5": "Absolutamente. Puede usar Refinedocs para flujos de trabajo personales o empresariales, aprovechando el cifrado seguro.",
+      "q6": "¿Cómo funciona la activación de la licencia?",
+      "a6": "Tras comprar una licencia, recibe una clave de licencia para activar su acceso Pro. Ya que usamos un sistema basado en licencias, no hay cargos automáticos ocultos.",
+      "q7": "¿Qué métodos de pago aceptan?",
+      "a7": "Aceptamos las principales tarjetas de crédito/débito, como Visa, Mastercard y American Express.",
+      "q8": "¿Por qué fue rechazada mi tarjeta de crédito?",
+      "a8": "Consulte con su banco para confirmar si bloquearon una transacción internacional, fondos insuficientes o una tarjeta caducada.",
+      "q9": "¿Mi licencia se renueva automáticamente?",
+      "a9": "No. Refinedocs utiliza un estricto sistema basado en licencias. Cuando expire su licencia, usted elige si desea comprar una nueva.",
+      "q10": "¿Dónde puedo descargar mi factura?",
+      "a10": "Inicie sesión y puede ver todas sus facturas anteriores en la página de Facturación.",
+      "q11": "¿Puedo compartir mi clave de licencia con otras personas?",
+      "a11": "Cada licencia de Refinedocs está destinada a una sola cuenta de usuario.",
+      "q12": "No puedo procesar mi archivo en línea.",
+      "a12": "Cuando el programa no puede completar un proceso, el problema suelen ser las extensiones del navegador. Desactive las extensiones.",
+      "q13": "No puedo encontrar el archivo descargado.",
+      "a13": "Su archivo debería estar en la carpeta de descargas predeterminada de su dispositivo.",
+      "q14": "¿Es seguro usar Refinedocs?",
+      "a14": "Aseguramos todas las transferencias con cifrado TLS avanzado y procesamos sus archivos localmente o los eliminamos automáticamente.",
+      "q15": "Mi documento se ve diferente tras el procesamiento.",
+      "a15": "El formato podría cambiar debido a la disponibilidad de las fuentes. Usar fuentes estándar asegura el mejor resultado.",
+      "q16": "Necesito comprimir aún más un archivo.",
+      "a16": "Ofrecemos modos de compresión potentes, pero algunos archivos contienen medios ya muy comprimidos que no se pueden reducir más sin perder calidad.",
+      "q17": "Mis fuentes han cambiado tras usar las herramientas PDF.",
+      "a17": "Intente incrustar sus fuentes antes de convertir sus archivos para evitar que esto suceda.",
+      "q18": "¿Puedo reorganizar las páginas de un PDF?",
+      "a18": "En este momento no se puede realizar, ¡pero llegarán pronto nuevas herramientas!"
+    }
   }
 }

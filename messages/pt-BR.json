@@ -780,5 +780,54 @@
         }
       }
     }
+  },
+  "Help": {
+    "title": "Ajuda do Refinedocs",
+    "subtitle": "Respostas para as perguntas mais frequentes.",
+    "categories": {
+      "account": "Conta e Faturamento",
+      "payments": "Pagamentos",
+      "processing": "Arquivos e Segurança"
+    },
+    "contactUs": "Ainda tem dúvidas?",
+    "contactButton": "Fale conosco",
+    "faqs": {
+      "q1": "Como cancelar minha licença?",
+      "a1": "Não há renovação automática. A licença apenas expira.",
+      "q2": "Como mudar email?",
+      "a2": "Sua conta é vinculada ao Google, mude por lá.",
+      "q3": "Conto com limites na conta Paga?",
+      "a3": "Você deve estar no login do Google errado.",
+      "q4": "Quais os benefícios?",
+      "a4": "Conversões rápidas, sem limites e sem anúncios.",
+      "q5": "Para empresas?",
+      "a5": "Sim, segurança garantida.",
+      "q6": "Como funciona a licença?",
+      "a6": "Receba a chave de licença no pagamento, sem compras surpresas.",
+      "q7": "Cartões aceitos?",
+      "a7": "Visa, Mastercard e Amex.",
+      "q8": "Cartão recusado?",
+      "a8": "Pode ser bloqueio de transação internacional do seu banco.",
+      "q9": "Renovação automática?",
+      "a9": "Nunca fazemos isso.",
+      "q10": "Onde achar faturas?",
+      "a10": "Na página Faturamento.",
+      "q11": "Posso compartilhar a chave?",
+      "a11": "Não, apenas um usuário por licença.",
+      "q12": "Erro online?",
+      "a12": "Tente desativar extensões do navegador.",
+      "q13": "E o arquivo baixado?",
+      "a13": "Confira na pasta de downloads.",
+      "q14": "O Refinedocs é seguro?",
+      "a14": "Sim, com criptografia TLS.",
+      "q15": "Documento distorcido?",
+      "a15": "Devido aos tipos de fontes não padrão.",
+      "q16": "Mais compressão?",
+      "a16": "Isso removeria muita qualidade.",
+      "q17": "Fontes mudaram no PDF?",
+      "a17": "Incorpore as fontes no editor original.",
+      "q18": "Reordenar páginas?",
+      "a18": "Em breve!"
+    }
   }
 }

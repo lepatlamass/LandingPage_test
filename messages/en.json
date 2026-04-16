@@ -780,5 +780,54 @@
         }
       }
     }
+  },
+  "Help": {
+    "title": "Refinedocs Help",
+    "subtitle": "Find answers to the most frequently asked questions about billing, features, and account settings.",
+    "categories": {
+      "account": "Account & Billing",
+      "payments": "Payments",
+      "processing": "File Processing & Security"
+    },
+    "contactUs": "Still have questions? Contact our support team.",
+    "contactButton": "Contact Us",
+    "faqs": {
+      "q1": "How do I cancel my Refinedocs Pro license?",
+      "a1": "Refinedocs Pro operates on a license-based model, meaning there are no auto-renewing subscriptions to cancel. Once your license period (e.g., Monthly or Yearly) expires, your account will simply revert to the free tier.",
+      "q2": "How do I change my login email or password?",
+      "a2": "Because we use Google Authentication, your login email and password are managed by your Google Account. You cannot change this directly within Refinedocs. If you wish to use a different email, you will need to sign out and log in with your new Google Account.",
+      "q3": "Why do I still receive a limitation message with a paid account?",
+      "a3": "If you have paid, but are still receiving a limitation message while trying to use our tools, you have probably logged into an incorrect account. Check if your account is active via the Account page. Try logging out and back in with the correct Google account.",
+      "q4": "What are the benefits of a Pro license?",
+      "a4": "With a Refinedocs Pro license, you unlock unlimited access to all tools, batch conversion, high-speed processing without limitations, priority customer support, and an ad-free experience.",
+      "q5": "Can I use Refinedocs for my business?",
+      "a5": "Absolutely. You can use Refinedocs for personal or business workflows, taking advantage of secure encryption and speedy cloud processing.",
+      "q6": "How does license activation work?",
+      "a6": "After purchasing a license, you receive a license key which you link to your account to instantly activate your Pro access. Since we use a license-based system rather than subscriptions, there are no hidden auto-charges.",
+      "q7": "Which payment methods do you support?",
+      "a7": "We accept major credit/debit cards such as Visa, Mastercard, and American Express.",
+      "q8": "Why was my credit card declined?",
+      "a8": "When a transaction is declined, it could be due to your bank blocking an international transaction, insufficient funds, or an expired card. Please check with your credit card provider for more information.",
+      "q9": "Does my license automatically renew?",
+      "a9": "No, Refinedocs uses a strict license-based system so we do not unexpectedly charge you. When your license expires, you simply choose to purchase a new one if you'd like to continue using Pro.",
+      "q10": "Where can I download my invoice?",
+      "a10": "Once you log in to your account, you can view and download all previous invoices on your Billing page.",
+      "q11": "Can I share my license key with others?",
+      "a11": "Each Refinedocs license is intended for a single user account. If you need coverage for multiple users or a team, please check our business and team pricing options.",
+      "q12": "I can't process my file online",
+      "a12": "When the program can't complete a process, usually, browser extensions are the problem. Please disable all browser extensions when you use our service, or try to use a different browser.",
+      "q13": "I can't find the downloaded file",
+      "a13": "If you have processed a file and clicked the 'Download' button, your file should be in your device's default download folder.",
+      "q14": "Is Refinedocs safe to use?",
+      "a14": "We care about your privacy. We secure all file transfers with an advanced TLS encryption level and process your files locally in your browser when possible or remove them automatically from our servers.",
+      "q15": "My document looks different post-processing",
+      "a15": "The formatting of your document may change slightly after converting text-heavy documents based on font availability. Using standard fonts ensures the best output.",
+      "q16": "I need to compress a file further",
+      "a16": "We offer strong compression modes within our image and PDF compression tools. While we try to minimize size, some files contain highly compressed media that cannot be shrunk further without massive quality loss.",
+      "q17": "My fonts changed after using the Office to PDF tools",
+      "a17": "If the fonts in your document changed, it's most likely because we don't have access to original proprietary fonts on our servers. To prevent this issue, please try to embed your fonts before converting your files.",
+      "q18": "Can I rearrange PDF pages?",
+      "a18": "Not directly at this time, but we are actively building organize, merge, and split tools that will be available very soon!"
+    }
   }
 }

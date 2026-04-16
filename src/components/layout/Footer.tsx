@@ -35,8 +35,8 @@ export default async function Footer() {
             <h4 className="text-white font-bold mb-6">{tCommon('company')}</h4>
             <ul className="space-y-4 text-gray-500 text-sm">
               <li><Link href="/#about" className="hover:text-white transition-colors">{tCommon('about')}</Link></li>
-              <li><Link href="/#cta" className="hover:text-white transition-colors">{tCommon('help')}</Link></li>
-              <li><Link href="/#about" className="hover:text-white transition-colors">{tCommon('blog')}</Link></li>
+              <li><Link href="/help" className="hover:text-white transition-colors">{tCommon('help')}</Link></li>
+              <li><Link href="/blog" className="hover:text-white transition-colors">{tCommon('blog')}</Link></li>
             </ul>
           </div>
 

@@ -780,5 +780,54 @@
         }
       }
     }
+  },
+  "Help": {
+    "title": "Assistenza Refinedocs",
+    "subtitle": "Trova risposte alle domande più frequenti.",
+    "categories": {
+      "account": "Account e Fatturazione",
+      "payments": "Pagamenti",
+      "processing": "File e Sicurezza"
+    },
+    "contactUs": "Hai ancora domande?",
+    "contactButton": "Contattaci",
+    "faqs": {
+      "q1": "Come annullo la mia licenza Pro?",
+      "a1": "Non c'è rinnovo automatico. La licenza scade naturalmente.",
+      "q2": "Come cambio email o password?",
+      "a2": "Tramite il tuo account Google.",
+      "q3": "Perché ho limiti se ho pagato?",
+      "a3": "Potresti aver effettuato l'accesso con l'account Google sbagliato.",
+      "q4": "Vantaggi di una licenza Pro?",
+      "a4": "Accesso illimitato, massima velocità e niente pubblicità.",
+      "q5": "Posso usarlo per la mia azienda?",
+      "a5": "Certamente, i dati sono crittografati in modo sicuro.",
+      "q6": "Come funziona l'attivazione?",
+      "a6": "Ricevi una chiave di licenza: niente costi nascosti.",
+      "q7": "Metodi di pagamento?",
+      "a7": "Visa, Mastercard, Amex.",
+      "q8": "Carta rifiutata?",
+      "a8": "Verifica che i pagamenti internazionali siano abilitati.",
+      "q9": "Si rinnova da solo?",
+      "a9": "No. Nessun costo automatico.",
+      "q10": "Dove trovo la fattura?",
+      "a10": "Nella sezione Fatturazione del tuo profilo.",
+      "q11": "Posso condividere la licenza?",
+      "a11": "No, la licenza è per singolo utente.",
+      "q12": "Errore di elaborazione.",
+      "a12": "Prova a disattivare le estensioni del browser.",
+      "q13": "Dove è il file?",
+      "a13": "Nella cartella Download.",
+      "q14": "È sicuro?",
+      "a14": "Assolutamente sì. Usiamo TLS e dati locali ove possibile.",
+      "q15": "Documento diverso?",
+      "a15": "I font non standard potrebbero influire sul risultato.",
+      "q16": "Voglio comprimerlo di più.",
+      "a16": "I file già molto compressi non si possono ridurre senza perdere qualità.",
+      "q17": "Font cambiati?",
+      "a17": "Assicurati di incorporare i font.",
+      "q18": "Posso riordinare le pagine?",
+      "a18": "Non ancora, lo implementeremo presto!"
+    }
   }
 }

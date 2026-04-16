@@ -780,5 +780,54 @@
         }
       }
     }
+  },
+  "Help": {
+    "title": "Ajuda Refinedocs",
+    "subtitle": "Respostas às perguntas mais frequentes.",
+    "categories": {
+      "account": "Conta e Faturação",
+      "payments": "Pagamentos",
+      "processing": "Ficheiros e Segurança"
+    },
+    "contactUs": "Ainda tem dúvidas?",
+    "contactButton": "Contacte-nos",
+    "faqs": {
+      "q1": "Como cancelar minha licença?",
+      "a1": "Não há renovação automática. A licença expira.",
+      "q2": "Como alterar email?",
+      "a2": "A sua conta é vinculada ao Google.",
+      "q3": "Tenho limites na conta paga?",
+      "a3": "Verifique o seu login do Google.",
+      "q4": "Quais são os benefícios?",
+      "a4": "Conversões rápidas e sem publicidade.",
+      "q5": "Para empresas?",
+      "a5": "Sim, segurança garantida com criptografia.",
+      "q6": "Como funciona?",
+      "a6": "Recebe a chave de licença no pagamento, sem renovações.",
+      "q7": "Cartões?",
+      "a7": "Visa, Mastercard e Amex.",
+      "q8": "Cartão recusado?",
+      "a8": "Verifique o bloqueio internacional do banco.",
+      "q9": "Renovação automática?",
+      "a9": "Sem custos inesperados.",
+      "q10": "Faturas?",
+      "a10": "Na secção de Faturação.",
+      "q11": "Partilhar licença?",
+      "a11": "Cada licença é individual.",
+      "q12": "Erro no servidor?",
+      "a12": "Desative as extensões do seu browser.",
+      "q13": "E o ficheiro?",
+      "a13": "Na pasta de transferências.",
+      "q14": "Refinedocs é seguro?",
+      "a14": "Sim. TLS ativado.",
+      "q15": "Documento modificado?",
+      "a15": "Isso ocorre por causa de tipos de fontes personalizados.",
+      "q16": "Mais compressão?",
+      "a16": "Cuidado com a perda de qualidade total.",
+      "q17": "As fontes mudaram?",
+      "a17": "Incorpore as fontes originais.",
+      "q18": "Reordenar páginas?",
+      "a18": "Em breve nova funcionalidade!"
+    }
   }
 }
