@@ -197,13 +197,12 @@ export async function consumeAICredit(
   }
 
   const data = snapshot.data();
-  console.log(`[consumeAICredit] toolId=${toolId}, aiCreditsRemaining=${data.aiCreditsRemaining}, hasPerToolCredits=${!!data.perToolCredits}`);
-  console.log(`[consumeAICredit] perToolCredits=${JSON.stringify(data.perToolCredits)}`);
+
 
   // Per-tool credit decrement (preferred)
   if (toolId && data.perToolCredits?.[toolId]) {
     const toolCredits = data.perToolCredits[toolId];
-    console.log(`[consumeAICredit] Using per-tool credits for ${toolId}: remaining=${toolCredits.remaining}`);
+
     if (toolCredits.remaining <= 0) {
       console.warn(`[consumeAICredit] No credits left for ${toolId}`);
       return -1;
@@ -226,11 +225,11 @@ export async function consumeAICredit(
       { merge: true }
     );
 
-    console.log(`[consumeAICredit] Success! ${toolId}: ${toolCredits.remaining} -> ${newRemaining}, aggregate: ${data.aiCreditsRemaining} -> ${newAggRemaining}`);
+
     return newRemaining;
   }
 
-  console.log(`[consumeAICredit] Per-tool credits not found, falling back to aggregate. aiCreditsRemaining=${data.aiCreditsRemaining}`);
+
 
   // Fallback: aggregate-only (legacy)
   if (data.aiCreditsRemaining <= 0) {
@@ -244,7 +243,7 @@ export async function consumeAICredit(
     { merge: true }
   );
 
-  console.log(`[consumeAICredit] Aggregate credit consumed: ${data.aiCreditsRemaining} -> ${newRemaining}`);
+
   return newRemaining;
 }
 
@@ -302,7 +301,7 @@ export async function resetCreditsIfNeeded(
 
   // Backfill perToolCredits if missing but planType exists (legacy fix)
   if (!data.perToolCredits && data.planType) {
-    console.log(`[resetCreditsIfNeeded] Backfilling missing perToolCredits for user ${userId}, planType=${data.planType}`);
+
     const creditAmount = AI_CREDITS[data.planType] ?? 10;
     const newPerToolCredits = buildInitialPerToolCredits(data.planType);
     const newTotalCredits = creditAmount * AI_SOLUTION_IDS.length;

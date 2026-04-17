@@ -6,6 +6,11 @@
 # testing
 /coverage
 
+# ignore firebase files
+/firebase.json
+.firebase/
+.firebaserc
+
 # next.js
 /.next/
 /out/

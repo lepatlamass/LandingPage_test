@@ -116,11 +116,11 @@ export default function BackgroundRemover() {
   };
 
   const handleProcess = async () => {
-    console.log('[bg-remover] handleProcess called');
+
     guardedAction(async () => {
-      console.log('[bg-remover] Inside guardedAction callback');
+
       if (images.length === 0 || isProcessing) {
-        console.log(`[bg-remover] Early return: images.length=${images.length}, isProcessing=${isProcessing}`);
+
         return;
       }
       setIsProcessing(true);
@@ -175,10 +175,10 @@ export default function BackgroundRemover() {
 
         // Consume AI credit for this tool
         const user = auth.currentUser;
-        console.log(`[bg-remover] Attempting to consume credit. User: ${user?.uid || 'none'}`);
+
         if (user) {
           const result = await consumeAICredit(user.uid, 'bg-remover');
-          console.log(`[bg-remover] Credit consumption result: ${result}`);
+
         }
       } catch (error: any) {
         console.error("Processing error:", error);

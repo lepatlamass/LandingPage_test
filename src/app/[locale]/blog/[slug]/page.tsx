@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 import { Link } from '../../../../navigation';
 import { getPostBySlug, getAllSlugs, getAllPosts } from '../../../../lib/blog';
 import Navbar from '../../../../components/layout/Navbar';
@@ -29,7 +30,8 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const post = getPostBySlug(slug);
 
   if (!post) {

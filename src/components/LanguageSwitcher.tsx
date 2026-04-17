@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from '../navigation';
 import { useSearchParams } from 'next/navigation';
@@ -17,7 +17,7 @@ const languages: { code: Locale; name: string; flag: string }[] = [
   { code: 'it', name: 'Italiano', flag: '🇮🇹' },
 ];
 
-export default function LanguageSwitcher() {
+function LanguageSwitcherContent() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -75,5 +75,13 @@ export default function LanguageSwitcher() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function LanguageSwitcher() {
+  return (
+    <Suspense fallback={<div className="w-20 h-8 animate-pulse bg-white/5 rounded-md border border-white/10"></div>}>
+      <LanguageSwitcherContent />
+    </Suspense>
   );
 }
