@@ -19,6 +19,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { toBlobURL } from '@ffmpeg/util';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface VideoFile {
   file: File;
@@ -136,6 +137,7 @@ export default function VideoToGifTool() {
     try {
       const ffmpeg = await loadFFmpeg();
       setVideo(prev => prev ? { ...prev, status: 'processing' } : null);
+      trackToolUsed('video-to-gif');
       setProgress(0);
 
       const inputName = 'input' + video.file.name.substring(video.file.name.lastIndexOf('.'));
@@ -170,6 +172,7 @@ export default function VideoToGifTool() {
         resultBlob: blob,
         resultUrl
       } : null);
+      trackToolCompleted('video-to-gif');
 
       // Cleanup
       await ffmpeg.deleteFile(inputName);
@@ -184,6 +187,7 @@ export default function VideoToGifTool() {
 
   const downloadGif = () => {
     if (!video?.resultUrl) return;
+    trackFileDownloaded('video-to-gif');
     guardedDownload(() => {
       const link = document.createElement('a');
       link.href = video!.resultUrl!;

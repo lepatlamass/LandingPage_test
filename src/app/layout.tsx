@@ -2,7 +2,7 @@ import React from 'react';
 import '../index.css';
 import type { Metadata } from 'next';
 
-const SITE_URL = 'https://backgrounds-on-demand.web.app';
+const SITE_URL = 'https://refinedocs.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -30,6 +30,12 @@ export const metadata: Metadata = {
   authors: [{ name: 'Refinedocs' }],
   creator: 'Refinedocs',
   publisher: 'Refinedocs',
+  verification: {
+    google: 'PASTE_GOOGLE_VERIFICATION_CODE_HERE',
+    other: {
+      'msvalidate.01': ['2CF4E38D40DE9951A5C5AFBD56FEFE03'],
+    },
+  },
   robots: {
     index: true,
     follow: true,

@@ -21,6 +21,7 @@ import {
 import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface ExcelToPdfFile {
   id: string;
@@ -120,6 +121,7 @@ export default function ExcelToPdfTool() {
   const processExcel = async () => {
     if (!excelFile || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('excel-to-pdf');
 
     try {
       setExcelFile(prev => prev ? { ...prev, status: 'processing' } : null);
@@ -243,10 +245,12 @@ export default function ExcelToPdfTool() {
       setExcelFile(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('excel-to-pdf');
     }
   };
 
   const downloadPdf = () => {
+    trackFileDownloaded('excel-to-pdf');
     if (!excelFile?.resultPdf) return;
     guardedDownload(() => {
       const url = URL.createObjectURL(excelFile!.resultPdf!);

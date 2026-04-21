@@ -1,0 +1,21 @@
+# Refinedocs – Crawler Configuration
+# https://refinedocs.com
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: *
+Allow: /
+
+# Disallow internal/auth routes from indexing
+Disallow: /api/
+Disallow: /*/account/
+Disallow: /*/login
+Disallow: /*/signup
+
+Sitemap: https://refinedocs.com/sitemap.xml

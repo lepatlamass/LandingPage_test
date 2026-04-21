@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import JSZip from 'jszip';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 type OutputFormat = 'jpeg' | 'png' | 'webp';
 
@@ -82,6 +83,7 @@ export default function HeicConverterTool() {
   const processAll = async () => {
     if (files.length === 0 || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('heic-converter');
 
     const updatedFiles = [...files];
     
@@ -113,9 +115,11 @@ export default function HeicConverterTool() {
     }
 
     setIsProcessing(false);
+    trackToolCompleted('heic-converter');
   };
 
   const downloadAll = () => {
+    trackFileDownloaded('heic-converter');
     const completedFiles = files.filter(f => f.status === 'completed' && f.resultBlob);
     if (completedFiles.length === 0) return;
 

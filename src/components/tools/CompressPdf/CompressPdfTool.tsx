@@ -18,6 +18,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { PDFDocument } from 'pdf-lib';
 import { useToolState } from '@/hooks/useToolState';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 type CompressionLevel = 'recommended' | 'extreme' | 'low';
 
@@ -59,6 +60,7 @@ export default function CompressPdfTool() {
     if (!pdfState || !file || isProcessing) return;
 
     setIsProcessing(true);
+    trackToolUsed('compress-pdf');
     setPdfState(prev => prev ? { ...prev, status: 'processing' } : null);
 
     try {
@@ -101,11 +103,13 @@ export default function CompressPdfTool() {
       setPdfState(prev => prev ? { ...prev, status: 'error', error: error.message } : null);
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('compress-pdf');
     }
   };
 
   const downloadPdf = () => {
     if (!pdfState?.resultDataUrl) return;
+    trackFileDownloaded('compress-pdf');
     guardedDownload(() => {
       // Re-create Blob from the persisted data URL
       fetch(pdfState.resultDataUrl!)

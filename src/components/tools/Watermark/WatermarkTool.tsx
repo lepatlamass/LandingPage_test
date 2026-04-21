@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface WatermarkSettings {
   position: 'top' | 'center' | 'bottom';
@@ -273,6 +274,7 @@ export default function WatermarkTool() {
   const startProcessing = async () => {
     if (files.length === 0 || (watermarkType === 'image' && !watermark) || (watermarkType === 'text' && !watermarkText)) return;
     setIsProcessing(true);
+    trackToolUsed('watermark');
 
     for (let i = 0; i < files.length; i++) {
       const fileObj = files[i];
@@ -307,9 +309,11 @@ export default function WatermarkTool() {
     }
 
     setIsProcessing(false);
+    trackToolCompleted('watermark');
   };
 
   const downloadFile = (url: string, filename: string) => {
+    trackFileDownloaded('watermark');
     guardedDownload(() => {
       const link = document.createElement('a');
       link.href = url;

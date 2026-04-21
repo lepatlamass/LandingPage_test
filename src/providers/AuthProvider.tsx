@@ -8,6 +8,7 @@ import { auth, db } from '../lib/firebase';
 import { getUserLicenseStatus, resetCreditsIfNeeded } from '../lib/firestore/licenses';
 import type { PerToolCredits } from '../lib/firestore/licenses';
 import { handleRedirectResult } from '../lib/auth-utils';
+import { trackSignUp, trackLogin } from '../lib/analytics';
 
 interface AuthContextType {
   user: User | null;
@@ -104,6 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Successfully signed in via redirect
         const additionalInfo = getAdditionalUserInfo(result);
         if (additionalInfo?.isNewUser) {
+          trackSignUp('google');
           fetch('/api/emails/welcome', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -112,6 +114,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               firstName: result.user.displayName?.split(' ')[0] || '',
             }),
           }).catch(e => console.error('Failed to send welcome email:', e));
+        } else {
+          trackLogin('google');
         }
       }
     });

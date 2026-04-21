@@ -21,6 +21,7 @@ import {
 import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 // No longer using jsPDF
 
@@ -123,6 +124,7 @@ export default function CsvToPdfTool() {
   const processCsv = async () => {
     if (!csvFile || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('csv-to-pdf');
 
     try {
       setCsvFile(prev => prev ? { ...prev, status: 'processing' } : null);
@@ -229,10 +231,12 @@ export default function CsvToPdfTool() {
       setCsvFile(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('csv-to-pdf');
     }
   };
 
   const downloadPdf = () => {
+    trackFileDownloaded('csv-to-pdf');
     if (!csvFile?.resultPdf) return;
     guardedDownload(() => {
       const url = URL.createObjectURL(csvFile!.resultPdf!);

@@ -17,6 +17,7 @@ import {
 import { motion } from 'motion/react';
 import mammoth from 'mammoth';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface WordToPdfFile {
   id: string;
@@ -215,7 +216,10 @@ export default function WordToPdfTool() {
   };
 
   const processAll = () => {
-    files.filter(f => f.status === 'idle' || f.status === 'error').forEach(processFile);
+    files.filter(f => f.status === 'idle' || f.status === 'error').forEach(f => {
+      trackToolUsed('word-to-pdf');
+      processFile(f);
+    });
   };
 
   const downloadFile = (fileObj: WordToPdfFile) => {
@@ -233,6 +237,7 @@ export default function WordToPdfTool() {
   };
 
   const downloadAll = () => {
+    trackFileDownloaded('word-to-pdf');
     files.filter(f => f.status === 'completed').forEach(downloadFile);
   };
 

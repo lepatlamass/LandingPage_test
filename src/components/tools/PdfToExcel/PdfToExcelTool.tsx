@@ -21,6 +21,7 @@ import {
 import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
 import { extractTableFromPdf } from '@/lib/pdf_js_csv';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface PdfToExcelFile {
   id: string;
@@ -85,6 +86,7 @@ export default function PdfToExcelTool() {
   const processPdf = async () => {
     if (!pdfFile || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('pdf-to-excel');
 
     try {
       setPdfFile(prev => prev ? { ...prev, status: 'processing', processedPages: 0 } : null);
@@ -109,10 +111,12 @@ export default function PdfToExcelTool() {
       setPdfFile(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('pdf-to-excel');
     }
   };
 
   const downloadExcel = () => {
+    trackFileDownloaded('pdf-to-excel');
     if (!pdfFile?.excelBlob) return;
     guardedDownload(() => {
       const url = URL.createObjectURL(pdfFile!.excelBlob!);

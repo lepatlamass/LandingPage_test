@@ -23,6 +23,7 @@ import AIGateModal from '@/components/auth/AIGateModal';
 import { useToolState } from '@/hooks/useToolState';
 import { consumeAICredit } from '@/lib/firestore/licenses';
 import { auth } from '@/lib/firebase';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface ImageFile {
   id: string;
@@ -74,6 +75,7 @@ export default function ImageToTextTool() {
       if (images.length === 0 || isProcessing) return;
 
       setIsProcessing(true);
+      trackToolUsed('image-to-text');
       const image = images[0];
 
       setImages(prev => prev.map(img => 
@@ -108,6 +110,7 @@ export default function ImageToTextTool() {
         ));
       } finally {
         setIsProcessing(false);
+        trackToolCompleted('image-to-text');
       }
     });
   };
@@ -122,6 +125,7 @@ export default function ImageToTextTool() {
 
   const downloadText = () => {
     if (images[0]?.result) {
+      trackFileDownloaded('image-to-text');
       const element = document.createElement("a");
       const file = new Blob([images[0].result], {type: 'text/plain'});
       element.href = URL.createObjectURL(file);

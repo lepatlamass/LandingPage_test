@@ -17,6 +17,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface ResizableImage {
   id: string;
@@ -157,6 +158,7 @@ export default function ImageResizerTool() {
     if (images.length === 0 || isProcessing) return;
 
     setIsProcessing(true);
+    trackToolUsed('image-resizer');
     
     const updatedImages = [...images];
     
@@ -181,9 +183,11 @@ export default function ImageResizerTool() {
     }
 
     setIsProcessing(false);
+    trackToolCompleted('image-resizer');
   };
 
   const downloadImage = (img: ResizableImage) => {
+    trackFileDownloaded('image-resizer');
     if (!img.result) return;
     guardedDownload(() => {
       const link = document.createElement('a');

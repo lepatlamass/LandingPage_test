@@ -18,6 +18,7 @@ import AIGateModal from '@/components/auth/AIGateModal';
 import { processWatermarkRemoval } from '@/lib/ai/gemini';
 import { consumeAICredit } from '@/lib/firestore/licenses';
 import { auth } from '@/lib/firebase';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface ProcessedImage {
   id: string;
@@ -174,6 +175,7 @@ export default function WatermarkRemoverTool() {
     guardedAction(async () => {
       if (images.length === 0 || isProcessing) return;
       setIsProcessing(true);
+      trackToolUsed('watermark-remover');
       
       try {
         setImages(prev => [{ ...prev[0], status: 'processing' }]);
@@ -202,11 +204,13 @@ export default function WatermarkRemoverTool() {
         setImages(prev => [{ ...prev[0], status: 'error', error: errorMessage }]);
       } finally {
         setIsProcessing(false);
+        trackToolCompleted('watermark-remover');
       }
     });
   };
 
   const downloadImage = (base64: string, filename: string) => {
+    trackFileDownloaded('watermark-remover');
     const link = document.createElement('a');
     link.href = base64;
     link.download = filename;

@@ -18,6 +18,7 @@ import { useTranslations } from 'next-intl';
 import { useAIGate } from '@/hooks/useAIGate';
 import AIGateModal from '@/components/auth/AIGateModal';
 import { useToolState } from '@/hooks/useToolState';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 import { consumeAICredit } from '@/lib/firestore/licenses';
 import { auth } from '@/lib/firebase';
 
@@ -124,6 +125,7 @@ export default function BackgroundRemover() {
         return;
       }
       setIsProcessing(true);
+      trackToolUsed('bg-remover');
 
       const updatedImages = [...images];
       
@@ -190,10 +192,12 @@ export default function BackgroundRemover() {
     }
 
     setIsProcessing(false);
+    trackToolCompleted('bg-remover');
     });
   };
 
   const downloadImage = (base64: string, filename: string) => {
+    trackFileDownloaded('bg-remover');
     const link = document.createElement('a');
     link.href = base64;
     link.download = filename;

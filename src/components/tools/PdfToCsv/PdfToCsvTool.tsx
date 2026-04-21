@@ -22,6 +22,7 @@ import { motion } from 'motion/react';
 // @ts-ignore
 import Papa from 'papaparse';
 import { extractTableFromPdf } from '@/lib/pdf_js_csv';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface PdfToCsvFile {
   id: string;
@@ -85,6 +86,7 @@ export default function PdfToCsvTool() {
   const processPdf = async () => {
     if (!pdfFile || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('pdf-to-csv');
 
     try {
       setPdfFile(prev => prev ? { ...prev, status: 'processing', processedPages: 0 } : null);
@@ -101,10 +103,12 @@ export default function PdfToCsvTool() {
       setPdfFile(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('pdf-to-csv');
     }
   };
 
   const downloadCsv = () => {
+    trackFileDownloaded('pdf-to-csv');
     if (!pdfFile?.csvData) return;
     guardedDownload(() => {
       const blob = new Blob([pdfFile!.csvData!], { type: 'text/csv;charset=utf-8;' });

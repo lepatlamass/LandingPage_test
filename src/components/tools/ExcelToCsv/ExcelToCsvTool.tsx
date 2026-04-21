@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import * as XLSX from 'xlsx';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface ExcelToCsvFile {
   id: string;
@@ -60,6 +61,7 @@ export default function ExcelToCsvTool() {
   const processExcel = async () => {
     if (!excelFile || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('excel-to-csv');
 
     try {
       setExcelFile(prev => prev ? { ...prev, status: 'processing' } : null);
@@ -80,10 +82,12 @@ export default function ExcelToCsvTool() {
       setExcelFile(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('excel-to-csv');
     }
   };
 
   const downloadCsv = () => {
+    trackFileDownloaded('excel-to-csv');
     if (!excelFile?.csvData) return;
     guardedDownload(() => {
       const blob = new Blob([excelFile!.csvData!], { type: 'text/csv;charset=utf-8;' });

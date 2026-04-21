@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import JSZip from 'jszip';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 type OutputFormat = 'png' | 'jpeg';
 
@@ -118,6 +119,7 @@ export default function SvgConverterTool() {
   const processAll = async () => {
     if (files.length === 0 || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('svg-converter');
 
     const updatedFiles = [...files];
     
@@ -144,9 +146,11 @@ export default function SvgConverterTool() {
     }
 
     setIsProcessing(false);
+    trackToolCompleted('svg-converter');
   };
 
   const downloadAll = () => {
+    trackFileDownloaded('svg-converter');
     const completedFiles = files.filter(f => f.status === 'completed' && f.resultBlob);
     if (completedFiles.length === 0) return;
 

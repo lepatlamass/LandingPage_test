@@ -22,6 +22,7 @@ import * as XLSX from 'xlsx';
 // @ts-ignore
 import Papa from 'papaparse';
 import { useToolState } from '@/hooks/useToolState';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface CsvFileState {
   fileName: string;
@@ -61,6 +62,7 @@ export default function CsvToExcelTool() {
     const file = fileRef.current;
     if (!csvState || !file || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('csv-to-excel');
 
     try {
       setCsvState(prev => prev ? { ...prev, status: 'processing' } : null);
@@ -86,10 +88,12 @@ export default function CsvToExcelTool() {
       setCsvState(prev => prev ? { ...prev, status: 'error', error: 'Failed' } : null);
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('csv-to-excel');
     }
   };
 
   const downloadExcel = () => {
+    trackFileDownloaded('csv-to-excel');
     if (!csvState?.resultDataUrl) return;
     guardedDownload(() => {
       fetch(csvState.resultDataUrl!)

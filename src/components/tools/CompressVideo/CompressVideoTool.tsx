@@ -19,6 +19,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { toBlobURL } from '@ffmpeg/util';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 type Resolution = 'original' | '1080p' | '720p' | '480p';
 type Format = 'mp4' | 'webm';
@@ -139,6 +140,7 @@ export default function CompressVideoTool() {
     try {
       const ffmpeg = await loadFFmpeg();
       setVideo(prev => prev ? { ...prev, status: 'processing' } : null);
+      trackToolUsed('compress-video');
       setProgress(0);
 
       const inputName = 'input' + video.file.name.substring(video.file.name.lastIndexOf('.'));
@@ -190,6 +192,7 @@ export default function CompressVideoTool() {
         resultBlob: blob,
         compressedSize: blob.size 
       } : null);
+      trackToolCompleted('compress-video');
 
       // Final cleanup
       await ffmpeg.deleteFile(outputName);
@@ -210,6 +213,7 @@ export default function CompressVideoTool() {
 
   const downloadVideo = () => {
     if (!video?.resultBlob) return;
+    trackFileDownloaded('compress-video');
     guardedDownload(() => {
       const url = URL.createObjectURL(video!.resultBlob!);
       const link = document.createElement('a');

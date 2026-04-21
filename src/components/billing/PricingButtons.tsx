@@ -4,6 +4,7 @@ import { useAuth } from '@/providers/AuthProvider';
 import { useRouter } from '@/navigation';
 import { Check } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
+import { trackSubscriptionStarted } from '@/lib/analytics';
 
 const MONTHLY_CHECKOUT = process.env.NEXT_PUBLIC_CHARIOW_MONTHLY_CHECKOUT || '#';
 const YEARLY_CHECKOUT = process.env.NEXT_PUBLIC_CHARIOW_YEARLY_CHECKOUT || '#';
@@ -222,6 +223,7 @@ export default function PricingButtons({
     if (!user) {
       router.push('/login?redirect=/#price');
     } else {
+      trackSubscriptionStarted('monthly');
       window.open(MONTHLY_CHECKOUT, '_blank');
     }
   };
@@ -230,6 +232,7 @@ export default function PricingButtons({
     if (!user) {
       router.push('/login?redirect=/#price');
     } else {
+      trackSubscriptionStarted('yearly');
       window.open(YEARLY_CHECKOUT, '_blank');
     }
   };
@@ -250,11 +253,7 @@ export default function PricingButtons({
           )}
           <span className="text-gray-500 text-base">{t.foundryProPeriod}</span>
         </div>
-        {monthlySale && (
-          <div className="inline-block text-[10px] text-black bg-[#d4ff33] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider mb-4">
-            Save {monthlySale}
-          </div>
-        )}
+
         <div className="text-xs text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.bestForOccasional}</div>
 
         <ul className="space-y-4 mb-10 flex-1">

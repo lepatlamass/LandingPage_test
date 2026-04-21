@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import JSZip from 'jszip';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface CompressibleImage {
   id: string;
@@ -109,6 +110,7 @@ export default function CompressImagesTool() {
     if (images.length === 0 || isProcessing) return;
 
     setIsProcessing(true);
+    trackToolUsed('compress-images');
     
     for (let i = 0; i < images.length; i++) {
       const img = images[i];
@@ -136,6 +138,7 @@ export default function CompressImagesTool() {
     }
 
     setIsProcessing(false);
+    trackToolCompleted('compress-images');
   };
 
   const downloadSingle = (img: CompressibleImage) => {
@@ -153,6 +156,7 @@ export default function CompressImagesTool() {
   };
 
   const downloadAll = () => {
+    trackFileDownloaded('compress-images');
     const completedImages = images.filter(img => img.status === 'completed' && img.resultBlob);
     if (completedImages.length === 0) return;
 

@@ -37,7 +37,7 @@ export default async function Navbar() {
           href="/tools"
           className="px-4 py-1.5 bg-[#d4ff33] text-black text-xs font-bold rounded hover:bg-[#bce622] transition-colors"
         >
-          Get Pro
+          {tCommon('getPro')}
         </Link>
       </div>
     </header>

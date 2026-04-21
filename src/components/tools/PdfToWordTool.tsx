@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Document, Packer, Paragraph, TextRun, ImageRun } from 'docx';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 interface PdfToWordFile {
   id: string;
@@ -75,6 +76,7 @@ export default function PdfToWordTool() {
   };
 
   const processFile = async (fileObj: PdfToWordFile) => {
+    trackToolUsed('pdf-to-word');
     setFiles(prev => prev.map(f => 
       f.id === fileObj.id ? { ...f, status: 'processing', error: undefined } : f
     ));
@@ -328,6 +330,7 @@ export default function PdfToWordTool() {
   };
 
   const downloadAll = () => {
+    trackFileDownloaded('pdf-to-word');
     files.filter(f => f.status === 'completed').forEach(downloadFile);
   };
 

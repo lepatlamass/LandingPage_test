@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { Upload, FileText, Download, Loader2, X, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import JSZip from 'jszip';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 const PdfToImageTool = () => {
   const t = useTranslations('Common');
@@ -33,6 +34,7 @@ const PdfToImageTool = () => {
     if (!file) return;
 
     setIsProcessing(true);
+    trackToolUsed('pdf-to-image');
     setProgress(0);
     setError(null);
 
@@ -76,10 +78,12 @@ const PdfToImageTool = () => {
       setError('An error occurred while processing the PDF. Please try again.');
     } finally {
       setIsProcessing(false);
+      trackToolCompleted('pdf-to-image');
     }
   };
 
   const downloadZip = () => {
+    trackFileDownloaded('pdf-to-image');
     if (!resultZip) return;
     guardedDownload(() => {
       const url = URL.createObjectURL(resultZip!);

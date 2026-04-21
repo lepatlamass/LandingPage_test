@@ -21,6 +21,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import JSZip from 'jszip';
 import { useToolState } from '@/hooks/useToolState';
+import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
 type TargetFormat = 'png' | 'jpeg' | 'webp' | 'avif' | 'ico';
 
@@ -188,6 +189,7 @@ export default function ImageConverterTool() {
   const processAll = async () => {
     if (images.length === 0 || isProcessing) return;
     setIsProcessing(true);
+    trackToolUsed('image-converter');
 
     const updatedImages = [...images];
     
@@ -218,9 +220,11 @@ export default function ImageConverterTool() {
     }
 
     setIsProcessing(false);
+    trackToolCompleted('image-converter');
   };
 
   const downloadAll = () => {
+    trackFileDownloaded('image-converter');
     const completedImages = images.filter(img => img.status === 'completed' && img.resultDataUrl);
     if (completedImages.length === 0) return;
 
