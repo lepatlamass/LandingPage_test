@@ -60,7 +60,7 @@ export default function SubscriptionPage() {
                 isActive={hasActiveLicense}
                 licenseInfo={licenseInfo ? {
                   productName: licenseInfo.productName || t('proPlan'),
-                  expiresAt: new Date(licenseInfo.expiresAt).toLocaleDateString(),
+                  expiresAt: new Date(licenseInfo.expiresAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                 } : null}
               />
             </motion.div>

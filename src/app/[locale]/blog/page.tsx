@@ -1,4 +1,4 @@
-
+import { setRequestLocale } from 'next-intl/server';
 import { getAllPosts } from '../../../lib/blog';
 import Navbar from '../../../components/layout/Navbar';
 import Footer from '../../../components/layout/Footer';
@@ -10,7 +10,18 @@ export const metadata = {
   description: 'Tips, Guides, and Tools for Mastering Your Documents',
 };
 
-export default async function BlogIndexPage() {
+export function generateStaticParams() {
+  return ['en', 'es', 'fr', 'it', 'pt-BR', 'pt-PT'].map((locale) => ({ locale }));
+}
+
+export default async function BlogIndexPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const posts = getAllPosts();
 
   return (

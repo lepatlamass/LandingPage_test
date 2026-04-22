@@ -25,12 +25,12 @@ export default async function HelpPage() {
 
         <div className="mt-16 text-center bg-[#d4ff33]/10 border border-[#d4ff33]/20 rounded-3xl p-10">
           <h3 className="text-2xl font-bold text-white mb-4">{t('contactUs')}</h3>
-          <Link 
-            href="/contact" 
+          <a 
+            href="mailto:konwoubuntu@gmail.com" 
             className="inline-block px-8 py-4 bg-[#d4ff33] text-black font-bold rounded-xl hover:bg-[#bce622] transition-colors shadow-[0_0_20px_rgba(212,255,51,0.2)]"
           >
             {t('contactButton')}
-          </Link>
+          </a>
         </div>
       </main>
 

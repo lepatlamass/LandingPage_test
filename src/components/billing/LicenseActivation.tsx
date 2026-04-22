@@ -144,7 +144,7 @@ export default function LicenseActivation({
 
       setLicenseInfo({
         productName: data.data.productName,
-        expiresAt: new Date(data.data.expiresAt).toLocaleDateString(),
+        expiresAt: new Date(data.data.expiresAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
       });
     } catch {
       setError(t('validationFailed'));
@@ -198,7 +198,7 @@ export default function LicenseActivation({
       setSuccess(true);
       setLicenseInfo({
         productName: data.data.productName,
-        expiresAt: new Date(data.data.expiresAt).toLocaleDateString(),
+        expiresAt: new Date(data.data.expiresAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         aiCreditsRemaining: data.data.aiCreditsRemaining,
       });
     } catch (err: any) {
@@ -232,7 +232,7 @@ export default function LicenseActivation({
           </h3>
           {licenseInfo && (
             <>
-              <p className="text-zinc-400 mb-1">
+              <p className="text-zinc-400 mb-1" suppressHydrationWarning>
                 {licenseInfo.productName} — {t('validUntil')}{' '}
                 {licenseInfo.expiresAt}
               </p>
@@ -283,7 +283,7 @@ export default function LicenseActivation({
         </div>
 
         {licenseInfo && (
-          <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-300">
+          <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-300" suppressHydrationWarning>
             <span className="text-[#d4ff33] font-semibold">
               {licenseInfo.productName}
             </span>{' '}

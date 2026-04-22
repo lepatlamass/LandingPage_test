@@ -13,7 +13,7 @@ export default function YouTubeBanner() {
         </div>
       </div>
       <a 
-        href="https://youtube.com" 
+        href="https://www.youtube.com/@konwolorentz7285" 
         target="_blank" 
         rel="noopener noreferrer"
         className="px-6 py-3 bg-[#ff0000] text-white font-bold rounded-xl hover:bg-[#cc0000] transition-colors whitespace-nowrap"

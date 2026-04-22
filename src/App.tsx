@@ -33,7 +33,8 @@ import {
   Twitter,
   Linkedin,
   ChevronRight,
-  CheckCircle2
+  CheckCircle2,
+  Youtube
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import BackgroundRemover from './components/tools/BackgroundRemover/BackgroundRemover';
@@ -887,8 +888,8 @@ export default function App() {
                 <h4 className="text-white font-bold mb-6">{t('company')}</h4>
                 <ul className="space-y-4 text-gray-500 text-sm">
                   <li><Link href="/#about" className="hover:text-white transition-colors">{t('about')}</Link></li>
-                  <li><Link href="/#cta" className="hover:text-white transition-colors">{t('help')}</Link></li>
-                  <li><Link href="/#about" className="hover:text-white transition-colors">{t('blog')}</Link></li>
+                  <li><Link href="/help" className="hover:text-white transition-colors">{t('help')}</Link></li>
+                  <li><Link href="/blog" className="hover:text-white transition-colors">{t('blog')}</Link></li>
                 </ul>
               </div>
 
@@ -902,15 +903,15 @@ export default function App() {
 
             <div className="pt-10 border-t border-gray-900 flex items-center justify-between">
               <div className="flex items-center gap-6">
-                <a href="#" className="text-gray-600 hover:text-white transition-colors"><Linkedin size={20} /></a>
-                <a href="#" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
+                <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Linkedin size={20} /></a>
+                <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
+                <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Youtube size={20} /></a>
               </div>
               <div className="flex items-center gap-8 text-[11px] text-gray-600 uppercase tracking-widest font-bold">
                 <span>{t('copyright')}</span>
                 <Link href="/privacy" className="hover:text-white transition-colors">{t('privacyNotice')}</Link>
                 <Link href="/terms" className="hover:text-white transition-colors">{t('termsConditions')}</Link>
-                <Link href="/imprint" className="hover:text-white transition-colors">{t('imprint')}</Link>
-                <Link href="/contact" className="hover:text-white transition-colors">{t('contactUs')}</Link>
+                <a href="mailto:konwoubuntu@gmail.com" className="hover:text-white transition-colors">{t('contactUs')}</a>
               </div>
             </div>
           </div>

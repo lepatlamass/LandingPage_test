@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '../../navigation';
-import { Twitter, Linkedin } from 'lucide-react';
+import { Twitter, Linkedin, Youtube } from 'lucide-react';
 
 export default async function Footer() {
   const tCommon = await getTranslations('Common');
@@ -50,15 +50,15 @@ export default async function Footer() {
 
         <div className="pt-10 border-t border-gray-900 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6">
-            <a href="#" className="text-gray-600 hover:text-white transition-colors"><Linkedin size={20} /></a>
-            <a href="#" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
+            <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Linkedin size={20} /></a>
+            <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
+            <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Youtube size={20} /></a>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-[11px] text-gray-600 uppercase tracking-widest font-bold">
             <span>{tCommon('copyright')}</span>
             <Link href="/privacy" className="hover:text-white transition-colors">{tCommon('privacyNotice')}</Link>
             <Link href="/terms" className="hover:text-white transition-colors">{tCommon('termsConditions')}</Link>
-            <Link href="/imprint" className="hover:text-white transition-colors">{tCommon('imprint')}</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">{tCommon('contactUs')}</Link>
+            <a href="mailto:konwoubuntu@gmail.com" className="hover:text-white transition-colors">{tCommon('contactUs')}</a>
           </div>
         </div>
       </div>

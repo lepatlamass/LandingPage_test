@@ -30,7 +30,7 @@ export default function PostCard({ post }: PostCardProps) {
         <div className="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-white/5 mt-auto">
           <div className="flex items-center gap-2">
             <Calendar className="w-3.5 h-3.5" />
-            <span>{new Date(post.date).toLocaleDateString()}</span>
+            <span suppressHydrationWarning>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
           </div>
           <div className="flex items-center gap-2">
             <Clock className="w-3.5 h-3.5" />
