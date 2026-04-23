@@ -5,10 +5,24 @@ import Footer from '../../../components/layout/Footer';
 import YouTubeBanner from '../../../components/blog/YouTubeBanner';
 import BlogClient from '../../../components/blog/BlogClient';
 
-export const metadata = {
-  title: 'Blog | Refinedocs',
-  description: 'Tips, Guides, and Tools for Mastering Your Documents',
-};
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Blog | Refinedocs',
+    description: 'Tips, Guides, and Tools for Mastering Your Documents',
+    alternates: {
+      canonical: `https://refinedocs.com/${locale}/blog`,
+    },
+    openGraph: {
+      title: 'Blog | Refinedocs',
+      description: 'Tips, Guides, and Tools for Mastering Your Documents',
+      url: `https://refinedocs.com/${locale}/blog`,
+      type: 'website',
+    },
+  };
+}
 
 export function generateStaticParams() {
   return ['en', 'es', 'fr', 'it', 'pt-BR', 'pt-PT'].map((locale) => ({ locale }));

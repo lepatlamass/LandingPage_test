@@ -3,6 +3,24 @@ import { Link } from '../../../navigation';
 import Navbar from '../../../components/layout/Navbar';
 import ToolsDirectory from '../../../components/layout/ToolsDirectory';
 import Footer from '../../../components/layout/Footer';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Privacy Policy | Refinedocs',
+    description: 'Privacy Policy for Refinedocs services and tools.',
+    alternates: {
+      canonical: `https://refinedocs.com/${locale}/privacy`,
+    },
+    openGraph: {
+      title: 'Privacy Policy | Refinedocs',
+      description: 'Privacy Policy for Refinedocs services and tools.',
+      url: `https://refinedocs.com/${locale}/privacy`,
+      type: 'website',
+    },
+  };
+}
 
 export default async function PrivacyPage() {
   const tCommon = await getTranslations('Common');

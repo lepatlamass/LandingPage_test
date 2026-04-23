@@ -3,6 +3,24 @@ import { Link } from '../../../navigation';
 import Navbar from '../../../components/layout/Navbar';
 import Footer from '../../../components/layout/Footer';
 import FaqAccordion from './FaqAccordion';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Help & FAQ | Refinedocs',
+    description: 'Frequently asked questions and support for Refinedocs.',
+    alternates: {
+      canonical: `https://refinedocs.com/${locale}/help`,
+    },
+    openGraph: {
+      title: 'Help & FAQ | Refinedocs',
+      description: 'Frequently asked questions and support for Refinedocs.',
+      url: `https://refinedocs.com/${locale}/help`,
+      type: 'website',
+    },
+  };
+}
 
 export default async function HelpPage() {
   const t = await getTranslations('Help');

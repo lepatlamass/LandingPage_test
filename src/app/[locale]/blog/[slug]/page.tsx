@@ -29,6 +29,32 @@ export async function generateStaticParams() {
   return params;
 }
 
+export async function generateMetadata({ params }: BlogPostPageProps) {
+  const { locale, slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found | Refinedocs',
+      description: 'The requested blog post could not be found.',
+    };
+  }
+
+  return {
+    title: `${post.title} | Refinedocs Blog`,
+    description: post.description,
+    alternates: {
+      canonical: `https://refinedocs.com/${locale}/blog/${slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: 'article',
+      url: `https://refinedocs.com/${locale}/blog/${slug}`,
+    },
+  };
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);

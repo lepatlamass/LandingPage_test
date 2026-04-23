@@ -3,6 +3,24 @@ import { Link } from '../../../navigation';
 import Navbar from '../../../components/layout/Navbar';
 import ToolsDirectory from '../../../components/layout/ToolsDirectory';
 import Footer from '../../../components/layout/Footer';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Terms of Service | Refinedocs',
+    description: 'Terms of Service and Conditions for using Refinedocs.',
+    alternates: {
+      canonical: `https://refinedocs.com/${locale}/terms`,
+    },
+    openGraph: {
+      title: 'Terms of Service | Refinedocs',
+      description: 'Terms of Service and Conditions for using Refinedocs.',
+      url: `https://refinedocs.com/${locale}/terms`,
+      type: 'website',
+    },
+  };
+}
 
 export default async function TermsPage() {
   const tCommon = await getTranslations('Common');
