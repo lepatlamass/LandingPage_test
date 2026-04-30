@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export function generateStaticParams() {
-  return ['en', 'es', 'fr', 'it', 'pt-BR', 'pt-PT'].map((locale) => ({ locale }));
+  return ['en', 'es', 'fr', 'it', 'pt-PT'].map((locale) => ({ locale }));
 }
 
 export default async function BlogIndexPage({

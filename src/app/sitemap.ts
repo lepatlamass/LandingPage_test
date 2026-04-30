@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 const SITE_URL = 'https://refinedocs.com';
 
-const locales = ['en', 'es', 'fr', 'pt-PT', 'pt-BR', 'it'];
+const locales = ['en', 'es', 'fr', 'pt-PT', 'it'];
 
 const toolSlugs = [
   'bg-remover', 'watermark', 'watermark-remover', 'image-to-text', 'resize',

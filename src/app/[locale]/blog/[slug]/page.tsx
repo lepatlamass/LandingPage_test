@@ -18,7 +18,7 @@ interface BlogPostPageProps {
 
 export async function generateStaticParams() {
   const slugs = getAllSlugs();
-  const locales = ['en', 'es', 'fr', 'it', 'pt-BR', 'pt-PT'];
+  const locales = ['en', 'es', 'fr', 'it', 'pt-PT'];
   
   const params: { locale: string; slug: string }[] = [];
   slugs.forEach((slug) => {

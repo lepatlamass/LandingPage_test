@@ -13,7 +13,6 @@ const languages: { code: Locale; name: string; flag: string }[] = [
   { code: 'es', name: 'Español', flag: '🇪🇸' },
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'pt-PT', name: 'Português', flag: '🇵🇹' },
-  { code: 'pt-BR', name: 'Brazil', flag: '🇧🇷' },
   { code: 'it', name: 'Italiano', flag: '🇮🇹' },
 ];
 

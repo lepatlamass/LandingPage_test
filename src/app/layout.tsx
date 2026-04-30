@@ -99,7 +99,6 @@ export const metadata: Metadata = {
       'es': `${SITE_URL}/es`,
       'fr': `${SITE_URL}/fr`,
       'it': `${SITE_URL}/it`,
-      'pt-BR': `${SITE_URL}/pt-BR`,
       'pt-PT': `${SITE_URL}/pt-PT`,
     },
   },

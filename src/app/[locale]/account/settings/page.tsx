@@ -17,8 +17,7 @@ const languages = [
   { code: 'fr', name: 'Français' },
   { code: 'es', name: 'Español' },
   { code: 'it', name: 'Italiano' },
-  { code: 'pt', name: 'Português' },
-  { code: 'pt-BR', name: 'Português (Brasil)' },
+  { code: 'pt-PT', name: 'Português' },
 ];
 
 export default function SettingsPage() {

@@ -584,7 +584,9 @@
       "watermark": "Watermark"
     },
     "chooseFiles": "CHOOSE FILES",
-    "dropFilesHere": "or drop files here"
+    "dropFilesHere": "or drop files here",
+    "excel-to-csv-desc": "Converti rapidamente i file Excel (.xlsx, .xls) nel formato CSV o viceversa con zero perdita di dati.",
+    "csv-to-excel-desc": "Converti rapidamente i file Excel (.xlsx, .xls) nel formato CSV o viceversa con zero perdita di dati."
   },
   "Home": {
     "home": "Home",
