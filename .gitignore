@@ -6,10 +6,8 @@
 # testing
 /coverage
 
-# ignore firebase files
-/firebase.json
+# ignore firebase cache only (not config files needed for CI)
 .firebase/
-.firebaserc
 
 # next.js
 /.next/

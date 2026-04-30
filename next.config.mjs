@@ -7,6 +7,8 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  // Increase timeout for static page generation during CI (238 pages)
+  staticPageGenerationTimeout: 180,
   eslint: {
     ignoreDuringBuilds: true,
   },
