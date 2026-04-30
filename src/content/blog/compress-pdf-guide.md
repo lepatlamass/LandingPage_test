@@ -19,7 +19,7 @@ Working with large PDF files can be a headache, especially when you need to emai
 
 ## Step-by-Step Guide
 
-1. Go to the [Compress PDF Tool](/tools?tool=compress-pdf).
+1. Go to the [Compress PDF Tool](/tools/compress-pdf).
 2. Drag and drop your large PDF file into the upload area.
 3. Wait just a few seconds while our smart engine compresses the file.
 4. Download your new, lightweight PDF!

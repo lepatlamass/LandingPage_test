@@ -546,8 +546,8 @@ export default function WatermarkTool() {
         {/* Right Column: Preview */}
         <div className="lg:col-span-5 space-y-4">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider opacity-50">{t('watermark-preview')}</h3>
-          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[500px] flex flex-col">
-            <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center text-center p-8 overflow-hidden min-h-[400px]">
+          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col">
+            <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center text-center p-8 overflow-hidden min-h-[250px] md:min-h-[400px]">
               <AnimatePresence mode="wait">
                 {files.length === 0 ? (
                   <motion.div 

@@ -97,7 +97,7 @@ export default async function ToolsDirectory() {
                 {category.tools.map((tool, toolIdx) => (
                   <li key={toolIdx}>
                     <Link
-                      href={`/tools?tool=${tool.id}`}
+                      href={`/tools/${tool.id}`}
                       className="group flex items-center gap-3 text-gray-400 hover:text-[#d4ff33] transition-colors"
                     >
                       <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#d4ff33]/10 transition-colors">

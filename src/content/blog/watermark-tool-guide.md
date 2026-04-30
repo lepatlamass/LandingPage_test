@@ -13,7 +13,7 @@ Watermarks serve two powerful purposes:
 🛡️ **Protect your work** by adding your brand, logo, or copyright  
 🧹 **Clean up your assets** by removing distracting or outdated watermarks  
 
-Whatever your goal, [Refinedocs' Watermark Tool](https://refinedocs.com/en/tools?tool=watermark) makes it effortless.
+Whatever your goal, [Refinedocs' Watermark Tool](https://refinedocs.com/en/tools/watermark) makes it effortless.
 
 Let's explore how this versatile tool can elevate your visual workflow. 🚀
 
@@ -163,7 +163,7 @@ All built with the same promise: **Simple. Secure. Powerful.**
 
 Stop juggling multiple apps. Start protecting and perfecting your visuals in one seamless workflow.
 
-✨ **Try it free now**: [refinedocs.com/en/tools?tool=watermark](https://refinedocs.com/en/tools?tool=watermark)  
+✨ **Try it free now**: [refinedocs.com/en/tools/watermark](https://refinedocs.com/en/tools/watermark)  
 ✨ **No sign-up required** for instant watermarking  
 ✨ **Upgrade anytime** for batch processing, priority speed, and advanced AI features  
 

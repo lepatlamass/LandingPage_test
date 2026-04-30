@@ -20,7 +20,7 @@ export default async function LoginPage() {
             <div className="w-7 h-7 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-lg">
               R
             </div>
-            <span className="font-bold text-lg tracking-tight">Refinedocs</span>
+            <span className="hidden sm:inline-block font-bold text-lg tracking-tight">Refinedocs</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-xs font-medium text-gray-400 hover:text-white transition-colors">
@@ -39,10 +39,12 @@ export default async function LoginPage() {
         </div>
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
-          <NavigationLoginButton />
+          <div className="hidden sm:block">
+            <NavigationLoginButton />
+          </div>
           <Link
             href="/#price"
-            className="px-4 py-1.5 bg-[#d4ff33] text-black text-xs font-bold rounded hover:bg-[#bce622] transition-colors"
+            className="px-3 md:px-4 py-1.5 bg-[#d4ff33] text-black text-[10px] md:text-xs font-bold rounded hover:bg-[#bce622] transition-colors whitespace-nowrap"
           >
             {tCommon('getPro')}
           </Link>

@@ -11,7 +11,7 @@ If you own an iPhone or an iPad, you've almost certainly run into the dreaded "H
 
 Apple introduced the High-Efficiency Image Container (HEIC) format to save storage space without sacrificing image quality. While it’s fantastic for your phone’s memory, it’s a nightmare for cross-platform sharing. 
 
-Enter the **[Refinedocs HEIC Converter](https://refinedocs.com/en/tools?tool=heic-to-png)**: a free, instant, and secure way to turn those stubborn Apple images into universally accepted formats like JPEG, PNG, and WebP. 
+Enter the **[Refinedocs HEIC Converter](https://refinedocs.com/en/tools/heic-to-png)**: a free, instant, and secure way to turn those stubborn Apple images into universally accepted formats like JPEG, PNG, and WebP. 
 
 Here is why this tool is the ultimate fix for your HEIC headaches.
 
@@ -50,6 +50,6 @@ Converting your iPhone photos takes mere seconds:
 
 ## Final Thoughts
 
-You shouldn't have to fight with your file formats just to share a photo. The **[Refinedocs HEIC Converter](https://refinedocs.com/en/tools?tool=heic-to-png)** bridges the gap between Apple's high-efficiency storage and the rest of the digital world. It is fast, secure, incredibly easy to use, and completely free. 
+You shouldn't have to fight with your file formats just to share a photo. The **[Refinedocs HEIC Converter](https://refinedocs.com/en/tools/heic-to-png)** bridges the gap between Apple's high-efficiency storage and the rest of the digital world. It is fast, secure, incredibly easy to use, and completely free. 
 
 Stop letting format errors slow you down. Try the Refinedocs HEIC to PNG/JPG tool today and share your photos anywhere, anytime!

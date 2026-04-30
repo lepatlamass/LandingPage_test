@@ -34,7 +34,9 @@ import {
   Linkedin,
   ChevronRight,
   CheckCircle2,
-  Youtube
+  Youtube,
+  Menu,
+  X as XIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import BackgroundRemover from './components/tools/BackgroundRemover/BackgroundRemover';
@@ -549,7 +551,7 @@ const toolContent: Record<string, ToolPageContent> = {
   }
 };
 
-export default function App() {
+export default function App({ toolSlug }: { toolSlug?: string }) {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
   const locale = useLocale();
@@ -558,24 +560,16 @@ export default function App() {
   const searchParams = useSearchParams();
   const { hasActiveLicense, loading: authLoading } = useAuth();
 
-  const activeTool = searchParams.get('tool') || 'pdf-to-excel';
+  // Use path-based toolSlug if provided, fall back to query param for backward compat
+  const activeTool = toolSlug || searchParams.get('tool') || 'pdf-to-excel';
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const setActiveTool = (toolId: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('tool', toolId);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    // Navigate to clean path-based URL
+    router.push(`/tools/${toolId}`, { scroll: false });
   };
-
-  // Ensure URL has the tool param on mount if missing
-  useEffect(() => {
-    if (!searchParams.get('tool')) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('tool', 'pdf-to-excel');
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    }
-  }, [searchParams, pathname, router]);
 
   // Reset FAQ when tool changes
   useEffect(() => {
@@ -605,14 +599,36 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-[#0f1115] text-gray-300 font-sans overflow-hidden">
-      <MainSidebar activeTool={activeTool} onToolSelect={setActiveTool} />
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-[60] lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar Wrapper */}
+      <div className={`fixed inset-y-0 left-0 z-[70] transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <MainSidebar activeTool={activeTool} onToolSelect={(toolId) => {
+          setActiveTool(toolId);
+          setIsSidebarOpen(false);
+        }} />
+      </div>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-y-auto scroll-smooth">
+      <main className="flex-1 flex flex-col overflow-y-auto scroll-smooth w-full lg:w-auto">
         {/* Navbar */}
-        <header className="h-16 border-b border-gray-800 flex items-center justify-between px-8 shrink-0 bg-[#0f1115] sticky top-0 z-50">
-          <div className="flex items-center gap-6 flex-1">
-            <Link href="/" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+        <header className="h-16 border-b border-gray-800 flex items-center justify-between px-4 lg:px-8 shrink-0 bg-[#0f1115] sticky top-0 z-50">
+          <div className="flex items-center gap-4 lg:gap-6 flex-1">
+            <button 
+              className="lg:hidden p-2 -ml-2 text-gray-400 hover:text-white transition-colors"
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            >
+              {isSidebarOpen ? <XIcon size={24} /> : <Menu size={24} />}
+            </button>
+            <Link href="/" className="hidden sm:block text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Home
             </Link>
             <Link href="/tools" className="text-sm font-medium text-white transition-colors">
@@ -669,7 +685,7 @@ export default function App() {
 
             <NavigationLoginButton />
             {!authLoading && !hasActiveLicense && (
-              <button className="bg-[#d4ff33] text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#c2eb2e] transition-colors">
+              <button className="hidden md:block bg-[#d4ff33] text-black px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-bold hover:bg-[#c2eb2e] transition-colors whitespace-nowrap">
                 {t('freeTrial')}
               </button>
             )}
@@ -677,17 +693,17 @@ export default function App() {
         </header>
 
         {/* Hero Section */}
-        <section className="px-8 py-16 max-w-5xl mx-auto w-full">
-          <div className="text-center mb-12">
+        <section className="px-4 md:px-8 py-8 md:py-16 max-w-5xl mx-auto w-full">
+          <div className="text-center mb-8 md:mb-12">
             <nav className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest text-gray-500 mb-4">
               <a href="#" className="hover:text-gray-300">{t('home')}</a>
               <span>/</span>
               <span className="text-gray-400">{activeToolData?.nameKey ? tt(activeToolData.nameKey.split('.')[1]) : 'Tool'}</span>
             </nav>
-            <h1 className="text-5xl font-bold text-white mb-6">
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6">
               {tt(currentContent.titleKey.split('.')[1])} <span className="italic text-[#d4ff33]">{tt(currentContent.accentKey.split('.')[1])}</span> Online
             </h1>
-            <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
               {tt(currentContent.descriptionKey.split('.')[1])}
             </p>
           </div>
@@ -739,37 +755,37 @@ export default function App() {
             ) : (
               <motion.div 
                 whileHover={{ scale: 1.005 }}
-                className="border-2 border-dashed border-lime-400/30 bg-lime-400/5 rounded-[32px] p-20 min-h-[500px] flex flex-col items-center justify-center group cursor-pointer transition-colors hover:border-lime-400/50"
+                className="border-2 border-dashed border-lime-400/30 bg-lime-400/5 rounded-[32px] p-8 md:p-20 min-h-[300px] md:min-h-[500px] flex flex-col items-center justify-center group cursor-pointer transition-colors hover:border-lime-400/50 mx-4 md:mx-0"
               >
-                <div className="w-16 h-16 bg-lime-400/10 rounded-full flex items-center justify-center text-lime-400 mb-6 group-hover:scale-110 transition-transform">
-                  <Upload size={32} />
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-lime-400/10 rounded-full flex items-center justify-center text-lime-400 mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                  <Upload className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
                 <div className="flex items-center gap-2 mb-4">
-                  <button className="bg-[#d4ff33] text-black px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/20">
-                    {t('chooseFiles')} <ChevronDown size={20} />
+                  <button className="bg-[#d4ff33] text-black px-4 py-2.5 sm:px-6 sm:py-3 md:px-10 md:py-4 rounded-xl md:rounded-2xl font-bold flex items-center gap-1 sm:gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/20 text-xs sm:text-sm md:text-base whitespace-nowrap">
+                    {t('chooseFiles')} <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
-                <p className="text-gray-500 text-sm">{t('dropFilesHere')}</p>
+                <p className="text-gray-500 text-xs md:text-sm text-center">{t('dropFilesHere')}</p>
               </motion.div>
             )}
           </div>
 
           {/* Stats Bar */}
-          <div className="flex items-center justify-center gap-12 text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-32">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-12 text-[9px] md:text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-16 md:mb-32 px-4">
             <span>{t('billionUsers')}</span>
             <span>{t('isoCompliance')}</span>
             <span>{t('gdprCompliant')}</span>
           </div>
 
           {/* Features Section */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} in Seconds</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">
-              Our tool is designed to be fast, secure, and easy to use for everyone.
+          <div className="text-center mb-10 md:mb-16 px-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('inSeconds')}</h2>
+            <p className="text-gray-500 max-w-xl mx-auto text-sm md:text-base">
+              {t('toolDesignedSubtitle')}
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 mb-32">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 md:mb-32 px-4 md:px-0">
             {currentContent.features.map((feature, i) => (
               <div key={i} className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/8 transition-colors">
                 <div className={`w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center ${feature.color} mb-6`}>
@@ -784,22 +800,22 @@ export default function App() {
           </div>
 
           {/* How To Section */}
-          <div className="grid grid-cols-2 gap-16 items-center mb-32">
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-lime-400/20 rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative rounded-[32px] overflow-hidden border border-white/10 aspect-[4/3] bg-white/5 flex items-center justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center mb-16 md:mb-32 px-4 md:px-0">
+            <div className="relative group order-2 lg:order-1">
+              <div className="absolute -inset-4 bg-lime-400/20 rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:block"></div>
+              <div className="relative rounded-[24px] md:rounded-[32px] overflow-hidden border border-white/10 aspect-[4/3] bg-white/5 flex items-center justify-center mx-4 md:mx-0">
                 <Image
                   src="/amico.svg"
                   alt={t('alt.processGuide')}
                   fill
-                  className="object-contain p-8"
+                  className="object-contain p-6 md:p-8"
                   referrerPolicy="no-referrer"
                 />
               </div>
             </div>
-            <div>
-              <h2 className="text-3xl font-bold text-white mb-8">How To {tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} for Free</h2>
-              <div className="space-y-6">
+            <div className="order-1 lg:order-2 px-4 md:px-0">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">{t('howTo')} {tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('forFree')}</h2>
+              <div className="space-y-4 md:space-y-6">
                 {currentContent.stepsKeys.map((stepKey, i) => (
                   <div key={i} className="flex items-start gap-4">
                     <div className="w-6 h-6 rounded-full bg-[#d4ff33] text-black flex items-center justify-center text-xs font-bold shrink-0 mt-1">
@@ -813,9 +829,9 @@ export default function App() {
           </div>
 
           {/* FAQs Section */}
-          <div className="max-w-3xl mx-auto mb-32">
-            <h2 className="text-3xl font-bold text-white text-center mb-12">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} FAQs</h2>
-            <div className="space-y-4">
+          <div className="max-w-3xl mx-auto mb-16 md:mb-32 px-4 md:px-0">
+            <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8 md:mb-12">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('faqs')}</h2>
+            <div className="space-y-3 md:space-y-4">
               {currentContent.faqsKeys.map((faq, i) => (
                 <div key={i} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
                   <button 
@@ -844,14 +860,14 @@ export default function App() {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-[#d4ff33] py-24 px-8 text-center">
+        <section className="bg-[#d4ff33] py-16 md:py-24 px-4 md:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-bold text-black mb-6 tracking-tight">{t('doBusinessBetter')}</h2>
-            <p className="text-black/70 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+            <h2 className="text-3xl md:text-5xl font-bold text-black mb-4 md:mb-6 tracking-tight leading-tight">{t('doBusinessBetter')}</h2>
+            <p className="text-black/70 text-base md:text-lg mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
               {t('documentWorkEasy')}
             </p>
             {!authLoading && !hasActiveLicense && (
-              <button className="bg-black text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-900 transition-all hover:scale-105 shadow-xl">
+              <button className="bg-black text-white px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg hover:bg-gray-900 transition-all hover:scale-105 shadow-xl whitespace-nowrap">
                 {t('try7DaysFree')}
               </button>
             )}
@@ -859,17 +875,17 @@ export default function App() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-black py-20 px-16">
+        <footer className="bg-black py-12 md:py-20 px-6 md:px-16">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-4 gap-12 mb-20">
-              <div className="col-span-1">
-                <div className="flex items-center gap-2 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16 md:mb-20">
+              <div className="col-span-1 sm:col-span-2 lg:col-span-1">
+                <div className="flex items-center gap-2 mb-4 md:mb-6">
                   <div className="w-6 h-6 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-sm">
                     R
                   </div>
                   <span className="text-white font-bold text-lg">Refinedocs</span>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
                   {t('weMakePdfEasy')}
                 </p>
               </div>
@@ -901,13 +917,13 @@ export default function App() {
               </div>
             </div>
 
-            <div className="pt-10 border-t border-gray-900 flex items-center justify-between">
+            <div className="pt-8 md:pt-10 border-t border-gray-900 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
               <div className="flex items-center gap-6">
                 <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Linkedin size={20} /></a>
                 <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
                 <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Youtube size={20} /></a>
               </div>
-              <div className="flex items-center gap-8 text-[11px] text-gray-600 uppercase tracking-widest font-bold">
+              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-[10px] md:text-[11px] text-gray-600 uppercase tracking-widest font-bold">
                 <span>{t('copyright')}</span>
                 <Link href="/privacy" className="hover:text-white transition-colors">{t('privacyNotice')}</Link>
                 <Link href="/terms" className="hover:text-white transition-colors">{t('termsConditions')}</Link>

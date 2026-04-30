@@ -343,8 +343,8 @@ export default function WatermarkRemoverTool() {
         {/* Right Column: Canvas/Preview */}
         <div className="lg:col-span-5 space-y-4">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider opacity-50">{t('bg-remover-preview')}</h3>
-          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[500px] flex flex-col overflow-hidden">
-            <div ref={containerRef} className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center relative overflow-hidden min-h-[400px]">
+          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col overflow-hidden">
+            <div ref={containerRef} className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center relative overflow-hidden min-h-[250px] md:min-h-[400px]">
               <AnimatePresence mode="wait">
                 {images.length === 0 ? (
                   <motion.div 
@@ -368,13 +368,13 @@ export default function WatermarkRemoverTool() {
                   >
                     <div className="relative group w-full h-full flex items-center justify-center">
                       <img src={images[0].processed} alt={commonT('alt.result')} className="max-w-full max-h-full object-contain rounded-lg shadow-2xl" />
-                      <div className="absolute top-4 left-4 bg-[#d4ff33] px-3 py-1 rounded-full text-[10px] font-bold text-black uppercase shadow-lg z-10">
+                      <div className="absolute top-4 left-4 bg-[#d4ff33] px-3 py-1 rounded-full text-[10px] font-bold text-black uppercase shadow-lg z-10 whitespace-nowrap text-xs sm:text-sm">
                         Cleaned Result
                       </div>
                     </div>
                     <button 
                       onClick={() => downloadImage(images[0].processed!, `cleaned-${images[0].id}.png`)}
-                      className="mt-6 bg-black text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-gray-900 transition-all shadow-xl"
+                      className="mt-6 bg-black text-white px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-gray-900 transition-all shadow-xl whitespace-nowrap text-sm sm:text-base"
                     >
                       <Download size={18} />
                       {t('watermark-download')}
@@ -412,7 +412,7 @@ export default function WatermarkRemoverTool() {
                         <p className="text-sm text-gray-300 mt-2">{images[0].error}</p>
                         <button 
                           onClick={clearMask}
-                          className="mt-6 bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-lg text-xs font-bold transition-all"
+                          className="mt-6 bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-lg text-xs font-bold transition-all whitespace-nowrap"
                         >
                           Try Again
                         </button>

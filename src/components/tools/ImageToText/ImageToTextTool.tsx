@@ -143,7 +143,7 @@ export default function ImageToTextTool() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-[#d4ff33]/30 bg-[#d4ff33]/5 rounded-[32px] p-20 min-h-[500px] flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-[#d4ff33]/50"
+          className="border-2 border-dashed border-[#d4ff33]/30 bg-[#d4ff33]/5 rounded-[32px] p-8 md:p-20 text-center min-h-[300px] md:min-h-[500px] flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-[#d4ff33]/50 whitespace-nowrap"
         >
           <input 
             type="file" 
@@ -152,11 +152,11 @@ export default function ImageToTextTool() {
             accept="image/*" 
             className="hidden" 
           />
-          <div className="w-16 h-16 bg-[#d4ff33]/10 rounded-full flex items-center justify-center text-[#d4ff33] mb-6 group-hover:scale-110 transition-transform">
+          <div className="w-16 h-16 bg-[#d4ff33]/10 rounded-full flex items-center justify-center text-[#d4ff33] mb-6 group-hover:scale-110 transition-transform whitespace-nowrap">
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-[#d4ff33] text-black px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-[#d4ff33]/20">
+            <div className="bg-[#d4ff33] text-black px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-[#d4ff33]/20 whitespace-nowrap text-sm sm:text-base">
               {t('chooseFiles')}
             </div>
           </div>
@@ -210,10 +210,9 @@ export default function ImageToTextTool() {
                 </button>
               </div>
 
-              <button
-                onClick={handleExtractText}
+              <button onClick={handleExtractText}
                 disabled={isProcessing || images[0].status === 'completed'}
-                className="flex-1 w-full mt-6 py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 uppercase tracking-wide text-sm"
+                className="flex-1 w-full mt-6 py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 uppercase tracking-wide text-xs sm:text-sm whitespace-nowrap"
               >
                 {isProcessing ? (
                   <>
@@ -231,7 +230,7 @@ export default function ImageToTextTool() {
 
           {/* Result Area */}
           <div className="space-y-6">
-            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 h-full flex flex-col min-h-[500px]">
+            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 h-full flex flex-col min-h-[300px] md:min-h-[500px]">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-white font-bold flex items-center gap-2">
                   <FileText size={20} className="text-[#d4ff33]" />
@@ -241,14 +240,14 @@ export default function ImageToTextTool() {
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={copyToClipboard}
-                      className="p-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all"
+                      className="p-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all whitespace-nowrap"
                       title="Copy to clipboard"
                     >
                       {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
                     </button>
                     <button 
                       onClick={downloadText}
-                      className="p-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all"
+                      className="p-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all whitespace-nowrap"
                       title="Download as .txt"
                     >
                       <Download size={18} />
@@ -297,9 +296,8 @@ export default function ImageToTextTool() {
                       <AlertCircle className="text-red-500 mb-4" size={48} />
                       <p className="text-white font-bold">Processing Failed</p>
                       <p className="text-red-400/80 text-sm mt-2">{images[0].error}</p>
-                      <button 
-                        onClick={handleExtractText}
-                        className="mt-6 text-[#d4ff33] hover:text-[#c8f020] text-sm font-bold underline underline-offset-4"
+                      <button onClick={handleExtractText}
+                        className="mt-6 text-[#d4ff33] hover:text-[#c8f020] text-xs sm:text-sm font-bold underline underline-offset-4 whitespace-nowrap"
                       >
                         Try Again
                       </button>

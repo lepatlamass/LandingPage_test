@@ -15,7 +15,7 @@ If you've ever tried to share an iPhone photo with a colleague, upload it to a w
 
 That's HEIC — Apple's efficient but not-universal photo format.
 
-The good news? **You don't need to change your camera settings or install sketchy software.** With [Refinedocs' HEIC to PNG converter](https://refinedocs.com/en/tools?tool=heic-to-png), you get universal compatibility in just a few clicks.
+The good news? **You don't need to change your camera settings or install sketchy software.** With [Refinedocs' HEIC to PNG converter](https://refinedocs.com/en/tools/heic-to-png), you get universal compatibility in just a few clicks.
 
 Let's dive in. ✨
 
@@ -150,7 +150,7 @@ All built with the same promise: **Simple. Secure. Powerful.**
 
 Stop wrestling with incompatible file formats. Start sharing your photos with ease.
 
-✨ **Try it free now**: [refinedocs.com/en/tools?tool=heic-to-png](https://refinedocs.com/en/tools?tool=heic-to-png)  
+✨ **Try it free now**: [refinedocs.com/en/tools/heic-to-png](https://refinedocs.com/en/tools/heic-to-png)  
 ✨ **No sign-up required** for instant conversions  
 ✨ **Upgrade anytime** for batch processing, priority speed, and larger file support
 

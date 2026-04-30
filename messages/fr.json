@@ -82,7 +82,12 @@
       "saved": "Saved",
       "loadingBilling": "Loading billing data...",
       "loadingSettings": "Loading settings..."
-    }
+    },
+    "inSeconds": "en Secondes",
+    "toolDesignedSubtitle": "Notre outil est conçu pour être rapide, sécurisé et facile à utiliser pour tous.",
+    "howTo": "Comment",
+    "forFree": "Gratuitement",
+    "faqs": "FAQ"
   },
   "Tools": {
     "bg-remover": "Suppresseur d'arrière-plan",

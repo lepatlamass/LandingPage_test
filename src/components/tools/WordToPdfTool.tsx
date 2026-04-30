@@ -245,7 +245,7 @@ export default function WordToPdfTool() {
     <div className="w-full max-w-4xl mx-auto">
       {/* Upload Area */}
       <div 
-        className={`relative border-2 border-dashed rounded-[32px] p-12 text-center transition-all duration-300 ease-out overflow-hidden ${
+        className={`relative border-2 border-dashed rounded-[32px] p-6 md:p-12 text-center transition-all duration-300 ease-out overflow-hidden ${
           isDragging 
             ? 'border-[#d4ff33] bg-[#d4ff33]/10 scale-[1.02] shadow-2xl shadow-[#d4ff33]/20' 
             : 'border-gray-700 bg-[#1a1c21] hover:border-gray-600 hover:bg-[#22252b]'
@@ -279,7 +279,7 @@ export default function WordToPdfTool() {
           
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="bg-[#d4ff33] text-black px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all hover:scale-105 active:scale-95 shadow-xl shadow-[#d4ff33]/20 flex items-center gap-3"
+            className="bg-[#d4ff33] text-black px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-sm sm:text-lg hover:bg-[#c2eb2e] transition-all hover:scale-105 active:scale-95 shadow-xl shadow-[#d4ff33]/20 flex items-center gap-3 whitespace-nowrap"
           >
             <FileText size={24} />
             {tCommon('chooseFiles')}
@@ -307,7 +307,7 @@ export default function WordToPdfTool() {
               {files.some(f => f.status === 'idle' || f.status === 'error') && (
                 <button
                   onClick={processAll}
-                  className="bg-white/10 text-white px-4 py-2 rounded-xl font-medium hover:bg-white/20 transition-colors flex items-center gap-2"
+                  className="bg-white/10 text-white px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-xl font-medium hover:bg-white/20 transition-colors flex items-center gap-2 whitespace-nowrap"
                 >
                   <RefreshCw size={18} />
                   Process All
@@ -316,7 +316,7 @@ export default function WordToPdfTool() {
               {files.some(f => f.status === 'completed') && (
                 <button
                   onClick={downloadAll}
-                  className="bg-[#d4ff33] text-black px-4 py-2 rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors flex items-center gap-2"
+                  className="bg-[#d4ff33] text-black px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors flex items-center gap-2 whitespace-nowrap"
                 >
                   <Download size={18} />
                   Download All
@@ -370,7 +370,7 @@ export default function WordToPdfTool() {
                   {fileObj.status === 'idle' && (
                     <button
                       onClick={() => processFile(fileObj)}
-                      className="p-2 text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors"
+                      className="p-2 text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
                       title="Convert to PDF"
                     >
                       <RefreshCw size={20} />
@@ -379,7 +379,7 @@ export default function WordToPdfTool() {
                   {fileObj.status === 'completed' && (
                     <button
                       onClick={() => downloadFile(fileObj)}
-                      className="p-2 text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors"
+                      className="p-2 text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
                       title="Download PDF"
                     >
                       <Download size={20} />
@@ -387,7 +387,7 @@ export default function WordToPdfTool() {
                   )}
                   <button
                     onClick={() => removeFile(fileObj.id)}
-                    className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
+                    className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors whitespace-nowrap"
                     title="Remove file"
                   >
                     <X size={20} />

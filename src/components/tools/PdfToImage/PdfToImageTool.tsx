@@ -115,7 +115,7 @@ const PdfToImageTool = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-red-400/30 bg-red-400/5 rounded-[32px] p-20 min-h-[400px] flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-red-400/50"
+            className="border-2 border-dashed border-red-400/30 bg-red-400/5 rounded-[32px] p-8 md:p-20 text-center min-h-[250px] md:min-h-[400px] flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-red-400/50"
           >
             <input
               type="file"
@@ -124,12 +124,12 @@ const PdfToImageTool = () => {
               accept=".pdf"
               className="hidden"
             />
-            <div className="w-16 h-16 bg-red-400/10 rounded-full flex items-center justify-center text-red-400 mb-6 group-hover:scale-110 transition-transform">
+            <div className="w-16 h-16 bg-red-400/10 rounded-full flex items-center justify-center text-red-400 mb-6 group-hover:scale-110 transition-transform whitespace-nowrap">
               <Upload size={32} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">{t('chooseFiles')}</h3>
+            <h3 className="text-lg md:text-xl font-bold text-white mb-2 whitespace-nowrap">{t('chooseFiles')}</h3>
             <p className="text-gray-500 text-sm mb-6">{t('dropFilesHere')}</p>
-            <div className="bg-[#d4ff33] text-black px-8 py-3 rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/10">
+            <div className="bg-[#d4ff33] text-black px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/10 whitespace-nowrap text-xs sm:text-sm">
               Select PDF
             </div>
           </motion.div>
@@ -142,7 +142,7 @@ const PdfToImageTool = () => {
           >
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-red-400/10 rounded-xl flex items-center justify-center text-red-400">
+                <div className="w-12 h-12 bg-red-400/10 rounded-xl flex items-center justify-center text-red-400 whitespace-nowrap">
                   <FileText size={24} />
                 </div>
                 <div>
@@ -151,7 +151,7 @@ const PdfToImageTool = () => {
                 </div>
               </div>
               {!isProcessing && (
-                <button onClick={reset} className="text-gray-500 hover:text-white transition-colors">
+                <button onClick={reset} className="text-gray-500 hover:text-white transition-colors whitespace-nowrap text-xs sm:text-sm">
                   <X size={20} />
                 </button>
               )}
@@ -173,7 +173,7 @@ const PdfToImageTool = () => {
                     </div>
                     <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
                       <motion.div 
-                        className="h-full bg-[#d4ff33]"
+                        className="h-full bg-[#d4ff33] whitespace-nowrap"
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                       />
@@ -186,7 +186,7 @@ const PdfToImageTool = () => {
                 ) : (
                   <button
                     onClick={processPdf}
-                    className="w-full bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10"
+                    className="w-full bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10 whitespace-nowrap"
                   >
                     Convert to Images
                   </button>
@@ -207,13 +207,12 @@ const PdfToImageTool = () => {
                 <div className="flex gap-4">
                   <button
                     onClick={downloadZip}
-                    className="flex-1 bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10"
+                    className="flex-1 bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10 whitespace-nowrap"
                   >
                     <Download size={20} /> Download ZIP
                   </button>
-                  <button
-                    onClick={reset}
-                    className="px-8 py-4 rounded-2xl font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+                  <button onClick={reset}
+                    className="px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-all whitespace-nowrap text-xs sm:text-sm"
                   >
                     Convert Another
                   </button>

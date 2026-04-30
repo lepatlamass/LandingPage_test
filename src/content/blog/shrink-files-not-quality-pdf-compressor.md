@@ -11,7 +11,7 @@ We have all been there: you finish a massive report, a stunning portfolio, or an
 
 Bloated PDFs are a major bottleneck for productivity. They bounce back from emails, fail to upload on application portals, and take forever to load on mobile devices. 
 
-Enter the **[Refinedocs PDF Compressor](https://refinedocs.com/en/tools?tool=compress-pdf)**—your ultimate free solution to shrink PDF files down to size without turning your text into an unreadable, blurry mess. Here is why this tool is essential for your digital workspace.
+Enter the **[Refinedocs PDF Compressor](https://refinedocs.com/en/tools/compress-pdf)**—your ultimate free solution to shrink PDF files down to size without turning your text into an unreadable, blurry mess. Here is why this tool is essential for your digital workspace.
 
 ## 🚀 Why Use the Refinedocs PDF Compressor?
 
@@ -41,6 +41,6 @@ You don't need to download any heavy software to get your files in shape. The pr
 
 ## Final Thoughts
 
-Document management shouldn't be a struggle against arbitrary file size limits. The **[Refinedocs PDF Compressor](https://refinedocs.com/en/tools?tool=compress-pdf)** gives you the power to send, share, and store your documents efficiently. It is incredibly fast, perfectly secure, and 100% free to use.
+Document management shouldn't be a struggle against arbitrary file size limits. The **[Refinedocs PDF Compressor](https://refinedocs.com/en/tools/compress-pdf)** gives you the power to send, share, and store your documents efficiently. It is incredibly fast, perfectly secure, and 100% free to use.
 
-Stop letting large files slow you down. Head over to Refinedocs and [compress your PDFs today](https://refinedocs.com/en/tools?tool=compress-pdf)!
+Stop letting large files slow you down. Head over to Refinedocs and [compress your PDFs today](https://refinedocs.com/en/tools/compress-pdf)!

@@ -9,7 +9,7 @@ author: "The Refinedocs Team"
 
 In today’s digital age, sharing your work online is easier than ever—but so is having it stolen. Whether you are a professional photographer sharing a portfolio, a business sending out confidential PDF proposals, or a digital artist posting your latest creation on social media, protecting your intellectual property is an absolute necessity. 
 
-The easiest and most effective way to secure your files? **Watermarking.** If you are looking for a fast, free, and secure way to stamp your ownership onto your documents and images, the **[Refinedocs Watermark Tool](https://refinedocs.com/en/tools?tool=watermark)** is exactly what you need. Here is a look at why this tool is a game-changer for creators and professionals alike.
+The easiest and most effective way to secure your files? **Watermarking.** If you are looking for a fast, free, and secure way to stamp your ownership onto your documents and images, the **[Refinedocs Watermark Tool](https://refinedocs.com/en/tools/watermark)** is exactly what you need. Here is a look at why this tool is a game-changer for creators and professionals alike.
 
 ## 🛡️ Why Watermark Your Files?
 
@@ -48,6 +48,6 @@ Using the Refinedocs Watermark tool is beautifully intuitive. You don't need any
 
 ## Final Thoughts
 
-You worked hard on your documents and images; don't let someone else take the credit. The **[Refinedocs Watermark Tool](https://refinedocs.com/en/tools?tool=watermark)** removes all the friction from protecting your work. It’s fast, incredibly secure, and perfectly tailored for anyone who values both their time and their privacy.
+You worked hard on your documents and images; don't let someone else take the credit. The **[Refinedocs Watermark Tool](https://refinedocs.com/en/tools/watermark)** removes all the friction from protecting your work. It’s fast, incredibly secure, and perfectly tailored for anyone who values both their time and their privacy.
 
-**Ready to secure your files?** Head over to Refinedocs and [try the Watermark tool today](https://refinedocs.com/en/tools?tool=watermark)!
+**Ready to secure your files?** Head over to Refinedocs and [try the Watermark tool today](https://refinedocs.com/en/tools/watermark)!

@@ -204,7 +204,7 @@ export default function VideoToGifTool() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 border-2 border-dashed border-white/10 rounded-[40px] p-20 flex flex-col items-center justify-center group hover:border-purple-400/50 transition-all cursor-pointer"
+          className="bg-white/5 border-2 border-dashed border-white/10 rounded-[40px] p-8 md:p-20 text-center flex flex-col items-center justify-center group hover:border-purple-400/50 transition-all cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
@@ -231,7 +231,7 @@ export default function VideoToGifTool() {
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-purple-400 text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-purple-500 transition-colors shadow-lg shadow-purple-400/20">
+            <div className="bg-purple-400 text-white px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-purple-500 transition-colors shadow-lg shadow-purple-400/20 whitespace-nowrap text-sm sm:text-base">
               {t('chooseFiles')}
             </div>
           </div>
@@ -334,7 +334,7 @@ export default function VideoToGifTool() {
 
                   <button
                     onClick={() => setVideo(null)}
-                    className="w-full py-4 rounded-2xl bg-white/5 text-gray-400 font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+                    className="w-full py-4 rounded-2xl bg-white/5 text-gray-400 font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all whitespace-nowrap"
                   >
                     <X size={20} />
                     {t('chooseFiles')}
@@ -388,7 +388,7 @@ export default function VideoToGifTool() {
                           {video.status === 'loading-ffmpeg' ? tt('video-to-gif-loading-ffmpeg') : tt('video-to-gif-processing')}
                         </h4>
                         {video.status === 'processing' && (
-                          <div className="w-64 h-2 bg-white/10 rounded-full overflow-hidden mx-auto">
+                          <div className="w-64 h-2 bg-white/10 rounded-full overflow-hidden mx-auto whitespace-nowrap">
                             <motion.div 
                               className="h-full bg-purple-400"
                               initial={{ width: 0 }}

@@ -9,7 +9,7 @@ author: "The Refinedocs Team"
 
 Have you ever found yourself staring at a scanned document, a photograph of a presentation slide, or a screenshot, wishing you could just copy and paste the text? Manually retyping information from images is tedious, error-prone, and a massive drain on productivity. 
 
-Fortunately, Optical Character Recognition (OCR) technology has solved this problem, and the **[Refinedocs Image to Text Tool](https://refinedocs.com/en/tools?tool=image-to-text)** makes it more accessible, faster, and more secure than ever before. 
+Fortunately, Optical Character Recognition (OCR) technology has solved this problem, and the **[Refinedocs Image to Text Tool](https://refinedocs.com/en/tools/image-to-text)** makes it more accessible, faster, and more secure than ever before. 
 
 Here is a comprehensive look at how this free online tool can revolutionize your document workflow.
 
@@ -45,6 +45,6 @@ You don't need to install any bulky software or sign up for expensive subscripti
 
 ## Final Thoughts
 
-Say goodbye to manual data entry. The **[Refinedocs Image to Text Tool](https://refinedocs.com/en/tools?tool=image-to-text)** is a must-have utility for anyone looking to streamline their workflow and digitize their world. It is fast, highly accurate, widely accessible, and best of all—it's completely free to use.
+Say goodbye to manual data entry. The **[Refinedocs Image to Text Tool](https://refinedocs.com/en/tools/image-to-text)** is a must-have utility for anyone looking to streamline their workflow and digitize their world. It is fast, highly accurate, widely accessible, and best of all—it's completely free to use.
 
-Stop typing and start extracting! Head over to Refinedocs and [try the Image to Text tool today](https://refinedocs.com/en/tools?tool=image-to-text).
+Stop typing and start extracting! Head over to Refinedocs and [try the Image to Text tool today](https://refinedocs.com/en/tools/image-to-text).

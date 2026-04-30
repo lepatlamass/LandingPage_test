@@ -35,7 +35,7 @@ export default function MainSidebar({ activeTool, onToolSelect }: MainSidebarPro
     if (onToolSelect) {
       onToolSelect(toolId);
     } else {
-      router.push(`/tools?tool=${toolId}`);
+      router.push(`/tools/${toolId}`);
     }
   };
 

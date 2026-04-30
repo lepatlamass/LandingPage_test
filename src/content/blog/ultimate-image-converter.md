@@ -9,7 +9,7 @@ author: "The Refinedocs Team"
 
 Whether you're a web developer trying to optimize load times with next-gen formats, a designer working across different platforms, or just someone trying to upload a profile picture that *finally* meets a site’s strict format requirements, dealing with image files can be a headache. 
 
-Enter the **[Refinedocs Image Converter](https://refinedocs.com/en/tools?tool=image-converter)**—a completely free, lightning-fast, and 100% private solution to all your image conversion needs. 
+Enter the **[Refinedocs Image Converter](https://refinedocs.com/en/tools/image-converter)**—a completely free, lightning-fast, and 100% private solution to all your image conversion needs. 
 
 Here’s why this tool deserves a permanent spot in your bookmarks.
 
@@ -52,4 +52,4 @@ Using the tool is incredibly straightforward and requires no technical expertise
 
 The Refinedocs Image Converter proves that you don't need clunky desktop software or expensive subscriptions to handle basic document and image administration. Fast, secure, GDPR-compliant, and incredibly easy to use, it removes the friction from file management.
 
-Ready to streamline your workflow? Try the **[Refinedocs Image Converter](https://refinedocs.com/en/tools?tool=image-converter)** today and experience seamless, private image processing directly in your browser.
+Ready to streamline your workflow? Try the **[Refinedocs Image Converter](https://refinedocs.com/en/tools/image-converter)** today and experience seamless, private image processing directly in your browser.

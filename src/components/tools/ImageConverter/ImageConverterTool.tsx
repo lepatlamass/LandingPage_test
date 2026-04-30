@@ -267,9 +267,9 @@ export default function ImageConverterTool() {
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="bg-[#1a1c21] border border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-8 border-b border-gray-800 flex items-center justify-between bg-white/5">
+        <div className="p-6 md:p-8 border-b border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400">
+            <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 shrink-0">
               <RefreshCw size={24} />
             </div>
             <div>
@@ -277,13 +277,13 @@ export default function ImageConverterTool() {
               <p className="text-gray-500 text-sm">Convert your images to PNG, JPEG, WebP, AVIF or Favicon ICO</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex flex-wrap bg-black/40 p-1 rounded-xl border border-gray-800">
+          <div className="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-0">
+            <div className="flex overflow-x-auto scrollbar-hide bg-black/40 p-1 rounded-xl border border-gray-800 flex-1 md:flex-none">
               {(['png', 'jpeg', 'webp', 'avif', 'ico'] as TargetFormat[]).map((f) => (
                 <button
                   key={f}
                   onClick={() => setTargetFormat(f)}
-                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  className={`flex-none px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                     targetFormat === f 
                       ? 'bg-blue-500 text-white shadow-lg' 
                       : 'text-gray-500 hover:text-gray-300'
@@ -296,10 +296,10 @@ export default function ImageConverterTool() {
             {images.length > 0 && (
               <button 
                 onClick={clearAll}
-                className="p-2 text-gray-500 hover:text-red-400 transition-colors"
+                className="shrink-0 p-2.5 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all"
                 title="Clear all"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             )}
           </div>
@@ -314,14 +314,14 @@ export default function ImageConverterTool() {
                 e.preventDefault();
                 addFiles(Array.from(e.dataTransfer.files));
               }}
-              className="border-2 border-dashed border-blue-400/30 bg-blue-400/5 rounded-[24px] p-20 flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-blue-400/50 hover:bg-blue-400/10"
+              className="border-2 border-dashed border-blue-400/30 bg-blue-400/5 rounded-[24px] p-8 md:p-20 text-center flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-blue-400/50 hover:bg-blue-400/10"
             >
               <div className="w-16 h-16 bg-blue-400/10 rounded-full flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
                 <Upload size={32} />
               </div>
-              <h4 className="text-white font-bold text-lg mb-2">{t('chooseFiles')}</h4>
+              <h4 className="text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{t('chooseFiles')}</h4>
               <p className="text-gray-500 text-sm mb-8">{t('dropFilesHere')}</p>
-              <div className="flex items-center gap-6 text-xs text-gray-500 font-medium">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-gray-500 font-medium">
                 <div className="flex items-center gap-2">
                   <ShieldCheck size={14} className="text-blue-400" />
                   Secure Processing
@@ -386,15 +386,14 @@ export default function ImageConverterTool() {
                 )}
               </div>
 
-              <div className="flex items-center justify-between pt-6 border-t border-gray-800">
-                <div className="text-xs text-gray-500">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-gray-800">
+                <div className="text-xs text-gray-500 text-center sm:text-left">
                   {images.filter(i => i.status === 'completed').length} of {images.length} converted
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                   {images.some(i => i.status === 'completed') && (
-                    <button 
-                      onClick={downloadAll}
-                      className="flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition-all"
+                    <button onClick={downloadAll}
+                      className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-6 sm:py-3 bg-gray-800 text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition-all whitespace-nowrap"
                     >
                       {images.filter(i => i.status === 'completed').length > 1 ? (
                         <><FileArchive size={18} /> Download All (ZIP)</>
@@ -406,7 +405,7 @@ export default function ImageConverterTool() {
                   <button 
                     onClick={processAll}
                     disabled={isProcessing || images.every(i => i.status === 'completed')}
-                    className="flex items-center gap-2 px-8 py-3 bg-blue-500 text-white rounded-xl text-sm font-bold hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-500/20"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-8 sm:py-3 bg-blue-500 text-white rounded-xl text-sm font-bold hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-500/20 whitespace-nowrap"
                   >
                     {isProcessing ? (
                       <><Loader2 size={18} className="animate-spin" /> Converting...</>

@@ -16,7 +16,7 @@ We've all been there:
 
 Stop copying by hand. Start extracting with intelligence.
 
-With [Refinedocs' Image-to-Text OCR tool](https://refinedocs.com/en/tools?tool=image-to-text), you turn any image into editable, searchable, shareable text — instantly.
+With [Refinedocs' Image-to-Text OCR tool](https://refinedocs.com/en/tools/image-to-text), you turn any image into editable, searchable, shareable text — instantly.
 
 Let's explore how this simple tool can transform your workflow. 🚀
 
@@ -151,7 +151,7 @@ All built with the same promise: **Simple. Secure. Powerful.**
 
 Stop typing what you can extract. Start working smarter, faster, and with less effort.
 
-✨ **Try it free now**: [refinedocs.com/en/tools?tool=image-to-text](https://refinedocs.com/en/tools?tool=image-to-text)  
+✨ **Try it free now**: [refinedocs.com/en/tools/image-to-text](https://refinedocs.com/en/tools/image-to-text)  
 ✨ **No sign-up required** for instant extractions  
 ✨ **Upgrade anytime** for priority processing, batch uploads, and advanced features
 

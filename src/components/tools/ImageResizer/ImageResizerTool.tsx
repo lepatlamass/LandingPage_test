@@ -206,7 +206,7 @@ export default function ImageResizerTool() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-cyan-400/30 bg-cyan-400/5 rounded-[32px] p-20 min-h-[500px] flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-cyan-400/50"
+          className="border-2 border-dashed border-cyan-400/30 bg-cyan-400/5 rounded-[32px] p-8 md:p-20 text-center min-h-[300px] md:min-h-[500px] flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-cyan-400/50"
         >
           <input 
             type="file" 
@@ -220,7 +220,7 @@ export default function ImageResizerTool() {
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-cyan-400 text-black px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-cyan-300 transition-colors shadow-lg shadow-cyan-400/20">
+            <div className="bg-cyan-400 text-black px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-cyan-300 transition-colors shadow-lg shadow-cyan-400/20 whitespace-nowrap text-sm sm:text-base">
               {t('chooseFiles')}
             </div>
           </div>
@@ -277,7 +277,7 @@ export default function ImageResizerTool() {
                   <button
                     onClick={startProcessing}
                     disabled={isProcessing}
-                    className="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl"
+                    className="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl whitespace-nowrap text-sm sm:text-base"
                   >
                     {isProcessing ? (
                       <>
@@ -293,7 +293,7 @@ export default function ImageResizerTool() {
                   
                   <button 
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full mt-3 bg-white/5 text-white py-3 rounded-xl font-bold text-sm hover:bg-white/10 transition-all border border-white/10"
+                    className="w-full mt-3 bg-white/5 text-white py-3 rounded-xl font-bold text-sm hover:bg-white/10 transition-all border border-white/10 whitespace-nowrap"
                   >
                     {tt('resize-add-more')}
                   </button>
@@ -358,7 +358,7 @@ export default function ImageResizerTool() {
                           </div>
                           <button 
                             onClick={() => downloadImage(img)}
-                            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-all"
+                            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap"
                           >
                             <Download size={14} />
                             {tt('resize-download')}

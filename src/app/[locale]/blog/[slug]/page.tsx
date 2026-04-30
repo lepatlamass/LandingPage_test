@@ -7,6 +7,7 @@ import Footer from '../../../../components/layout/Footer';
 import ReactMarkdown from 'react-markdown';
 import { ArrowLeft, Clock, Calendar, Youtube } from 'lucide-react';
 import PostCard from '../../../../components/blog/PostCard';
+import RelatedToolsCTA from '../../../../components/blog/RelatedToolsCTA';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -155,6 +156,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.content}
           </ReactMarkdown>
         </article>
+
+        {/* Blog → Tool Interlinking CTA */}
+        <RelatedToolsCTA category={post.category} tags={post.tags} />
       </main>
 
       {/* Related Posts Section */}

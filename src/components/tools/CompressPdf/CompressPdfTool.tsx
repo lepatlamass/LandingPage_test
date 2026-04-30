@@ -147,7 +147,7 @@ export default function CompressPdfTool() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 border-2 border-dashed border-white/10 rounded-[40px] p-20 flex flex-col items-center justify-center group hover:border-red-400/50 transition-all cursor-pointer"
+          className="bg-white/5 border-2 border-dashed border-white/10 rounded-[40px] p-8 md:p-20 text-center flex flex-col items-center justify-center group hover:border-red-400/50 transition-all cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
@@ -166,11 +166,11 @@ export default function CompressPdfTool() {
             accept="application/pdf" 
             className="hidden" 
           />
-          <div className="w-16 h-16 bg-red-400/10 rounded-full flex items-center justify-center text-red-400 mb-6 group-hover:scale-110 transition-transform">
+          <div className="w-16 h-16 bg-red-400/10 rounded-full flex items-center justify-center text-red-400 mb-6 group-hover:scale-110 transition-transform whitespace-nowrap">
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-red-400 text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-red-500 transition-colors shadow-lg shadow-red-400/20">
+            <div className="bg-red-400 text-white px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-red-500 transition-colors shadow-lg shadow-red-400/20 whitespace-nowrap text-sm sm:text-base">
               {t('chooseFiles')}
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function CompressPdfTool() {
 
                   <button
                     onClick={resetPdfState}
-                    className="w-full py-4 rounded-2xl bg-white/5 text-gray-400 font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+                    className="w-full py-4 rounded-2xl bg-white/5 text-gray-400 font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all whitespace-nowrap"
                   >
                     <X size={20} />
                     {t('chooseFiles')}
@@ -268,7 +268,7 @@ export default function CompressPdfTool() {
             <div className="bg-white/5 border border-white/10 rounded-[32px] overflow-hidden">
               <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-400/10 rounded-lg text-red-400">
+                  <div className="p-2 bg-red-400/10 rounded-lg text-red-400 whitespace-nowrap">
                     <FileText size={20} />
                   </div>
                   <div>
@@ -346,9 +346,8 @@ export default function CompressPdfTool() {
                         <p className="text-white font-bold">Compression Complete!</p>
                         <p className="text-gray-500 text-xs">Your PDF has been successfully optimized.</p>
                       </div>
-                      <button
-                        onClick={downloadPdf}
-                        className="inline-flex items-center gap-2 px-8 py-3 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600 transition-colors"
+                      <button onClick={downloadPdf}
+                        className="inline-flex items-center gap-2 px-4 py-2 sm:px-8 sm:py-3 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600 transition-colors whitespace-nowrap text-xs sm:text-sm"
                       >
                         <Download size={18} />
                         Download Now

@@ -312,7 +312,7 @@ export default function BackgroundRemover() {
                         <span className="text-[10px] font-bold text-white">{p.name}</span>
                       </div>
                       {selectedPreset === p.id && (
-                        <div className="absolute top-2 right-2 bg-[#d4ff33] rounded-full p-0.5">
+                        <div className="absolute top-2 right-2 bg-[#d4ff33] rounded-full p-0.5 whitespace-nowrap">
                           <CheckCircle2 size={12} className="text-black" />
                         </div>
                       )}
@@ -381,8 +381,8 @@ export default function BackgroundRemover() {
         {/* Right Column: Preview */}
         <div className="lg:col-span-5 space-y-4">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider opacity-50">{t('bg-remover-preview')}</h3>
-          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[500px] flex flex-col">
-            <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center text-center p-8 min-h-[400px]">
+          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col">
+            <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center text-center p-8 min-h-[250px] md:min-h-[400px]">
               <AnimatePresence mode="wait">
                 {images.length === 0 ? (
                   <motion.div 
@@ -415,7 +415,7 @@ export default function BackgroundRemover() {
                             {img.status === 'completed' && img.processed ? (
                               <>
                                 <img src={img.processed} alt={commonT('alt.processedFile')} className="absolute inset-0 w-full h-full object-cover" />
-                                <div className="absolute top-1 left-1 bg-[#d4ff33] px-1.5 py-0.5 rounded text-[8px] font-bold text-black uppercase">{t('bg-remover-result')}</div>
+                                <div className="absolute top-1 left-1 bg-[#d4ff33] px-1.5 py-0.5 rounded text-[8px] font-bold text-black uppercase whitespace-nowrap text-xs sm:text-sm">{t('bg-remover-result')}</div>
                               </>
                             ) : img.status === 'processing' ? (
                               <Loader2 className="w-5 h-5 text-[#d4ff33] animate-spin" />

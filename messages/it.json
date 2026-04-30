@@ -82,7 +82,12 @@
       "saved": "Saved",
       "loadingBilling": "Loading billing data...",
       "loadingSettings": "Loading settings..."
-    }
+    },
+    "inSeconds": "in Secondi",
+    "toolDesignedSubtitle": "Il nostro strumento è progettato per essere veloce, sicuro e facile da usare per tutti.",
+    "howTo": "Come",
+    "forFree": "Gratuitamente",
+    "faqs": "Domande Frequenti"
   },
   "Tools": {
     "bg-remover": "Rimozione Sfondo",

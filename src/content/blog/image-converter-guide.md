@@ -11,7 +11,7 @@ author: "The Refinedocs Team"
 
 Images power the web. But not all platforms, devices, or tools speak the same image language.
 
-That's where [Refinedocs' Image Converter](https://refinedocs.com/en/tools?tool=image-converter) comes in: your one-stop solution for fast, flawless format conversion — right in your browser.
+That's where [Refinedocs' Image Converter](https://refinedocs.com/en/tools/image-converter) comes in: your one-stop solution for fast, flawless format conversion — right in your browser.
 
 Let's explore how this simple tool can unlock smoother workflows, faster uploads, and cleaner visuals. 🚀
 
@@ -154,7 +154,7 @@ All built with the same promise: **Simple. Secure. Powerful.**
 
 Stop wrestling with incompatible formats. Start sharing, uploading, and creating with ease.
 
-✨ **Try it free now**: [refinedocs.com/en/tools?tool=image-converter](https://refinedocs.com/en/tools?tool=image-converter)  
+✨ **Try it free now**: [refinedocs.com/en/tools/image-converter](https://refinedocs.com/en/tools/image-converter)  
 ✨ **No sign-up required** for instant conversions  
 ✨ **Upgrade anytime** for batch processing, priority speed, and advanced format support  
 

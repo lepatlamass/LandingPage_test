@@ -15,7 +15,7 @@ Manually copying table cells. Wrestling with broken formatting. Losing hours to 
 
 Stop the struggle. Start extracting.
 
-With [Refinedocs' PDF to CSV converter](https://refinedocs.com/en/tools?tool=pdf-to-csv), you turn static PDF tables into clean, sortable, analysis-ready CSV files — instantly.
+With [Refinedocs' PDF to CSV converter](https://refinedocs.com/en/tools/pdf-to-csv), you turn static PDF tables into clean, sortable, analysis-ready CSV files — instantly.
 
 Let's dive into how this simple tool can transform your data workflow. 🚀
 
@@ -143,7 +143,7 @@ All built with the same promise: **Simple. Secure. Powerful.**
 
 Stop copying cells by hand. Start analyzing, automating, and acting on your data — faster.
 
-✨ **Try it free now**: [refinedocs.com/en/tools?tool=pdf-to-csv](https://refinedocs.com/en/tools?tool=pdf-to-csv)  
+✨ **Try it free now**: [refinedocs.com/en/tools/pdf-to-csv](https://refinedocs.com/en/tools/pdf-to-csv)  
 ✨ **No sign-up required** for instant conversions  
 ✨ **Upgrade anytime** for batch processing, priority speed, and advanced table detection  
 

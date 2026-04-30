@@ -12,7 +12,7 @@ export default function NavigationLoginButton() {
 
   if (loading) {
     return (
-      <div className="w-10 h-10 rounded-full bg-white/10 animate-pulse hidden sm:block" />
+      <div className="w-10 h-10 rounded-full bg-white/10 animate-pulse" />
     );
   }
 
@@ -23,7 +23,7 @@ export default function NavigationLoginButton() {
   return (
     <Link
       href="/login"
-      className="text-xs font-medium text-gray-300 hover:text-white transition-colors hidden sm:block"
+      className="text-xs font-medium text-gray-300 hover:text-white transition-colors"
     >
       {t('logIn')}
     </Link>

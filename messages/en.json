@@ -82,7 +82,12 @@
       "saved": "Saved",
       "loadingBilling": "Loading billing data...",
       "loadingSettings": "Loading settings..."
-    }
+    },
+    "inSeconds": "in Seconds",
+    "toolDesignedSubtitle": "Our tool is designed to be fast, secure, and easy to use for everyone.",
+    "howTo": "How To",
+    "forFree": "for Free",
+    "faqs": "FAQs"
   },
   "Tools": {
     "bg-remover": "Background Remover",

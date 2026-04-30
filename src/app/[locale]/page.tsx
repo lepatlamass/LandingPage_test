@@ -113,7 +113,7 @@ export default async function Page({
                   <div key={i} className="p-6 rounded-xl bg-[#1a1c21] border border-white/5 hover:border-white/10 transition-colors flex flex-col h-full">
                     <h4 className="text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
                     <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
-                    <Link href={`/tools?tool=${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
+                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
                       {tool.link} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
@@ -139,7 +139,7 @@ export default async function Page({
                   <div key={i} className="p-6 rounded-xl bg-[#1a1c21] border border-white/5 hover:border-white/10 transition-colors flex flex-col h-full">
                     <h4 className="text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
                     <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
-                    <Link href={`/tools?tool=${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
+                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
                       {tool.link} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
@@ -161,7 +161,7 @@ export default async function Page({
                   <div key={i} className="p-6 rounded-xl bg-[#1a1c21] border border-white/5 hover:border-white/10 transition-colors flex flex-col h-full">
                     <h4 className="text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
                     <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
-                    <Link href={`/tools?tool=${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
+                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
                       {tool.link} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
@@ -185,7 +185,7 @@ export default async function Page({
                   <p className="text-lg text-gray-400 leading-relaxed">
                     {t('forBusinessesDesc')}
                   </p>
-                  <Link href="/tools?tool=pdf-to-excel" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/pdf-to-excel" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
                     Convert PDF to Excel <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -207,7 +207,7 @@ export default async function Page({
                   <p className="text-lg text-gray-400 leading-relaxed">
                     {t('forAccountantsDesc')}
                   </p>
-                  <Link href="/tools?tool=excel-to-csv" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/excel-to-csv" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
                     Convert Excel/CSV <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -229,7 +229,7 @@ export default async function Page({
                   <p className="text-lg text-gray-400 leading-relaxed">
                     {t('forStudentsDesc')}
                   </p>
-                  <Link href="/tools?tool=image-to-text" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/image-to-text" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
                     Extract Text <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -251,7 +251,7 @@ export default async function Page({
                   <p className="text-lg text-gray-400 leading-relaxed">
                     {t('forDesignersDesc')}
                   </p>
-                  <Link href="/tools?tool=compress-images" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/compress-images" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
                     Compress Image <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>

@@ -11,7 +11,7 @@ We’ve all experienced the frustration: a client, colleague, or vendor sends ov
 
 You can't easily filter it, sort it, or run calculations. Your choices seem limited to either retyping hours of data manually or dealing with clunky copy-paste formatting errors that merge all your columns into a single line of text. 
 
-Fortunately, there's a better way. The **[Refinedocs PDF to CSV Tool](https://refinedocs.com/en/tools?tool=pdf-to-csv)** is a free, blazing-fast, and highly secure solution designed to instantly extract tabular data from your PDFs and convert them into clean, editable CSV spreadsheets. 
+Fortunately, there's a better way. The **[Refinedocs PDF to CSV Tool](https://refinedocs.com/en/tools/pdf-to-csv)** is a free, blazing-fast, and highly secure solution designed to instantly extract tabular data from your PDFs and convert them into clean, editable CSV spreadsheets. 
 
 Here is a closer look at how this tool can save you hours of manual data entry.
 
@@ -40,6 +40,6 @@ Using the tool is incredibly straightforward. You don't need any technical skill
 
 ## Final Thoughts
 
-Stop wasting your valuable time manually transcribing data. Whether you work in finance, real estate, sales, or education, the **[Refinedocs PDF to CSV Tool](https://refinedocs.com/en/tools?tool=pdf-to-csv)** is an indispensable asset for your workflow. 
+Stop wasting your valuable time manually transcribing data. Whether you work in finance, real estate, sales, or education, the **[Refinedocs PDF to CSV Tool](https://refinedocs.com/en/tools/pdf-to-csv)** is an indispensable asset for your workflow. 
 
-It's fast, free, and incredibly secure. Head over to Refinedocs and [unlock your PDF data today!](https://refinedocs.com/en/tools?tool=pdf-to-csv)
+It's fast, free, and incredibly secure. Head over to Refinedocs and [unlock your PDF data today!](https://refinedocs.com/en/tools/pdf-to-csv)

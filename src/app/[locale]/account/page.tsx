@@ -55,7 +55,7 @@ export default function AccountPage() {
   if (!user) return null;
 
   return (
-    <div className="p-8 max-w-4xl mx-auto w-full">
+    <div className="p-4 md:p-8 max-w-4xl mx-auto w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
         <p className="text-zinc-400">Manage your account details and personalization.</p>

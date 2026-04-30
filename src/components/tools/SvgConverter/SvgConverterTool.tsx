@@ -188,9 +188,9 @@ export default function SvgConverterTool() {
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="bg-[#1a1c21] border border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-8 border-b border-gray-800 flex items-center justify-between bg-white/5">
+        <div className="p-6 md:p-8 border-b border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-indigo-400/10 rounded-2xl flex items-center justify-center text-indigo-400">
+            <div className="w-12 h-12 bg-indigo-400/10 rounded-2xl flex items-center justify-center text-indigo-400 shrink-0">
               <ImageIcon size={24} />
             </div>
             <div>
@@ -198,13 +198,13 @@ export default function SvgConverterTool() {
               <p className="text-gray-500 text-sm">Convert vector SVG files to PNG or JPEG</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex bg-black/40 p-1 rounded-xl border border-gray-800">
+          <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+            <div className="flex flex-wrap bg-black/40 p-1 rounded-xl border border-gray-800 w-full md:w-auto">
               {(['png', 'jpeg'] as OutputFormat[]).map((f) => (
                 <button
                   key={f}
                   onClick={() => setOutputFormat(f)}
-                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  className={`flex-1 md:flex-none px-2 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                     outputFormat === f 
                       ? 'bg-indigo-500 text-white shadow-lg' 
                       : 'text-gray-500 hover:text-gray-300'
@@ -235,14 +235,14 @@ export default function SvgConverterTool() {
                 e.preventDefault();
                 addFiles(Array.from(e.dataTransfer.files));
               }}
-              className="border-2 border-dashed border-indigo-400/30 bg-indigo-400/5 rounded-[24px] p-20 flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-indigo-400/50 hover:bg-indigo-400/10"
+              className="border-2 border-dashed border-indigo-400/30 bg-indigo-400/5 rounded-[24px] p-8 md:p-20 text-center flex flex-col items-center justify-center group cursor-pointer transition-all hover:border-indigo-400/50 hover:bg-indigo-400/10"
             >
               <div className="w-16 h-16 bg-indigo-400/10 rounded-full flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
                 <Upload size={32} />
               </div>
-              <h4 className="text-white font-bold text-lg mb-2">{t('chooseFiles')}</h4>
+              <h4 className="text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{t('chooseFiles')}</h4>
               <p className="text-gray-500 text-sm mb-8">Select SVG files to convert</p>
-              <div className="flex items-center gap-6 text-xs text-gray-500 font-medium">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-gray-500 font-medium">
                 <div className="flex items-center gap-2">
                   <ShieldCheck size={14} className="text-blue-400" />
                   Secure Processing
@@ -339,9 +339,8 @@ export default function SvgConverterTool() {
                 </div>
                 <div className="flex items-center gap-3">
                   {files.some(f => f.status === 'completed') && (
-                    <button 
-                      onClick={downloadAll}
-                      className="flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition-all"
+                    <button onClick={downloadAll}
+                      className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-gray-800 text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-gray-700 transition-all whitespace-nowrap"
                     >
                       {files.filter(f => f.status === 'completed').length > 1 ? (
                         <><FileArchive size={18} /> Download All (ZIP)</>

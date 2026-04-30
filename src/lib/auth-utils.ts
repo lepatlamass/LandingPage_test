@@ -31,8 +31,10 @@ export const signInWithGoogle = async (
   auth: Auth,
   provider: GoogleAuthProvider
 ): Promise<UserCredential | null | void> => {
-  // Always use redirect on mobile or on /tools routes (COOP/COEP blocks popups)
-  if (isMobile() || isOnRestrictedRoute()) {
+  // Use redirect only on /tools routes (COOP/COEP blocks popups).
+  // On mobile, popup flow works on modern browsers if triggered by a direct user click,
+  // avoiding the 'missing initial state' error caused by ITP (Intelligent Tracking Prevention).
+  if (isOnRestrictedRoute()) {
     return signInWithRedirect(auth, provider);
   }
 

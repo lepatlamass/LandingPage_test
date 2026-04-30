@@ -14,7 +14,7 @@ We've all been there:
 ⚠️ *"Attachment too large"*  
 😤 Cue the frustration.
 
-Say goodbye to file-size headaches. With **[Refinedocs' PDF Compressor](https://refinedocs.com/en/tools?tool=compress-pdf)**, you get professional-grade compression that just works.
+Say goodbye to file-size headaches. With **[Refinedocs' PDF Compressor](https://refinedocs.com/en/tools/compress-pdf)**, you get professional-grade compression that just works.
 
 Let's explore why this simple tool is becoming a favorite among professionals, students, and teams worldwide. 🚀
 
@@ -142,7 +142,7 @@ Get the most out of every file:
 
 No installation. No risk. Just results.
 
-✨ **Start compressing**: [refinedocs.com/en/tools?tool=compress-pdf](https://refinedocs.com/en/tools?tool=compress-pdf)  
+✨ **Start compressing**: [refinedocs.com/en/tools/compress-pdf](https://refinedocs.com/en/tools/compress-pdf)  
 ✨ **Free forever tier** — upgrade anytime for priority processing & batch tools  
 ✨ **Love it? Share it** — help your team work smarter too
 
