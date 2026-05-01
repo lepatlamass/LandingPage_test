@@ -224,40 +224,40 @@ export default function ImageResizerTool() {
               {t('chooseFiles')}
             </div>
           </div>
-          <p className="text-gray-500 text-sm">{t('dropFilesHere')} {tt('resize-max-images')}</p>
+          <p className="text-black dark:text-gray-500 text-sm">{t('dropFilesHere')} {tt('resize-max-images')}</p>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Settings Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 sticky top-24">
-              <h3 className="text-white font-bold mb-6 flex items-center gap-2">
+            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 sticky top-24">
+              <h3 className="text-black dark:text-white font-bold mb-6 flex items-center gap-2">
                 <Maximize size={20} className="text-cyan-400" />
                 {tt('resize-settings')}
               </h3>
 
               <div className="space-y-6">
                 <div>
-                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">
+                  <label className="text-xs font-bold text-black dark:text-gray-500 uppercase tracking-wider mb-2 block">
                     {tt('resize-width-label')}
                   </label>
                   <input 
                     type="number" 
                     value={globalWidth}
                     onChange={(e) => updateGlobalWidth(parseInt(e.target.value) || 0)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-400/50 transition-colors"
+                    className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:border-cyan-400/50 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">
+                  <label className="text-xs font-bold text-black dark:text-gray-500 uppercase tracking-wider mb-2 block">
                     {tt('resize-height-label')}
                   </label>
                   <input 
                     type="number" 
                     value={globalHeight}
                     onChange={(e) => updateGlobalHeight(parseInt(e.target.value) || 0)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-400/50 transition-colors"
+                    className="w-full bg-black/40 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:border-cyan-400/50 transition-colors"
                   />
                 </div>
 
@@ -266,7 +266,7 @@ export default function ImageResizerTool() {
                   className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all ${
                     lockAspectRatio 
                       ? 'bg-cyan-400/10 border-cyan-400/30 text-cyan-400' 
-                      : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
+                      : 'bg-white/5 border-black/10 dark:border-white/10 text-black dark:text-gray-400 hover:bg-black/10 dark:hover:bg-white/10'
                   }`}
                 >
                   <span className="text-sm font-bold">{tt('resize-lock-aspect')}</span>
@@ -293,7 +293,7 @@ export default function ImageResizerTool() {
                   
                   <button 
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full mt-3 bg-white/5 text-white py-3 rounded-xl font-bold text-sm hover:bg-white/10 transition-all border border-white/10 whitespace-nowrap"
+                    className="w-full mt-3 bg-white/5 text-black dark:text-white py-3 rounded-xl font-bold text-sm hover:bg-black/10 dark:hover:bg-white/10 transition-all border border-black/10 dark:border-white/10 whitespace-nowrap"
                   >
                     {tt('resize-add-more')}
                   </button>
@@ -319,23 +319,23 @@ export default function ImageResizerTool() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white/5 border border-white/10 rounded-3xl p-4 flex items-center gap-6 group hover:bg-white/8 transition-colors"
+                  className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-4 flex items-center gap-6 group hover:bg-white/8 transition-colors"
                 >
-                  <div className="w-24 h-24 rounded-2xl overflow-hidden bg-black/40 shrink-0 border border-white/5">
+                  <div className="w-24 h-24 rounded-2xl overflow-hidden bg-black/40 shrink-0 border border-black/10 dark:border-white/5">
                     <img src={img.preview} alt="Preview" className="w-full h-full object-cover" />
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
-                      <h4 className="text-white font-bold text-sm truncate pr-4">{img.file.name}</h4>
+                      <h4 className="text-black dark:text-white font-bold text-sm truncate pr-4">{img.file.name}</h4>
                       <button 
                         onClick={() => removeImage(img.id)}
-                        className="text-gray-500 hover:text-red-400 transition-colors"
+                        className="text-black dark:text-gray-500 hover:text-red-400 transition-colors"
                       >
                         <X size={18} />
                       </button>
                     </div>
-                    <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-bold text-gray-500">
+                    <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-bold text-black dark:text-gray-500">
                       <span>{img.originalWidth} x {img.originalHeight} px</span>
                       <span className="text-gray-700">•</span>
                       <span className="text-cyan-400/80">
@@ -358,7 +358,7 @@ export default function ImageResizerTool() {
                           </div>
                           <button 
                             onClick={() => downloadImage(img)}
-                            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap"
+                            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-black dark:text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap"
                           >
                             <Download size={14} />
                             {tt('resize-download')}

@@ -17,7 +17,7 @@ export default function SubscriptionPage() {
   return (
     <div className="p-4 md:p-8 max-w-4xl mx-auto w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
+        <h1 className="text-3xl font-bold text-black dark:text-white mb-2">{t('title')}</h1>
         <p className="text-zinc-400">{t('managePlan')}</p>
       </div>
 
@@ -30,7 +30,7 @@ export default function SubscriptionPage() {
         >
           <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
             <div className="space-y-2 flex-1">
-              <h3 className="text-lg font-semibold text-white">{t('upgradeToProTitle')}</h3>
+              <h3 className="text-lg font-semibold text-black dark:text-white">{t('upgradeToProTitle')}</h3>
               <p className="text-sm text-zinc-400 leading-relaxed">
                 {t('upgradeToProDescription')}
               </p>
@@ -101,14 +101,14 @@ export default function SubscriptionPage() {
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
               <div className="px-6 py-5 border-b border-zinc-800 flex items-center gap-3">
                 <CreditCard className="text-zinc-500 h-5 w-5" />
-                <h2 className="text-lg font-semibold text-white">{t('currentPlan')}</h2>
+                <h2 className="text-lg font-semibold text-black dark:text-white">{t('currentPlan')}</h2>
               </div>
 
               <div className="p-8 flex flex-col items-center text-center">
                 <div className="w-16 h-16 bg-zinc-950 border border-zinc-800 rounded-full flex items-center justify-center mb-4">
                   <CreditCard className="text-zinc-500 h-8 w-8" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{t('noActiveSubscription')}</h3>
+                <h3 className="text-xl font-semibold text-black dark:text-white mb-2">{t('noActiveSubscription')}</h3>
                 <p className="text-zinc-400 mb-8 max-w-sm">
                   {t('noSubscription')}
                 </p>

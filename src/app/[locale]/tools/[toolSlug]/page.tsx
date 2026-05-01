@@ -156,7 +156,7 @@ export default async function ToolPage({ params }: Props) {
       <ToolJsonLd locale={locale} toolSlug={toolSlug} title={title} description={description} />
       <Suspense
         fallback={
-          <div className="min-h-screen bg-[#111111] flex flex-col items-center justify-center">
+          <div className="min-h-screen bg-white dark:bg-[#111111] flex flex-col items-center justify-center">
             <div className="relative">
               <div className="absolute inset-0 bg-[#d4ff33] rounded-xl blur-xl opacity-40 animate-pulse"></div>
               <div className="w-16 h-16 bg-[#d4ff33] rounded-xl flex items-center justify-center text-black font-bold text-3xl shadow-[0_0_30px_rgba(212,255,51,0.3)] animate-bounce relative z-10">

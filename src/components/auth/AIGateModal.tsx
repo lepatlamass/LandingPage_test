@@ -81,11 +81,11 @@ export default function AIGateModal({ state, onClose, onLoginSuccess }: AIGateMo
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#d4ff33]/30 via-transparent to-blue-500/20 pointer-events-none" />
               
               {/* Card body */}
-              <div className="relative bg-[#111317] border border-white/10 rounded-3xl p-8">
+              <div className="relative bg-[#111317] border border-black/10 dark:border-white/10 rounded-3xl p-8">
                 {/* Close button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-500 hover:text-white transition-all z-10"
+                  className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-500 hover:text-black dark:text-white transition-all z-10"
                 >
                   <X size={18} />
                 </button>
@@ -131,10 +131,10 @@ function LoginView({
       </div>
 
       {/* Headline */}
-      <h2 className="text-2xl font-bold text-white mb-2">
+      <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
         Unlock AI Features
       </h2>
-      <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+      <p className="text-black dark:text-gray-400 text-sm mb-8 leading-relaxed">
         Sign in to protect against abuse and gain access to our powerful AI tools.
       </p>
 
@@ -144,9 +144,9 @@ function LoginView({
           { icon: Shield, label: 'Secure Access' },
           { icon: Zap, label: 'Instant Results' }
         ].map(({ icon: Icon, label }) => (
-          <div key={label} className="flex flex-col items-center gap-2 p-3 bg-white/5 rounded-2xl border border-white/5">
+          <div key={label} className="flex flex-col items-center gap-2 p-3 bg-white/5 rounded-2xl border border-black/10 dark:border-white/5">
             <Icon size={18} className="text-[#d4ff33]" />
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider leading-tight">{label}</span>
+            <span className="text-[10px] font-bold text-black dark:text-gray-400 uppercase tracking-wider leading-tight">{label}</span>
           </div>
         ))}
       </div>
@@ -211,10 +211,10 @@ function SubscribeView({
       </div>
 
       {/* Headline */}
-      <h2 className="text-2xl font-bold text-white mb-2">
+      <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
         Upgrade for AI features
       </h2>
-      <p className="text-gray-400 text-sm mb-7 leading-relaxed">
+      <p className="text-black dark:text-gray-400 text-sm mb-7 leading-relaxed">
         Our AI models consume significant server credits. An active subscription is required to generate AI outputs.
       </p>
 
@@ -225,7 +225,7 @@ function SubscribeView({
             <div className="w-5 h-5 rounded-full bg-[#d4ff33]/10 flex items-center justify-center shrink-0">
               <CheckCircle2 size={14} className="text-[#d4ff33]" />
             </div>
-            <span className="text-sm text-gray-300 font-medium">{perk}</span>
+            <span className="text-sm text-black dark:text-gray-300 font-medium">{perk}</span>
           </div>
         ))}
       </div>
@@ -241,7 +241,7 @@ function SubscribeView({
 
       <button
         onClick={onClose}
-        className="mt-3 w-full py-3 text-sm text-gray-500 hover:text-gray-300 transition-colors font-medium"
+        className="mt-3 w-full py-3 text-sm text-black dark:text-gray-500 hover:text-black dark:text-gray-300 transition-colors font-medium"
       >
         Back to tool
       </button>
@@ -283,10 +283,10 @@ function BuyCreditsView({
       </div>
 
       {/* Headline */}
-      <h2 className="text-2xl font-bold text-white mb-2">
+      <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
         Out of AI Credits
       </h2>
-      <p className="text-gray-400 text-sm mb-7 leading-relaxed">
+      <p className="text-black dark:text-gray-400 text-sm mb-7 leading-relaxed">
         You&apos;ve used all your AI credits for this billing period. Purchase more credits to continue using AI features.
       </p>
 
@@ -301,7 +301,7 @@ function BuyCreditsView({
             <div className="w-5 h-5 rounded-full bg-[#d4ff33]/10 flex items-center justify-center shrink-0">
               <CheckCircle2 size={14} className="text-[#d4ff33]" />
             </div>
-            <span className="text-sm text-gray-300 font-medium">{perk}</span>
+            <span className="text-sm text-black dark:text-gray-300 font-medium">{perk}</span>
           </div>
         ))}
       </div>
@@ -317,7 +317,7 @@ function BuyCreditsView({
 
       <button
         onClick={onClose}
-        className="mt-3 w-full py-3 text-sm text-gray-500 hover:text-gray-300 transition-colors font-medium"
+        className="mt-3 w-full py-3 text-sm text-black dark:text-gray-500 hover:text-black dark:text-gray-300 transition-colors font-medium"
       >
         Back to tool
       </button>

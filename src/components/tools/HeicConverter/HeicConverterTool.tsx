@@ -19,7 +19,7 @@ import {
   FileArchive,
   ChevronDown
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import JSZip from 'jszip';
 import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
@@ -156,27 +156,27 @@ export default function HeicConverterTool() {
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-      <div className="bg-[#1a1c21] border border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-6 md:p-8 border-b border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
+      <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
+        <div className="p-6 md:p-8 border-b border-zinc-300 dark:border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-orange-400/10 rounded-2xl flex items-center justify-center text-orange-400 shrink-0">
               <RefreshCw size={24} />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">HEIC Converter</h3>
-              <p className="text-gray-500 text-sm">Convert Apple HEIC images to JPEG, PNG or WebP</p>
+              <h3 className="text-xl font-bold text-black dark:text-white">HEIC Converter</h3>
+              <p className="text-black dark:text-gray-500 text-sm">Convert Apple HEIC images to JPEG, PNG or WebP</p>
             </div>
           </div>
           <div className="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-0">
-            <div className="flex overflow-x-auto scrollbar-hide bg-black/40 p-1 rounded-xl border border-gray-800 flex-1 md:flex-none">
+            <div className="flex overflow-x-auto scrollbar-hide bg-black/40 p-1 rounded-xl border border-zinc-300 dark:border-gray-800 flex-1 md:flex-none">
               {(['jpeg', 'png', 'webp'] as OutputFormat[]).map((f) => (
                 <button
                   key={f}
                   onClick={() => setOutputFormat(f)}
                   className={`flex-none px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                     outputFormat === f 
-                      ? 'bg-orange-500 text-white shadow-lg' 
-                      : 'text-gray-500 hover:text-gray-300'
+                      ? 'bg-orange-500 text-black dark:text-white shadow-lg' 
+                      : 'text-black dark:text-gray-500 hover:text-black dark:text-gray-300'
                   }`}
                 >
                   {f.toUpperCase()}
@@ -186,7 +186,7 @@ export default function HeicConverterTool() {
             {files.length > 0 && (
               <button 
                 onClick={clearAll}
-                className="shrink-0 p-2.5 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all"
+                className="shrink-0 p-2.5 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-black dark:text-white transition-all"
                 title="Clear all"
               >
                 <X size={18} />
@@ -209,9 +209,9 @@ export default function HeicConverterTool() {
               <div className="w-16 h-16 bg-orange-400/10 rounded-full flex items-center justify-center text-orange-400 mb-6 group-hover:scale-110 transition-transform">
                 <Upload size={32} />
               </div>
-              <h4 className="text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{t('chooseFiles')}</h4>
-              <p className="text-gray-500 text-sm mb-8">Select up to 20 HEIC files</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-gray-500 font-medium">
+              <h4 className="text-black dark:text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{t('chooseFiles')}</h4>
+              <p className="text-black dark:text-gray-500 text-sm mb-8">Select up to 20 HEIC files</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-black dark:text-gray-500 font-medium">
                 <div className="flex items-center gap-2">
                   <ShieldCheck size={14} className="text-blue-400" />
                   Secure Processing
@@ -225,9 +225,9 @@ export default function HeicConverterTool() {
           ) : (
             <div className="space-y-6">
               {outputFormat === 'jpeg' && (
-                <div className="bg-black/20 p-6 rounded-2xl border border-gray-800 mb-6">
+                <div className="bg-black/20 p-6 rounded-2xl border border-zinc-300 dark:border-gray-800 mb-6">
                   <div className="flex items-center justify-between mb-4">
-                    <label className="text-sm font-bold text-white flex items-center gap-2">
+                    <label className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
                       <Settings size={16} className="text-orange-400" />
                       JPEG Quality: {Math.round(quality * 100)}%
                     </label>
@@ -239,7 +239,7 @@ export default function HeicConverterTool() {
                     step="0.1" 
                     value={quality}
                     onChange={(e) => setQuality(parseFloat(e.target.value))}
-                    className="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                    className="w-full h-2 bg-white dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-500"
                   />
                 </div>
               )}
@@ -251,14 +251,14 @@ export default function HeicConverterTool() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     key={item.id}
-                    className="bg-black/40 border border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
+                    className="bg-black/40 border border-zinc-300 dark:border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
                   >
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-800 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-white dark:bg-gray-900 shrink-0 border border-zinc-300 dark:border-gray-800 flex items-center justify-center">
                       <ImageIcon size={24} className="text-gray-700" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{item.file.name}</p>
-                      <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">
+                      <p className="text-sm font-medium text-black dark:text-white truncate">{item.file.name}</p>
+                      <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-wider mt-1">
                         {(item.file.size / (1024 * 1024)).toFixed(2)} MB • HEIC
                       </p>
                     </div>
@@ -268,7 +268,7 @@ export default function HeicConverterTool() {
                           <CheckCircle2 size={16} className="text-green-400" />
                           <button 
                             onClick={() => downloadSingle(item)}
-                            className="p-2 bg-orange-500/10 text-orange-400 rounded-lg hover:bg-orange-500 hover:text-white transition-all"
+                            className="p-2 bg-orange-500/10 text-orange-400 rounded-lg hover:bg-orange-500 hover:text-black dark:text-white transition-all"
                           >
                             <Download size={16} />
                           </button>
@@ -280,7 +280,7 @@ export default function HeicConverterTool() {
                       ) : (
                         <button 
                           onClick={() => removeFile(item.id)}
-                          className="p-2 text-gray-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                          className="p-2 text-black dark:text-gray-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <X size={16} />
                         </button>
@@ -291,7 +291,7 @@ export default function HeicConverterTool() {
                 {files.length < 20 && (
                   <button 
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-gray-800 rounded-2xl p-4 flex items-center justify-center gap-3 text-gray-500 hover:border-orange-400/30 hover:text-orange-400 transition-all group"
+                    className="border-2 border-dashed border-zinc-300 dark:border-gray-800 rounded-2xl p-4 flex items-center justify-center gap-3 text-black dark:text-gray-500 hover:border-orange-400/30 hover:text-orange-400 transition-all group"
                   >
                     <Upload size={20} className="group-hover:scale-110 transition-transform" />
                     <span className="text-sm font-medium">Add More</span>
@@ -299,14 +299,14 @@ export default function HeicConverterTool() {
                 )}
               </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-gray-800">
-                <div className="text-xs text-gray-500 text-center sm:text-left">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-zinc-300 dark:border-gray-800">
+                <div className="text-xs text-black dark:text-gray-500 text-center sm:text-left">
                   {files.filter(f => f.status === 'completed').length} of {files.length} converted
                 </div>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                   {files.some(f => f.status === 'completed') && (
                     <button onClick={downloadAll}
-                      className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-6 sm:py-3 bg-gray-800 text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition-all whitespace-nowrap"
+                      className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-6 sm:py-3 bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition-all whitespace-nowrap"
                     >
                       {files.filter(f => f.status === 'completed').length > 1 ? (
                         <><FileArchive size={18} /> Download All (ZIP)</>
@@ -318,7 +318,7 @@ export default function HeicConverterTool() {
                   <button 
                     onClick={processAll}
                     disabled={isProcessing || files.every(f => f.status === 'completed')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-8 sm:py-3 bg-orange-500 text-white rounded-xl text-sm font-bold hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-500/20 whitespace-nowrap"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-8 sm:py-3 bg-orange-500 text-black dark:text-white rounded-xl text-sm font-bold hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-500/20 whitespace-nowrap"
                   >
                     {isProcessing ? (
                       <><Loader2 size={18} className="animate-spin" /> Converting...</>
@@ -344,30 +344,30 @@ export default function HeicConverterTool() {
 
       {/* SEO Content Section */}
       <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-orange-400/10 rounded-2xl flex items-center justify-center text-orange-400 mb-6">
             <ShieldCheck size={24} />
           </div>
-          <h4 className="text-white font-bold mb-4">Apple Compatible</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <h4 className="text-black dark:text-white font-bold mb-4">Apple Compatible</h4>
+          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
             Specifically designed to handle HEIC and HEIF files from iPhones and iPads. Convert them to universally compatible formats in seconds.
           </p>
         </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-yellow-400 mb-6">
             <Zap size={24} />
           </div>
-          <h4 className="text-white font-bold mb-4">Instant Conversion</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <h4 className="text-black dark:text-white font-bold mb-4">Instant Conversion</h4>
+          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
             No software installation required. Our browser-based converter processes your files instantly using your device&apos;s power.
           </p>
         </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 mb-6">
             <CheckCircle2 size={24} />
           </div>
-          <h4 className="text-white font-bold mb-4">Quality Control</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <h4 className="text-black dark:text-white font-bold mb-4">Quality Control</h4>
+          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
             Adjust the quality of your JPEG output to balance file size and visual fidelity. Maintain the original resolution of your photos.
           </p>
         </div>

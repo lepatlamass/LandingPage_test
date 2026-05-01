@@ -63,10 +63,10 @@ export default function GoogleSignInButton() {
     <button
       onClick={handleSignIn}
       disabled={isBusy}
-      className={`w-full py-3 sm:py-4 px-4 sm:px-6 flex items-center justify-center gap-3 sm:gap-4 bg-[#23252b] hover:bg-[#2c2f36] border border-white/5 text-white font-semibold rounded-xl sm:rounded-2xl transition-all ${isBusy ? 'opacity-70 cursor-not-allowed' : 'active:scale-[0.98]'}`}
+      className={`w-full py-3 sm:py-4 px-4 sm:px-6 flex items-center justify-center gap-3 sm:gap-4 bg-[#23252b] hover:bg-[#2c2f36] border border-black/10 dark:border-white/5 text-black dark:text-white font-semibold rounded-xl sm:rounded-2xl transition-all ${isBusy ? 'opacity-70 cursor-not-allowed' : 'active:scale-[0.98]'}`}
     >
       {isBusy ? (
-        <div className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+        <div className="w-5 h-5 sm:w-6 sm:h-6 border-2 border-black/20 dark:border-white/20 border-t-white rounded-full animate-spin" />
       ) : (
         <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-6 sm:h-6">
           <path

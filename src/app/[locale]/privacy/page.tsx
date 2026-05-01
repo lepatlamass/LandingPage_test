@@ -26,7 +26,7 @@ export default async function PrivacyPage() {
   const tCommon = await getTranslations('Common');
   
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+    <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <Navbar />
       
       <main className="py-20 px-6 sm:px-12">
@@ -35,8 +35,8 @@ export default async function PrivacyPage() {
           ← {tCommon('home')}
         </Link>
         <h1 className="text-2xl font-bold mb-16 tracking-tight">{tCommon('privacyNotice')}</h1>
-        <div className="prose prose-sm prose-invert max-w-none text-[14px] font-normal prose-p:text-gray-400 prose-headings:text-[16px] prose-headings:font-medium prose-headings:text-white prose-a:text-[#d4ff33] prose-strong:text-white prose-p:leading-10 prose-p:mb-20 prose-headings:mt-32 prose-headings:mb-16 prose-li:mb-8 prose-ul:mb-12 prose-p:indent-8">
-          <p className="text-gray-400 mb-20">Last updated: April 14, 2026</p>
+        <div className="prose prose-sm prose-invert max-w-none text-[14px] font-normal prose-p:text-black dark:text-gray-400 prose-headings:text-[16px] prose-headings:font-medium prose-headings:text-black dark:text-white prose-a:text-[#d4ff33] prose-strong:text-black dark:text-white prose-p:leading-10 prose-p:mb-20 prose-headings:mt-32 prose-headings:mb-16 prose-li:mb-8 prose-ul:mb-12 prose-p:indent-8">
+          <p className="text-black dark:text-gray-400 mb-20">Last updated: April 14, 2026</p>
           
           <p>We are DtempoLabs, a company incorporated under the laws of Cameroon, with its registered offices at Douala Kotto, Cameroon (<strong>‘Refinedocs’</strong>, <strong>‘we’</strong>, <strong>‘our’</strong>, <strong>‘us’</strong>), also reachable at Konwoubuntu@gmail.com. Legal documents are not easy to read, so in summary, this policy sets out how Refinedocs collects and uses information about you.</p>
 

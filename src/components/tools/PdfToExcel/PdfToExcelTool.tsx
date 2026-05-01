@@ -130,21 +130,21 @@ export default function PdfToExcelTool() {
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-      <div className="bg-[#1a1c21] border border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-6 md:p-8 border-b border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
+      <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
+        <div className="p-6 md:p-8 border-b border-zinc-300 dark:border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-lime-400/10 rounded-2xl flex items-center justify-center text-lime-400 shrink-0">
               <FileSpreadsheet size={24} />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">{t('pdf-to-excel')}</h3>
-              <p className="text-gray-500 text-sm">{t('pdf-to-excel-desc')}</p>
+              <h3 className="text-xl font-bold text-black dark:text-white">{t('pdf-to-excel')}</h3>
+              <p className="text-black dark:text-gray-500 text-sm">{t('pdf-to-excel-desc')}</p>
             </div>
           </div>
           {pdfFile && (
             <button 
               onClick={removeFile}
-              className="p-2 text-gray-500 hover:text-red-400 transition-colors"
+              className="p-2 text-black dark:text-gray-500 hover:text-red-400 transition-colors"
               title="Clear"
             >
               <X size={20} />
@@ -167,9 +167,9 @@ export default function PdfToExcelTool() {
               <div className="w-16 h-16 bg-lime-400/10 rounded-full flex items-center justify-center text-lime-400 mb-6 group-hover:scale-110 transition-transform">
                 <Upload size={32} />
               </div>
-              <h4 className="text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{commonT('chooseFiles')}</h4>
-              <p className="text-gray-500 text-sm mb-8">{t('pdf-to-excel-select-file-desc')}</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-gray-500 font-medium">
+              <h4 className="text-black dark:text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{commonT('chooseFiles')}</h4>
+              <p className="text-black dark:text-gray-500 text-sm mb-8">{t('pdf-to-excel-select-file-desc')}</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-black dark:text-gray-500 font-medium">
                 <div className="flex items-center gap-2">
                   <ShieldCheck size={14} className="text-blue-400" />
                   Secure Processing
@@ -192,24 +192,24 @@ export default function PdfToExcelTool() {
                 layout
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-black/40 border border-gray-800 rounded-2xl p-6 flex items-center gap-6"
+                className="bg-black/40 border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 flex items-center gap-6"
               >
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-900 shrink-0 border border-gray-800 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-xl overflow-hidden bg-white dark:bg-gray-900 shrink-0 border border-zinc-300 dark:border-gray-800 flex items-center justify-center">
                   <FileText size={32} className="text-lime-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-lg font-bold text-white truncate">{pdfFile.file.name}</p>
-                  <p className="text-xs text-gray-500 uppercase tracking-wider mt-1">
+                  <p className="text-lg font-bold text-black dark:text-white truncate">{pdfFile.file.name}</p>
+                  <p className="text-xs text-black dark:text-gray-500 uppercase tracking-wider mt-1">
                     {(pdfFile.file.size / (1024 * 1024)).toFixed(2)} MB • {pdfFile.totalPages} Pages
                   </p>
                   
                   {pdfFile.status === 'processing' && (
                     <div className="mt-4">
-                      <div className="flex items-center justify-between text-[10px] text-gray-500 uppercase tracking-widest mb-2">
+                      <div className="flex items-center justify-between text-[10px] text-black dark:text-gray-500 uppercase tracking-widest mb-2">
                         <span>{t('pdf-to-excel-status-processing')}</span>
                         <span>{Math.round((pdfFile.processedPages / pdfFile.totalPages) * 100)}%</span>
                       </div>
-                      <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-white dark:bg-gray-800 rounded-full overflow-hidden">
                         <motion.div 
                           className="h-full bg-lime-500"
                           initial={{ width: 0 }}
@@ -253,9 +253,9 @@ export default function PdfToExcelTool() {
                 </div>
               </motion.div>
 
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex items-center gap-4">
+              <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl p-6 flex items-center gap-4">
                 <Table size={20} className="text-yellow-400 shrink-0" />
-                <p className="text-xs text-gray-400 leading-relaxed">
+                <p className="text-xs text-black dark:text-gray-400 leading-relaxed">
                   {t('pdf-to-excel-info-desc')}
                 </p>
               </div>

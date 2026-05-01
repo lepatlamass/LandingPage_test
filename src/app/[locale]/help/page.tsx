@@ -26,7 +26,7 @@ export default async function HelpPage() {
   const t = await getTranslations('Help');
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+    <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <Navbar />
 
       <main className="pt-24 pb-20 px-6 max-w-4xl mx-auto">
@@ -34,7 +34,7 @@ export default async function HelpPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
             {t('title')}
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-black dark:text-gray-400 text-lg max-w-2xl mx-auto">
             {t('subtitle')}
           </p>
         </div>
@@ -42,7 +42,7 @@ export default async function HelpPage() {
         <FaqAccordion />
 
         <div className="mt-16 text-center bg-[#d4ff33]/10 border border-[#d4ff33]/20 rounded-3xl p-10">
-          <h3 className="text-2xl font-bold text-white mb-4">{t('contactUs')}</h3>
+          <h3 className="text-2xl font-bold text-black dark:text-white mb-4">{t('contactUs')}</h3>
           <a 
             href="mailto:konwoubuntu@gmail.com" 
             className="inline-block px-8 py-4 bg-[#d4ff33] text-black font-bold rounded-xl hover:bg-[#bce622] transition-colors shadow-[0_0_20px_rgba(212,255,51,0.2)]"

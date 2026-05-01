@@ -47,20 +47,20 @@ export default async function Page({
 
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+    <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <Navbar />
 
       <main>
         {/* Hero Section */}
         <section className="pt-20 pb-16 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-transparent border border-white/20 text-[10px] font-bold text-[#d4ff33] mb-6 tracking-widest uppercase">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-transparent border border-black/20 dark:border-white/20 text-[10px] font-bold text-black dark:text-[#d4ff33] mb-6 tracking-widest uppercase">
             <div className="w-2 h-2 rounded-full bg-[#d4ff33]"></div> YOUR ALL IN ONE TOOL FOR IMAGES AND DOCUMENTS
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-[1.15]">
-            {t('heroTitle')}<span className="text-[#d4ff33]">{t('heroTitleAccent')}</span><br />
+            {t('heroTitle')}<span className="text-black dark:text-[#d4ff33]">{t('heroTitleAccent')}</span><br />
             {t('heroTitleSuffix')}
           </h1>
-          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base md:text-lg text-black dark:text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
             {t('heroSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -70,13 +70,13 @@ export default async function Page({
             >
               {t('startConverting')}
             </Link>
-            <span className="text-sm text-white font-bold tracking-wide">
+            <span className="text-sm text-black dark:text-white font-bold tracking-wide">
               {t('noCreditCard')}
             </span>
           </div>
 
           {/* App Mockup Placeholder - YouTube Embed Ready */}
-          <div className="relative w-full max-w-5xl mx-auto rounded-xl overflow-hidden border-2 border-[#d4ff33] shadow-[0_0_50px_rgba(212,255,51,0.15)] bg-[#1a1c21] aspect-[16/9]">
+          <div className="relative w-full max-w-5xl mx-auto rounded-xl overflow-hidden border-2 border-[#d4ff33] shadow-[0_0_50px_rgba(212,255,51,0.15)] bg-white dark:bg-[#1a1c21] aspect-[16/9]">
             <iframe
               className="absolute top-0 left-0 w-full h-full"
               src="https://www.youtube.com/embed/rCMfqbzG-uw"
@@ -90,11 +90,11 @@ export default async function Page({
         </section>
 
         {/* Tools Grid Section */}
-        <section className="py-16 bg-[#111111]">
+        <section className="py-16 bg-white dark:bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-3xl font-bold mb-2">{t('powerfulTools')}</h2>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#d4ff33]">{t('powerfulToolsAccent')}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-[#d4ff33]">{t('powerfulToolsAccent')}</h2>
             </div>
 
             {/* PDF Tools */}
@@ -110,10 +110,10 @@ export default async function Page({
                   { id: "pdf-to-csv", title: "PDF to CSV Converter", desc: "Convert PDF tables to CSV format for easy data import into spreadsheets, databases, or analytics tools.", link: "Convert PDF to CSV" },
                   { id: "excel-to-csv", title: "Excel/CSV Tools", desc: "Convert between Excel and CSV formats instantly. Merge, split, or transform your spreadsheet files.", link: "Convert Excel/CSV" }
                 ].map((tool, i) => (
-                  <div key={i} className="p-6 rounded-xl bg-[#1a1c21] border border-white/5 hover:border-white/10 transition-colors flex flex-col h-full">
-                    <h4 className="text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
-                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
+                  <div key={i} className="p-6 rounded-xl bg-white dark:bg-[#1a1c21] border border-black/10 dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-colors flex flex-col h-full">
+                    <h4 className="text-black dark:text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
+                    <p className="text-black dark:text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
+                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-black dark:text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
                       {tool.link} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
@@ -136,10 +136,10 @@ export default async function Page({
                   { id: "resize", title: "Image Resizer", desc: "Resize images for social media, websites, or print. Maintain quality while adjusting dimensions.", link: "Resize Image" },
                   { id: "compress-images", title: "Image Compressor", desc: "Reduce image file size without losing quality. Optimize photos for faster web loading and email sharing.", link: "Compress Image" }
                 ].map((tool, i) => (
-                  <div key={i} className="p-6 rounded-xl bg-[#1a1c21] border border-white/5 hover:border-white/10 transition-colors flex flex-col h-full">
-                    <h4 className="text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
-                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
+                  <div key={i} className="p-6 rounded-xl bg-white dark:bg-[#1a1c21] border border-black/10 dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-colors flex flex-col h-full">
+                    <h4 className="text-black dark:text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
+                    <p className="text-black dark:text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
+                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-black dark:text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
                       {tool.link} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
@@ -158,10 +158,10 @@ export default async function Page({
                   { id: "video-to-gif", title: "Video to GIF Converter", desc: "Transform video clips into animated GIFs. Perfect for social media, presentations, and messaging.", link: "Create GIF" },
                   { id: "image-converter", title: "File Converter", desc: "Convert between multiple file formats. Support for documents, images, audio, and video files.", link: "Convert Files" }
                 ].map((tool, i) => (
-                  <div key={i} className="p-6 rounded-xl bg-[#1a1c21] border border-white/5 hover:border-white/10 transition-colors flex flex-col h-full">
-                    <h4 className="text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
-                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
+                  <div key={i} className="p-6 rounded-xl bg-white dark:bg-[#1a1c21] border border-black/10 dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-colors flex flex-col h-full">
+                    <h4 className="text-black dark:text-[#d4ff33] font-bold mb-3">{tool.title}</h4>
+                    <p className="text-black dark:text-gray-400 text-sm leading-relaxed mb-6 flex-1">{tool.desc}</p>
+                    <Link href={`/tools/${tool.id}`} className="text-xs font-bold text-black dark:text-white flex items-center justify-end gap-1 hover:text-[#d4ff33] transition-colors mt-auto">
                       {tool.link} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
@@ -173,7 +173,7 @@ export default async function Page({
         </section>
 
         {/* Built for Every Need */}
-        <section id="solutions" className="py-16 bg-[#111111]">
+        <section id="solutions" className="py-16 bg-white dark:bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">{t('builtForEveryNeed')}</h2>
 
@@ -182,10 +182,10 @@ export default async function Page({
               <div className="flex flex-col md:flex-row items-center gap-12 md:gap-24">
                 <div className="flex-1 space-y-6">
                   <h3 className="text-3xl font-bold">{t('forBusinesses')}</h3>
-                  <p className="text-lg text-gray-400 leading-relaxed">
+                  <p className="text-lg text-black dark:text-gray-400 leading-relaxed">
                     {t('forBusinessesDesc')}
                   </p>
-                  <Link href="/tools/pdf-to-excel" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/pdf-to-excel" className="inline-flex items-center gap-2 font-bold text-black dark:text-white hover:text-[#d4ff33] transition-colors">
                     Convert PDF to Excel <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -204,10 +204,10 @@ export default async function Page({
               <div className="flex flex-col md:flex-row-reverse items-center gap-12 md:gap-24">
                 <div className="flex-1 space-y-6">
                   <h3 className="text-3xl font-bold">{t('forAccountants')}</h3>
-                  <p className="text-lg text-gray-400 leading-relaxed">
+                  <p className="text-lg text-black dark:text-gray-400 leading-relaxed">
                     {t('forAccountantsDesc')}
                   </p>
-                  <Link href="/tools/excel-to-csv" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/excel-to-csv" className="inline-flex items-center gap-2 font-bold text-black dark:text-white hover:text-[#d4ff33] transition-colors">
                     Convert Excel/CSV <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -226,10 +226,10 @@ export default async function Page({
               <div className="flex flex-col md:flex-row items-center gap-12 md:gap-24">
                 <div className="flex-1 space-y-6">
                   <h3 className="text-3xl font-bold">{t('forStudents')}</h3>
-                  <p className="text-lg text-gray-400 leading-relaxed">
+                  <p className="text-lg text-black dark:text-gray-400 leading-relaxed">
                     {t('forStudentsDesc')}
                   </p>
-                  <Link href="/tools/image-to-text" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/image-to-text" className="inline-flex items-center gap-2 font-bold text-black dark:text-white hover:text-[#d4ff33] transition-colors">
                     Extract Text <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -248,10 +248,10 @@ export default async function Page({
               <div className="flex flex-col md:flex-row-reverse items-center gap-12 md:gap-24">
                 <div className="flex-1 space-y-6">
                   <h3 className="text-3xl font-bold">{t('forDesigners')}</h3>
-                  <p className="text-lg text-gray-400 leading-relaxed">
+                  <p className="text-lg text-black dark:text-gray-400 leading-relaxed">
                     {t('forDesignersDesc')}
                   </p>
-                  <Link href="/tools/compress-images" className="inline-flex items-center gap-2 font-bold text-white hover:text-[#d4ff33] transition-colors">
+                  <Link href="/tools/compress-images" className="inline-flex items-center gap-2 font-bold text-black dark:text-white hover:text-[#d4ff33] transition-colors">
                     Compress Image <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -270,12 +270,12 @@ export default async function Page({
         </section>
 
         {/* Pricing Section */}
-        <section id="price" className="py-20 bg-[#0a0b0e]">
+        <section id="price" className="py-20 bg-white dark:bg-[#0a0b0e]">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="lg:w-1/3">
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">{t('pricingTitle')}</h2>
-                <p className="text-gray-400 text-base max-w-md leading-relaxed">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-black dark:text-white">{t('pricingTitle')}</h2>
+                <p className="text-black dark:text-gray-400 text-base max-w-md leading-relaxed">
                   {t('pricingSubtitle')}
                 </p>
               </div>
@@ -311,7 +311,7 @@ export default async function Page({
         </section>
 
         {/* Premium Quality Section */}
-        <section id="about" className="py-16 bg-[#111111]">
+        <section id="about" className="py-16 bg-white dark:bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">{t('premiumQuality')}</h2>
 
@@ -321,7 +321,7 @@ export default async function Page({
                   <Zap className="w-full h-full" fill="currentColor" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{t('lightningFast')}</h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-black dark:text-gray-400 leading-relaxed">
                   {t('lightningFastDesc')}
                 </p>
               </div>
@@ -331,7 +331,7 @@ export default async function Page({
                   <Shield className="w-full h-full" fill="currentColor" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{t('privacyFirst')}</h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-black dark:text-gray-400 leading-relaxed">
                   {t('privacyFirstDesc')}
                 </p>
               </div>
@@ -341,7 +341,7 @@ export default async function Page({
                   <TrendingUp className="w-full h-full" fill="currentColor" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{t('unbeatableValue')}</h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-black dark:text-gray-400 leading-relaxed">
                   {t('unbeatableValueDesc')}
                 </p>
               </div>
@@ -352,7 +352,7 @@ export default async function Page({
                     <CloudDownload className="w-full h-full" fill="currentColor" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4">{t('downloadTrial')}</h3>
-                  <p className="text-gray-400 leading-relaxed">
+                  <p className="text-black dark:text-gray-400 leading-relaxed">
                     {t('downloadTrialDesc')}
                   </p>
                 </div>
@@ -362,12 +362,12 @@ export default async function Page({
         </section>
 
         {/* CTA Section */}
-        <section id="cta" className="py-16 bg-[#1a1c21]">
+        <section id="cta" className="py-16 bg-white dark:bg-[#1a1c21]">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="flex-1">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">{t('readyToTransform')}</h2>
-                <p className="text-gray-400 mb-6 text-sm">
+                <p className="text-black dark:text-gray-400 mb-6 text-sm">
                   {t('readyToTransformDesc')}
                 </p>
                 <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -379,7 +379,7 @@ export default async function Page({
                   </Link>
                 </div>
                 <div className="mt-4">
-                  <span className="text-sm text-gray-400 font-medium inline-block bg-black/50 px-4 py-2 rounded-full">
+                  <span className="text-sm text-black dark:text-gray-400 font-medium inline-block bg-gray-100 dark:bg-black/50 px-4 py-2 rounded-full">
                     {t('unlimitedAccessNote')}
                   </span>
                 </div>

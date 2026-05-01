@@ -26,7 +26,7 @@ export default async function TermsPage() {
   const tCommon = await getTranslations('Common');
   
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+    <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <Navbar />
       
       <main className="py-20 px-6 sm:px-12">
@@ -35,8 +35,8 @@ export default async function TermsPage() {
           ← {tCommon('home')}
         </Link>
         <h1 className="text-2xl font-bold mb-16 tracking-tight">{tCommon('termsConditions')}</h1>
-        <div className="prose prose-sm prose-invert max-w-none text-[14px] font-normal prose-p:text-gray-400 prose-headings:text-[16px] prose-headings:font-medium prose-headings:text-white prose-a:text-[#d4ff33] prose-strong:text-white prose-p:leading-10 prose-p:mb-20 prose-headings:mt-32 prose-headings:mb-16 prose-li:mb-8 prose-ul:mb-12 prose-p:indent-8">
-          <p className="text-gray-400 mb-20 italic">Douala, April 2026. Replaces the prior versions in their entirety.</p>
+        <div className="prose prose-sm prose-invert max-w-none text-[14px] font-normal prose-p:text-black dark:text-gray-400 prose-headings:text-[16px] prose-headings:font-medium prose-headings:text-black dark:text-white prose-a:text-[#d4ff33] prose-strong:text-black dark:text-white prose-p:leading-10 prose-p:mb-20 prose-headings:mt-32 prose-headings:mb-16 prose-li:mb-8 prose-ul:mb-12 prose-p:indent-8">
+          <p className="text-black dark:text-gray-400 mb-20 italic">Douala, April 2026. Replaces the prior versions in their entirety.</p>
           
           <p>These terms govern your use of our website and services such as Refinedocs (collectively, “Services”) and software that we include as part of the Services, including any applications, scripts, instruction sets, and any related documentation (collectively “Software”). By using the Services or Software, you agree to these terms. If you have entered into another agreement with us concerning specific Services or Software, then the terms of that agreement control where it conflicts with these terms. As discussed further in Section 3 below, you retain all rights and ownership you have in your content that you make available through the Services. By using our services, you may upload or otherwise provide files and information and process such files and information using our services (collectively “User Files”).</p>
 

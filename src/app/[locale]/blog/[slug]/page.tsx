@@ -72,13 +72,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .slice(0, 3); // Max 3 related posts
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+    <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <Navbar />
 
       <main className="pt-24 pb-24 px-6 max-w-4xl mx-auto">
         <Link 
           href="/blog" 
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-[#d4ff33] mb-12 transition-colors font-medium text-sm"
+          className="inline-flex items-center gap-2 text-black dark:text-gray-400 hover:text-[#d4ff33] mb-12 transition-colors font-medium text-sm"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Blog
         </Link>
@@ -94,9 +94,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.title}
           </h1>
           
-          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400 border-t border-white/10 pt-6">
-            <div className="flex items-center gap-2 font-medium text-white">
-              <div className="w-8 h-8 rounded-full bg-[#2a2d39] flex items-center justify-center text-[#d4ff33]">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-black dark:text-gray-400 border-t border-black/10 dark:border-white/10 pt-6">
+            <div className="flex items-center gap-2 font-medium text-black dark:text-white">
+              <div className="w-8 h-8 rounded-full bg-black/5 dark:bg-[#2a2d39] flex items-center justify-center text-[#d4ff33]">
                 {post.author.charAt(0)}
               </div>
               {post.author}
@@ -113,19 +113,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </header>
 
         {post.youtubeUrl && (
-          <div className="mb-16 bg-[#1a1c21] rounded-2xl p-6 sm:p-8 border border-[#ff0000]/20 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_0_30px_rgba(255,0,0,0.05)]">
+          <div className="mb-16 bg-white dark:bg-[#1a1c21] rounded-2xl p-6 sm:p-8 border border-[#ff0000]/20 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_0_30px_rgba(255,0,0,0.05)]">
             <div className="flex items-center gap-4 text-[#ff0000]">
               <Youtube className="w-8 h-8" />
               <div className="text-left">
-                <h3 className="font-bold text-white text-lg">Watch the Video Tutorial</h3>
-                <p className="text-sm text-gray-400">Prefer watching? Catch the full guide on YouTube.</p>
+                <h3 className="font-bold text-black dark:text-white text-lg">Watch the Video Tutorial</h3>
+                <p className="text-sm text-black dark:text-gray-400">Prefer watching? Catch the full guide on YouTube.</p>
               </div>
             </div>
             <a 
               href={post.youtubeUrl} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-[#ff0000] text-white font-bold rounded-xl hover:bg-[#cc0000] transition-colors whitespace-nowrap w-full sm:w-auto text-center"
+              className="px-6 py-3 bg-[#ff0000] text-black dark:text-white font-bold rounded-xl hover:bg-[#cc0000] transition-colors whitespace-nowrap w-full sm:w-auto text-center"
             >
               Watch on YouTube
             </a>
@@ -134,22 +134,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <article className="prose prose-invert prose-lg max-w-none 
           prose-headings:font-bold prose-headings:tracking-tight prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 
-          prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
+          prose-p:text-black dark:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
           prose-a:text-[#d4ff33] prose-a:no-underline hover:prose-a:underline
-          prose-strong:text-white prose-strong:font-bold
-          prose-ul:list-disc prose-ul:text-gray-300 prose-ul:ml-6
-          prose-ol:list-decimal prose-ol:text-gray-300 prose-ol:ml-6
-          prose-li:pl-2 prose-li:marker:text-gray-500
-          prose-blockquote:border-l-[#d4ff33] prose-blockquote:bg-[#1a1c21] prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:text-gray-200">
+          prose-strong:text-black dark:text-white prose-strong:font-bold
+          prose-ul:list-disc prose-ul:text-black dark:text-gray-300 prose-ul:ml-6
+          prose-ol:list-decimal prose-ol:text-black dark:text-gray-300 prose-ol:ml-6
+          prose-li:pl-2 prose-li:marker:text-black dark:text-gray-500
+          prose-blockquote:border-l-[#d4ff33] prose-blockquote:bg-white dark:bg-[#1a1c21] prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:text-gray-200">
           <ReactMarkdown
             components={{
-              h2: ({node, ...props}) => <h2 className="text-3xl font-bold mt-12 mb-6 text-white" {...props}/>,
-              h3: ({node, ...props}) => <h3 className="text-2xl font-bold mt-8 mb-4 text-white" {...props}/>,
-              p: ({node, ...props}) => <p className="text-gray-300 leading-relaxed mb-6 text-lg" {...props}/>,
-              ul: ({node, ...props}) => <ul className="list-disc text-gray-300 ml-6 mb-8 space-y-2" {...props}/>,
-              ol: ({node, ...props}) => <ol className="list-decimal text-gray-300 ml-6 mb-8 space-y-2" {...props}/>,
-              li: ({node, ...props}) => <li className="pl-2 marker:text-gray-500" {...props}/>,
-              strong: ({node, ...props}) => <strong className="text-white font-bold" {...props}/>,
+              h2: ({node, ...props}) => <h2 className="text-3xl font-bold mt-12 mb-6 text-black dark:text-white" {...props}/>,
+              h3: ({node, ...props}) => <h3 className="text-2xl font-bold mt-8 mb-4 text-black dark:text-white" {...props}/>,
+              p: ({node, ...props}) => <p className="text-black dark:text-gray-300 leading-relaxed mb-6 text-lg" {...props}/>,
+              ul: ({node, ...props}) => <ul className="list-disc text-black dark:text-gray-300 ml-6 mb-8 space-y-2" {...props}/>,
+              ol: ({node, ...props}) => <ol className="list-decimal text-black dark:text-gray-300 ml-6 mb-8 space-y-2" {...props}/>,
+              li: ({node, ...props}) => <li className="pl-2 marker:text-black dark:text-gray-500" {...props}/>,
+              strong: ({node, ...props}) => <strong className="text-black dark:text-white font-bold" {...props}/>,
               a: ({node, ...props}) => <a className="text-[#d4ff33] font-medium hover:underline transition-all" {...props}/>,
             }}
           >
@@ -163,9 +163,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Related Posts Section */}
       {relatedPosts.length > 0 && (
-        <section className="bg-[#1a1c21] py-24 border-t border-white/5">
+        <section className="bg-white dark:bg-[#1a1c21] py-24 border-t border-black/10 dark:border-white/5">
           <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-3xl font-bold mb-12 text-center text-white">Related Posts</h2>
+            <h2 className="text-3xl font-bold mb-12 text-center text-black dark:text-white">Related Posts</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedPosts.map((related) => (
                 <PostCard key={related.slug} post={related} />

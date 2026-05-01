@@ -34,7 +34,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
             className={`px-5 py-2 rounded-full text-sm font-bold transition-all ${
               selectedCategory === category
                 ? 'bg-[#d4ff33] text-black shadow-[0_0_15px_rgba(212,255,51,0.2)]'
-                : 'bg-[#1a1c21] text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
+                : 'bg-white dark:bg-[#1a1c21] text-black dark:text-gray-400 hover:text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/5'
             }`}
           >
             {category}
@@ -50,8 +50,8 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 bg-[#1a1c21] rounded-3xl border border-white/5">
-          <p className="text-gray-400">No posts found in this category.</p>
+        <div className="text-center py-20 bg-white dark:bg-[#1a1c21] rounded-3xl border border-black/10 dark:border-white/5">
+          <p className="text-black dark:text-gray-400">No posts found in this category.</p>
         </div>
       )}
     </>

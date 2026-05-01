@@ -29,7 +29,7 @@ export function AICreditsBar({
       <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Sparkles className="text-[#d4ff33] h-5 w-5" />
-          <h2 className="text-lg font-semibold text-white">{t('aiCredits')}</h2>
+          <h2 className="text-lg font-semibold text-black dark:text-white">{t('aiCredits')}</h2>
         </div>
         <span
           className={`text-sm font-bold ${
@@ -75,7 +75,7 @@ export function AICreditsBar({
         {/* Buy more credits */}
         <button
           onClick={() => window.open(CREDITS_CHECKOUT, '_blank')}
-          className="w-full py-3 rounded-xl bg-zinc-800 text-white font-bold text-sm hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
+          className="w-full py-3 rounded-xl bg-zinc-800 text-black dark:text-white font-bold text-sm hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
         >
           <Sparkles className="w-4 h-4 text-[#d4ff33]" />
           {t('buyMoreCredits')}
@@ -214,7 +214,7 @@ export default function LicenseActivation({
         <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CreditCard className="text-[#d4ff33] h-5 w-5" />
-            <h2 className="text-lg font-semibold text-white">{t('currentPlan')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('currentPlan')}</h2>
           </div>
           <button
             onClick={() => { setSuccess(false); setLicenseInfo(null); setLicenseKey(''); }}
@@ -227,7 +227,7 @@ export default function LicenseActivation({
           <div className="w-16 h-16 bg-zinc-950 border border-zinc-800 rounded-full flex items-center justify-center mb-4">
             <CheckCircle className="text-[#d4ff33] h-8 w-8" />
           </div>
-          <h3 className="text-xl font-semibold text-white mb-2">
+          <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
             {t('licenseActivated')}
           </h3>
           {licenseInfo && (
@@ -255,7 +255,7 @@ export default function LicenseActivation({
     <div id="activate-form" className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
       <div className="px-6 py-5 border-b border-zinc-800 flex items-center gap-3">
         <Key className="text-zinc-500 h-5 w-5" />
-        <h2 className="text-lg font-semibold text-white">
+        <h2 className="text-lg font-semibold text-black dark:text-white">
           {t('activateLicense')}
         </h2>
       </div>
@@ -276,7 +276,7 @@ export default function LicenseActivation({
                 if (licenseKey.length > 8) handleValidate();
               }}
               placeholder={t('placeholder.licenseKey')}
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:ring-2 focus:ring-[#d4ff33]/30 focus:border-[#d4ff33] outline-none font-mono uppercase text-sm"
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-black dark:text-white placeholder:text-zinc-600 focus:ring-2 focus:ring-[#d4ff33]/30 focus:border-[#d4ff33] outline-none font-mono uppercase text-sm"
               required
             />
           </div>

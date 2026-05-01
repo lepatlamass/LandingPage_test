@@ -39,7 +39,7 @@ export default async function BlogIndexPage({
   const posts = getAllPosts();
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+    <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <Navbar />
 
       <main className="pt-24 pb-24 px-6 max-w-6xl mx-auto">
@@ -47,7 +47,7 @@ export default async function BlogIndexPage({
           <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
             Refinedocs <span className="text-[#d4ff33]">Blog</span>
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-black dark:text-gray-400 text-lg max-w-2xl mx-auto">
             Tips, guides, and masterclasses to help you get the most out of your documents and images.
           </p>
         </div>

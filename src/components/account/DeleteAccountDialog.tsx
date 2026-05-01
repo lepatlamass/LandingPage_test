@@ -86,20 +86,20 @@ export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogP
           className="relative bg-zinc-900 border border-zinc-800 shadow-2xl rounded-2xl w-full max-w-lg overflow-hidden py-6 px-6 sm:px-8 z-10"
         >
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-white mb-2">{t('manageAccount.deleteTitle')}</h2>
+            <h2 className="text-xl font-bold text-black dark:text-white mb-2">{t('manageAccount.deleteTitle')}</h2>
             <p className="text-red-400 text-sm">{t('manageAccount.deleteDescription')}</p>
           </div>
 
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-300">
-                Type <span className="font-bold text-white">&quot;delete my account&quot;</span> to confirm
+                Type <span className="font-bold text-black dark:text-white">&quot;delete my account&quot;</span> to confirm
               </label>
               <input
                 type="text"
                 value={confirmText}
                 onChange={(e) => setConfirmText(e.target.value)}
-                className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
+                className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all"
                 placeholder={t('manageAccount.placeholder.deleteMyAccount')}
                 disabled={deleting}
               />
@@ -116,14 +116,14 @@ export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogP
             <button
               onClick={() => onOpenChange(false)}
               disabled={deleting}
-              className="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-800 rounded-xl transition-colors disabled:opacity-50"
+              className="px-5 py-2.5 text-sm font-medium text-zinc-300 hover:text-black dark:text-white hover:bg-zinc-800 rounded-xl transition-colors disabled:opacity-50"
             >
               {t('manageAccount.deleteCancel')}
             </button>
             <button
               onClick={handleDelete}
               disabled={deleting || confirmText.toLowerCase() !== 'delete my account'}
-              className="px-5 py-2.5 bg-red-500 text-white text-sm font-bold rounded-xl hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center gap-2"
+              className="px-5 py-2.5 bg-red-500 text-black dark:text-white text-sm font-bold rounded-xl hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center gap-2"
             >
               {deleting ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

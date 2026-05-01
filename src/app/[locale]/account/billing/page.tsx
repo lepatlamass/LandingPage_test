@@ -164,7 +164,7 @@ export default function BillingPage() {
   return (
     <div className="p-4 md:p-8 max-w-2xl mx-auto w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
+        <h1 className="text-3xl font-bold text-black dark:text-white mb-2">{t('title')}</h1>
         <p className="text-zinc-400">{t('invoiceInfo')}</p>
       </div>
 
@@ -173,7 +173,7 @@ export default function BillingPage() {
         {/* Section 1: Billing Address */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">{t('billingAddress')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('billingAddress')}</h2>
             <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">{t('close')}</button>
           </div>
           
@@ -187,7 +187,7 @@ export default function BillingPage() {
                     type="text"
                     value={addressData.firstName}
                     onChange={(e) => setAddressData({...addressData, firstName: e.target.value})}
-                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.enterFirstName')}
                   />
                 </div>
@@ -198,7 +198,7 @@ export default function BillingPage() {
                     type="text"
                     value={addressData.lastName}
                     onChange={(e) => setAddressData({...addressData, lastName: e.target.value})}
-                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.enterLastName')}
                   />
                 </div>
@@ -211,7 +211,7 @@ export default function BillingPage() {
                   type="text"
                   value={addressData.companyName}
                   onChange={(e) => setAddressData({...addressData, companyName: e.target.value})}
-                  className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                   placeholder={t('placeholder.acmeCorp')}
                 />
               </div>
@@ -223,7 +223,7 @@ export default function BillingPage() {
                   type="tel"
                   value={addressData.phoneNumber}
                   onChange={(e) => setAddressData({...addressData, phoneNumber: e.target.value})}
-                  className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                   placeholder={t('placeholder.phoneNumber')}
                 />
               </div>
@@ -235,7 +235,7 @@ export default function BillingPage() {
                     id="country"
                     value={addressData.country}
                     onChange={(e) => setAddressData({...addressData, country: e.target.value})}
-                    className="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all appearance-none"
+                    className="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all appearance-none"
                   >
                     {countryList.map((c) => (
                       <option key={c.value} value={c.value}>
@@ -251,7 +251,7 @@ export default function BillingPage() {
                     type="text"
                     value={addressData.postalCode}
                     onChange={(e) => setAddressData({...addressData, postalCode: e.target.value})}
-                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.zipPostalCode')}
                   />
                 </div>
@@ -265,7 +265,7 @@ export default function BillingPage() {
                     type="text"
                     value={addressData.state}
                     onChange={(e) => setAddressData({...addressData, state: e.target.value})}
-                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.selectEnterState')}
                   />
                 </div>
@@ -276,7 +276,7 @@ export default function BillingPage() {
                     type="text"
                     value={addressData.city}
                     onChange={(e) => setAddressData({...addressData, city: e.target.value})}
-                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.enterCity')}
                   />
                 </div>
@@ -289,7 +289,7 @@ export default function BillingPage() {
                   type="text"
                   value={addressData.street}
                   onChange={(e) => setAddressData({...addressData, street: e.target.value})}
-                  className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                   placeholder={t('placeholder.streetAddress')}
                 />
               </div>
@@ -323,7 +323,7 @@ export default function BillingPage() {
         {/* Section 2: Billing Email */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">{t('billingEmail')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('billingEmail')}</h2>
             <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">{t('close')}</button>
           </div>
           
@@ -340,7 +340,7 @@ export default function BillingPage() {
                     type="email"
                     value={billingEmail}
                     onChange={(e) => setBillingEmail(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.billingEmail')}
                   />
                 </div>
@@ -375,7 +375,7 @@ export default function BillingPage() {
         {/* Section 3: VAT Number */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">{t('vatNumber')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('vatNumber')}</h2>
             <button className="text-sm font-medium text-zinc-500 hover:text-zinc-300 transition-colors">{t('close')}</button>
           </div>
           
@@ -392,7 +392,7 @@ export default function BillingPage() {
                     type="text"
                     value={vatNumber}
                     onChange={(e) => setVatNumber(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.vatNumber')}
                   />
                 </div>

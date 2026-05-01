@@ -57,14 +57,14 @@ export default function AccountPage() {
   return (
     <div className="p-4 md:p-8 max-w-4xl mx-auto w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
+        <h1 className="text-3xl font-bold text-black dark:text-white mb-2">{t('title')}</h1>
         <p className="text-zinc-400">Manage your account details and personalization.</p>
       </div>
 
       <div className="space-y-6">
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800">
-            <h2 className="text-lg font-semibold text-white">{t('title')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('title')}</h2>
           </div>
           
           <div className="p-6">
@@ -84,7 +84,7 @@ export default function AccountPage() {
                     type="text"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all"
                     placeholder={t('placeholder.enterFullName')}
                   />
                 </div>

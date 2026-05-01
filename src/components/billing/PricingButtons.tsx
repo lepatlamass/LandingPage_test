@@ -162,7 +162,6 @@ export default function PricingButtons({
   t,
   monthlyPrice,
   yearlyPrice,
-  monthlySale,
   yearlySale,
   monthlyName,
   yearlyName,
@@ -240,36 +239,36 @@ export default function PricingButtons({
   return (
     <div className="lg:w-2/3 flex flex-col sm:flex-row gap-8 w-full items-stretch">
       {/* Monthly Plan */}
-      <div className="flex-1 rounded-[32px] border-[2px] border-[#d4ff33] bg-[#111111] p-8 relative flex flex-col shadow-2xl shadow-[#d4ff33]/5 min-h-[460px]">
+      <div className="flex-1 rounded-[32px] border-[2px] border-[#d4ff33] bg-white dark:bg-[#111111] p-8 relative flex flex-col shadow-2xl shadow-[#d4ff33]/5 min-h-[460px]">
         <div className="absolute -top-[2px] right-8 bg-[#d4ff33] text-black text-[10px] font-black px-6 py-2 rounded-b-xl uppercase tracking-widest">
           Recommended
         </div>
-        <h3 className="text-xl font-bold mb-2 text-white">{monthlyTitle}</h3>
+        <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{monthlyTitle}</h3>
         <div className="flex items-baseline gap-1 mb-4">
           {monthlyDisplay === null ? (
             <span className="h-9 w-24 rounded-lg bg-white/10 animate-pulse inline-block" />
           ) : (
-            <span className="text-3xl font-bold text-white">{monthlyDisplay}</span>
+            <span className="text-3xl font-bold text-black dark:text-white">{monthlyDisplay}</span>
           )}
-          <span className="text-gray-500 text-base">{t.foundryProPeriod}</span>
+          <span className="text-black dark:text-gray-500 text-base">{t.foundryProPeriod}</span>
         </div>
 
-        <div className="text-xs text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.bestForOccasional}</div>
+        <div className="text-xs text-black dark:text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.bestForOccasional}</div>
 
         <ul className="space-y-4 mb-10 flex-1">
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.unlimitedDownloads}</span>
           </li>
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.creditsDesc}</span>
           </li>
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.priorityProcessing}</span>
           </li>
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.noWatermarks}</span>
           </li>
@@ -284,35 +283,35 @@ export default function PricingButtons({
       </div>
 
       {/* Yearly Plan */}
-      <div className="flex-1 rounded-[32px] bg-[#1a1c21] p-8 flex flex-col shadow-xl min-h-[460px]">
-        <h3 className="text-xl font-bold mb-2 text-white">{yearlyTitle}</h3>
+      <div className="flex-1 rounded-[32px] bg-white dark:bg-[#1a1c21] p-8 flex flex-col shadow-xl min-h-[460px]">
+        <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{yearlyTitle}</h3>
         <div className="flex items-baseline gap-2 mb-4">
           {yearlyDisplay === null ? (
             <span className="h-9 w-24 rounded-lg bg-white/10 animate-pulse inline-block" />
           ) : (
-            <span className="text-3xl font-bold text-white">{yearlyDisplay}</span>
+            <span className="text-3xl font-bold text-black dark:text-white">{yearlyDisplay}</span>
           )}
-          <span className="text-gray-500 text-base">{t.yearlyPeriod}</span>
+          <span className="text-black dark:text-gray-500 text-base">{t.yearlyPeriod}</span>
           {yearlySale && (
-            <span className="text-[#d4ff33] text-xs font-bold">(Save {yearlySale})</span>
+            <span className="text-black dark:text-[#d4ff33] text-xs font-bold">(Save {yearlySale})</span>
           )}
         </div>
-        <div className="text-xs text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.bestForPower}</div>
+        <div className="text-xs text-black dark:text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.bestForPower}</div>
 
         <ul className="space-y-4 mb-10 flex-1">
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.everythingInPro}</span>
           </li>
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.yearlyCredits}</span>
           </li>
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.priorityProcessing}</span>
           </li>
-          <li className="flex items-start gap-3 text-[14px] text-gray-300">
+          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
             <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
             <span className="leading-tight">{t.noWatermarks}</span>
           </li>
@@ -320,7 +319,7 @@ export default function PricingButtons({
 
         <button
           onClick={handleYearly}
-          className="w-full py-4 rounded-xl bg-[#2a2d35] text-white font-black text-base hover:bg-[#353943] transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full py-4 rounded-xl bg-gray-100 dark:bg-[#2a2d35] text-black dark:text-white font-black text-base hover:bg-gray-200 dark:hover:bg-[#353943] transition-all hover:scale-[1.02] active:scale-[0.98]"
         >
           {t.getYearly}
         </button>

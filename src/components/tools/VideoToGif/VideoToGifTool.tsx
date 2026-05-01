@@ -16,7 +16,7 @@ import {
   Zap,
   RefreshCw
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { toBlobURL } from '@ffmpeg/util';
 import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
@@ -204,7 +204,7 @@ export default function VideoToGifTool() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 border-2 border-dashed border-white/10 rounded-[40px] p-8 md:p-20 text-center flex flex-col items-center justify-center group hover:border-purple-400/50 transition-all cursor-pointer"
+          className="bg-white/5 border-2 border-dashed border-black/10 dark:border-white/10 rounded-[40px] p-8 md:p-20 text-center flex flex-col items-center justify-center group hover:border-purple-400/50 transition-all cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
@@ -231,24 +231,24 @@ export default function VideoToGifTool() {
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-purple-400 text-white px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-purple-500 transition-colors shadow-lg shadow-purple-400/20 whitespace-nowrap text-sm sm:text-base">
+            <div className="bg-purple-400 text-black dark:text-white px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-purple-500 transition-colors shadow-lg shadow-purple-400/20 whitespace-nowrap text-sm sm:text-base">
               {t('chooseFiles')}
             </div>
           </div>
-          <p className="text-gray-500 text-sm">{t('dropFilesHere')}</p>
+          <p className="text-black dark:text-gray-500 text-sm">{t('dropFilesHere')}</p>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 sticky top-24">
-              <h3 className="text-white font-bold mb-6 flex items-center gap-2">
+            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 sticky top-24">
+              <h3 className="text-black dark:text-white font-bold mb-6 flex items-center gap-2">
                 <Settings size={20} className="text-purple-400" />
                 {t('settings')}
               </h3>
 
               <div className="space-y-6">
                 <div>
-                  <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 block">
+                  <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest mb-4 block">
                     {tt('video-to-gif-fps-label')}
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -258,8 +258,8 @@ export default function VideoToGifTool() {
                         onClick={() => setFps(f)}
                         className={`p-3 rounded-xl border text-xs font-bold transition-all ${
                           fps === f 
-                            ? 'bg-purple-400/10 border-purple-400 text-white' 
-                            : 'bg-white/5 border-white/10 text-gray-400 hover:border-white/20'
+                            ? 'bg-purple-400/10 border-purple-400 text-black dark:text-white' 
+                            : 'bg-white/5 border-black/10 dark:border-white/10 text-black dark:text-gray-400 hover:border-black/20 dark:border-white/20'
                         }`}
                       >
                         {f} FPS
@@ -269,7 +269,7 @@ export default function VideoToGifTool() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 block">
+                  <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest mb-4 block">
                     {tt('video-to-gif-scale-label')}
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -279,8 +279,8 @@ export default function VideoToGifTool() {
                         onClick={() => setScale(s)}
                         className={`p-3 rounded-xl border text-xs font-bold transition-all ${
                           scale === s 
-                            ? 'bg-purple-400/10 border-purple-400 text-white' 
-                            : 'bg-white/5 border-white/10 text-gray-400 hover:border-white/20'
+                            ? 'bg-purple-400/10 border-purple-400 text-black dark:text-white' 
+                            : 'bg-white/5 border-black/10 dark:border-white/10 text-black dark:text-gray-400 hover:border-black/20 dark:border-white/20'
                         }`}
                       >
                         {s}px
@@ -295,8 +295,8 @@ export default function VideoToGifTool() {
                     disabled={video.status === 'processing' || video.status === 'loading-ffmpeg' || video.status === 'completed'}
                     className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all ${
                       video.status === 'completed'
-                        ? 'bg-green-500 text-white cursor-default'
-                        : 'bg-purple-400 text-white hover:bg-purple-500 shadow-lg shadow-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed'
+                        ? 'bg-green-500 text-black dark:text-white cursor-default'
+                        : 'bg-purple-400 text-black dark:text-white hover:bg-purple-500 shadow-lg shadow-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed'
                     }`}
                   >
                     {video.status === 'loading-ffmpeg' ? (
@@ -334,7 +334,7 @@ export default function VideoToGifTool() {
 
                   <button
                     onClick={() => setVideo(null)}
-                    className="w-full py-4 rounded-2xl bg-white/5 text-gray-400 font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all whitespace-nowrap"
+                    className="w-full py-4 rounded-2xl bg-white/5 text-black dark:text-gray-400 font-bold flex items-center justify-center gap-2 hover:bg-black/10 dark:hover:bg-white/10 transition-all whitespace-nowrap"
                   >
                     <X size={20} />
                     {t('chooseFiles')}
@@ -345,20 +345,20 @@ export default function VideoToGifTool() {
           </div>
 
           <div className="lg:col-span-2 space-y-4">
-            <div className="bg-white/5 border border-white/10 rounded-[32px] overflow-hidden">
-              <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
+            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] overflow-hidden">
+              <div className="p-6 border-b border-black/10 dark:border-white/10 flex items-center justify-between bg-white/[0.02]">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-purple-400/10 rounded-lg text-purple-400">
                     <Video size={20} />
                   </div>
                   <div>
-                    <h4 className="text-white font-bold text-sm truncate max-w-[200px]">{video.file.name}</h4>
+                    <h4 className="text-black dark:text-white font-bold text-sm truncate max-w-[200px]">{video.file.name}</h4>
                   </div>
                 </div>
               </div>
 
               <div className="p-8">
-                <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 group">
+                <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 group">
                   {video.status === 'completed' && video.resultUrl ? (
                     <img
                       src={video.resultUrl}
@@ -384,7 +384,7 @@ export default function VideoToGifTool() {
                         <div className="relative mb-6">
                           <Loader2 size={64} className="text-purple-400 animate-spin" />
                         </div>
-                        <h4 className="text-white font-bold mb-2">
+                        <h4 className="text-black dark:text-white font-bold mb-2">
                           {video.status === 'loading-ffmpeg' ? tt('video-to-gif-loading-ffmpeg') : tt('video-to-gif-processing')}
                         </h4>
                         {video.status === 'processing' && (
@@ -404,22 +404,22 @@ export default function VideoToGifTool() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex gap-4">
+              <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-6 flex gap-4">
                 <div className="p-3 bg-blue-400/10 rounded-xl text-blue-400 h-fit">
                   <ShieldCheck size={20} />
                 </div>
                 <div>
-                  <h5 className="text-white font-bold text-sm mb-1">{tt('video-to-gif-f3-title')}</h5>
-                  <p className="text-xs text-gray-500 leading-relaxed">{tt('video-to-gif-f3-desc')}</p>
+                  <h5 className="text-black dark:text-white font-bold text-sm mb-1">{tt('video-to-gif-f3-title')}</h5>
+                  <p className="text-xs text-black dark:text-gray-500 leading-relaxed">{tt('video-to-gif-f3-desc')}</p>
                 </div>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex gap-4">
+              <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-6 flex gap-4">
                 <div className="p-3 bg-yellow-400/10 rounded-xl text-yellow-400 h-fit">
                   <Zap size={20} />
                 </div>
                 <div>
-                  <h5 className="text-white font-bold text-sm mb-1">{tt('video-to-gif-f2-title')}</h5>
-                  <p className="text-xs text-gray-500 leading-relaxed">{tt('video-to-gif-f2-desc')}</p>
+                  <h5 className="text-black dark:text-white font-bold text-sm mb-1">{tt('video-to-gif-f2-title')}</h5>
+                  <p className="text-xs text-black dark:text-gray-500 leading-relaxed">{tt('video-to-gif-f2-desc')}</p>
                 </div>
               </div>
             </div>

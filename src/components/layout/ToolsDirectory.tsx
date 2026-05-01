@@ -84,13 +84,13 @@ export default async function ToolsDirectory() {
   ];
 
   return (
-    <section className="py-20 bg-[#0a0b0e] border-t border-white/5">
+    <section className="py-20 bg-white dark:bg-[#0a0b0e] border-t border-black/10 dark:border-white/5">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-2xl font-bold mb-12 text-white">{tCommon('allTools')}</h2>
+        <h2 className="text-2xl font-bold mb-12 text-black dark:text-white">{tCommon('allTools')}</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-12">
           {toolDirectory.map((category, idx) => (
             <div key={idx} className="flex flex-col">
-              <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest mb-6 border-b border-white/5 pb-2">
+              <h3 className="text-black dark:text-gray-500 font-bold text-xs uppercase tracking-widest mb-6 border-b border-black/10 dark:border-white/5 pb-2">
                 {category.title}
               </h3>
               <ul className="space-y-4">
@@ -98,9 +98,9 @@ export default async function ToolsDirectory() {
                   <li key={toolIdx}>
                     <Link
                       href={`/tools/${tool.id}`}
-                      className="group flex items-center gap-3 text-gray-400 hover:text-[#d4ff33] transition-colors"
+                      className="group flex items-center gap-3 text-black dark:text-gray-400 hover:text-[#d4ff33] transition-colors"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#d4ff33]/10 transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-[#d4ff33]/10 transition-colors">
                         <tool.icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
                       </div>
                       <span className="text-sm font-medium">{tool.name}</span>

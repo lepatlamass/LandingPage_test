@@ -127,8 +127,8 @@ const PdfToImageTool = () => {
             <div className="w-16 h-16 bg-red-400/10 rounded-full flex items-center justify-center text-red-400 mb-6 group-hover:scale-110 transition-transform whitespace-nowrap">
               <Upload size={32} />
             </div>
-            <h3 className="text-lg md:text-xl font-bold text-white mb-2 whitespace-nowrap">{t('chooseFiles')}</h3>
-            <p className="text-gray-500 text-sm mb-6">{t('dropFilesHere')}</p>
+            <h3 className="text-lg md:text-xl font-bold text-black dark:text-white mb-2 whitespace-nowrap">{t('chooseFiles')}</h3>
+            <p className="text-black dark:text-gray-500 text-sm mb-6">{t('dropFilesHere')}</p>
             <div className="bg-[#d4ff33] text-black px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/10 whitespace-nowrap text-xs sm:text-sm">
               Select PDF
             </div>
@@ -138,7 +138,7 @@ const PdfToImageTool = () => {
             key="processing"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-[#1a1c21] border border-gray-800 rounded-[32px] p-12"
+            className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-[32px] p-12"
           >
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-4">
@@ -146,12 +146,12 @@ const PdfToImageTool = () => {
                   <FileText size={24} />
                 </div>
                 <div>
-                  <h3 className="text-white font-bold truncate max-w-[300px]">{file.name}</h3>
-                  <p className="text-gray-500 text-xs">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                  <h3 className="text-black dark:text-white font-bold truncate max-w-[300px]">{file.name}</h3>
+                  <p className="text-black dark:text-gray-500 text-xs">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                 </div>
               </div>
               {!isProcessing && (
-                <button onClick={reset} className="text-gray-500 hover:text-white transition-colors whitespace-nowrap text-xs sm:text-sm">
+                <button onClick={reset} className="text-black dark:text-gray-500 hover:text-black dark:text-white transition-colors whitespace-nowrap text-xs sm:text-sm">
                   <X size={20} />
                 </button>
               )}
@@ -168,17 +168,17 @@ const PdfToImageTool = () => {
                 {isProcessing ? (
                   <div className="space-y-4">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-400">Converting pages...</span>
+                      <span className="text-black dark:text-gray-400">Converting pages...</span>
                       <span className="text-[#d4ff33] font-bold">{progress}%</span>
                     </div>
-                    <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div className="h-2 bg-white dark:bg-gray-800 rounded-full overflow-hidden">
                       <motion.div 
                         className="h-full bg-[#d4ff33] whitespace-nowrap"
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                       />
                     </div>
-                    <div className="flex items-center justify-center gap-2 text-gray-500 text-sm pt-4">
+                    <div className="flex items-center justify-center gap-2 text-black dark:text-gray-500 text-sm pt-4">
                       <Loader2 size={16} className="animate-spin" />
                       <span>Processing PDF pages into images...</span>
                     </div>
@@ -201,8 +201,8 @@ const PdfToImageTool = () => {
                 <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 mx-auto mb-4">
                   <CheckCircle2 size={40} />
                 </div>
-                <h4 className="text-white text-xl font-bold">Conversion Complete!</h4>
-                <p className="text-gray-500">All pages have been converted to images and bundled into a ZIP file.</p>
+                <h4 className="text-black dark:text-white text-xl font-bold">Conversion Complete!</h4>
+                <p className="text-black dark:text-gray-500">All pages have been converted to images and bundled into a ZIP file.</p>
                 
                 <div className="flex gap-4">
                   <button
@@ -212,7 +212,7 @@ const PdfToImageTool = () => {
                     <Download size={20} /> Download ZIP
                   </button>
                   <button onClick={reset}
-                    className="px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-all whitespace-nowrap text-xs sm:text-sm"
+                    className="px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-black dark:text-gray-400 hover:text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all whitespace-nowrap text-xs sm:text-sm"
                   >
                     Convert Another
                   </button>

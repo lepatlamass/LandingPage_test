@@ -14,7 +14,7 @@ import {
   AlertCircle,
   FileArchive
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import JSZip from 'jszip';
 import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 
@@ -80,7 +80,7 @@ export default function CompressImagesTool() {
         canvas.height = img.height;
 
         if (!ctx) {
-          reject(new Error("Could not get canvas context"));
+          reject(new Error(tt('compress-images-error-canvas')));
           return;
         }
 
@@ -94,14 +94,14 @@ export default function CompressImagesTool() {
             if (blob) {
               resolve(blob);
             } else {
-              reject(new Error("Compression failed"));
+              reject(new Error(tt('compress-images-error-generic')));
             }
           },
           mimeType,
           targetQuality / 100
         );
       };
-      img.onerror = () => reject(new Error("Failed to load image"));
+      img.onerror = () => reject(new Error(tt('compress-images-error-load')));
       img.src = imgData.preview;
     });
   };
@@ -218,18 +218,18 @@ export default function CompressImagesTool() {
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-green-400 text-black px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-green-300 transition-colors shadow-lg shadow-green-400/20 whitespace-nowrap text-sm sm:text-base">
+            <div className="bg-green-400 text-black px-4 py-3 sm:px-8 sm:py-4 rounded-2xl font-medium flex items-center gap-2 hover:bg-green-300 transition-colors shadow-lg shadow-green-400/20 whitespace-nowrap text-xs sm:text-sm">
               {t('chooseFiles')}
             </div>
           </div>
-          <p className="text-gray-500 text-sm">{t('dropFilesHere')} {tt('compress-images-max-images')}</p>
+          <p className="text-black dark:text-gray-500 text-sm">{t('dropFilesHere')} {tt('compress-images-max-images')}</p>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Settings Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 sticky top-24">
-              <h3 className="text-white font-bold mb-6 flex items-center gap-2">
+            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 sticky top-24">
+              <h3 className="text-black dark:text-white font-bold mb-6 flex items-center gap-2">
                 <Settings size={20} className="text-green-400" />
                 {t('settings')}
               </h3>
@@ -237,7 +237,7 @@ export default function CompressImagesTool() {
               <div className="space-y-6">
                 <div>
                   <div className="flex justify-between mb-2">
-                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    <label className="text-xs font-bold text-black dark:text-gray-500 uppercase tracking-wider">
                       {tt('compress-images-quality-label')}
                     </label>
                     <span className="text-green-400 font-mono font-bold">{quality}%</span>
@@ -248,18 +248,18 @@ export default function CompressImagesTool() {
                     max="100" 
                     value={quality}
                     onChange={(e) => setQuality(parseInt(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-green-400 whitespace-nowrap"
+                    className="w-full h-2 bg-black/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-green-600 dark:accent-green-400"
                   />
-                  <p className="text-[10px] text-gray-500 mt-2 italic">
+                  <p className="text-[10px] text-black dark:text-gray-500 mt-2 italic">
                     {tt('compress-images-quality-desc')}
                   </p>
                 </div>
 
                 <div className="pt-4 space-y-3">
-                  <button
+                   <button
                     onClick={startProcessing}
                     disabled={isProcessing}
-                    className="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl whitespace-nowrap text-sm sm:text-base"
+                    className="w-full bg-green-400 text-black py-4 px-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:bg-green-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl whitespace-nowrap text-xs sm:text-sm shadow-green-400/20"
                   >
                     {isProcessing ? (
                       <>
@@ -276,7 +276,7 @@ export default function CompressImagesTool() {
                   {images.some(img => img.status === 'completed') && (
                     <button
                       onClick={downloadAll}
-                      className="w-full bg-green-400 text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-green-300 transition-all shadow-xl shadow-green-400/20 whitespace-nowrap text-sm sm:text-base"
+                      className="w-full bg-green-400 text-black py-4 px-4 rounded-2xl font-medium flex items-center justify-center gap-2 hover:bg-green-300 transition-all shadow-xl shadow-green-400/20 whitespace-nowrap text-xs sm:text-sm"
                     >
                       <FileArchive size={20} />
                       {tt('compress-images-download-all')}
@@ -285,7 +285,7 @@ export default function CompressImagesTool() {
                   
                   <button 
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full bg-white/5 text-white py-3 rounded-xl font-bold text-sm hover:bg-white/10 transition-all border border-white/10 whitespace-nowrap"
+                    className="w-full bg-white/5 dark:bg-white/5 text-black dark:text-white py-3 px-4 rounded-xl font-medium text-xs hover:bg-black/10 dark:hover:bg-white/10 transition-all border border-black/10 dark:border-white/10 whitespace-nowrap"
                   >
                     {tt('compress-images-add-more')}
                   </button>
@@ -311,23 +311,23 @@ export default function CompressImagesTool() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white/5 border border-white/10 rounded-3xl p-4 flex items-center gap-6 group hover:bg-white/8 transition-colors"
+                  className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-4 flex items-center gap-6 group hover:bg-white/8 transition-colors"
                 >
-                  <div className="w-24 h-24 rounded-2xl overflow-hidden bg-black/40 shrink-0 border border-white/5">
+                  <div className="w-24 h-24 rounded-2xl overflow-hidden bg-black/40 shrink-0 border border-black/10 dark:border-white/5">
                     <img src={img.preview} alt="Preview" className="w-full h-full object-cover" />
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
-                      <h4 className="text-white font-bold text-sm truncate pr-4">{img.file.name}</h4>
+                      <h4 className="text-black dark:text-white font-bold text-sm truncate pr-4">{img.file.name}</h4>
                       <button 
                         onClick={() => removeImage(img.id)}
-                        className="text-gray-500 hover:text-red-400 transition-colors"
+                        className="text-black dark:text-gray-500 hover:text-red-400 transition-colors"
                       >
                         <X size={18} />
                       </button>
                     </div>
-                    <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-bold text-gray-500">
+                    <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-bold text-black dark:text-gray-500">
                       <span>{formatSize(img.originalSize)}</span>
                       {img.compressedSize && (
                         <>
@@ -358,7 +358,7 @@ export default function CompressImagesTool() {
                           </div>
                           <button 
                             onClick={() => downloadSingle(img)}
-                            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap"
+                            className="flex items-center gap-2 bg-green-400 text-black px-4 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap shadow-sm hover:bg-green-500"
                           >
                             <Download size={14} />
                             {tt('compress-images-download')}
@@ -368,7 +368,7 @@ export default function CompressImagesTool() {
                       {img.status === 'error' && (
                         <div className="flex items-center gap-2 text-red-400 text-xs font-bold">
                           <AlertCircle size={14} />
-                          {img.error || 'Error'}
+                          {img.error || tt('compress-images-error-generic-label')}
                         </div>
                       )}
                     </div>

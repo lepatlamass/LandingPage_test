@@ -82,7 +82,7 @@ export default function UserMenuDropdown() {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className="w-10 h-10 rounded-full bg-[#1a1c21] border border-white/10 flex items-center justify-center transition-all duration-150 ease-out hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#d4ff33]/50 overflow-hidden"
+        className="w-10 h-10 rounded-full bg-white dark:bg-[#1a1c21] border border-black/10 dark:border-white/10 flex items-center justify-center transition-all duration-150 ease-out hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#d4ff33]/50 overflow-hidden"
       >
         {user.photoURL ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -93,17 +93,17 @@ export default function UserMenuDropdown() {
             referrerPolicy="no-referrer"
           />
         ) : (
-          <span className="text-white text-sm font-bold">{initials}</span>
+          <span className="text-black dark:text-white text-sm font-bold">{initials}</span>
         )}
       </button>
 
       {/* DROPDOWN MENU */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 min-w-[280px] z-50 bg-[#111111] border border-white/10 rounded-xl shadow-xl shadow-black/40 py-2 animate-in fade-in slide-in-from-top-2 duration-150">
+        <div className="absolute right-0 mt-2 min-w-[280px] z-50 bg-white dark:bg-[#111111] border border-black/10 dark:border-white/10 rounded-xl shadow-xl shadow-black/40 py-2 animate-in fade-in slide-in-from-top-2 duration-150">
           
           {/* USER INFO SECTION */}
-          <div className="flex items-center gap-3 px-4 py-3 mb-1 border-b border-white/5">
-            <div className="w-12 h-12 rounded-full shrink-0 bg-[#1a1c21] border border-white/10 flex items-center justify-center overflow-hidden">
+          <div className="flex items-center gap-3 px-4 py-3 mb-1 border-b border-black/10 dark:border-white/5">
+            <div className="w-12 h-12 rounded-full shrink-0 bg-white dark:bg-[#1a1c21] border border-black/10 dark:border-white/10 flex items-center justify-center overflow-hidden">
               {user.photoURL ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -113,14 +113,14 @@ export default function UserMenuDropdown() {
                   referrerPolicy="no-referrer"
                 />
               ) : (
-                <span className="text-white text-lg font-bold">{initials}</span>
+                <span className="text-black dark:text-white text-lg font-bold">{initials}</span>
               )}
             </div>
             <div className="flex flex-col flex-1 overflow-hidden">
               <span className="text-gray-100 font-bold text-base truncate">
                 {user.displayName || 'Refinedocs User'}
               </span>
-              <span className="text-gray-400 text-sm truncate">
+              <span className="text-black dark:text-gray-400 text-sm truncate">
                 {user.email}
               </span>
             </div>
@@ -130,34 +130,34 @@ export default function UserMenuDropdown() {
           <div className="flex flex-col py-1">
             <button
               onClick={() => handleNavigation('/account')}
-              className="flex items-center w-full px-4 py-3 hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5 group"
+              className="flex items-center w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5 group"
               role="menuitem"
             >
-              <User className="w-5 h-5 text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
+              <User className="w-5 h-5 text-black dark:text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
               <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">{t('account')}</span>
-              <ChevronRight className="w-4 h-4 text-gray-500 shrink-0 group-hover:text-gray-400 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-black dark:text-gray-500 shrink-0 group-hover:text-black dark:text-gray-400 transition-colors" />
             </button>
 
             <button
               onClick={() => handleNavigation('/#faq')}
-              className="flex items-center w-full px-4 py-3 hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5 group"
+              className="flex items-center w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5 group"
               role="menuitem"
             >
-              <HelpCircle className="w-5 h-5 text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
+              <HelpCircle className="w-5 h-5 text-black dark:text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
               <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">{t('help')}</span>
-              <ChevronRight className="w-4 h-4 text-gray-500 shrink-0 group-hover:text-gray-400 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-black dark:text-gray-500 shrink-0 group-hover:text-black dark:text-gray-400 transition-colors" />
             </button>
             
             <div className="h-px bg-white/5 my-1 mx-4" />
 
             <button
               onClick={handleSignOut}
-              className="flex items-center w-full px-4 py-3 hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5 group"
+              className="flex items-center w-full px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5 group"
               role="menuitem"
             >
-              <LogOut className="w-5 h-5 text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
+              <LogOut className="w-5 h-5 text-black dark:text-gray-400 mr-3 shrink-0 group-hover:text-gray-200 transition-colors" />
               <span className="text-[15px] text-gray-200 flex-1 text-left font-medium">{t('logout')}</span>
-              <ChevronRight className="w-4 h-4 text-gray-500 shrink-0 group-hover:text-gray-400 transition-colors" />
+              <ChevronRight className="w-4 h-4 text-black dark:text-gray-500 shrink-0 group-hover:text-black dark:text-gray-400 transition-colors" />
             </button>
           </div>
         </div>

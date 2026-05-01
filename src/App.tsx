@@ -10,13 +10,11 @@ import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
 import { usePathname, useRouter, Link } from './navigation';
 import { useSearchParams } from 'next/navigation';
-import { Locale } from './i18n/config';
 import { 
   FileText, 
   Image as ImageIcon, 
   Maximize, 
   Minimize, 
-  RefreshCw, 
   FileSpreadsheet, 
   FileCode, 
   FileVideo, 
@@ -32,8 +30,6 @@ import {
   Search,
   Twitter,
   Linkedin,
-  ChevronRight,
-  CheckCircle2,
   Youtube,
   Menu,
   X as XIcon
@@ -62,6 +58,8 @@ import PdfToWordTool from './components/tools/PdfToWordTool';
 import WordToPdfTool from './components/tools/WordToPdfTool';
 import VideoToGifTool from './components/tools/VideoToGif/VideoToGifTool';
 import NavigationLoginButton from './components/auth/NavigationLoginButton';
+import LanguageSwitcher from './components/LanguageSwitcher';
+import { ThemeToggle } from './components/ThemeToggle';
 import MainSidebar from './components/layout/MainSidebar';
 import { sidebarTools } from './lib/sidebarData';
 import { useAuth } from './providers/AuthProvider';
@@ -554,8 +552,6 @@ const toolContent: Record<string, ToolPageContent> = {
 export default function App({ toolSlug }: { toolSlug?: string }) {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
-  const locale = useLocale();
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const { hasActiveLicense, loading: authLoading } = useAuth();
@@ -563,7 +559,6 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
   // Use path-based toolSlug if provided, fall back to query param for backward compat
   const activeTool = toolSlug || searchParams.get('tool') || 'pdf-to-excel';
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const setActiveTool = (toolId: string) => {
@@ -576,28 +571,13 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
     setOpenFaq(null);
   }, [activeTool]);
 
-  const languages: { code: Locale; name: string; flag: string }[] = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'pt-PT', name: 'Português', flag: '🇵🇹' },
-    { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-  ];
-
-  const currentLanguage = languages.find(l => l.code === locale) || languages[0];
-
-  const handleLanguageChange = (newLocale: Locale) => {
-    const params = new URLSearchParams(searchParams.toString());
-    router.replace(`${pathname}?${params.toString()}`, { locale: newLocale });
-    setIsLangMenuOpen(false);
-  };
 
   const currentContent = toolContent[activeTool] || toolContent['pdf-to-excel'];
   const activeToolData = sidebarTools.find(t => t.id === activeTool) || 
                         sidebarTools.flatMap(t => t.children || []).find(c => c.id === activeTool);
 
   return (
-    <div className="flex h-screen bg-[#0f1115] text-gray-300 font-sans overflow-hidden">
+    <div className="flex h-screen bg-white dark:bg-[#0f1115] text-black dark:text-gray-300 font-sans overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
@@ -619,69 +599,24 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-y-auto scroll-smooth w-full lg:w-auto">
         {/* Navbar */}
-        <header className="h-16 border-b border-gray-800 flex items-center justify-between px-4 lg:px-8 shrink-0 bg-[#0f1115] sticky top-0 z-50">
+        <header className="h-16 border-b border-gray-200 dark:border-white/5 flex items-center justify-between px-4 lg:px-8 shrink-0 bg-white dark:bg-[#0f1115] sticky top-0 z-50">
           <div className="flex items-center gap-4 lg:gap-6 flex-1">
             <button 
-              className="lg:hidden p-2 -ml-2 text-gray-400 hover:text-white transition-colors"
+              className="lg:hidden p-2 -ml-2 text-black dark:text-gray-400 hover:text-black dark:text-white transition-colors"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
               {isSidebarOpen ? <XIcon size={24} /> : <Menu size={24} />}
             </button>
-            <Link href="/" className="hidden sm:block text-sm font-medium text-gray-400 hover:text-white transition-colors">
+            <Link href="/" className="hidden sm:block text-sm font-medium text-black dark:text-gray-400 hover:text-black dark:text-white transition-colors">
               Home
             </Link>
-            <Link href="/tools" className="text-sm font-medium text-white transition-colors">
+            <Link href="/tools" className="text-sm font-medium text-black dark:text-white transition-colors">
               Tools
             </Link>
           </div>
-          <div className="flex items-center gap-4">
-            {/* Language Switcher */}
-            <div className="relative">
-              <button 
-                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-400 transition-colors rounded-lg bg-white/5 hover:bg-white/10 hover:text-white"
-              >
-                <span>{currentLanguage.flag}</span>
-                <span className="hidden sm:inline">{currentLanguage.name}</span>
-                <ChevronDown size={14} className={`transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              <AnimatePresence>
-                {isLangMenuOpen && (
-                  <>
-                    <div 
-                      className="fixed inset-0 z-10" 
-                      onClick={() => setIsLangMenuOpen(false)}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-xl border border-gray-800 bg-[#1a1c21] shadow-2xl"
-                    >
-                      <div className="py-1">
-                        {languages.map((lang) => (
-                          <button
-                            key={lang.code}
-                            onClick={() => handleLanguageChange(lang.code)}
-                            className={`flex w-full items-center gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-white/5 ${
-                              locale === lang.code ? 'text-[#d4ff33] bg-white/5' : 'text-gray-400'
-                            }`}
-                          >
-                            <span className="text-lg">{lang.flag}</span>
-                            <span className="flex-1">{lang.name}</span>
-                            {locale === lang.code && (
-                              <CheckCircle2 size={14} className="text-[#d4ff33]" />
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-
+          <div className="flex items-center gap-3 md:gap-4">
+            <ThemeToggle />
+            <LanguageSwitcher />
             <NavigationLoginButton />
             {!authLoading && !hasActiveLicense && (
               <button className="hidden md:block bg-[#d4ff33] text-black px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-bold hover:bg-[#c2eb2e] transition-colors whitespace-nowrap">
@@ -694,15 +629,15 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
         {/* Hero Section */}
         <section className="px-4 md:px-8 py-8 md:py-16 max-w-5xl mx-auto w-full">
           <div className="text-center mb-8 md:mb-12">
-            <nav className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest text-gray-500 mb-4">
-              <a href="#" className="hover:text-gray-300">{t('home')}</a>
+            <nav className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest text-black dark:text-gray-500 mb-4">
+              <a href="#" className="hover:text-black dark:text-gray-300">{t('home')}</a>
               <span>/</span>
-              <span className="text-gray-400">{activeToolData?.nameKey ? tt(activeToolData.nameKey.split('.')[1]) : 'Tool'}</span>
+              <span className="text-black dark:text-gray-400">{activeToolData?.nameKey ? tt(activeToolData.nameKey.split('.')[1]) : 'Tool'}</span>
             </nav>
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6">
-              {tt(currentContent.titleKey.split('.')[1])} <span className="italic text-[#d4ff33]">{tt(currentContent.accentKey.split('.')[1])}</span> Online
+            <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 md:mb-6">
+              {tt(currentContent.titleKey.split('.')[1])} <span className="italic text-black dark:text-[#d4ff33]">{tt(currentContent.accentKey.split('.')[1])}</span> Online
             </h1>
-            <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
+            <p className="text-sm md:text-base text-black dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
               {tt(currentContent.descriptionKey.split('.')[1])}
             </p>
           </div>
@@ -764,7 +699,7 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
                     {t('chooseFiles')} <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
-                <p className="text-gray-500 text-xs md:text-sm text-center">{t('dropFilesHere')}</p>
+                <p className="text-black dark:text-gray-500 text-xs md:text-sm text-center">{t('dropFilesHere')}</p>
               </motion.div>
             )}
           </div>
@@ -778,20 +713,20 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
 
           {/* Features Section */}
           <div className="text-center mb-10 md:mb-16 px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('inSeconds')}</h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-sm md:text-base">
+            <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white mb-4">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('inSeconds')}</h2>
+            <p className="text-black dark:text-gray-500 max-w-xl mx-auto text-sm md:text-base">
               {t('toolDesignedSubtitle')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 md:mb-32 px-4 md:px-0">
             {currentContent.features.map((feature, i) => (
-              <div key={i} className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/8 transition-colors">
-                <div className={`w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center ${feature.color} mb-6`}>
+              <div key={i} className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8 hover:bg-black/5 dark:hover:bg-white/8 transition-colors">
+                <div className={`w-10 h-10 bg-black/5 dark:bg-white/5 rounded-xl flex items-center justify-center ${feature.color} mb-6`}>
                   <feature.icon size={24} />
                 </div>
-                <h3 className="text-white font-bold mb-3">{tt(feature.titleKey.split('.')[1])}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
+                <h3 className="text-black dark:text-white font-bold mb-3">{tt(feature.titleKey.split('.')[1])}</h3>
+                <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
                   {tt(feature.descriptionKey.split('.')[1])}
                 </p>
               </div>
@@ -802,7 +737,7 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center mb-16 md:mb-32 px-4 md:px-0">
             <div className="relative group order-2 lg:order-1">
               <div className="absolute -inset-4 bg-lime-400/20 rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:block"></div>
-              <div className="relative rounded-[24px] md:rounded-[32px] overflow-hidden border border-white/10 aspect-[4/3] bg-white/5 flex items-center justify-center mx-4 md:mx-0">
+              <div className="relative rounded-[24px] md:rounded-[32px] overflow-hidden border border-black/10 dark:border-white/10 aspect-[4/3] bg-black/5 dark:bg-white/5 flex items-center justify-center mx-4 md:mx-0">
                 <Image
                   src="/amico.svg"
                   alt={t('alt.processGuide')}
@@ -813,14 +748,14 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
               </div>
             </div>
             <div className="order-1 lg:order-2 px-4 md:px-0">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 md:mb-8">{t('howTo')} {tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('forFree')}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white mb-6 md:mb-8">{t('howTo')} {tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('forFree')}</h2>
               <div className="space-y-4 md:space-y-6">
                 {currentContent.stepsKeys.map((stepKey, i) => (
                   <div key={i} className="flex items-start gap-4">
                     <div className="w-6 h-6 rounded-full bg-[#d4ff33] text-black flex items-center justify-center text-xs font-bold shrink-0 mt-1">
                       {i + 1}
                     </div>
-                    <p className="text-gray-400 leading-relaxed">{tt(stepKey.split('.')[1])}</p>
+                    <p className="text-black dark:text-gray-400 leading-relaxed">{tt(stepKey.split('.')[1])}</p>
                   </div>
                 ))}
               </div>
@@ -829,15 +764,15 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
 
           {/* FAQs Section */}
           <div className="max-w-3xl mx-auto mb-16 md:mb-32 px-4 md:px-0">
-            <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-8 md:mb-12">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('faqs')}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white text-center mb-8 md:mb-12">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('faqs')}</h2>
             <div className="space-y-3 md:space-y-4">
               {currentContent.faqsKeys.map((faq, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+                <div key={i} className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl overflow-hidden">
                   <button 
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
+                    className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                   >
-                    <span className="font-bold text-white">{tt(faq.questionKey.split('.')[1])}</span>
+                    <span className="font-bold text-black dark:text-white">{tt(faq.questionKey.split('.')[1])}</span>
                     <ChevronDown className={`text-lime-400 transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -846,7 +781,7 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="px-8 pb-6 text-gray-500 text-sm leading-relaxed"
+                        className="px-8 pb-6 text-black dark:text-gray-500 text-sm leading-relaxed"
                       >
                         {tt(faq.answerKey.split('.')[1])}
                       </motion.div>
@@ -866,7 +801,7 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
               {t('documentWorkEasy')}
             </p>
             {!authLoading && !hasActiveLicense && (
-              <button className="bg-black text-white px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg hover:bg-gray-900 transition-all hover:scale-105 shadow-xl whitespace-nowrap">
+              <button className="bg-black text-black dark:text-white px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg hover:bg-white dark:bg-gray-900 transition-all hover:scale-105 shadow-xl whitespace-nowrap">
                 {t('try7DaysFree')}
               </button>
             )}
@@ -874,7 +809,7 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
         </section>
 
         {/* Footer */}
-        <footer className="bg-black py-12 md:py-20 px-6 md:px-16">
+        <footer className="bg-white dark:bg-black py-12 md:py-20 px-6 md:px-16 border-t border-black/10 dark:border-transparent">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16 md:mb-20">
               <div className="col-span-1 sm:col-span-2 lg:col-span-1">
@@ -882,51 +817,51 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
                   <div className="w-6 h-6 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-sm">
                     R
                   </div>
-                  <span className="text-white font-bold text-lg">Refinedocs</span>
+                  <span className="text-black dark:text-white font-bold text-lg">Refinedocs</span>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
+                <p className="text-black dark:text-gray-600 text-sm leading-relaxed max-w-sm">
                   {t('weMakePdfEasy')}
                 </p>
               </div>
               
               <div>
-                <h4 className="text-white font-bold mb-6">{t('solutions')}</h4>
-                <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('sales')}</Link></li>
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('finance')}</Link></li>
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('realEstate')}</Link></li>
-                  <li><Link href="/#solutions" className="hover:text-white transition-colors">{t('education')}</Link></li>
+                <h4 className="text-black dark:text-white font-bold mb-6">{t('solutions')}</h4>
+                <ul className="space-y-4 text-black dark:text-gray-500 text-sm">
+                  <li><Link href="/#solutions" className="hover:text-black dark:text-white transition-colors">{t('sales')}</Link></li>
+                  <li><Link href="/#solutions" className="hover:text-black dark:text-white transition-colors">{t('finance')}</Link></li>
+                  <li><Link href="/#solutions" className="hover:text-black dark:text-white transition-colors">{t('realEstate')}</Link></li>
+                  <li><Link href="/#solutions" className="hover:text-black dark:text-white transition-colors">{t('education')}</Link></li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="text-white font-bold mb-6">{t('company')}</h4>
-                <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/#about" className="hover:text-white transition-colors">{t('about')}</Link></li>
-                  <li><Link href="/help" className="hover:text-white transition-colors">{t('help')}</Link></li>
-                  <li><Link href="/blog" className="hover:text-white transition-colors">{t('blog')}</Link></li>
+                <h4 className="text-black dark:text-white font-bold mb-6">{t('company')}</h4>
+                <ul className="space-y-4 text-black dark:text-gray-500 text-sm">
+                  <li><Link href="/#about" className="hover:text-black dark:text-white transition-colors">{t('about')}</Link></li>
+                  <li><Link href="/help" className="hover:text-black dark:text-white transition-colors">{t('help')}</Link></li>
+                  <li><Link href="/blog" className="hover:text-black dark:text-white transition-colors">{t('blog')}</Link></li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="text-white font-bold mb-6">{t('product')}</h4>
-                <ul className="space-y-4 text-gray-500 text-sm">
-                  <li><Link href="/#price" className="hover:text-white transition-colors">{t('pricing')}</Link></li>
+                <h4 className="text-black dark:text-white font-bold mb-6">{t('product')}</h4>
+                <ul className="space-y-4 text-black dark:text-gray-500 text-sm">
+                  <li><Link href="/#price" className="hover:text-black dark:text-white transition-colors">{t('pricing')}</Link></li>
                 </ul>
               </div>
             </div>
 
-            <div className="pt-8 md:pt-10 border-t border-gray-900 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
+            <div className="pt-8 md:pt-10 border-t border-black/10 dark:border-gray-900 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
               <div className="flex items-center gap-6">
-                <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Linkedin size={20} /></a>
-                <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Twitter size={20} /></a>
-                <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-white transition-colors"><Youtube size={20} /></a>
+                <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Linkedin size={20} /></a>
+                <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Twitter size={20} /></a>
+                <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Youtube size={20} /></a>
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-[10px] md:text-[11px] text-gray-600 uppercase tracking-widest font-bold">
+              <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-[10px] md:text-[11px] text-black dark:text-gray-600 uppercase tracking-widest font-bold">
                 <span>{t('copyright')}</span>
-                <Link href="/privacy" className="hover:text-white transition-colors">{t('privacyNotice')}</Link>
-                <Link href="/terms" className="hover:text-white transition-colors">{t('termsConditions')}</Link>
-                <a href="mailto:konwoubuntu@gmail.com" className="hover:text-white transition-colors">{t('contactUs')}</a>
+                <Link href="/privacy" className="hover:text-black dark:text-white transition-colors">{t('privacyNotice')}</Link>
+                <Link href="/terms" className="hover:text-black dark:text-white transition-colors">{t('termsConditions')}</Link>
+                <a href="mailto:konwoubuntu@gmail.com" className="hover:text-black dark:text-white transition-colors">{t('contactUs')}</a>
               </div>
             </div>
           </div>

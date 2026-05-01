@@ -141,7 +141,7 @@ function AIToolCreditCard({
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <h4 className="text-sm font-semibold text-white truncate mb-1">
+          <h4 className="text-sm font-semibold text-black dark:text-white truncate mb-1">
             {meta.label}
           </h4>
           <div className="flex items-baseline gap-1.5">
@@ -227,7 +227,7 @@ export default function AICreditsGrid({
             <Sparkles className="text-[#d4ff33] h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-white">{t('aiCredits')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('aiCredits')}</h2>
             <p className="text-xs text-zinc-500">
               {planType === 'yearly'
                 ? t('creditsPerToolYearly')
@@ -273,7 +273,7 @@ export default function AICreditsGrid({
       <div className="px-5 pb-5">
         <button
           onClick={() => window.open(CREDITS_CHECKOUT, '_blank')}
-          className="w-full py-3 rounded-xl bg-zinc-800 text-white font-bold text-sm hover:bg-zinc-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]"
+          className="w-full py-3 rounded-xl bg-zinc-800 text-black dark:text-white font-bold text-sm hover:bg-zinc-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]"
         >
           <ShoppingCart className="w-4 h-4 text-[#d4ff33]" />
           {t('buyMoreCredits')}

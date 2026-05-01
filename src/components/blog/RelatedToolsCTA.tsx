@@ -86,14 +86,14 @@ export default function RelatedToolsCTA({ category, tags }: RelatedToolsCTAProps
   if (relatedTools.length === 0) return null;
 
   return (
-    <section className="my-16 bg-gradient-to-br from-[#1a1c21] to-[#1e2028] rounded-2xl p-8 border border-[#d4ff33]/20 shadow-[0_0_40px_rgba(212,255,51,0.05)]">
+    <section className="my-16 bg-gradient-to-br from-white dark:from-[#1a1c21] to-zinc-50 dark:to-[#1e2028] rounded-2xl p-8 border border-[#d4ff33]/20 shadow-[0_0_40px_rgba(212,255,51,0.05)]">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 bg-[#d4ff33]/10 rounded-xl flex items-center justify-center">
           <Zap className="w-5 h-5 text-[#d4ff33]" />
         </div>
         <div>
-          <h3 className="text-white font-bold text-lg">Try These Tools</h3>
-          <p className="text-gray-400 text-sm">Put what you learned into practice — instantly, for free.</p>
+          <h3 className="text-black dark:text-white font-bold text-lg">Try These Tools</h3>
+          <p className="text-black dark:text-gray-400 text-sm">Put what you learned into practice — instantly, for free.</p>
         </div>
       </div>
 
@@ -102,12 +102,12 @@ export default function RelatedToolsCTA({ category, tags }: RelatedToolsCTAProps
           <Link
             key={tool.slug}
             href={`/tools/${tool.slug}`}
-            className="group flex items-center justify-between px-5 py-4 bg-white/5 rounded-xl border border-white/5 hover:border-[#d4ff33]/30 hover:bg-[#d4ff33]/5 transition-all duration-200"
+            className="group flex items-center justify-between px-5 py-4 bg-white/5 rounded-xl border border-black/10 dark:border-white/5 hover:border-[#d4ff33]/30 hover:bg-[#d4ff33]/5 transition-all duration-200"
           >
             <span className="text-sm font-semibold text-gray-200 group-hover:text-[#d4ff33] transition-colors">
               {tool.label}
             </span>
-            <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-[#d4ff33] group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-4 h-4 text-black dark:text-gray-500 group-hover:text-[#d4ff33] group-hover:translate-x-1 transition-all" />
           </Link>
         ))}
       </div>

@@ -213,13 +213,13 @@ export default function BackgroundRemover() {
         <div className="lg:col-span-7 space-y-8">
           {/* Step 1 */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
               {t('bg-remover-upload-step')}
             </h3>
             <div 
               onClick={() => fileInputRef.current?.click()}
               className={cn(
-                "relative border border-gray-800 bg-[#1a1c21] rounded-2xl p-12 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
+                "relative border border-zinc-300 dark:border-gray-800 bg-white dark:bg-[#1a1c21] rounded-2xl p-12 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
                 images.length >= 5 ? "opacity-50 pointer-events-none" : "hover:border-[#d4ff33]/50 hover:bg-[#d4ff33]/5"
               )}
             >
@@ -231,23 +231,23 @@ export default function BackgroundRemover() {
                 accept="image/png,image/jpeg,image/webp"
                 className="hidden" 
               />
-              <Upload className="w-10 h-10 text-gray-500 mb-4 group-hover:text-[#d4ff33] transition-colors" />
-              <p className="text-sm font-bold text-white mb-1">
-                {t('bg-remover-click-to-upload')} <span className="font-normal text-gray-400">{t('bg-remover-or-drag-drop')}</span>
+              <Upload className="w-10 h-10 text-black dark:text-gray-500 mb-4 group-hover:text-[#d4ff33] transition-colors" />
+              <p className="text-sm font-bold text-black dark:text-white mb-1">
+                {t('bg-remover-click-to-upload')} <span className="font-normal text-black dark:text-gray-400">{t('bg-remover-or-drag-drop')}</span>
               </p>
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest">
+              <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest">
                 {t('bg-remover-formats')}
               </p>
             </div>
           </div>
 
           {/* Mode Selection Tabs */}
-          <div className="bg-[#1a1c21] p-1 rounded-xl flex items-center gap-1 border border-gray-800">
+          <div className="bg-white dark:bg-[#1a1c21] p-1 rounded-xl flex items-center gap-1 border border-zinc-300 dark:border-gray-800">
             <button 
               onClick={() => setMode('prompt')}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                mode === 'prompt' ? "bg-black text-white shadow-lg" : "text-gray-500 hover:text-gray-300"
+                mode === 'prompt' ? "bg-black text-black dark:text-white shadow-lg" : "text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
               )}
             >
               <Sparkles size={14} />
@@ -257,7 +257,7 @@ export default function BackgroundRemover() {
               onClick={() => setMode('preset')}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                mode === 'preset' ? "bg-black text-white shadow-lg" : "text-gray-500 hover:text-gray-300"
+                mode === 'preset' ? "bg-black text-black dark:text-white shadow-lg" : "text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
               )}
             >
               <LayoutGrid size={14} />
@@ -267,7 +267,7 @@ export default function BackgroundRemover() {
               onClick={() => setMode('custom')}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                mode === 'custom' ? "bg-black text-white shadow-lg" : "text-gray-500 hover:text-gray-300"
+                mode === 'custom' ? "bg-black text-black dark:text-white shadow-lg" : "text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
               )}
             >
               <ImageIcon size={14} />
@@ -277,11 +277,11 @@ export default function BackgroundRemover() {
 
           {/* Step 2 */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
               {mode === 'prompt' ? t('bg-remover-step2-prompt') : mode === 'preset' ? t('bg-remover-step2-preset') : t('bg-remover-step2-custom')}
             </h3>
             
-            <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 space-y-6">
+            <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 space-y-6">
               {mode === 'prompt' && (
                 <div className="relative group">
                   <div className="absolute left-4 top-4 text-[#d4ff33]">
@@ -291,7 +291,7 @@ export default function BackgroundRemover() {
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder={t('bg-remover-prompt-placeholder')}
-                    className="w-full h-32 bg-black border-2 border-[#d4ff33]/30 rounded-xl pl-12 pr-4 py-4 text-sm text-white focus:outline-none focus:border-[#d4ff33] transition-all resize-none placeholder:text-gray-600"
+                    className="w-full h-32 bg-black border-2 border-[#d4ff33]/30 rounded-xl pl-12 pr-4 py-4 text-sm text-black dark:text-white focus:outline-none focus:border-[#d4ff33] transition-all resize-none placeholder:text-gray-600"
                   />
                 </div>
               )}
@@ -309,7 +309,7 @@ export default function BackgroundRemover() {
                     >
                       <img src={p.url} alt={p.name} className="absolute inset-0 w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/40 flex items-end p-2">
-                        <span className="text-[10px] font-bold text-white">{p.name}</span>
+                        <span className="text-[10px] font-bold text-black dark:text-white">{p.name}</span>
                       </div>
                       {selectedPreset === p.id && (
                         <div className="absolute top-2 right-2 bg-[#d4ff33] rounded-full p-0.5 whitespace-nowrap">
@@ -325,7 +325,7 @@ export default function BackgroundRemover() {
                 <div 
                   onClick={() => bgInputRef.current?.click()}
                   className={cn(
-                    "relative aspect-video border-2 border-dashed border-gray-800 rounded-xl overflow-hidden cursor-pointer group flex flex-col items-center justify-center bg-black transition-all hover:border-[#d4ff33]/30",
+                    "relative aspect-video border-2 border-dashed border-zinc-300 dark:border-gray-800 rounded-xl overflow-hidden cursor-pointer group flex flex-col items-center justify-center bg-black transition-all hover:border-[#d4ff33]/30",
                     customBg ? "" : "hover:bg-[#d4ff33]/5"
                   )}
                 >
@@ -341,12 +341,12 @@ export default function BackgroundRemover() {
                   ) : (
                     <div className="flex flex-col items-center gap-2">
                       <Upload size={24} className="text-gray-600 group-hover:text-[#d4ff33]" />
-                      <span className="text-xs font-bold text-gray-500">{t('bg-remover-select-bg')}</span>
+                      <span className="text-xs font-bold text-black dark:text-gray-500">{t('bg-remover-select-bg')}</span>
                     </div>
                   )}
                   {customBg && (
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                      <RefreshCw size={24} className="text-white" />
+                      <RefreshCw size={24} className="text-black dark:text-white" />
                     </div>
                   )}
                 </div>
@@ -358,7 +358,7 @@ export default function BackgroundRemover() {
                 className={cn(
                   "w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-sm",
                   isProcessing || images.length === 0 || (mode === 'prompt' && !prompt) || (mode === 'custom' && !customBg) || (mode === 'preset' && !selectedPreset)
-                    ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                    ? "bg-white dark:bg-gray-800 text-black dark:text-gray-500 cursor-not-allowed"
                     : "bg-[#84a12d] text-black hover:bg-[#d4ff33] shadow-lg"
                 )}
               >
@@ -380,8 +380,8 @@ export default function BackgroundRemover() {
 
         {/* Right Column: Preview */}
         <div className="lg:col-span-5 space-y-4">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider opacity-50">{t('bg-remover-preview')}</h3>
-          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col">
+          <h3 className="text-sm font-bold text-black dark:text-white uppercase tracking-wider opacity-50">{t('bg-remover-preview')}</h3>
+          <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col">
             <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center text-center p-8 min-h-[250px] md:min-h-[400px]">
               <AnimatePresence mode="wait">
                 {images.length === 0 ? (
@@ -392,10 +392,10 @@ export default function BackgroundRemover() {
                     exit={{ opacity: 0 }}
                     className="flex flex-col items-center gap-4"
                   >
-                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-black dark:text-gray-400">
                       <ImageIcon size={32} />
                     </div>
-                    <p className="text-sm font-medium text-gray-400">{t('bg-remover-empty-preview')}</p>
+                    <p className="text-sm font-medium text-black dark:text-gray-400">{t('bg-remover-empty-preview')}</p>
                   </motion.div>
                 ) : (
                   <motion.div 
@@ -409,7 +409,7 @@ export default function BackgroundRemover() {
                         <div className="flex gap-2">
                           <div className="relative flex-1 aspect-square rounded-lg overflow-hidden border border-gray-200">
                             <img src={img.original} alt={commonT('alt.original')} className="absolute inset-0 w-full h-full object-cover" />
-                            <div className="absolute top-1 left-1 bg-black/60 px-1.5 py-0.5 rounded text-[8px] font-bold text-white uppercase">{t('bg-remover-original')}</div>
+                            <div className="absolute top-1 left-1 bg-black/60 px-1.5 py-0.5 rounded text-[8px] font-bold text-black dark:text-white uppercase">{t('bg-remover-original')}</div>
                           </div>
                           <div className="relative flex-1 aspect-square rounded-lg overflow-hidden border border-gray-200 bg-gray-200 flex items-center justify-center">
                             {img.status === 'completed' && img.processed ? (
@@ -420,14 +420,14 @@ export default function BackgroundRemover() {
                             ) : img.status === 'processing' ? (
                               <Loader2 className="w-5 h-5 text-[#d4ff33] animate-spin" />
                             ) : (
-                              <Sparkles className="w-5 h-5 text-gray-400" />
+                              <Sparkles className="w-5 h-5 text-black dark:text-gray-400" />
                             )}
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className={cn(
                             "text-[10px] font-bold uppercase tracking-wider",
-                            img.status === 'error' ? "text-red-400" : "text-gray-400"
+                            img.status === 'error' ? "text-red-400" : "text-black dark:text-gray-400"
                           )}>
                             {img.status === 'error' ? img.error : t(`bg-remover-status-${img.status}`)}
                           </span>

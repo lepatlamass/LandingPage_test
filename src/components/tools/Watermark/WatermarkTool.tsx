@@ -331,13 +331,13 @@ export default function WatermarkTool() {
         <div className="lg:col-span-7 space-y-8">
           {/* Step 1: Upload Subject */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
               {t('watermark-upload-subject')}
             </h3>
             <div 
               onClick={() => fileInputRef.current?.click()}
               className={cn(
-                "relative border border-gray-800 bg-[#1a1c21] rounded-2xl p-12 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
+                "relative border border-zinc-300 dark:border-gray-800 bg-white dark:bg-[#1a1c21] rounded-2xl p-12 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
                 "hover:border-[#3b82f6]/50 hover:bg-[#3b82f6]/5"
               )}
             >
@@ -349,11 +349,11 @@ export default function WatermarkTool() {
                 accept="image/*,application/pdf"
                 className="hidden" 
               />
-              <Upload className="w-10 h-10 text-gray-500 mb-4 group-hover:text-[#3b82f6] transition-colors" />
-              <p className="text-sm font-bold text-white mb-1">
-                {t('watermark-click-to-upload')} <span className="font-normal text-gray-400">{t('watermark-or-drag-drop')}</span>
+              <Upload className="w-10 h-10 text-black dark:text-gray-500 mb-4 group-hover:text-[#3b82f6] transition-colors" />
+              <p className="text-sm font-bold text-black dark:text-white mb-1">
+                {t('watermark-click-to-upload')} <span className="font-normal text-black dark:text-gray-400">{t('watermark-or-drag-drop')}</span>
               </p>
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest">
+              <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest">
                 Images ou PDF
               </p>
             </div>
@@ -361,10 +361,10 @@ export default function WatermarkTool() {
 
           {/* Step 2: Configure Watermark */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
               {t('watermark-upload-watermark')}
             </h3>
-            <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 space-y-6">
+            <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 space-y-6">
               <div className="flex gap-4">
                 {(['image', 'text'] as const).map((type) => (
                   <button
@@ -373,8 +373,8 @@ export default function WatermarkTool() {
                     className={cn(
                       "flex-1 py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2",
                       watermarkType === type 
-                        ? "bg-[#3b82f6] text-white shadow-lg shadow-blue-500/20" 
-                        : "bg-black text-gray-500 hover:text-gray-300"
+                        ? "bg-[#3b82f6] text-black dark:text-white shadow-lg shadow-blue-500/20" 
+                        : "bg-black text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
                     )}
                   >
                     {type === 'image' ? <ImageIcon size={16} /> : <FileText size={16} />}
@@ -387,7 +387,7 @@ export default function WatermarkTool() {
                 <div 
                   onClick={() => watermarkInputRef.current?.click()}
                   className={cn(
-                    "relative border border-dashed border-gray-800 bg-black/40 rounded-xl p-8 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
+                    "relative border border-dashed border-zinc-300 dark:border-gray-800 bg-black/40 rounded-xl p-8 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
                     watermark ? "border-[#3b82f6]/30" : "hover:border-[#3b82f6]/50 hover:bg-[#3b82f6]/5"
                   )}
                 >
@@ -399,25 +399,25 @@ export default function WatermarkTool() {
                     className="hidden" 
                   />
                   {watermark ? (
-                    <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-gray-800">
+                    <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-zinc-300 dark:border-gray-800">
                       <img src={watermark} alt={t('alt.watermark')} className="w-full h-full object-contain" />
                       <button 
                         onClick={(e) => { e.stopPropagation(); setWatermark(null); }}
-                        className="absolute top-1 right-1 bg-black/60 p-1 rounded-full text-white hover:bg-red-500 transition-colors"
+                        className="absolute top-1 right-1 bg-black/60 p-1 rounded-full text-black dark:text-white hover:bg-red-500 transition-colors"
                       >
                         <X size={12} />
                       </button>
                     </div>
                   ) : (
                     <>
-                      <ImageIcon className="w-8 h-8 text-gray-500 mb-2 group-hover:text-[#3b82f6] transition-colors" />
-                      <p className="text-xs font-bold text-white">{t('watermark-select-watermark')}</p>
+                      <ImageIcon className="w-8 h-8 text-black dark:text-gray-500 mb-2 group-hover:text-[#3b82f6] transition-colors" />
+                      <p className="text-xs font-bold text-black dark:text-white">{t('watermark-select-watermark')}</p>
                     </>
                   )}
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                  <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest">
                     {t('watermark-text-label')}
                   </label>
                   <input 
@@ -425,7 +425,7 @@ export default function WatermarkTool() {
                     value={watermarkText}
                     onChange={(e) => setWatermarkText(e.target.value)}
                     placeholder={t('watermark-text-placeholder')}
-                    className="w-full bg-black border border-gray-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#3b82f6] transition-all"
+                    className="w-full bg-black border border-zinc-300 dark:border-gray-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white focus:outline-none focus:border-[#3b82f6] transition-all"
                   />
                 </div>
               )}
@@ -434,13 +434,13 @@ export default function WatermarkTool() {
 
           {/* Step 3: Customization */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
               {t('watermark-customization')}
             </h3>
-            <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Position */}
               <div className="space-y-4">
-                <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
                   <Layout size={14} /> {t('watermark-position')}
                 </label>
                 <div className="grid grid-cols-1 gap-2">
@@ -450,7 +450,7 @@ export default function WatermarkTool() {
                       onClick={() => setSettings(s => ({ ...s, position: pos }))}
                       className={cn(
                         "py-2 px-4 rounded-lg text-xs font-bold transition-all capitalize",
-                        settings.position === pos ? "bg-[#3b82f6] text-white" : "bg-black text-gray-500 hover:text-gray-300"
+                        settings.position === pos ? "bg-[#3b82f6] text-black dark:text-white" : "bg-black text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
                       )}
                     >
                       {pos}
@@ -461,7 +461,7 @@ export default function WatermarkTool() {
 
               {/* Size */}
               <div className="space-y-4">
-                <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
                   <Maximize2 size={14} /> {t('watermark-size')}
                 </label>
                 <div className="grid grid-cols-1 gap-2">
@@ -471,7 +471,7 @@ export default function WatermarkTool() {
                       onClick={() => setSettings(s => ({ ...s, size: sz }))}
                       className={cn(
                         "py-2 px-4 rounded-lg text-xs font-bold transition-all capitalize",
-                        settings.size === sz ? "bg-[#3b82f6] text-white" : "bg-black text-gray-500 hover:text-gray-300"
+                        settings.size === sz ? "bg-[#3b82f6] text-black dark:text-white" : "bg-black text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
                       )}
                     >
                       {sz}
@@ -482,7 +482,7 @@ export default function WatermarkTool() {
 
               {/* Opacity */}
               <div className="space-y-4">
-                <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
                   <Settings2 size={14} /> {t('watermark-opacity')} ({settings.opacity}%)
                 </label>
                 <input 
@@ -502,7 +502,7 @@ export default function WatermarkTool() {
               {/* Color (Only for Text) */}
               {watermarkType === 'text' && (
                 <div className="space-y-4">
-                  <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                  <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
                     <Droplets size={14} /> {t('watermark-color')}
                   </label>
                   <div className="flex items-center gap-4">
@@ -510,9 +510,9 @@ export default function WatermarkTool() {
                       type="color" 
                       value={settings.color}
                       onChange={(e) => setSettings(s => ({ ...s, color: e.target.value }))}
-                      className="w-12 h-12 bg-black border border-gray-800 rounded-lg cursor-pointer p-1"
+                      className="w-12 h-12 bg-black border border-zinc-300 dark:border-gray-800 rounded-lg cursor-pointer p-1"
                     />
-                    <span className="text-xs font-mono text-gray-400 uppercase">{settings.color}</span>
+                    <span className="text-xs font-mono text-black dark:text-gray-400 uppercase">{settings.color}</span>
                   </div>
                 </div>
               )}
@@ -525,8 +525,8 @@ export default function WatermarkTool() {
             className={cn(
               "w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-sm",
               isProcessing || files.length === 0 || (watermarkType === 'image' && !watermark) || (watermarkType === 'text' && !watermarkText)
-                ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-                : "bg-[#3b82f6] text-white hover:bg-[#2563eb] shadow-lg shadow-blue-500/20"
+                ? "bg-white dark:bg-gray-800 text-black dark:text-gray-500 cursor-not-allowed"
+                : "bg-[#3b82f6] text-black dark:text-white hover:bg-[#2563eb] shadow-lg shadow-blue-500/20"
             )}
           >
             {isProcessing ? (
@@ -545,8 +545,8 @@ export default function WatermarkTool() {
 
         {/* Right Column: Preview */}
         <div className="lg:col-span-5 space-y-4">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider opacity-50">{t('watermark-preview')}</h3>
-          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col">
+          <h3 className="text-sm font-bold text-black dark:text-white uppercase tracking-wider opacity-50">{t('watermark-preview')}</h3>
+          <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col">
             <div className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center text-center p-8 overflow-hidden min-h-[250px] md:min-h-[400px]">
               <AnimatePresence mode="wait">
                 {files.length === 0 ? (
@@ -557,10 +557,10 @@ export default function WatermarkTool() {
                     exit={{ opacity: 0 }}
                     className="flex flex-col items-center gap-4"
                   >
-                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-black dark:text-gray-400">
                       <ImageIcon size={32} />
                     </div>
-                    <p className="text-sm font-medium text-gray-400">{t('watermark-empty-preview')}</p>
+                    <p className="text-sm font-medium text-black dark:text-gray-400">{t('watermark-empty-preview')}</p>
                   </motion.div>
                 ) : (
                   <motion.div 
@@ -576,16 +576,16 @@ export default function WatermarkTool() {
                             {f.type === 'image' ? (
                               <img src={f.preview} alt="Preview" className="w-full h-full object-cover" />
                             ) : (
-                              <FileText className="text-gray-400" size={24} />
+                              <FileText className="text-black dark:text-gray-400" size={24} />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-bold text-gray-900 truncate">{f.file.name}</p>
-                            <p className="text-[10px] text-gray-500 uppercase">{f.type}</p>
+                            <p className="text-[10px] text-black dark:text-gray-500 uppercase">{f.type}</p>
                           </div>
                           <button 
                             onClick={() => setFiles(prev => prev.filter(item => item.id !== f.id))}
-                            className="text-gray-400 hover:text-red-500 transition-colors"
+                            className="text-black dark:text-gray-400 hover:text-red-500 transition-colors"
                           >
                             <X size={16} />
                           </button>

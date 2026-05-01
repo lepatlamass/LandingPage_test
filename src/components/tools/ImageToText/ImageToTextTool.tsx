@@ -160,13 +160,13 @@ export default function ImageToTextTool() {
               {t('chooseFiles')}
             </div>
           </div>
-          <p className="text-gray-500 text-sm">{t('dropFilesHere')}</p>
+          <p className="text-black dark:text-gray-500 text-sm">{t('dropFilesHere')}</p>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Image Preview & Controls */}
           <div className="space-y-6">
-            <div className="relative aspect-square rounded-[32px] overflow-hidden bg-black/40 border border-white/10 group">
+            <div className="relative aspect-square rounded-[32px] overflow-hidden bg-black/40 border border-black/10 dark:border-white/10 group">
               <img
                 src={images[0].preview}
                 alt={commonT('alt.original')}
@@ -174,14 +174,14 @@ export default function ImageToTextTool() {
               />
               <button 
                 onClick={() => removeImage(images[0].id)}
-                className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-red-500 text-white rounded-full transition-colors"
+                className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-red-500 text-black dark:text-white rounded-full transition-colors"
               >
                 <X size={20} />
               </button>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-              <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-6">
+              <h3 className="text-black dark:text-white font-bold mb-4 flex items-center gap-2">
                 <Search size={18} className="text-[#d4ff33]" />
                 Processing Mode
               </h3>
@@ -191,7 +191,7 @@ export default function ImageToTextTool() {
                   className={`flex items-center justify-center gap-2 p-4 rounded-2xl font-bold transition-all ${
                     mode === 'extract' 
                       ? 'bg-[#d4ff33] text-black shadow-lg shadow-[#d4ff33]/20' 
-                      : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                      : 'bg-white/5 text-black dark:text-gray-400 hover:bg-black/10 dark:hover:bg-white/10'
                   }`}
                 >
                   <Type size={18} />
@@ -202,7 +202,7 @@ export default function ImageToTextTool() {
                   className={`flex items-center justify-center gap-2 p-4 rounded-2xl font-bold transition-all ${
                     mode === 'caption' 
                       ? 'bg-[#d4ff33] text-black shadow-lg shadow-[#d4ff33]/20' 
-                      : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                      : 'bg-white/5 text-black dark:text-gray-400 hover:bg-black/10 dark:hover:bg-white/10'
                   }`}
                 >
                   <FileText size={18} />
@@ -230,9 +230,9 @@ export default function ImageToTextTool() {
 
           {/* Result Area */}
           <div className="space-y-6">
-            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 h-full flex flex-col min-h-[300px] md:min-h-[500px]">
+            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 h-full flex flex-col min-h-[300px] md:min-h-[500px]">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-white font-bold flex items-center gap-2">
+                <h3 className="text-black dark:text-white font-bold flex items-center gap-2">
                   <FileText size={20} className="text-[#d4ff33]" />
                   Result
                 </h3>
@@ -240,14 +240,14 @@ export default function ImageToTextTool() {
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={copyToClipboard}
-                      className="p-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all whitespace-nowrap"
+                      className="p-2 bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-400 hover:text-black dark:text-white rounded-lg transition-all whitespace-nowrap"
                       title="Copy to clipboard"
                     >
                       {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
                     </button>
                     <button 
                       onClick={downloadText}
-                      className="p-2 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-lg transition-all whitespace-nowrap"
+                      className="p-2 bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-400 hover:text-black dark:text-white rounded-lg transition-all whitespace-nowrap"
                       title="Download as .txt"
                     >
                       <Download size={18} />
@@ -264,7 +264,7 @@ export default function ImageToTextTool() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="absolute inset-0 flex flex-col items-center justify-center text-gray-500 text-center p-8"
+                      className="absolute inset-0 flex flex-col items-center justify-center text-black dark:text-gray-500 text-center p-8"
                     >
                       <FileText size={48} className="mb-4 opacity-20" />
                       <p>Click &quot;Process Image&quot; to extract text or generate a caption.</p>
@@ -280,8 +280,8 @@ export default function ImageToTextTool() {
                       className="absolute inset-0 flex flex-col items-center justify-center text-center p-8"
                     >
                       <Loader2 className="animate-spin text-[#d4ff33] mb-4" size={48} />
-                      <p className="text-white font-bold">Analyzing Image...</p>
-                      <p className="text-gray-500 text-sm mt-2">Gemini AI is reading the content</p>
+                      <p className="text-black dark:text-white font-bold">Analyzing Image...</p>
+                      <p className="text-black dark:text-gray-500 text-sm mt-2">Gemini AI is reading the content</p>
                     </motion.div>
                   )}
 
@@ -294,7 +294,7 @@ export default function ImageToTextTool() {
                       className="absolute inset-0 flex flex-col items-center justify-center text-center p-8"
                     >
                       <AlertCircle className="text-red-500 mb-4" size={48} />
-                      <p className="text-white font-bold">Processing Failed</p>
+                      <p className="text-black dark:text-white font-bold">Processing Failed</p>
                       <p className="text-red-400/80 text-sm mt-2">{images[0].error}</p>
                       <button onClick={handleExtractText}
                         className="mt-6 text-[#d4ff33] hover:text-[#c8f020] text-xs sm:text-sm font-bold underline underline-offset-4 whitespace-nowrap"
@@ -315,7 +315,7 @@ export default function ImageToTextTool() {
                       <textarea 
                         readOnly
                         value={images[0].result}
-                        className="w-full h-full bg-black/20 border border-white/5 rounded-2xl p-6 text-gray-300 font-mono text-sm leading-relaxed focus:outline-none resize-none scrollbar-hide"
+                        className="w-full h-full bg-black/20 border border-black/10 dark:border-white/5 rounded-2xl p-6 text-black dark:text-gray-300 font-mono text-sm leading-relaxed focus:outline-none resize-none scrollbar-hide"
                       />
                     </motion.div>
                   )}

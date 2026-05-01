@@ -35,7 +35,7 @@ function LanguageSwitcherContent() {
     <div className="relative">
       <button 
         onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-        className="flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-md border border-white/10"
+        className="flex items-center gap-2 text-sm font-medium text-black dark:text-gray-300 hover:text-black dark:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-md border border-black/10 dark:border-white/10"
       >
         <span>{currentLanguage.flag}</span>
         <span className="hidden sm:inline">{currentLanguage.name}</span>
@@ -53,15 +53,15 @@ function LanguageSwitcherContent() {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-xl border border-gray-800 bg-[#1a1c21] shadow-2xl"
+              className="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-xl border border-zinc-300 dark:border-gray-800 bg-white dark:bg-[#1a1c21] shadow-2xl"
             >
               <div className="py-1">
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
-                    className={`flex w-full items-center gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-white/5 ${
-                      locale === lang.code ? 'bg-white/10 text-white font-medium' : 'text-gray-400'
+                    className={`flex w-full items-center gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${
+                      locale === lang.code ? 'bg-white/10 text-black dark:text-white font-medium' : 'text-black dark:text-gray-400'
                     }`}
                   >
                     <span className="text-lg">{lang.flag}</span>
@@ -79,7 +79,7 @@ function LanguageSwitcherContent() {
 
 export default function LanguageSwitcher() {
   return (
-    <Suspense fallback={<div className="w-20 h-8 animate-pulse bg-white/5 rounded-md border border-white/10"></div>}>
+    <Suspense fallback={<div className="w-20 h-8 animate-pulse bg-white/5 rounded-md border border-black/10 dark:border-white/10"></div>}>
       <LanguageSwitcherContent />
     </Suspense>
   );

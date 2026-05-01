@@ -341,7 +341,7 @@ export default function PdfToWordTool() {
         className={`relative border-2 border-dashed rounded-[32px] p-6 md:p-12 text-center transition-all duration-300 ease-out overflow-hidden ${
           isDragging 
             ? 'border-[#d4ff33] bg-[#d4ff33]/10 scale-[1.02] shadow-2xl shadow-[#d4ff33]/20' 
-            : 'border-gray-700 bg-[#1a1c21] hover:border-gray-600 hover:bg-[#22252b]'
+            : 'border-gray-700 bg-white dark:bg-[#1a1c21] hover:border-gray-600 hover:bg-black/5 dark:hover:bg-[#22252b]'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -358,15 +358,15 @@ export default function PdfToWordTool() {
         
         <div className="relative z-10 flex flex-col items-center">
           <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-300 ${
-            isDragging ? 'bg-[#d4ff33] text-black scale-110' : 'bg-gray-800 text-gray-400'
+            isDragging ? 'bg-[#d4ff33] text-black scale-110' : 'bg-white dark:bg-gray-800 text-black dark:text-gray-400'
           }`}>
             <Upload size={32} className={isDragging ? 'animate-bounce' : ''} />
           </div>
           
-          <h3 className="text-2xl font-bold text-white mb-4">
+          <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
             {tCommon('dropFilesHere')}
           </h3>
-          <p className="text-gray-400 mb-8 max-w-md mx-auto">
+          <p className="text-black dark:text-gray-400 mb-8 max-w-md mx-auto">
             {t('pdf-to-word-desc')}
           </p>
           
@@ -378,7 +378,7 @@ export default function PdfToWordTool() {
             {tCommon('chooseFiles')}
           </button>
           
-          <p className="text-gray-500 text-sm mt-6 font-medium">
+          <p className="text-black dark:text-gray-500 text-sm mt-6 font-medium">
             Supports PDF files
           </p>
         </div>
@@ -392,7 +392,7 @@ export default function PdfToWordTool() {
           className="mt-8 space-y-4"
         >
           <div className="flex items-center justify-between mb-6 px-2">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            <h3 className="text-xl font-bold text-black dark:text-white flex items-center gap-2">
               <FileText className="text-[#d4ff33]" />
               Files ({files.length})
             </h3>
@@ -400,7 +400,7 @@ export default function PdfToWordTool() {
               {files.some(f => f.status === 'idle' || f.status === 'error') && (
                 <button
                   onClick={processAll}
-                  className="bg-white/10 text-white px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-xl font-medium hover:bg-white/20 transition-colors flex items-center gap-2 whitespace-nowrap"
+                  className="bg-white/10 text-black dark:text-white px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-xl font-medium hover:bg-white/20 transition-colors flex items-center gap-2 whitespace-nowrap"
                 >
                   <RefreshCw size={18} />
                   Process All
@@ -424,18 +424,18 @@ export default function PdfToWordTool() {
                 key={fileObj.id}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-4 flex items-center gap-4 group hover:border-gray-700 transition-colors"
+                className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-4 flex items-center gap-4 group hover:border-gray-700 transition-colors"
               >
-                <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shrink-0">
                   <FileText className="text-blue-400" size={24} />
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-white font-medium truncate mb-1">
+                  <h4 className="text-black dark:text-white font-medium truncate mb-1">
                     {fileObj.file.name}
                   </h4>
                   <div className="flex items-center gap-3 text-sm">
-                    <span className="text-gray-500">
+                    <span className="text-black dark:text-gray-500">
                       {(fileObj.file.size / 1024 / 1024).toFixed(2)} MB
                     </span>
                     {fileObj.status === 'processing' && (
@@ -463,7 +463,7 @@ export default function PdfToWordTool() {
                   {fileObj.status === 'idle' && (
                     <button
                       onClick={() => processFile(fileObj)}
-                      className="p-2 text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
+                      className="p-2 text-black dark:text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
                       title="Convert to Word"
                     >
                       <RefreshCw size={20} />
@@ -472,7 +472,7 @@ export default function PdfToWordTool() {
                   {fileObj.status === 'completed' && (
                     <button
                       onClick={() => downloadFile(fileObj)}
-                      className="p-2 text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
+                      className="p-2 text-black dark:text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
                       title="Download Word"
                     >
                       <Download size={20} />
@@ -480,7 +480,7 @@ export default function PdfToWordTool() {
                   )}
                   <button
                     onClick={() => removeFile(fileObj.id)}
-                    className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors whitespace-nowrap"
+                    className="p-2 text-black dark:text-gray-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors whitespace-nowrap"
                     title="Remove file"
                   >
                     <X size={20} />

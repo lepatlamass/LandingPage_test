@@ -106,7 +106,7 @@ export default function SettingsPage() {
   return (
     <div className="p-4 md:p-8 max-w-2xl mx-auto w-full relative">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">{t('title')}</h1>
+        <h1 className="text-3xl font-bold text-black dark:text-white mb-2">{t('title')}</h1>
       </div>
 
       <div className="space-y-6">
@@ -114,7 +114,7 @@ export default function SettingsPage() {
         {/* Section 1: Preferences */}
         <section className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800">
-            <h2 className="text-lg font-semibold text-white">{t('preferences.title')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('preferences.title')}</h2>
           </div>
           
           <div className="p-6 space-y-8">
@@ -122,7 +122,7 @@ export default function SettingsPage() {
             {/* Language */}
             <div>
               <div className="mb-4">
-                <h3 className="text-sm font-medium text-white">{t('preferences.language.label')}</h3>
+                <h3 className="text-sm font-medium text-black dark:text-white">{t('preferences.language.label')}</h3>
                 <p className="text-sm text-zinc-400 mt-1">{t('preferences.language.disclaimer')}</p>
               </div>
               
@@ -131,7 +131,7 @@ export default function SettingsPage() {
                   id="language"
                   value={language}
                   onChange={handleLanguageChange}
-                  className="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all appearance-none"
+                  className="w-full px-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#d4ff33] focus:border-transparent transition-all appearance-none"
                 >
                   {languages.map((lang) => (
                     <option key={lang.code} value={lang.code}>
@@ -148,7 +148,7 @@ export default function SettingsPage() {
             <div>
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-sm font-medium text-white">{t('preferences.emailNotifications.label')}</h3>
+                  <h3 className="text-sm font-medium text-black dark:text-white">{t('preferences.emailNotifications.label')}</h3>
                   <p className="text-sm text-zinc-400 mt-1 max-w-sm">
                     {t('preferences.emailNotifications.description')}
                   </p>
@@ -180,20 +180,20 @@ export default function SettingsPage() {
         {/* Section 2: Manage Account */}
         <section className="bg-zinc-900 border border-zinc-800 border-l-4 border-l-red-500 rounded-2xl overflow-hidden">
           <div className="px-6 py-5 border-b border-zinc-800">
-            <h2 className="text-lg font-semibold text-white">{t('manageAccount.label')}</h2>
+            <h2 className="text-lg font-semibold text-black dark:text-white">{t('manageAccount.label')}</h2>
           </div>
           
           <div className="p-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-sm font-medium text-white">{t('manageAccount.deleteAccount')}</h3>
+                <h3 className="text-sm font-medium text-black dark:text-white">{t('manageAccount.deleteAccount')}</h3>
                 <p className="text-sm text-zinc-400 mt-1 max-w-sm">
                   {t('manageAccount.deleteDescription')}
                 </p>
               </div>
               <button
                 onClick={() => setDeleteModalOpen(true)}
-                className="px-5 py-2.5 bg-red-500/10 text-red-500 border border-red-500/20 text-sm font-bold rounded-xl hover:bg-red-500 hover:text-white transition-colors whitespace-nowrap"
+                className="px-5 py-2.5 bg-red-500/10 text-red-500 border border-red-500/20 text-sm font-bold rounded-xl hover:bg-red-500 hover:text-black dark:text-white transition-colors whitespace-nowrap"
               >
                 {t('manageAccount.deleteConfirm')}
               </button>

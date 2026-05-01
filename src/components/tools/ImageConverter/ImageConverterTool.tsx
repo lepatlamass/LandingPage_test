@@ -18,7 +18,7 @@ import {
   RefreshCw,
   FileArchive
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import JSZip from 'jszip';
 import { useToolState } from '@/hooks/useToolState';
 import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
@@ -266,27 +266,27 @@ export default function ImageConverterTool() {
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-      <div className="bg-[#1a1c21] border border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-6 md:p-8 border-b border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
+      <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
+        <div className="p-6 md:p-8 border-b border-zinc-300 dark:border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 shrink-0">
               <RefreshCw size={24} />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Image Converter</h3>
-              <p className="text-gray-500 text-sm">Convert your images to PNG, JPEG, WebP, AVIF or Favicon ICO</p>
+              <h3 className="text-xl font-bold text-black dark:text-white">Image Converter</h3>
+              <p className="text-black dark:text-gray-500 text-sm">Convert your images to PNG, JPEG, WebP, AVIF or Favicon ICO</p>
             </div>
           </div>
           <div className="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-0">
-            <div className="flex overflow-x-auto scrollbar-hide bg-black/40 p-1 rounded-xl border border-gray-800 flex-1 md:flex-none">
+            <div className="flex overflow-x-auto scrollbar-hide bg-black/40 p-1 rounded-xl border border-zinc-300 dark:border-gray-800 flex-1 md:flex-none">
               {(['png', 'jpeg', 'webp', 'avif', 'ico'] as TargetFormat[]).map((f) => (
                 <button
                   key={f}
                   onClick={() => setTargetFormat(f)}
                   className={`flex-none px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                     targetFormat === f 
-                      ? 'bg-blue-500 text-white shadow-lg' 
-                      : 'text-gray-500 hover:text-gray-300'
+                      ? 'bg-blue-500 text-black dark:text-white shadow-lg' 
+                      : 'text-black dark:text-gray-500 hover:text-black dark:text-gray-300'
                   }`}
                 >
                   {f === 'ico' ? 'ICO' : f.toUpperCase()}
@@ -296,7 +296,7 @@ export default function ImageConverterTool() {
             {images.length > 0 && (
               <button 
                 onClick={clearAll}
-                className="shrink-0 p-2.5 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all"
+                className="shrink-0 p-2.5 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-black dark:text-white transition-all"
                 title="Clear all"
               >
                 <X size={18} />
@@ -319,9 +319,9 @@ export default function ImageConverterTool() {
               <div className="w-16 h-16 bg-blue-400/10 rounded-full flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
                 <Upload size={32} />
               </div>
-              <h4 className="text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{t('chooseFiles')}</h4>
-              <p className="text-gray-500 text-sm mb-8">{t('dropFilesHere')}</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-gray-500 font-medium">
+              <h4 className="text-black dark:text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{t('chooseFiles')}</h4>
+              <p className="text-black dark:text-gray-500 text-sm mb-8">{t('dropFilesHere')}</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-black dark:text-gray-500 font-medium">
                 <div className="flex items-center gap-2">
                   <ShieldCheck size={14} className="text-blue-400" />
                   Secure Processing
@@ -341,14 +341,14 @@ export default function ImageConverterTool() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     key={img.id}
-                    className="bg-black/40 border border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
+                    className="bg-black/40 border border-zinc-300 dark:border-gray-800 rounded-2xl p-4 flex items-center gap-4 group"
                   >
-                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-800">
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-white dark:bg-gray-900 shrink-0 border border-zinc-300 dark:border-gray-800">
                       <img src={img.preview} alt="preview" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{img.fileName}</p>
-                      <p className="text-[10px] text-gray-500 uppercase tracking-wider mt-1">
+                      <p className="text-sm font-medium text-black dark:text-white truncate">{img.fileName}</p>
+                      <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-wider mt-1">
                         {(img.fileSize / 1024).toFixed(1)} KB • {img.fileType.split('/')[1]}
                       </p>
                     </div>
@@ -356,7 +356,7 @@ export default function ImageConverterTool() {
                       {img.status === 'completed' ? (
                         <button 
                           onClick={() => downloadSingle(img)}
-                          className="p-2 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-white transition-all"
+                          className="p-2 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-black dark:text-white transition-all"
                         >
                           <Download size={16} />
                         </button>
@@ -367,7 +367,7 @@ export default function ImageConverterTool() {
                       ) : (
                         <button 
                           onClick={() => removeImage(img.id)}
-                          className="p-2 text-gray-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                          className="p-2 text-black dark:text-gray-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <X size={16} />
                         </button>
@@ -378,7 +378,7 @@ export default function ImageConverterTool() {
                 {images.length < 10 && (
                   <button 
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-gray-800 rounded-2xl p-4 flex items-center justify-center gap-3 text-gray-500 hover:border-blue-400/30 hover:text-blue-400 transition-all group"
+                    className="border-2 border-dashed border-zinc-300 dark:border-gray-800 rounded-2xl p-4 flex items-center justify-center gap-3 text-black dark:text-gray-500 hover:border-blue-400/30 hover:text-blue-400 transition-all group"
                   >
                     <Upload size={20} className="group-hover:scale-110 transition-transform" />
                     <span className="text-sm font-medium">Add More</span>
@@ -386,14 +386,14 @@ export default function ImageConverterTool() {
                 )}
               </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-gray-800">
-                <div className="text-xs text-gray-500 text-center sm:text-left">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-zinc-300 dark:border-gray-800">
+                <div className="text-xs text-black dark:text-gray-500 text-center sm:text-left">
                   {images.filter(i => i.status === 'completed').length} of {images.length} converted
                 </div>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                   {images.some(i => i.status === 'completed') && (
                     <button onClick={downloadAll}
-                      className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-6 sm:py-3 bg-gray-800 text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition-all whitespace-nowrap"
+                      className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-6 sm:py-3 bg-white dark:bg-gray-800 text-black dark:text-white rounded-xl text-sm font-bold hover:bg-gray-700 transition-all whitespace-nowrap"
                     >
                       {images.filter(i => i.status === 'completed').length > 1 ? (
                         <><FileArchive size={18} /> Download All (ZIP)</>
@@ -405,7 +405,7 @@ export default function ImageConverterTool() {
                   <button 
                     onClick={processAll}
                     disabled={isProcessing || images.every(i => i.status === 'completed')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-8 sm:py-3 bg-blue-500 text-white rounded-xl text-sm font-bold hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-500/20 whitespace-nowrap"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:px-8 sm:py-3 bg-blue-500 text-black dark:text-white rounded-xl text-sm font-bold hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-500/20 whitespace-nowrap"
                   >
                     {isProcessing ? (
                       <><Loader2 size={18} className="animate-spin" /> Converting...</>
@@ -431,30 +431,30 @@ export default function ImageConverterTool() {
 
       {/* SEO Content Section */}
       <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 mb-6">
             <ShieldCheck size={24} />
           </div>
-          <h4 className="text-white font-bold mb-4">Privacy First</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <h4 className="text-black dark:text-white font-bold mb-4">Privacy First</h4>
+          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
             Your images are processed entirely in your browser using the Canvas API. No data is ever uploaded to our servers, ensuring 100% privacy.
           </p>
         </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-yellow-400 mb-6">
             <Zap size={24} />
           </div>
-          <h4 className="text-white font-bold mb-4">Lightning Fast</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <h4 className="text-black dark:text-white font-bold mb-4">Lightning Fast</h4>
+          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
             Experience near-instant conversion speeds. Since processing happens locally, there&apos;s no network latency or upload wait times.
           </p>
         </div>
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-green-400/10 rounded-2xl flex items-center justify-center text-green-400 mb-6">
             <ImageIcon size={24} />
           </div>
-          <h4 className="text-white font-bold mb-4">Multiple Formats</h4>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <h4 className="text-black dark:text-white font-bold mb-4">Multiple Formats</h4>
+          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
             Convert between PNG, JPEG, WebP, AVIF, and Favicon ICO formats seamlessly. Perfect for optimizing images for web performance.
           </p>
         </div>

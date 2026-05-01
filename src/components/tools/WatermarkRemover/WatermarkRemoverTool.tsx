@@ -226,13 +226,13 @@ export default function WatermarkRemoverTool() {
         <div className="lg:col-span-7 space-y-8">
           {/* Step 1: Upload */}
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+            <h3 className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
               {t('watermark-remover-step1')}
             </h3>
             <div 
               onClick={() => images.length === 0 && fileInputRef.current?.click()}
               className={cn(
-                "relative border border-gray-800 bg-[#1a1c21] rounded-2xl p-12 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
+                "relative border border-zinc-300 dark:border-gray-800 bg-white dark:bg-[#1a1c21] rounded-2xl p-12 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
                 images.length > 0 ? "cursor-default" : "hover:border-[#d4ff33]/50 hover:bg-[#d4ff33]/5"
               )}
             >
@@ -245,11 +245,11 @@ export default function WatermarkRemoverTool() {
               />
               {images.length === 0 ? (
                 <>
-                  <Upload className="w-10 h-10 text-gray-500 mb-4 group-hover:text-[#d4ff33] transition-colors" />
-                  <p className="text-sm font-bold text-white mb-1">
-                    {t('bg-remover-click-to-upload')} <span className="font-normal text-gray-400">{t('bg-remover-or-drag-drop')}</span>
+                  <Upload className="w-10 h-10 text-black dark:text-gray-500 mb-4 group-hover:text-[#d4ff33] transition-colors" />
+                  <p className="text-sm font-bold text-black dark:text-white mb-1">
+                    {t('bg-remover-click-to-upload')} <span className="font-normal text-black dark:text-gray-400">{t('bg-remover-or-drag-drop')}</span>
                   </p>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-widest">
+                  <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest">
                     PNG, JPG or WEBP
                   </p>
                 </>
@@ -259,7 +259,7 @@ export default function WatermarkRemoverTool() {
                     <img src={images[0].original} alt={commonT('alt.original')} className="w-full h-full object-cover" />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-bold text-white">Image Uploaded</p>
+                    <p className="text-sm font-bold text-black dark:text-white">Image Uploaded</p>
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
@@ -284,13 +284,13 @@ export default function WatermarkRemoverTool() {
                 exit={{ opacity: 0, y: 20 }}
                 className="space-y-4"
               >
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <h3 className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
                   {t('watermark-remover-step2')}
                 </h3>
-                <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 space-y-6">
+                <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 space-y-6">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Brush Size</label>
+                      <label className="text-xs font-bold text-black dark:text-gray-400 uppercase tracking-wider">Brush Size</label>
                       <span className="text-xs font-bold text-[#d4ff33]">{brushSize}px</span>
                     </div>
                     <input 
@@ -306,7 +306,7 @@ export default function WatermarkRemoverTool() {
                   <div className="flex gap-3">
                     <button 
                       onClick={clearMask}
-                      className="flex-1 py-3 rounded-xl border border-gray-800 text-xs font-bold text-gray-400 hover:text-white hover:border-gray-600 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 py-3 rounded-xl border border-zinc-300 dark:border-gray-800 text-xs font-bold text-black dark:text-gray-400 hover:text-black dark:text-white hover:border-gray-600 transition-all flex items-center justify-center gap-2"
                     >
                       <Undo size={14} />
                       Reset Brush
@@ -317,7 +317,7 @@ export default function WatermarkRemoverTool() {
                       className={cn(
                         "flex-[2] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-xs",
                         isProcessing || !hasDrawn
-                          ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                          ? "bg-white dark:bg-gray-800 text-black dark:text-gray-500 cursor-not-allowed"
                           : "bg-[#84a12d] text-black hover:bg-[#d4ff33] shadow-lg"
                       )}
                     >
@@ -342,8 +342,8 @@ export default function WatermarkRemoverTool() {
 
         {/* Right Column: Canvas/Preview */}
         <div className="lg:col-span-5 space-y-4">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider opacity-50">{t('bg-remover-preview')}</h3>
-          <div className="bg-[#1a1c21] border border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col overflow-hidden">
+          <h3 className="text-sm font-bold text-black dark:text-white uppercase tracking-wider opacity-50">{t('bg-remover-preview')}</h3>
+          <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 min-h-[300px] md:min-h-[500px] flex flex-col overflow-hidden">
             <div ref={containerRef} className="flex-1 bg-white rounded-xl flex flex-col items-center justify-center relative overflow-hidden min-h-[250px] md:min-h-[400px]">
               <AnimatePresence mode="wait">
                 {images.length === 0 ? (
@@ -354,10 +354,10 @@ export default function WatermarkRemoverTool() {
                     exit={{ opacity: 0 }}
                     className="flex flex-col items-center gap-4"
                   >
-                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                    <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-black dark:text-gray-400">
                       <ImageIcon size={32} />
                     </div>
-                    <p className="text-sm font-medium text-gray-400">{t('bg-remover-empty-preview')}</p>
+                    <p className="text-sm font-medium text-black dark:text-gray-400">{t('bg-remover-empty-preview')}</p>
                   </motion.div>
                 ) : images[0].status === 'completed' && images[0].processed ? (
                   <motion.div 
@@ -374,7 +374,7 @@ export default function WatermarkRemoverTool() {
                     </div>
                     <button 
                       onClick={() => downloadImage(images[0].processed!, `cleaned-${images[0].id}.png`)}
-                      className="mt-6 bg-black text-white px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-gray-900 transition-all shadow-xl whitespace-nowrap text-sm sm:text-base"
+                      className="mt-6 bg-black text-black dark:text-white px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-white dark:bg-gray-900 transition-all shadow-xl whitespace-nowrap text-sm sm:text-base"
                     >
                       <Download size={18} />
                       {t('watermark-download')}
@@ -398,21 +398,21 @@ export default function WatermarkRemoverTool() {
                     <canvas ref={maskCanvasRef} className="hidden" />
                     
                     {isProcessing && (
-                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center text-white rounded-lg">
+                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center text-black dark:text-white rounded-lg">
                         <Loader2 className="w-12 h-12 text-[#d4ff33] animate-spin mb-4" />
                         <p className="text-lg font-bold">AI is removing watermark...</p>
-                        <p className="text-sm text-gray-400">This may take a few seconds</p>
+                        <p className="text-sm text-black dark:text-gray-400">This may take a few seconds</p>
                       </div>
                     )}
                     
                     {!isProcessing && images[0].status === 'error' && (
-                      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center text-white rounded-lg p-6 text-center">
+                      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center text-black dark:text-white rounded-lg p-6 text-center">
                         <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
                         <p className="text-lg font-bold text-red-500">Error</p>
-                        <p className="text-sm text-gray-300 mt-2">{images[0].error}</p>
+                        <p className="text-sm text-black dark:text-gray-300 mt-2">{images[0].error}</p>
                         <button 
                           onClick={clearMask}
-                          className="mt-6 bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-lg text-xs font-bold transition-all whitespace-nowrap"
+                          className="mt-6 bg-white/10 hover:bg-white/20 text-black dark:text-white px-6 py-2 rounded-lg text-xs font-bold transition-all whitespace-nowrap"
                         >
                           Try Again
                         </button>
@@ -423,7 +423,7 @@ export default function WatermarkRemoverTool() {
                       <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
                         <div className="bg-black/80 px-6 py-3 rounded-full border border-[#d4ff33]/30 flex items-center gap-3">
                           <Eraser size={20} className="text-[#d4ff33]" />
-                          <span className="text-sm font-bold text-white">Paint over the watermark</span>
+                          <span className="text-sm font-bold text-black dark:text-white">Paint over the watermark</span>
                         </div>
                       </div>
                     )}
