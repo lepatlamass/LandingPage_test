@@ -1,4 +1,4 @@
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getAllPosts } from '../../../lib/blog';
 import Navbar from '../../../components/layout/Navbar';
 import Footer from '../../../components/layout/Footer';
@@ -9,15 +9,16 @@ import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Blog' });
   return {
-    title: 'Blog | Refinedocs',
-    description: 'Tips, Guides, and Tools for Mastering Your Documents',
+    title: t('metaTitle'),
+    description: t('metaDescription'),
     alternates: {
       canonical: `https://refinedocs.com/${locale}/blog`,
     },
     openGraph: {
-      title: 'Blog | Refinedocs',
-      description: 'Tips, Guides, and Tools for Mastering Your Documents',
+      title: t('metaTitle'),
+      description: t('metaDescription'),
       url: `https://refinedocs.com/${locale}/blog`,
       type: 'website',
     },

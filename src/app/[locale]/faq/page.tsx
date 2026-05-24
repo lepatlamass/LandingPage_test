@@ -1,28 +1,30 @@
 import { getTranslations } from 'next-intl/server';
-import { Link } from '../../../navigation';
 import Navbar from '../../../components/layout/Navbar';
 import Footer from '../../../components/layout/Footer';
 import FaqAccordion from './FaqAccordion';
+import ToolLimitsComparison from '../../../components/billing/ToolLimitsComparison';
+import ToolsDirectory from '../../../components/layout/ToolsDirectory';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Help' });
   return {
-    title: 'Help & FAQ | Refinedocs',
-    description: 'Frequently asked questions and support for Refinedocs.',
+    title: t('metaTitle'),
+    description: t('metaDescription'),
     alternates: {
-      canonical: `https://refinedocs.com/${locale}/help`,
+      canonical: `https://refinedocs.com/${locale}/faq`,
     },
     openGraph: {
-      title: 'Help & FAQ | Refinedocs',
-      description: 'Frequently asked questions and support for Refinedocs.',
-      url: `https://refinedocs.com/${locale}/help`,
+      title: t('metaTitle'),
+      description: t('metaDescription'),
+      url: `https://refinedocs.com/${locale}/faq`,
       type: 'website',
     },
   };
 }
 
-export default async function HelpPage() {
+export default async function FaqPage() {
   const t = await getTranslations('Help');
 
   return (
@@ -51,6 +53,9 @@ export default async function HelpPage() {
           </a>
         </div>
       </main>
+
+      <ToolLimitsComparison />
+      <ToolsDirectory />
 
       <Footer />
     </div>

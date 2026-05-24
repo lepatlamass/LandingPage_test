@@ -7,6 +7,7 @@ import { auth, googleProvider } from '@/lib/firebase';
 import { useRouter } from '@/navigation';
 import type { DownloadGateModalState } from '@/hooks/useDownloadGate';
 import { signInWithGoogle } from '@/lib/auth-utils';
+import { useTranslations } from 'next-intl';
 
 interface DownloadGateModalProps {
   state: DownloadGateModalState;
@@ -52,14 +53,14 @@ export default function DownloadGateModal({ state, onClose, onLoginSuccess }: Do
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop (Solid backdrop, no glass blur) */}
           <motion.div
             key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/85"
             onClick={onClose}
           />
 
@@ -76,15 +77,12 @@ export default function DownloadGateModal({ state, onClose, onLoginSuccess }: Do
               className="relative w-full max-w-md pointer-events-auto rounded-3xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Gradient border glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#d4ff33]/20 via-transparent to-purple-500/10 pointer-events-none" />
-              
-              {/* Card body */}
-              <div className="relative bg-[#111317] border border-black/10 dark:border-white/10 rounded-3xl p-8">
+              {/* Card body (Solid border, no glow gradients) */}
+              <div className="relative bg-white dark:bg-[#111317] border-2 border-black dark:border-zinc-800 rounded-3xl p-8 shadow-2xl">
                 {/* Close button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-500 hover:text-black dark:text-white transition-all"
+                  className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all z-10"
                 >
                   <X size={18} />
                 </button>
@@ -120,31 +118,33 @@ function LoginView({
   signError: string | null;
   onSignIn: () => void;
 }) {
+  const t = useTranslations('DownloadGateModal');
+
   return (
     <div className="text-center">
-      {/* Icon */}
-      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[#d4ff33]/10 flex items-center justify-center">
-        <Download size={28} className="text-[#d4ff33]" />
+      {/* Icon (Solid border/bg, no glow gradient) */}
+      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border-2 border-black dark:border-zinc-700 flex items-center justify-center">
+        <Download size={28} className="text-black dark:text-[#d4ff33]" />
       </div>
 
       {/* Headline */}
       <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
-        Your file is ready!
+        {t('loginTitle')}
       </h2>
-      <p className="text-black dark:text-gray-400 text-sm mb-8 leading-relaxed">
-        Sign in for free to download your file. Your work is saved — no need to start over.
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-8 leading-relaxed">
+        {t('loginDesc')}
       </p>
 
       {/* Perks */}
       <div className="grid grid-cols-3 gap-3 mb-8">
         {[
-          { icon: Zap, label: 'Instant download' },
-          { icon: Shield, label: 'Free account' },
-          { icon: Sparkles, label: 'All tools' },
+          { icon: Zap, label: t('loginPerkInstant') },
+          { icon: Shield, label: t('loginPerkFree') },
+          { icon: Sparkles, label: t('loginPerkAll') },
         ].map(({ icon: Icon, label }) => (
-          <div key={label} className="flex flex-col items-center gap-2 p-3 bg-white/5 rounded-2xl">
-            <Icon size={18} className="text-[#d4ff33]" />
-            <span className="text-[10px] font-bold text-black dark:text-gray-400 uppercase tracking-wider leading-tight">{label}</span>
+          <div key={label} className="flex flex-col items-center gap-2 p-3 bg-zinc-50 dark:bg-white/5 rounded-2xl border border-zinc-100 dark:border-white/5">
+            <Icon size={18} className="text-black dark:text-[#d4ff33]" />
+            <span className="text-[10px] font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wider leading-tight text-center">{label}</span>
           </div>
         ))}
       </div>
@@ -153,7 +153,7 @@ function LoginView({
       <button
         onClick={onSignIn}
         disabled={isSigning}
-        className={`w-full py-4 px-6 flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-black font-bold rounded-2xl transition-all shadow-xl ${
+        className={`w-full py-4 px-6 flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-black border border-black dark:border-zinc-700 font-bold rounded-2xl transition-all shadow-md ${
           isSigning ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02] active:scale-[0.98]'
         }`}
       >
@@ -167,15 +167,15 @@ function LoginView({
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
           </svg>
         )}
-        <span>{isSigning ? 'Signing in…' : 'Continue with Google'}</span>
+        <span>{isSigning ? t('loginBtnSigning') : t('loginBtnContinue')}</span>
       </button>
 
       {signError && (
-        <p className="mt-3 text-red-400 text-xs">{signError}</p>
+        <p className="mt-3 text-red-500 text-xs">{signError}</p>
       )}
 
-      <p className="mt-4 text-[11px] text-gray-600">
-        Free forever. No credit card required.
+      <p className="mt-4 text-[11px] text-gray-500 dark:text-gray-400">
+        {t('loginFooter')}
       </p>
     </div>
   );
@@ -192,60 +192,62 @@ function SubscribeView({
   onSubscribe: () => void;
   onClose: () => void;
 }) {
+  const t = useTranslations('DownloadGateModal');
+
   const perks = [
-    'Unlimited downloads across all tools',
-    'Batch processing — multiple files at once',
-    'Priority processing speed',
-    'Cancel anytime',
+    t('subPerkUnlimited'),
+    t('subPerkBatch'),
+    t('subPerkPriority'),
+    t('subPerkCancel'),
   ];
 
   return (
     <div className="text-center">
-      {/* Icon */}
-      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#d4ff33]/20 to-purple-500/20 flex items-center justify-center">
-        <Infinity size={28} className="text-[#d4ff33]" />
+      {/* Icon (Solid border/bg, no glow gradient) */}
+      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border-2 border-black dark:border-zinc-700 flex items-center justify-center">
+        <Infinity size={28} className="text-black dark:text-[#d4ff33]" />
       </div>
 
       {/* Badge */}
-      <div className="inline-flex items-center gap-1.5 bg-[#d4ff33]/10 border border-[#d4ff33]/20 text-[#d4ff33] text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
-        <Sparkles size={12} />
-        You&apos;ve used your free download
+      <div className="inline-flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
+        <Sparkles size={12} className="text-red-400" />
+        {t('subBadge')}
       </div>
 
       {/* Headline */}
       <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
-        Unlock unlimited downloads
+        {t('subTitle')}
       </h2>
-      <p className="text-black dark:text-gray-400 text-sm mb-7 leading-relaxed">
-        Subscribe to keep downloading files from all our tools without any limits.
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-7 leading-relaxed">
+        {t('subDesc')}
       </p>
 
       {/* Perks list */}
-      <div className="text-left space-y-3 mb-8">
+      <div className="text-left space-y-3 mb-8 bg-zinc-50 dark:bg-white/[0.03] p-5 rounded-2xl border border-zinc-200 dark:border-white/[0.05]">
         {perks.map((perk) => (
           <div key={perk} className="flex items-center gap-3">
             <div className="w-5 h-5 rounded-full bg-[#d4ff33]/10 flex items-center justify-center shrink-0">
               <CheckCircle2 size={14} className="text-[#d4ff33]" />
             </div>
-            <span className="text-sm text-black dark:text-gray-300">{perk}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">{perk}</span>
           </div>
         ))}
       </div>
 
-      {/* CTA */}
+      {/* CTA (Solid shadow & contrast border, no glow shadow) */}
       <button
         onClick={onSubscribe}
-        className="w-full py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black font-bold rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#d4ff33]/20"
+        className="w-full py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black border border-black font-bold rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md"
       >
-        View Plans
+        {t('subBtnPlans')}
         <ArrowRight size={18} />
       </button>
 
       <button
         onClick={onClose}
-        className="mt-3 w-full py-3 text-sm text-black dark:text-gray-500 hover:text-black dark:text-gray-300 transition-colors font-medium"
+        className="mt-3 w-full py-3 text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors font-medium"
       >
-        Maybe later
+        {t('subBtnBack')}
       </button>
     </div>
   );

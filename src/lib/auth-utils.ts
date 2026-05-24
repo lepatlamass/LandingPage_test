@@ -16,14 +16,6 @@ export const isMobile = () => {
 };
 
 /**
- * Check if we're on a route with COOP/COEP headers that would block popups
- */
-const isOnRestrictedRoute = () => {
-  if (typeof window === 'undefined') return false;
-  return window.location.pathname.includes('/tools');
-};
-
-/**
  * Centralized Google Sign-In helper that handles popups, redirects,
  * and common errors like 'popup-closed-by-user' gracefully.
  */
@@ -31,10 +23,11 @@ export const signInWithGoogle = async (
   auth: Auth,
   provider: GoogleAuthProvider
 ): Promise<UserCredential | null | void> => {
-  // Use redirect only on /tools routes (COOP/COEP blocks popups).
-  // On mobile, popup flow works on modern browsers if triggered by a direct user click,
-  // avoiding the 'missing initial state' error caused by ITP (Intelligent Tracking Prevention).
-  if (isOnRestrictedRoute()) {
+  // Use popup by default to preserve page state.
+  // Fall back to redirect if popup is blocked.
+  if (isMobile()) {
+    // Mobile browsers often block popups or have ITP restrictions,
+    // so using redirect is generally more reliable.
     return signInWithRedirect(auth, provider);
   }
 

@@ -55,7 +55,7 @@ function RadialProgress({
         stroke="rgba(255,255,255,0.06)"
         strokeWidth={strokeWidth}
       />
-      {/* Animated progress arc */}
+      {/* Animated progress arc (Solid, no glow filter) */}
       <motion.circle
         cx={size / 2}
         cy={size / 2}
@@ -68,7 +68,6 @@ function RadialProgress({
         initial={{ strokeDashoffset: circumference }}
         animate={{ strokeDashoffset: offset }}
         transition={{ duration: 1.2, ease: 'easeOut' }}
-        style={{ filter: `drop-shadow(0 0 6px ${color}40)` }}
       />
     </svg>
   );
@@ -107,19 +106,8 @@ function AIToolCreditCard({
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative bg-zinc-900/80 border border-zinc-800/60 rounded-2xl p-5 hover:border-zinc-700/80 transition-all duration-300 hover:shadow-lg"
-      style={{
-        ['--card-glow' as string]: `${activeColor}10`,
-      }}
+      className="group relative bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 hover:shadow-md"
     >
-      {/* Subtle glow effect on hover */}
-      <div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse at center, ${activeColor}08 0%, transparent 70%)`,
-        }}
-      />
-
       <div className="relative flex items-center gap-4">
         {/* Radial Progress */}
         <div className="relative shrink-0">
@@ -176,7 +164,7 @@ function AIToolCreditCard({
       </div>
 
       {/* Bottom mini progress bar */}
-      <div className="mt-4 w-full bg-zinc-950 rounded-full h-1.5 overflow-hidden">
+      <div className="mt-4 w-full bg-zinc-200 dark:bg-zinc-950 rounded-full h-1.5 overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{ backgroundColor: activeColor }}
@@ -218,13 +206,13 @@ export default function AICreditsGrid({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden"
+      className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-md"
     >
       {/* Header */}
-      <div className="px-6 py-5 border-b border-zinc-800 flex items-center justify-between">
+      <div className="px-6 py-5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-zinc-800 rounded-lg">
-            <Sparkles className="text-[#d4ff33] h-5 w-5" />
+          <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700">
+            <Sparkles className="text-black dark:text-[#d4ff33] h-5 w-5" />
           </div>
           <div>
             <h2 className="text-lg font-semibold text-black dark:text-white">{t('aiCredits')}</h2>
@@ -239,10 +227,10 @@ export default function AICreditsGrid({
           <span
             className={`text-sm font-bold ${
               anyDepleted
-                ? 'text-red-400'
+                ? 'text-red-500 dark:text-red-400'
                 : totalRemaining <= totalCreditsAll * 0.2
-                  ? 'text-amber-400'
-                  : 'text-[#d4ff33]'
+                  ? 'text-amber-500 dark:text-amber-400'
+                  : 'text-black dark:text-[#d4ff33]'
             }`}
           >
             {totalRemaining} / {totalCreditsAll}
@@ -273,9 +261,9 @@ export default function AICreditsGrid({
       <div className="px-5 pb-5">
         <button
           onClick={() => window.open(CREDITS_CHECKOUT, '_blank')}
-          className="w-full py-3 rounded-xl bg-zinc-800 text-black dark:text-white font-bold text-sm hover:bg-zinc-700 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]"
+          className="w-full py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white border border-zinc-300 dark:border-zinc-700 font-bold text-sm hover:bg-zinc-200 dark:hover:bg-zinc-750 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] shadow-sm"
         >
-          <ShoppingCart className="w-4 h-4 text-[#d4ff33]" />
+          <ShoppingCart className="w-4 h-4 text-black dark:text-[#d4ff33]" />
           {t('buyMoreCredits')}
         </button>
       </div>

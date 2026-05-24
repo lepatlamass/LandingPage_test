@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { Link } from '../../../../navigation';
-import { getPostBySlug, getAllSlugs, getAllPosts } from '../../../../lib/blog';
+import { getPostBySlug, getAllSlugs, getAllPosts, type BlogPost } from '../../../../lib/blog';
+import { locales } from '../../../../i18n/config';
 import Navbar from '../../../../components/layout/Navbar';
 import Footer from '../../../../components/layout/Footer';
 import ReactMarkdown from 'react-markdown';
@@ -41,11 +42,17 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     };
   }
 
+  const languages: Record<string, string> = {};
+  for (const loc of locales) {
+    languages[loc] = `https://refinedocs.com/${loc}/blog/${slug}`;
+  }
+
   return {
     title: `${post.title} | Refinedocs Blog`,
     description: post.description,
     alternates: {
       canonical: `https://refinedocs.com/${locale}/blog/${slug}`,
+      languages,
     },
     openGraph: {
       title: post.title,
@@ -54,6 +61,36 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
       url: `https://refinedocs.com/${locale}/blog/${slug}`,
     },
   };
+}
+
+function BlogPostJsonLd({ post, locale }: { post: BlogPost; locale: string }) {
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Refinedocs',
+      url: 'https://refinedocs.com',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://refinedocs.com/${locale}/blog/${post.slug}`,
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+    />
+  );
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -72,6 +109,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .slice(0, 3); // Max 3 related posts
 
   return (
+    <>
+    <BlogPostJsonLd post={post} locale={locale} />
     <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <Navbar />
 
@@ -177,5 +216,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <Footer />
     </div>
+    </>
   );
 }

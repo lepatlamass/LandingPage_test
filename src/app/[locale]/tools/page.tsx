@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -8,9 +9,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Tools' });
   return {
-    title: 'All Tools | Refinedocs',
-    description: 'Free online PDF, image, video, and document conversion tools. Convert, compress, resize, and edit files instantly.',
+    title: t('metaTitle'),
+    description: t('metaDescription'),
     alternates: {
       canonical: `https://refinedocs.com/${locale}/tools`,
     },

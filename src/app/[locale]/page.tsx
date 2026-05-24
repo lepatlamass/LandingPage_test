@@ -1,16 +1,51 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '../../navigation';
 import Image from 'next/image';
-import { ArrowRight, Zap, Shield, TrendingUp, CloudDownload } from 'lucide-react';
+import type { Metadata } from 'next';
+import { ArrowRight, Zap, Shield, TrendingUp, CloudDownload, Gift } from 'lucide-react';
 import Navbar from '../../components/layout/Navbar';
 import ToolsDirectory from '../../components/layout/ToolsDirectory';
 import Footer from '../../components/layout/Footer';
+import YouTubeFacade from '../../components/ui/YouTubeFacade';
 import PricingButtons from '../../components/billing/PricingButtons';
 import TrialSectionWrapper from '../../components/layout/TrialSectionWrapper';
 import { getProduct } from '../../lib/chariow';
 
-const MONTHLY_PRODUCT_ID = 'prd_zvd1cf';
-const YEARLY_PRODUCT_ID = 'prd_ge7e1g';
+type MetaProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Home' });
+  const siteUrl = 'https://refinedocs.com';
+
+  const languages: Record<string, string> = {
+    'x-default': siteUrl,
+    'en': `${siteUrl}/en`,
+    'es': `${siteUrl}/es`,
+    'fr': `${siteUrl}/fr`,
+    'it': `${siteUrl}/it`,
+    'pt-PT': `${siteUrl}/pt-PT`,
+  };
+
+  return {
+    title: t('metaTitle'),
+    description: t('metaDescription'),
+    alternates: {
+      canonical: `${siteUrl}/${locale}`,
+      languages,
+    },
+    openGraph: {
+      title: t('metaTitle'),
+      description: t('metaDescription'),
+      url: `${siteUrl}/${locale}`,
+      siteName: 'Refinedocs',
+      type: 'website',
+      images: [{ url: '/og-image.jpg', width: 1024, height: 1024 }],
+    },
+  };
+}
 
 export default async function Page({
   params,
@@ -20,7 +55,10 @@ export default async function Page({
   const { locale } = await params;
   const t = await getTranslations('Home');
   const tCommon = await getTranslations('Common');
-  const tTools = await getTranslations('Tools');
+  const tPricing = await getTranslations('Pricing');
+
+  const MONTHLY_PRODUCT_ID = 'prd_zvd1cf';
+  const YEARLY_PRODUCT_ID = 'prd_ge7e1g';
 
   // Fetch live prices from Chariow
   let monthlyPrice: { value: number; formatted: string; currency: string } | null = null;
@@ -45,16 +83,35 @@ export default async function Page({
     // If Chariow API is unavailable, prices will remain null and use fallbacks
   }
 
+  const siteUrl = 'https://refinedocs.com';
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Refinedocs',
+    url: `${siteUrl}/${locale}`,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteUrl}/${locale}/tools?q={search_term_string}`
+      },
+      'query-input': 'required name=search_term_string'
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
       <Navbar />
 
       <main>
         {/* Hero Section */}
         <section className="pt-20 pb-16 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-transparent border border-black/20 dark:border-white/20 text-[10px] font-bold text-black dark:text-[#d4ff33] mb-6 tracking-widest uppercase">
-            <div className="w-2 h-2 rounded-full bg-[#d4ff33]"></div> YOUR ALL IN ONE TOOL FOR IMAGES AND DOCUMENTS
+            <div className="w-2 h-2 rounded-full bg-[#d4ff33]"></div> 100% FREE — NO SIGN-UP REQUIRED
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-[1.15]">
             {t('heroTitle')}<span className="text-black dark:text-[#d4ff33]">{t('heroTitleAccent')}</span><br />
@@ -76,16 +133,8 @@ export default async function Page({
           </div>
 
           {/* App Mockup Placeholder - YouTube Embed Ready */}
-          <div className="relative w-full max-w-5xl mx-auto rounded-xl overflow-hidden border-2 border-[#d4ff33] shadow-[0_0_50px_rgba(212,255,51,0.15)] bg-white dark:bg-[#1a1c21] aspect-[16/9]">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/rCMfqbzG-uw"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+          <div className="relative w-full max-w-5xl mx-auto rounded-xl overflow-hidden border-2 border-[#d4ff33] shadow-xl bg-white dark:bg-[#1a1c21] aspect-[16/9]">
+            <YouTubeFacade videoId="rCMfqbzG-uw" title="Refinedocs Demo" />
           </div>
         </section>
 
@@ -275,9 +324,16 @@ export default async function Page({
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="lg:w-1/3">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-black dark:text-white">{t('pricingTitle')}</h2>
-                <p className="text-black dark:text-gray-400 text-base max-w-md leading-relaxed">
+                <p className="text-black dark:text-gray-400 text-base max-w-md leading-relaxed mb-6">
                   {t('pricingSubtitle')}
                 </p>
+                <Link
+                  href="/pricing"
+                  className="inline-flex items-center gap-2 text-[#d4ff33] hover:text-[#bce622] font-semibold text-sm transition-colors group"
+                >
+                  {tPricing('viewFullDetails')}
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </div>
               <PricingButtons
                 t={{
@@ -305,6 +361,7 @@ export default async function Page({
                 yearlySale={yearlySale}
                 monthlyName={monthlyName}
                 yearlyName={yearlyName}
+                showDetails={false}
               />
             </div>
           </div>

@@ -35,7 +35,7 @@ export default async function Footer() {
             <h4 className="text-black dark:text-white font-bold mb-6">{tCommon('company')}</h4>
             <ul className="space-y-4 text-black dark:text-gray-500 text-sm">
               <li><Link href="/#about" className="hover:text-black dark:text-white transition-colors">{tCommon('about')}</Link></li>
-              <li><Link href="/help" className="hover:text-black dark:text-white transition-colors">{tCommon('help')}</Link></li>
+              <li><Link href="/faq" className="hover:text-black dark:text-white transition-colors">{tCommon('help')}</Link></li>
               <li><Link href="/blog" className="hover:text-black dark:text-white transition-colors">{tCommon('blog')}</Link></li>
             </ul>
           </div>
@@ -43,7 +43,9 @@ export default async function Footer() {
           <div>
             <h4 className="text-black dark:text-white font-bold mb-6">{tCommon('product')}</h4>
             <ul className="space-y-4 text-black dark:text-gray-500 text-sm">
-              <li><Link href="/#price" className="hover:text-black dark:text-white transition-colors">{tCommon('pricing')}</Link></li>
+              <li><Link href="/tools" className="hover:text-black dark:text-white transition-colors">All Free Tools</Link></li>
+              <li><Link href="/blog" className="hover:text-black dark:text-white transition-colors">Blog</Link></li>
+              <li><Link href="/pricing" className="hover:text-black dark:text-white transition-colors">{tCommon('pricing')}</Link></li>
             </ul>
           </div>
         </div>

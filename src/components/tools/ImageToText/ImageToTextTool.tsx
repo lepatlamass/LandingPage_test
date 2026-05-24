@@ -156,17 +156,17 @@ export default function ImageToTextTool() {
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-[#d4ff33] text-black px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-[#d4ff33]/20 whitespace-nowrap text-sm sm:text-base">
+            <div className="bg-[#d4ff33] text-black px-6 py-3 sm:px-10 sm:py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#c2eb2e] transition-colors border border-black shadow-md whitespace-nowrap text-sm sm:text-base">
               {t('chooseFiles')}
             </div>
           </div>
-          <p className="text-black dark:text-gray-500 text-sm">{t('dropFilesHere')}</p>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">{t('dropFilesHere')}</p>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Image Preview & Controls */}
           <div className="space-y-6">
-            <div className="relative aspect-square rounded-[32px] overflow-hidden bg-black/40 border border-black/10 dark:border-white/10 group">
+            <div className="relative aspect-square rounded-[32px] overflow-hidden bg-gray-100 dark:bg-black/40 border border-black/10 dark:border-white/10 group">
               <img
                 src={images[0].preview}
                 alt={commonT('alt.original')}
@@ -180,7 +180,7 @@ export default function ImageToTextTool() {
               </button>
             </div>
 
-            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-6">
+            <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-6">
               <h3 className="text-black dark:text-white font-bold mb-4 flex items-center gap-2">
                 <Search size={18} className="text-[#d4ff33]" />
                 Processing Mode
@@ -190,8 +190,8 @@ export default function ImageToTextTool() {
                   onClick={() => setMode('extract')}
                   className={`flex items-center justify-center gap-2 p-4 rounded-2xl font-bold transition-all ${
                     mode === 'extract' 
-                      ? 'bg-[#d4ff33] text-black shadow-lg shadow-[#d4ff33]/20' 
-                      : 'bg-white/5 text-black dark:text-gray-400 hover:bg-black/10 dark:hover:bg-white/10'
+                      ? 'bg-[#d4ff33] text-black border border-black shadow-md' 
+                      : 'bg-black/5 dark:bg-white/5 text-black dark:text-gray-400 hover:bg-black/10 dark:hover:bg-white/10'
                   }`}
                 >
                   <Type size={18} />
@@ -201,8 +201,8 @@ export default function ImageToTextTool() {
                   onClick={() => setMode('caption')}
                   className={`flex items-center justify-center gap-2 p-4 rounded-2xl font-bold transition-all ${
                     mode === 'caption' 
-                      ? 'bg-[#d4ff33] text-black shadow-lg shadow-[#d4ff33]/20' 
-                      : 'bg-white/5 text-black dark:text-gray-400 hover:bg-black/10 dark:hover:bg-white/10'
+                      ? 'bg-[#d4ff33] text-black border border-black shadow-md' 
+                      : 'bg-black/5 dark:bg-white/5 text-black dark:text-gray-400 hover:bg-black/10 dark:hover:bg-white/10'
                   }`}
                 >
                   <FileText size={18} />
@@ -230,7 +230,7 @@ export default function ImageToTextTool() {
 
           {/* Result Area */}
           <div className="space-y-6">
-            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 h-full flex flex-col min-h-[300px] md:min-h-[500px]">
+            <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 h-full flex flex-col min-h-[300px] md:min-h-[500px]">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-black dark:text-white font-bold flex items-center gap-2">
                   <FileText size={20} className="text-[#d4ff33]" />
@@ -240,14 +240,14 @@ export default function ImageToTextTool() {
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={copyToClipboard}
-                      className="p-2 bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-400 hover:text-black dark:text-white rounded-lg transition-all whitespace-nowrap"
+                      className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-400 hover:text-black dark:text-white rounded-lg transition-all whitespace-nowrap"
                       title="Copy to clipboard"
                     >
                       {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
                     </button>
                     <button 
                       onClick={downloadText}
-                      className="p-2 bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-400 hover:text-black dark:text-white rounded-lg transition-all whitespace-nowrap"
+                      className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-400 hover:text-black dark:text-white rounded-lg transition-all whitespace-nowrap"
                       title="Download as .txt"
                     >
                       <Download size={18} />
@@ -264,7 +264,7 @@ export default function ImageToTextTool() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="absolute inset-0 flex flex-col items-center justify-center text-black dark:text-gray-500 text-center p-8"
+                      className="absolute inset-0 flex flex-col items-center justify-center text-gray-600 dark:text-gray-400 text-center p-8"
                     >
                       <FileText size={48} className="mb-4 opacity-20" />
                       <p>Click &quot;Process Image&quot; to extract text or generate a caption.</p>
@@ -281,7 +281,7 @@ export default function ImageToTextTool() {
                     >
                       <Loader2 className="animate-spin text-[#d4ff33] mb-4" size={48} />
                       <p className="text-black dark:text-white font-bold">Analyzing Image...</p>
-                      <p className="text-black dark:text-gray-500 text-sm mt-2">Gemini AI is reading the content</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">Gemini AI is reading the content</p>
                     </motion.div>
                   )}
 
@@ -315,7 +315,7 @@ export default function ImageToTextTool() {
                       <textarea 
                         readOnly
                         value={images[0].result}
-                        className="w-full h-full bg-black/20 border border-black/10 dark:border-white/5 rounded-2xl p-6 text-black dark:text-gray-300 font-mono text-sm leading-relaxed focus:outline-none resize-none scrollbar-hide"
+                        className="w-full h-full bg-gray-50 dark:bg-black/20 border border-black/10 dark:border-white/5 rounded-2xl p-6 text-black dark:text-gray-300 font-mono text-sm leading-relaxed focus:outline-none resize-none scrollbar-hide"
                       />
                     </motion.div>
                   )}

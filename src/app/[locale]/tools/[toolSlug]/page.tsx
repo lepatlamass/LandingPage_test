@@ -73,8 +73,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // JSON-LD structured data component
-function ToolJsonLd({ locale, toolSlug, title, description }: {
-  locale: string; toolSlug: string; title: string; description: string;
+function ToolJsonLd({ locale, toolSlug, title, description, faqs }: {
+  locale: string; toolSlug: string; title: string; description: string; faqs?: { question: string; answer: string }[];
 }) {
   const url = `https://refinedocs.com/${locale}/tools/${toolSlug}`;
 
@@ -124,6 +124,19 @@ function ToolJsonLd({ locale, toolSlug, title, description }: {
     ],
   };
 
+  const faqSchema = faqs && faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer
+      }
+    }))
+  } : null;
+
   return (
     <>
       <script
@@ -134,6 +147,12 @@ function ToolJsonLd({ locale, toolSlug, title, description }: {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
     </>
   );
 }
@@ -143,23 +162,59 @@ export default async function ToolPage({ params }: Props) {
 
   let title = toolSlug;
   let description = '';
+  const faqs: { question: string; answer: string }[] = [];
+
   try {
-    const t = await getTranslations({ locale, namespace: 'Tools' });
-    title = t(toolSlug as any) || toolSlug;
-    description = t(`${toolSlug}-desc` as any) || '';
+    const tTools = await getTranslations({ locale, namespace: 'Tools' });
+    const tCommon = await getTranslations({ locale, namespace: 'Common' });
+    if (tTools.has(toolSlug as any)) {
+      title = tTools(toolSlug as any);
+    }
+    const descKey = `${toolSlug}-desc`;
+    if (tTools.has(descKey as any)) {
+      description = tTools(descKey as any);
+    }
+
+    const faqSlug = (toolSlug === 'excel-to-csv' || toolSlug === 'csv-to-excel') ? 'excel-csv' : toolSlug;
+
+    for (let i = 1; i <= 4; i++) {
+      const qKey = `${faqSlug}-faq${i}-q`;
+      const aKey = `${faqSlug}-faq${i}-a`;
+      if (tTools.has(qKey as any) && tTools.has(aKey as any)) {
+        const question = tTools(qKey as any);
+        const answer = tTools(aKey as any);
+        if (question && answer) {
+          faqs.push({ question, answer });
+        }
+      } else {
+        break;
+      }
+    }
+
+    if (tCommon.has('securityFaqQuestion' as any) && tCommon.has('securityFaqAnswer' as any)) {
+      faqs.push({
+        question: tCommon('securityFaqQuestion' as any),
+        answer: tCommon('securityFaqAnswer' as any)
+      });
+    }
+    if (tCommon.has('loginFaqQuestion' as any) && tCommon.has('loginFaqAnswer' as any)) {
+      faqs.push({
+        question: tCommon('loginFaqQuestion' as any),
+        answer: tCommon('loginFaqAnswer' as any)
+      });
+    }
   } catch {
     // fallback
   }
 
   return (
     <>
-      <ToolJsonLd locale={locale} toolSlug={toolSlug} title={title} description={description} />
+      <ToolJsonLd locale={locale} toolSlug={toolSlug} title={title} description={description} faqs={faqs} />
       <Suspense
         fallback={
           <div className="min-h-screen bg-white dark:bg-[#111111] flex flex-col items-center justify-center">
             <div className="relative">
-              <div className="absolute inset-0 bg-[#d4ff33] rounded-xl blur-xl opacity-40 animate-pulse"></div>
-              <div className="w-16 h-16 bg-[#d4ff33] rounded-xl flex items-center justify-center text-black font-bold text-3xl shadow-[0_0_30px_rgba(212,255,51,0.3)] animate-bounce relative z-10">
+              <div className="w-16 h-16 bg-[#d4ff33] rounded-xl flex items-center justify-center text-black font-bold text-3xl border-2 border-black animate-bounce relative z-10">
                 R
               </div>
             </div>

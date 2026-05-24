@@ -11,7 +11,7 @@ import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/an
 
 const PdfToImageTool = () => {
   const t = useTranslations('Common');
-  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
+  const { guardedBlobDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate('pdf-to-image');
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -85,16 +85,7 @@ const PdfToImageTool = () => {
   const downloadZip = () => {
     trackFileDownloaded('pdf-to-image');
     if (!resultZip) return;
-    guardedDownload(() => {
-      const url = URL.createObjectURL(resultZip!);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${file?.name.replace('.pdf', '') || 'pdf-images'}.zip`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
+    guardedBlobDownload(resultZip, `${file?.name.replace('.pdf', '') || 'pdf-images'}.zip`);
   };
 
   const reset = () => {
@@ -128,8 +119,8 @@ const PdfToImageTool = () => {
               <Upload size={32} />
             </div>
             <h3 className="text-lg md:text-xl font-bold text-black dark:text-white mb-2 whitespace-nowrap">{t('chooseFiles')}</h3>
-            <p className="text-black dark:text-gray-500 text-sm mb-6">{t('dropFilesHere')}</p>
-            <div className="bg-[#d4ff33] text-black px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors shadow-lg shadow-lime-400/10 whitespace-nowrap text-xs sm:text-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">{t('dropFilesHere')}</p>
+            <div className="bg-[#d4ff33] text-black px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors border border-black shadow-md whitespace-nowrap text-xs sm:text-sm">
               Select PDF
             </div>
           </motion.div>
@@ -147,11 +138,11 @@ const PdfToImageTool = () => {
                 </div>
                 <div>
                   <h3 className="text-black dark:text-white font-bold truncate max-w-[300px]">{file.name}</h3>
-                  <p className="text-black dark:text-gray-500 text-xs">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-xs">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                 </div>
               </div>
               {!isProcessing && (
-                <button onClick={reset} className="text-black dark:text-gray-500 hover:text-black dark:text-white transition-colors whitespace-nowrap text-xs sm:text-sm">
+                <button onClick={reset} className="text-gray-600 dark:text-gray-400 hover:text-black dark:text-white transition-colors whitespace-nowrap text-xs sm:text-sm">
                   <X size={20} />
                 </button>
               )}
@@ -178,7 +169,7 @@ const PdfToImageTool = () => {
                         animate={{ width: `${progress}%` }}
                       />
                     </div>
-                    <div className="flex items-center justify-center gap-2 text-black dark:text-gray-500 text-sm pt-4">
+                    <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400 text-sm pt-4">
                       <Loader2 size={16} className="animate-spin" />
                       <span>Processing PDF pages into images...</span>
                     </div>
@@ -186,7 +177,7 @@ const PdfToImageTool = () => {
                 ) : (
                   <button
                     onClick={processPdf}
-                    className="w-full bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10 whitespace-nowrap"
+                    className="w-full bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 border border-black shadow-md whitespace-nowrap"
                   >
                     Convert to Images
                   </button>
@@ -202,17 +193,17 @@ const PdfToImageTool = () => {
                   <CheckCircle2 size={40} />
                 </div>
                 <h4 className="text-black dark:text-white text-xl font-bold">Conversion Complete!</h4>
-                <p className="text-black dark:text-gray-500">All pages have been converted to images and bundled into a ZIP file.</p>
+                <p className="text-gray-600 dark:text-gray-400">All pages have been converted to images and bundled into a ZIP file.</p>
                 
                 <div className="flex gap-4">
                   <button
                     onClick={downloadZip}
-                    className="flex-1 bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 shadow-xl shadow-lime-400/10 whitespace-nowrap"
+                    className="flex-1 bg-[#d4ff33] text-black py-4 rounded-2xl font-bold text-lg hover:bg-[#c2eb2e] transition-all flex items-center justify-center gap-2 border border-black shadow-md whitespace-nowrap"
                   >
                     <Download size={20} /> Download ZIP
                   </button>
                   <button onClick={reset}
-                    className="px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-black dark:text-gray-400 hover:text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all whitespace-nowrap text-xs sm:text-sm"
+                    className="px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-black dark:text-gray-400 hover:text-black dark:text-white hover:bg-black/5 dark:hover:bg-black/5 dark:bg-white/5 transition-all whitespace-nowrap text-xs sm:text-sm"
                   >
                     Convert Another
                   </button>

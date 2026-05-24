@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { useDownloadGate } from '@/hooks/useDownloadGate';
 import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
+import WorkflowPrompts from './WorkflowPrompts';
 import { 
   Upload, 
   X, 
@@ -12,7 +13,8 @@ import {
   CheckCircle2,
   AlertCircle,
   FileText,
-  RefreshCw
+  RefreshCw,
+  Plus
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Document, Packer, Paragraph, TextRun, ImageRun } from 'docx';
@@ -31,7 +33,7 @@ interface PdfToWordFile {
 export default function PdfToWordTool() {
   const t = useTranslations('Tools');
   const tCommon = useTranslations('Common');
-  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
+  const { guardedBlobDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate('pdf-to-word');
   const [files, setFiles] = useState<PdfToWordFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -317,16 +319,7 @@ export default function PdfToWordTool() {
 
   const downloadFile = (fileObj: PdfToWordFile) => {
     if (!fileObj.wordBlob) return;
-    guardedDownload(() => {
-      const url = URL.createObjectURL(fileObj.wordBlob!);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileObj.file.name.replace(/\.pdf$/i, '.docx');
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    });
+    guardedBlobDownload(fileObj.wordBlob, fileObj.file.name.replace(/\.pdf$/i, '.docx'));
   };
 
   const downloadAll = () => {
@@ -336,98 +329,97 @@ export default function PdfToWordTool() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      {/* Upload Area */}
-      <div 
-        className={`relative border-2 border-dashed rounded-[32px] p-6 md:p-12 text-center transition-all duration-300 ease-out overflow-hidden ${
-          isDragging 
-            ? 'border-[#d4ff33] bg-[#d4ff33]/10 scale-[1.02] shadow-2xl shadow-[#d4ff33]/20' 
-            : 'border-gray-700 bg-white dark:bg-[#1a1c21] hover:border-gray-600 hover:bg-black/5 dark:hover:bg-[#22252b]'
-        }`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileSelect}
-          accept=".pdf"
-          multiple
-          className="hidden"
-        />
-        
-        <div className="relative z-10 flex flex-col items-center">
-          <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-300 ${
-            isDragging ? 'bg-[#d4ff33] text-black scale-110' : 'bg-white dark:bg-gray-800 text-black dark:text-gray-400'
-          }`}>
-            <Upload size={32} className={isDragging ? 'animate-bounce' : ''} />
-          </div>
-          
-          <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
-            {tCommon('dropFilesHere')}
-          </h3>
-          <p className="text-black dark:text-gray-400 mb-8 max-w-md mx-auto">
-            {t('pdf-to-word-desc')}
-          </p>
-          
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            className="bg-[#d4ff33] text-black px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-sm sm:text-lg hover:bg-[#c2eb2e] transition-all hover:scale-105 active:scale-95 shadow-xl shadow-[#d4ff33]/20 flex items-center gap-3 whitespace-nowrap"
-          >
-            <FileText size={24} />
-            {tCommon('chooseFiles')}
-          </button>
-          
-          <p className="text-black dark:text-gray-500 text-sm mt-6 font-medium">
-            Supports PDF files
-          </p>
-        </div>
-      </div>
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileSelect}
+        accept=".pdf"
+        multiple
+        className="hidden"
+      />
 
-      {/* File List */}
-      {files.length > 0 && (
+      {files.length === 0 ? (
+        /* Upload Area */
+        <div 
+          className={`relative border-2 border-dashed rounded-[32px] p-6 md:p-12 text-center transition-all duration-300 ease-out overflow-hidden ${
+            isDragging 
+              ? 'border-[#d4ff33] bg-[#d4ff33]/10 scale-[1.02] shadow-md' 
+              : 'border-gray-700 bg-white dark:bg-[#1a1c21] hover:border-gray-600 hover:bg-black/5 dark:hover:bg-[#22252b]'
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <div className="relative z-10 flex flex-col items-center">
+            <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-300 ${
+              isDragging ? 'bg-[#d4ff33] text-black scale-110' : 'bg-white dark:bg-gray-800 text-black dark:text-gray-400'
+            }`}>
+              <Upload size={32} className={isDragging ? 'animate-bounce' : ''} />
+            </div>
+            
+            <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
+              {tCommon('dropFilesHere')}
+            </h3>
+            <p className="text-black dark:text-gray-400 mb-8 max-w-md mx-auto">
+              {t('pdf-to-word-desc')}
+            </p>
+            
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="bg-[#d4ff33] text-black px-5 py-3 sm:px-8 sm:py-4 rounded-2xl font-bold text-sm sm:text-lg hover:bg-[#c2eb2e] transition-all hover:scale-105 active:scale-95 border border-black shadow-md flex items-center gap-3 whitespace-nowrap"
+            >
+              <FileText size={24} />
+              {tCommon('chooseFiles')}
+            </button>
+            
+            <p className="text-gray-600 dark:text-gray-400 text-sm mt-6 font-medium">
+              Supports PDF files
+            </p>
+          </div>
+        </div>
+      ) : (
+        /* Redesigned Staged Files View */
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-8 space-y-4"
+          className="bg-white dark:bg-[#1a1c21] border border-zinc-200 dark:border-gray-800 rounded-[32px] p-6 md:p-8 shadow-xl space-y-6"
         >
-          <div className="flex items-center justify-between mb-6 px-2">
+          {/* Header */}
+          <div className="flex items-center justify-between pb-4 border-b border-zinc-100 dark:border-gray-850">
             <h3 className="text-xl font-bold text-black dark:text-white flex items-center gap-2">
               <FileText className="text-[#d4ff33]" />
-              Files ({files.length})
+              Staged Files ({files.length})
             </h3>
-            <div className="flex gap-3">
-              {files.some(f => f.status === 'idle' || f.status === 'error') && (
-                <button
-                  onClick={processAll}
-                  className="bg-white/10 text-black dark:text-white px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-xl font-medium hover:bg-white/20 transition-colors flex items-center gap-2 whitespace-nowrap"
-                >
-                  <RefreshCw size={18} />
-                  Process All
-                </button>
-              )}
-              {files.some(f => f.status === 'completed') && (
-                <button
-                  onClick={downloadAll}
-                  className="bg-[#d4ff33] text-black px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-xl font-bold hover:bg-[#c2eb2e] transition-colors flex items-center gap-2 whitespace-nowrap"
-                >
-                  <Download size={18} />
-                  Download All
-                </button>
-              )}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="bg-[#d4ff33]/10 text-black dark:text-[#d4ff33] border border-[#d4ff33]/20 dark:border-[#d4ff33]/30 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold hover:bg-[#d4ff33]/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
+              >
+                <Plus size={16} />
+                Add Files
+              </button>
+              <button
+                onClick={() => setFiles([])}
+                className="text-gray-500 hover:text-red-400 text-xs sm:text-sm font-medium flex items-center gap-1 transition-colors"
+                title="Clear all files"
+              >
+                <X size={16} />
+                Clear All
+              </button>
             </div>
           </div>
 
-          <div className="grid gap-4">
+          {/* Files List */}
+          <div className="grid gap-4 max-h-[320px] overflow-y-auto pr-1">
             {files.map((fileObj) => (
               <motion.div
                 key={fileObj.id}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-4 flex items-center gap-4 group hover:border-gray-700 transition-colors"
+                className="bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-gray-800 rounded-2xl p-4 flex items-center gap-4 group hover:border-gray-400 dark:hover:border-gray-700 transition-colors"
               >
-                <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shrink-0">
-                  <FileText className="text-blue-400" size={24} />
+                <div className="w-12 h-12 bg-red-500/10 dark:bg-red-500/5 text-red-500 rounded-xl flex items-center justify-center shrink-0">
+                  <FileText size={24} />
                 </div>
                 
                 <div className="flex-1 min-w-0">
@@ -435,23 +427,23 @@ export default function PdfToWordTool() {
                     {fileObj.file.name}
                   </h4>
                   <div className="flex items-center gap-3 text-sm">
-                    <span className="text-black dark:text-gray-500">
+                    <span className="text-gray-600 dark:text-gray-400">
                       {(fileObj.file.size / 1024 / 1024).toFixed(2)} MB
                     </span>
                     {fileObj.status === 'processing' && (
-                      <span className="text-[#d4ff33] flex items-center gap-1">
+                      <span className="text-[#d4ff33] flex items-center gap-1 font-medium">
                         <Loader2 size={14} className="animate-spin" />
                         Processing ({fileObj.processedPages}/{fileObj.totalPages})
                       </span>
                     )}
                     {fileObj.status === 'completed' && (
-                      <span className="text-emerald-400 flex items-center gap-1">
+                      <span className="text-emerald-400 flex items-center gap-1 font-medium">
                         <CheckCircle2 size={14} />
                         Ready
                       </span>
                     )}
                     {fileObj.status === 'error' && (
-                      <span className="text-red-400 flex items-center gap-1">
+                      <span className="text-red-400 flex items-center gap-1 font-medium">
                         <AlertCircle size={14} />
                         {fileObj.error || 'Error'}
                       </span>
@@ -463,7 +455,7 @@ export default function PdfToWordTool() {
                   {fileObj.status === 'idle' && (
                     <button
                       onClick={() => processFile(fileObj)}
-                      className="p-2 text-black dark:text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
+                      className="p-2 text-black dark:text-gray-450 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
                       title="Convert to Word"
                     >
                       <RefreshCw size={20} />
@@ -472,7 +464,7 @@ export default function PdfToWordTool() {
                   {fileObj.status === 'completed' && (
                     <button
                       onClick={() => downloadFile(fileObj)}
-                      className="p-2 text-black dark:text-gray-400 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
+                      className="p-2 text-black dark:text-gray-450 hover:text-[#d4ff33] hover:bg-[#d4ff33]/10 rounded-lg transition-colors whitespace-nowrap"
                       title="Download Word"
                     >
                       <Download size={20} />
@@ -480,7 +472,7 @@ export default function PdfToWordTool() {
                   )}
                   <button
                     onClick={() => removeFile(fileObj.id)}
-                    className="p-2 text-black dark:text-gray-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors whitespace-nowrap"
+                    className="p-2 text-gray-600 dark:text-gray-455 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors whitespace-nowrap"
                     title="Remove file"
                   >
                     <X size={20} />
@@ -489,6 +481,39 @@ export default function PdfToWordTool() {
               </motion.div>
             ))}
           </div>
+
+          {/* Action Button Panel */}
+          <div className="pt-4 border-t border-zinc-150 dark:border-gray-800">
+            {files.some(f => f.status === 'processing') ? (
+              <button
+                disabled
+                className="w-full bg-zinc-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 py-4 px-6 rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-3 cursor-not-allowed border border-transparent dark:border-white/5"
+              >
+                <Loader2 className="animate-spin text-[#d4ff33]" size={22} />
+                Converting document(s)...
+              </button>
+            ) : files.some(f => f.status === 'idle' || f.status === 'error') ? (
+              <button
+                onClick={processAll}
+                className="w-full bg-[#d4ff33] text-black hover:bg-[#c2eb2e] py-4 px-6 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 border border-black shadow-md hover:scale-[1.01] active:scale-[0.99] transition-all duration-300"
+              >
+                <RefreshCw size={22} />
+                Convert to Word
+              </button>
+            ) : files.some(f => f.status === 'completed') ? (
+              <button
+                onClick={downloadAll}
+                className="w-full bg-emerald-450 hover:bg-emerald-500 text-black py-4 px-6 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-3 border border-black shadow-md hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 bg-[#d4ff33] hover:bg-[#c2eb2e]"
+              >
+                <Download size={22} />
+                Download Word Document{files.filter(f => f.status === 'completed').length > 1 ? 's' : ''}
+              </button>
+            ) : null}
+          </div>
+
+          {files.some(f => f.status === 'completed') && (
+            <WorkflowPrompts currentTool="pdf-to-word" />
+          )}
         </motion.div>
       )}
       <DownloadGateModal state={modalState} onClose={closeModal} onLoginSuccess={onLoginSuccess} />

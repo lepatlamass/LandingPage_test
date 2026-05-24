@@ -245,11 +245,11 @@ export default function WatermarkRemoverTool() {
               />
               {images.length === 0 ? (
                 <>
-                  <Upload className="w-10 h-10 text-black dark:text-gray-500 mb-4 group-hover:text-[#d4ff33] transition-colors" />
+                  <Upload className="w-10 h-10 text-gray-600 dark:text-gray-400 mb-4 group-hover:text-[#d4ff33] transition-colors" />
                   <p className="text-sm font-bold text-black dark:text-white mb-1">
                     {t('bg-remover-click-to-upload')} <span className="font-normal text-black dark:text-gray-400">{t('bg-remover-or-drag-drop')}</span>
                   </p>
-                  <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest">
+                  <p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase tracking-widest">
                     PNG, JPG or WEBP
                   </p>
                 </>
@@ -317,8 +317,8 @@ export default function WatermarkRemoverTool() {
                       className={cn(
                         "flex-[2] py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-xs",
                         isProcessing || !hasDrawn
-                          ? "bg-white dark:bg-gray-800 text-black dark:text-gray-500 cursor-not-allowed"
-                          : "bg-[#84a12d] text-black hover:bg-[#d4ff33] shadow-lg"
+                          ? "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 cursor-not-allowed"
+                          : "bg-[#84a12d] text-black hover:bg-[#d4ff33] border border-black shadow-md"
                       )}
                     >
                       {isProcessing ? (
@@ -398,7 +398,7 @@ export default function WatermarkRemoverTool() {
                     <canvas ref={maskCanvasRef} className="hidden" />
                     
                     {isProcessing && (
-                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center text-black dark:text-white rounded-lg">
+                      <div className="absolute inset-0 bg-zinc-950 flex flex-col items-center justify-center text-black dark:text-white rounded-lg">
                         <Loader2 className="w-12 h-12 text-[#d4ff33] animate-spin mb-4" />
                         <p className="text-lg font-bold">AI is removing watermark...</p>
                         <p className="text-sm text-black dark:text-gray-400">This may take a few seconds</p>
@@ -406,7 +406,7 @@ export default function WatermarkRemoverTool() {
                     )}
                     
                     {!isProcessing && images[0].status === 'error' && (
-                      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center text-black dark:text-white rounded-lg p-6 text-center">
+                      <div className="absolute inset-0 bg-black/90 flex flex-col items-center justify-center text-black dark:text-white rounded-lg p-6 text-center">
                         <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
                         <p className="text-lg font-bold text-red-500">Error</p>
                         <p className="text-sm text-black dark:text-gray-300 mt-2">{images[0].error}</p>

@@ -58,11 +58,13 @@ import PdfToWordTool from './components/tools/PdfToWordTool';
 import WordToPdfTool from './components/tools/WordToPdfTool';
 import VideoToGifTool from './components/tools/VideoToGif/VideoToGifTool';
 import NavigationLoginButton from './components/auth/NavigationLoginButton';
+import AIFeatureGate from './components/auth/AIFeatureGate';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import { ThemeToggle } from './components/ThemeToggle';
 import MainSidebar from './components/layout/MainSidebar';
 import { sidebarTools } from './lib/sidebarData';
 import { useAuth } from './providers/AuthProvider';
+import { seoPages, type SeoPageData } from './lib/seoData';
 
 interface ToolPageContent {
   titleKey: string;
@@ -359,8 +361,8 @@ const toolContent: Record<string, ToolPageContent> = {
     ]
   },
   'excel-to-csv': {
-    titleKey: 'Tools.excel-csv-title',
-    accentKey: 'Tools.excel-csv-accent',
+    titleKey: 'Tools.excel-to-csv-title',
+    accentKey: 'Tools.excel-to-csv-accent',
     descriptionKey: 'Tools.excel-csv-desc',
     heroIcon: FileSpreadsheet,
     features: [
@@ -380,8 +382,8 @@ const toolContent: Record<string, ToolPageContent> = {
     ]
   },
   'csv-to-excel': {
-    titleKey: 'Tools.excel-csv-title',
-    accentKey: 'Tools.excel-csv-accent',
+    titleKey: 'Tools.csv-to-excel-title',
+    accentKey: 'Tools.csv-to-excel-accent',
     descriptionKey: 'Tools.excel-csv-desc',
     heroIcon: FileSpreadsheet,
     features: [
@@ -549,7 +551,7 @@ const toolContent: Record<string, ToolPageContent> = {
   }
 };
 
-export default function App({ toolSlug }: { toolSlug?: string }) {
+export default function App({ toolSlug, seoOverride }: { toolSlug?: string; seoOverride?: SeoPageData }) {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
   const router = useRouter();
@@ -575,6 +577,41 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
   const currentContent = toolContent[activeTool] || toolContent['pdf-to-excel'];
   const activeToolData = sidebarTools.find(t => t.id === activeTool) || 
                         sidebarTools.flatMap(t => t.children || []).find(c => c.id === activeTool);
+
+  const combinedFaqs = seoOverride
+    ? [
+        ...seoOverride.faqs,
+        {
+          question: t('securityFaqQuestion'),
+          answer: t('securityFaqAnswer')
+        },
+        {
+          question: t('loginFaqQuestion'),
+          answer: t('loginFaqAnswer')
+        }
+      ]
+    : [
+        ...currentContent.faqsKeys.map((faq) => ({
+          question: tt(faq.questionKey.split('.')[1]),
+          answer: tt(faq.answerKey.split('.')[1])
+        })),
+        {
+          question: t('securityFaqQuestion'),
+          answer: t('securityFaqAnswer')
+        },
+        {
+          question: t('loginFaqQuestion'),
+          answer: t('loginFaqAnswer')
+        }
+      ];
+
+  const coreToolSlug = activeTool;
+  const relatedUseCases = Object.values(seoPages).filter(
+    (page) => page.coreTool === coreToolSlug
+  );
+  const filteredUseCases = seoOverride
+    ? relatedUseCases.filter((page) => page.slug !== seoOverride.slug)
+    : relatedUseCases;
 
   return (
     <div className="flex h-screen bg-white dark:bg-[#0f1115] text-black dark:text-gray-300 font-sans overflow-hidden">
@@ -619,9 +656,12 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
             <LanguageSwitcher />
             <NavigationLoginButton />
             {!authLoading && !hasActiveLicense && (
-              <button className="hidden md:block bg-[#d4ff33] text-black px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-bold hover:bg-[#c2eb2e] transition-colors whitespace-nowrap">
-                {t('freeTrial')}
-              </button>
+              <Link 
+                href="/account/subscription"
+                className="hidden md:block bg-[#d4ff33] text-black px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-bold hover:bg-[#c2eb2e] transition-colors whitespace-nowrap"
+              >
+                {t('goPro')}
+              </Link>
             )}
           </div>
         </header>
@@ -635,17 +675,19 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
               <span className="text-black dark:text-gray-400">{activeToolData?.nameKey ? tt(activeToolData.nameKey.split('.')[1]) : 'Tool'}</span>
             </nav>
             <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 md:mb-6">
-              {tt(currentContent.titleKey.split('.')[1])} <span className="italic text-black dark:text-[#d4ff33]">{tt(currentContent.accentKey.split('.')[1])}</span> Online
+              {seoOverride ? seoOverride.h1 : tt(currentContent.titleKey.split('.')[1])} <span className="italic text-black dark:text-[#d4ff33]">{seoOverride ? seoOverride.h1Accent : tt(currentContent.accentKey.split('.')[1])}</span>
             </h1>
-            <p className="text-sm md:text-base text-black dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
-              {tt(currentContent.descriptionKey.split('.')[1])}
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
+              {seoOverride ? seoOverride.subtitle : tt(currentContent.descriptionKey.split('.')[1])}
             </p>
           </div>
 
           {/* Tool Area */}
           <div className="mb-16">
             {activeTool === 'bg-remover' ? (
-              <BackgroundRemover />
+              <AIFeatureGate toolId="bg-remover">
+                <BackgroundRemover />
+              </AIFeatureGate>
             ) : activeTool === 'compress-images' ? (
               <CompressImagesTool />
             ) : activeTool === 'compress-pdf' ? (
@@ -655,9 +697,13 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
             ) : activeTool === 'watermark' ? (
               <WatermarkTool />
             ) : activeTool === 'watermark-remover' ? (
-              <WatermarkRemoverTool />
+              <AIFeatureGate toolId="watermark-remover">
+                <WatermarkRemoverTool />
+              </AIFeatureGate>
             ) : activeTool === 'image-to-text' ? (
-              <ImageToTextTool />
+              <AIFeatureGate toolId="image-to-text">
+                <ImageToTextTool />
+              </AIFeatureGate>
             ) : activeTool === 'resize' ? (
               <ImageResizerTool />
             ) : activeTool === 'image-converter' ? (
@@ -721,7 +767,7 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 md:mb-32 px-4 md:px-0">
             {currentContent.features.map((feature, i) => (
-              <div key={i} className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8 hover:bg-black/5 dark:hover:bg-white/8 transition-colors">
+              <div key={i} className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-colors">
                 <div className={`w-10 h-10 bg-black/5 dark:bg-white/5 rounded-xl flex items-center justify-center ${feature.color} mb-6`}>
                   <feature.icon size={24} />
                 </div>
@@ -736,8 +782,7 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
           {/* How To Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center mb-16 md:mb-32 px-4 md:px-0">
             <div className="relative group order-2 lg:order-1">
-              <div className="absolute -inset-4 bg-lime-400/20 rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:block"></div>
-              <div className="relative rounded-[24px] md:rounded-[32px] overflow-hidden border border-black/10 dark:border-white/10 aspect-[4/3] bg-black/5 dark:bg-white/5 flex items-center justify-center mx-4 md:mx-0">
+              <div className="relative rounded-[24px] md:rounded-[32px] overflow-hidden border border-zinc-200 dark:border-zinc-800 aspect-[4/3] bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center mx-4 md:mx-0">
                 <Image
                   src="/amico.svg"
                   alt={t('alt.processGuide')}
@@ -764,15 +809,17 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
 
           {/* FAQs Section */}
           <div className="max-w-3xl mx-auto mb-16 md:mb-32 px-4 md:px-0">
-            <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white text-center mb-8 md:mb-12">{tt(currentContent.titleKey.split('.')[1])} {tt(currentContent.accentKey.split('.')[1])} {t('faqs')}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white text-center mb-8 md:mb-12">
+              {seoOverride ? `${seoOverride.h1} ${seoOverride.h1Accent} FAQs` : `${tt(currentContent.titleKey.split('.')[1])} ${tt(currentContent.accentKey.split('.')[1])} ${t('faqs')}`}
+            </h2>
             <div className="space-y-3 md:space-y-4">
-              {currentContent.faqsKeys.map((faq, i) => (
+              {combinedFaqs.map((faq, i) => (
                 <div key={i} className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl overflow-hidden">
                   <button 
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                   >
-                    <span className="font-bold text-black dark:text-white">{tt(faq.questionKey.split('.')[1])}</span>
+                    <span className="font-bold text-black dark:text-white">{faq.question}</span>
                     <ChevronDown className={`text-lime-400 transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -781,9 +828,9 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="px-8 pb-6 text-black dark:text-gray-500 text-sm leading-relaxed"
+                        className="px-8 pb-6 text-gray-600 dark:text-gray-500 text-sm leading-relaxed"
                       >
-                        {tt(faq.answerKey.split('.')[1])}
+                        {faq.answer}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -791,21 +838,31 @@ export default function App({ toolSlug }: { toolSlug?: string }) {
               ))}
             </div>
           </div>
-        </section>
 
-        {/* CTA Section */}
-        <section className="bg-[#d4ff33] py-16 md:py-24 px-4 md:px-8 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-bold text-black mb-4 md:mb-6 tracking-tight leading-tight">{t('doBusinessBetter')}</h2>
-            <p className="text-black/70 text-base md:text-lg mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
-              {t('documentWorkEasy')}
-            </p>
-            {!authLoading && !hasActiveLicense && (
-              <button className="bg-black text-black dark:text-white px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg hover:bg-white dark:bg-gray-900 transition-all hover:scale-105 shadow-xl whitespace-nowrap">
-                {t('try7DaysFree')}
-              </button>
-            )}
-          </div>
+          {/* Related Use Cases Section */}
+          {filteredUseCases.length > 0 && (
+            <div className="max-w-3xl mx-auto mb-16 md:mb-32 px-4 md:px-0 border-t border-black/5 dark:border-white/5 pt-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white text-center mb-8 md:mb-12">
+                {t('directoryPopularTasks')}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {filteredUseCases.map((useCase) => (
+                  <Link
+                    key={useCase.slug}
+                    href={`/${useCase.slug}`}
+                    className="group flex flex-col justify-center p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 hover:border-[#d4ff33] dark:hover:border-[#d4ff33] transition-all hover:scale-[1.01] duration-200"
+                  >
+                    <span className="text-sm font-bold text-black dark:text-white group-hover:text-[#d4ff33] dark:group-hover:text-[#d4ff33] transition-colors">
+                      {useCase.title.split('|')[0].trim()}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">
+                      {useCase.description}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Footer */}

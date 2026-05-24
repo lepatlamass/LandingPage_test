@@ -23,12 +23,12 @@ export default async function Navbar() {
           <Link href="/tools" className="text-xs font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">
             {tCommon('tools')}
           </Link>
-          <a href="/#faq" className="text-xs font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">
-            Faq
-          </a>
-          <a href="/#price" className="text-xs font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">
-            Price
-          </a>
+          <Link href="/faq" className="text-xs font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">
+            {tCommon('faqs')}
+          </Link>
+          <Link href="/pricing" className="text-xs font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors">
+            {tCommon('pricing')}
+          </Link>
         </nav>
       </div>
       <div className="flex items-center gap-3 md:gap-4">
@@ -36,7 +36,7 @@ export default async function Navbar() {
         <LanguageSwitcher />
         <NavigationLoginButton />
         <Link
-          href="/tools"
+          href="/pricing"
           className="px-3 md:px-4 py-1.5 bg-[#d4ff33] text-black text-[10px] md:text-xs font-bold rounded hover:bg-[#bce622] transition-colors whitespace-nowrap"
         >
           {tCommon('getPro')}

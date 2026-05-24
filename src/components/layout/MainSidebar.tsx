@@ -99,7 +99,7 @@ export default function MainSidebar({ activeTool, onToolSelect }: MainSidebarPro
                         key={child.id}
                         onClick={() => handleToolSelect(child.id)}
                         className={`w-full text-left px-3 py-2 text-xs font-medium transition-colors ${
-                          activeTool === child.id ? 'text-[#aacc29] dark:text-[#d4ff33]' : 'text-black dark:text-gray-500 hover:text-gray-900 dark:hover:text-black dark:text-gray-300'
+                          activeTool === child.id ? 'text-[#aacc29] dark:text-[#d4ff33]' : 'text-black hover:text-[#aacc29] dark:text-gray-400 dark:hover:text-[#d4ff33]'
                         }`}
                       >
                         {tt(child.nameKey.split('.')[1])}

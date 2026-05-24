@@ -25,36 +25,18 @@ const nextConfig = {
       },
     ],
   },
-  async headers() {
+
+  async redirects() {
     return [
-      // COEP + COOP are required for SharedArrayBuffer (used by ffmpeg in tools pages).
-      // They must NOT be applied globally because they block third-party iframes
-      // (e.g. YouTube) on the home page. Scope only to tool routes.
       {
-        source: '/:locale/tools:path*',
-        headers: [
-          {
-            key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp',
-          },
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
-          },
-        ],
+        source: '/help',
+        destination: '/faq',
+        permanent: true,
       },
       {
-        source: '/tools:path*',
-        headers: [
-          {
-            key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp',
-          },
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
-          },
-        ],
+        source: '/:locale/help',
+        destination: '/:locale/faq',
+        permanent: true,
       },
     ];
   },

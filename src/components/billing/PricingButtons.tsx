@@ -146,6 +146,17 @@ interface PricingStrings {
   everythingInPro: string;
   yearlyCredits: string;
   getYearly: string;
+  
+  // New keys for free tier
+  freeTier?: string;
+  freeTierDesc?: string;
+  freeTierPrice?: string;
+  freeTierPeriod?: string;
+  limitedDownloads?: string;
+  noAiFeatures?: string;
+  clientSideOnly?: string;
+  currentPlan?: string;
+  getStarted?: string;
 }
 
 interface PricingButtonsProps {
@@ -156,6 +167,8 @@ interface PricingButtonsProps {
   yearlySale?: string | null;
   monthlyName?: string | null;
   yearlyName?: string | null;
+  showDetails?: boolean;
+  showFree?: boolean;
 }
 
 export default function PricingButtons({
@@ -165,8 +178,10 @@ export default function PricingButtons({
   yearlySale,
   monthlyName,
   yearlyName,
+  showDetails = true,
+  showFree = false,
 }: PricingButtonsProps) {
-  const { user } = useAuth();
+  const { user, hasActiveLicense, licenseInfo } = useAuth();
   const router = useRouter();
 
   const [userCurrency, setUserCurrency] = useState<string>('USD');
@@ -218,9 +233,11 @@ export default function PricingButtons({
   const monthlyTitle = monthlyName ?? t.foundryPro;
   const yearlyTitle = yearlyName ?? t.yearlyBestValue;
 
+  const redirectPath = showFree ? '/pricing' : '/#price';
+
   const handleMonthly = () => {
     if (!user) {
-      router.push('/login?redirect=/#price');
+      router.push(`/login?redirect=${redirectPath}`);
     } else {
       trackSubscriptionStarted('monthly');
       window.open(MONTHLY_CHECKOUT, '_blank');
@@ -229,17 +246,66 @@ export default function PricingButtons({
 
   const handleYearly = () => {
     if (!user) {
-      router.push('/login?redirect=/#price');
+      router.push(`/login?redirect=${redirectPath}`);
     } else {
       trackSubscriptionStarted('yearly');
       window.open(YEARLY_CHECKOUT, '_blank');
     }
   };
 
+  const isMonthlyActive = user !== null && hasActiveLicense && licenseInfo?.planType === 'monthly';
+  const isYearlyActive = user !== null && hasActiveLicense && licenseInfo?.planType === 'yearly';
+
   return (
-    <div className="lg:w-2/3 flex flex-col sm:flex-row gap-8 w-full items-stretch">
+    <div className={`w-full gap-8 items-stretch flex flex-col ${showFree ? 'lg:flex-row max-w-6xl' : 'sm:flex-row lg:w-2/3'}`}>
+      {/* Free Tier Plan */}
+      {showFree && (
+        <div className={`flex-1 rounded-[32px] bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-zinc-800 p-8 flex flex-col shadow-md ${showDetails ? 'min-h-[460px]' : 'min-h-[280px]'}`}>
+          <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{t.freeTier || 'Free Tier'}</h3>
+          <div className="flex items-baseline gap-1 mb-4">
+            <span className="text-3xl font-bold text-black dark:text-white">{t.freeTierPrice || '$0'}</span>
+            <span className="text-black dark:text-gray-500 text-base">{t.freeTierPeriod || '/ forever'}</span>
+          </div>
+
+          <div className="text-xs text-black dark:text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.freeTierDesc || 'Basic Access'}</div>
+
+          {showDetails && (
+            <ul className="space-y-4 mb-10 flex-1">
+              <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+                <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+                <span className="leading-tight">{t.clientSideOnly || 'Client-side processing'}</span>
+              </li>
+              <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+                <div className="w-5 h-5 flex items-center justify-center text-yellow-500 shrink-0 font-bold">⚠️</div>
+                <span className="leading-tight">{t.limitedDownloads || 'Limited daily downloads'}</span>
+              </li>
+              <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+                <div className="w-5 h-5 flex items-center justify-center text-red-500 shrink-0 font-bold">✕</div>
+                <span className="leading-tight text-gray-500 dark:text-gray-500 line-through">{t.noAiFeatures || 'No access to AI features'}</span>
+              </li>
+            </ul>
+          )}
+
+          <button
+            disabled={user !== null && !hasActiveLicense}
+            onClick={() => {
+              if (!user) {
+                router.push(`/signup?redirect=${redirectPath}`);
+              }
+            }}
+            className={`w-full py-4 rounded-xl font-black text-base transition-all hover:scale-[1.02] active:scale-[0.98] ${
+              user !== null && !hasActiveLicense
+                ? 'bg-gray-200 dark:bg-[#222222] text-gray-400 dark:text-gray-600 cursor-default hover:scale-100 active:scale-100'
+                : 'bg-[#d4ff33] text-black hover:bg-[#bce622]'
+            }`}
+          >
+            {user !== null && !hasActiveLicense ? (t.currentPlan || 'Current Plan') : (t.getStarted || 'Get Started')}
+          </button>
+        </div>
+      )}
+
       {/* Monthly Plan */}
-      <div className="flex-1 rounded-[32px] border-[2px] border-[#d4ff33] bg-white dark:bg-[#111111] p-8 relative flex flex-col shadow-2xl shadow-[#d4ff33]/5 min-h-[460px]">
+      <div className={`flex-1 rounded-[32px] border-2 border-[#d4ff33] bg-white dark:bg-[#111111] p-8 relative flex flex-col shadow-md ${showDetails ? 'min-h-[460px]' : 'min-h-[280px]'} ${showFree ? 'lg:scale-105 z-10' : ''}`}>
         <div className="absolute -top-[2px] right-8 bg-[#d4ff33] text-black text-[10px] font-black px-6 py-2 rounded-b-xl uppercase tracking-widest">
           Recommended
         </div>
@@ -255,35 +321,42 @@ export default function PricingButtons({
 
         <div className="text-xs text-black dark:text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.bestForOccasional}</div>
 
-        <ul className="space-y-4 mb-10 flex-1">
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.unlimitedDownloads}</span>
-          </li>
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.creditsDesc}</span>
-          </li>
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.priorityProcessing}</span>
-          </li>
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.noWatermarks}</span>
-          </li>
-        </ul>
+        {showDetails && (
+          <ul className="space-y-4 mb-10 flex-1">
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.unlimitedDownloads}</span>
+            </li>
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.creditsDesc}</span>
+            </li>
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.priorityProcessing}</span>
+            </li>
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.noWatermarks}</span>
+            </li>
+          </ul>
+        )}
 
         <button
+          disabled={isMonthlyActive}
           onClick={handleMonthly}
-          className="w-full py-4 rounded-xl bg-[#d4ff33] text-black font-black text-base hover:bg-[#bce622] transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className={`w-full py-4 rounded-xl font-black text-base transition-all hover:scale-[1.02] active:scale-[0.98] ${
+            isMonthlyActive
+              ? 'bg-gray-200 dark:bg-[#222222] text-gray-400 dark:text-gray-600 cursor-default hover:scale-100 active:scale-100'
+              : 'bg-[#d4ff33] text-black hover:bg-[#bce622]'
+          }`}
         >
-          {t.startMonthly}
+          {isMonthlyActive ? (t.currentPlan || 'Current Plan') : t.startMonthly}
         </button>
       </div>
 
       {/* Yearly Plan */}
-      <div className="flex-1 rounded-[32px] bg-white dark:bg-[#1a1c21] p-8 flex flex-col shadow-xl min-h-[460px]">
+      <div className={`flex-1 rounded-[32px] bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-zinc-800 p-8 flex flex-col shadow-md ${showDetails ? 'min-h-[460px]' : 'min-h-[280px]'}`}>
         <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{yearlyTitle}</h3>
         <div className="flex items-baseline gap-2 mb-4">
           {yearlyDisplay === null ? (
@@ -298,30 +371,37 @@ export default function PricingButtons({
         </div>
         <div className="text-xs text-black dark:text-[#d4ff33] font-bold mb-8 uppercase tracking-widest">{t.bestForPower}</div>
 
-        <ul className="space-y-4 mb-10 flex-1">
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.everythingInPro}</span>
-          </li>
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.yearlyCredits}</span>
-          </li>
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.priorityProcessing}</span>
-          </li>
-          <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
-            <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
-            <span className="leading-tight">{t.noWatermarks}</span>
-          </li>
-        </ul>
+        {showDetails && (
+          <ul className="space-y-4 mb-10 flex-1">
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.everythingInPro}</span>
+            </li>
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.yearlyCredits}</span>
+            </li>
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.priorityProcessing}</span>
+            </li>
+            <li className="flex items-start gap-3 text-[14px] text-black dark:text-gray-300">
+              <Check className="w-5 h-5 text-[#d4ff33] shrink-0 mt-0.5" />
+              <span className="leading-tight">{t.noWatermarks}</span>
+            </li>
+          </ul>
+        )}
 
         <button
+          disabled={isYearlyActive}
           onClick={handleYearly}
-          className="w-full py-4 rounded-xl bg-gray-100 dark:bg-[#2a2d35] text-black dark:text-white font-black text-base hover:bg-gray-200 dark:hover:bg-[#353943] transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className={`w-full py-4 rounded-xl font-black text-base transition-all hover:scale-[1.02] active:scale-[0.98] ${
+            isYearlyActive
+              ? 'bg-gray-200 dark:bg-[#222222] text-gray-400 dark:text-gray-600 cursor-default hover:scale-100 active:scale-100'
+              : 'bg-gray-100 dark:bg-[#2a2d35] text-black dark:text-white hover:bg-gray-200 dark:hover:bg-[#353943]'
+          }`}
         >
-          {t.getYearly}
+          {isYearlyActive ? (t.currentPlan || 'Current Plan') : t.getYearly}
         </button>
       </div>
     </div>

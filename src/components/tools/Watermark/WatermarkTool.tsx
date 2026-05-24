@@ -34,7 +34,7 @@ interface UploadedFile {
   file: File;
   preview: string;
   type: 'image' | 'pdf';
-  processed?: string;
+  processedBlob?: Blob;
   status: 'pending' | 'processing' | 'completed' | 'error';
   error?: string;
 }
@@ -43,7 +43,7 @@ interface UploadedFile {
 
 export default function WatermarkTool() {
   const t = useTranslations('Tools');
-  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
+  const { guardedBlobDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate('watermark');
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [watermarkType, setWatermarkType] = useState<'image' | 'text'>('image');
   const [watermark, setWatermark] = useState<string | null>(null);
@@ -95,7 +95,7 @@ export default function WatermarkTool() {
     reader.readAsDataURL(file);
   };
 
-  const applyImageWatermark = async (imageSrc: string, watermarkSrc: string | null, text: string | null, settings: WatermarkSettings): Promise<string> => {
+  const applyImageWatermark = async (imageSrc: string, watermarkSrc: string | null, text: string | null, settings: WatermarkSettings): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       
@@ -109,6 +109,13 @@ export default function WatermarkTool() {
 
         // Draw subject
         ctx.drawImage(img, 0, 0);
+
+        const finalize = () => {
+          canvas.toBlob((blob) => {
+            if (blob) resolve(blob);
+            else reject('Failed to generate image blob');
+          }, 'image/png');
+        };
 
         if (watermarkSrc) {
           const wm = new Image();
@@ -141,7 +148,7 @@ export default function WatermarkTool() {
             ctx.drawImage(wm, x, y, wmWidth, wmHeight);
             ctx.globalAlpha = 1.0;
 
-            resolve(canvas.toDataURL('image/png'));
+            finalize();
           };
           wm.src = watermarkSrc;
         } else if (text) {
@@ -176,16 +183,16 @@ export default function WatermarkTool() {
           }
 
           ctx.fillText(text, x, y);
-          resolve(canvas.toDataURL('image/png'));
+          finalize();
         } else {
-          resolve(canvas.toDataURL('image/png'));
+          finalize();
         }
       };
       img.src = imageSrc;
     });
   };
 
-  const applyPdfWatermark = async (pdfBuffer: ArrayBuffer, watermarkSrc: string | null, text: string | null, settings: WatermarkSettings): Promise<string> => {
+  const applyPdfWatermark = async (pdfBuffer: ArrayBuffer, watermarkSrc: string | null, text: string | null, settings: WatermarkSettings): Promise<Blob> => {
     const pdfDoc = await PDFDocument.load(pdfBuffer);
     const pages = pdfDoc.getPages();
     const scale = settings.size === 'small' ? 0.1 : settings.size === 'medium' ? 0.2 : 0.3;
@@ -267,8 +274,7 @@ export default function WatermarkTool() {
     }
 
     const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes as unknown as ArrayBuffer], { type: 'application/pdf' });
-    return URL.createObjectURL(blob);
+    return new Blob([pdfBytes as unknown as ArrayBuffer], { type: 'application/pdf' });
   };
 
   const startProcessing = async () => {
@@ -283,9 +289,9 @@ export default function WatermarkTool() {
       try {
         setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'processing' } : f));
 
-        let result: string;
+        let resultBlob: Blob;
         if (fileObj.type === 'image') {
-          result = await applyImageWatermark(
+          resultBlob = await applyImageWatermark(
             fileObj.preview, 
             watermarkType === 'image' ? watermark : null, 
             watermarkType === 'text' ? watermarkText : null, 
@@ -293,7 +299,7 @@ export default function WatermarkTool() {
           );
         } else {
           const buffer = await fileObj.file.arrayBuffer();
-          result = await applyPdfWatermark(
+          resultBlob = await applyPdfWatermark(
             buffer, 
             watermarkType === 'image' ? watermark : null, 
             watermarkType === 'text' ? watermarkText : null, 
@@ -301,7 +307,7 @@ export default function WatermarkTool() {
           );
         }
 
-        setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'completed', processed: result } : f));
+        setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'completed', processedBlob: resultBlob } : f));
       } catch (error) {
         console.error("Watermark error:", error);
         setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'error', error: "Failed to apply watermark" } : f));
@@ -312,16 +318,9 @@ export default function WatermarkTool() {
     trackToolCompleted('watermark');
   };
 
-  const downloadFile = (url: string, filename: string) => {
+  const downloadFile = (blob: Blob, filename: string) => {
     trackFileDownloaded('watermark');
-    guardedDownload(() => {
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
+    guardedBlobDownload(blob, filename);
   };
 
   return (
@@ -349,11 +348,11 @@ export default function WatermarkTool() {
                 accept="image/*,application/pdf"
                 className="hidden" 
               />
-              <Upload className="w-10 h-10 text-black dark:text-gray-500 mb-4 group-hover:text-[#3b82f6] transition-colors" />
+              <Upload className="w-10 h-10 text-gray-600 dark:text-gray-400 mb-4 group-hover:text-[#3b82f6] transition-colors" />
               <p className="text-sm font-bold text-black dark:text-white mb-1">
                 {t('watermark-click-to-upload')} <span className="font-normal text-black dark:text-gray-400">{t('watermark-or-drag-drop')}</span>
               </p>
-              <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest">
+              <p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase tracking-widest">
                 Images ou PDF
               </p>
             </div>
@@ -373,8 +372,8 @@ export default function WatermarkTool() {
                     className={cn(
                       "flex-1 py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2",
                       watermarkType === type 
-                        ? "bg-[#3b82f6] text-black dark:text-white shadow-lg shadow-blue-500/20" 
-                        : "bg-black text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
+                        ? "bg-[#3b82f6] text-black dark:text-white border border-blue-600 shadow-md" 
+                        : "bg-black text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-300"
                     )}
                   >
                     {type === 'image' ? <ImageIcon size={16} /> : <FileText size={16} />}
@@ -387,7 +386,7 @@ export default function WatermarkTool() {
                 <div 
                   onClick={() => watermarkInputRef.current?.click()}
                   className={cn(
-                    "relative border border-dashed border-zinc-300 dark:border-gray-800 bg-black/40 rounded-xl p-8 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
+                    "relative border border-dashed border-zinc-300 dark:border-gray-800 bg-gray-100 dark:bg-black/40 rounded-xl p-8 transition-all cursor-pointer group flex flex-col items-center justify-center text-center",
                     watermark ? "border-[#3b82f6]/30" : "hover:border-[#3b82f6]/50 hover:bg-[#3b82f6]/5"
                   )}
                 >
@@ -410,14 +409,14 @@ export default function WatermarkTool() {
                     </div>
                   ) : (
                     <>
-                      <ImageIcon className="w-8 h-8 text-black dark:text-gray-500 mb-2 group-hover:text-[#3b82f6] transition-colors" />
+                      <ImageIcon className="w-8 h-8 text-gray-600 dark:text-gray-400 mb-2 group-hover:text-[#3b82f6] transition-colors" />
                       <p className="text-xs font-bold text-black dark:text-white">{t('watermark-select-watermark')}</p>
                     </>
                   )}
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest">
+                  <label className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-widest">
                     {t('watermark-text-label')}
                   </label>
                   <input 
@@ -440,7 +439,7 @@ export default function WatermarkTool() {
             <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Position */}
               <div className="space-y-4">
-                <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                <label className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-widest flex items-center gap-2">
                   <Layout size={14} /> {t('watermark-position')}
                 </label>
                 <div className="grid grid-cols-1 gap-2">
@@ -450,7 +449,7 @@ export default function WatermarkTool() {
                       onClick={() => setSettings(s => ({ ...s, position: pos }))}
                       className={cn(
                         "py-2 px-4 rounded-lg text-xs font-bold transition-all capitalize",
-                        settings.position === pos ? "bg-[#3b82f6] text-black dark:text-white" : "bg-black text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
+                        settings.position === pos ? "bg-[#3b82f6] text-black dark:text-white" : "bg-black text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-300"
                       )}
                     >
                       {pos}
@@ -461,7 +460,7 @@ export default function WatermarkTool() {
 
               {/* Size */}
               <div className="space-y-4">
-                <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                <label className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-widest flex items-center gap-2">
                   <Maximize2 size={14} /> {t('watermark-size')}
                 </label>
                 <div className="grid grid-cols-1 gap-2">
@@ -471,7 +470,7 @@ export default function WatermarkTool() {
                       onClick={() => setSettings(s => ({ ...s, size: sz }))}
                       className={cn(
                         "py-2 px-4 rounded-lg text-xs font-bold transition-all capitalize",
-                        settings.size === sz ? "bg-[#3b82f6] text-black dark:text-white" : "bg-black text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
+                        settings.size === sz ? "bg-[#3b82f6] text-black dark:text-white" : "bg-black text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-300"
                       )}
                     >
                       {sz}
@@ -482,7 +481,7 @@ export default function WatermarkTool() {
 
               {/* Opacity */}
               <div className="space-y-4">
-                <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                <label className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-widest flex items-center gap-2">
                   <Settings2 size={14} /> {t('watermark-opacity')} ({settings.opacity}%)
                 </label>
                 <input 
@@ -502,7 +501,7 @@ export default function WatermarkTool() {
               {/* Color (Only for Text) */}
               {watermarkType === 'text' && (
                 <div className="space-y-4">
-                  <label className="text-[10px] font-bold text-black dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                  <label className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-widest flex items-center gap-2">
                     <Droplets size={14} /> {t('watermark-color')}
                   </label>
                   <div className="flex items-center gap-4">
@@ -525,8 +524,8 @@ export default function WatermarkTool() {
             className={cn(
               "w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-sm",
               isProcessing || files.length === 0 || (watermarkType === 'image' && !watermark) || (watermarkType === 'text' && !watermarkText)
-                ? "bg-white dark:bg-gray-800 text-black dark:text-gray-500 cursor-not-allowed"
-                : "bg-[#3b82f6] text-black dark:text-white hover:bg-[#2563eb] shadow-lg shadow-blue-500/20"
+                ? "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 cursor-not-allowed"
+                : "bg-[#3b82f6] text-black dark:text-white hover:bg-[#2563eb] border border-blue-600 shadow-md"
             )}
           >
             {isProcessing ? (
@@ -581,7 +580,7 @@ export default function WatermarkTool() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-bold text-gray-900 truncate">{f.file.name}</p>
-                            <p className="text-[10px] text-black dark:text-gray-500 uppercase">{f.type}</p>
+                            <p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase">{f.type}</p>
                           </div>
                           <button 
                             onClick={() => setFiles(prev => prev.filter(item => item.id !== f.id))}
@@ -591,9 +590,9 @@ export default function WatermarkTool() {
                           </button>
                         </div>
                         
-                        {f.status === 'completed' && f.processed && (
+                        {f.status === 'completed' && f.processedBlob && (
                           <button 
-                            onClick={() => downloadFile(f.processed!, `watermarked-${f.file.name}`)}
+                            onClick={() => downloadFile(f.processedBlob!, `watermarked-${f.file.name}`)}
                             className="w-full py-2 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold flex items-center justify-center gap-2 hover:bg-blue-100 transition-colors"
                           >
                             <Download size={12} />

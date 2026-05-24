@@ -23,7 +23,7 @@ export default function NavigationLoginButton() {
   return (
     <Link
       href="/login"
-      className="text-xs font-medium text-black dark:text-gray-300 hover:text-black dark:text-white transition-colors"
+      className="text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
     >
       {t('logIn')}
     </Link>

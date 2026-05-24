@@ -90,7 +90,7 @@ const wrapText = (text: string, maxWidth: number, font: any, fontSize: number): 
 export default function ExcelToPdfTool() {
   const t = useTranslations('Tools');
   const commonT = useTranslations('Common');
-  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
+  const { guardedBlobDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate('excel-to-pdf');
   const [excelFile, setExcelFile] = useState<ExcelToPdfFile | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -252,33 +252,26 @@ export default function ExcelToPdfTool() {
   const downloadPdf = () => {
     trackFileDownloaded('excel-to-pdf');
     if (!excelFile?.resultPdf) return;
-    guardedDownload(() => {
-      const url = URL.createObjectURL(excelFile!.resultPdf!);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${excelFile!.file.name.split('.')[0]}.pdf`;
-      link.click();
-      URL.revokeObjectURL(url);
-    });
+    guardedBlobDownload(excelFile.resultPdf, `${excelFile.file.name.split('.')[0]}.pdf`);
   };
 
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="bg-white dark:bg-[#1a1c21] border border-zinc-300 dark:border-gray-800 rounded-[32px] overflow-hidden shadow-2xl">
-        <div className="p-6 md:p-8 border-b border-zinc-300 dark:border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-white/5 gap-6 md:gap-0">
+        <div className="p-6 md:p-8 border-b border-zinc-300 dark:border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between bg-black/5 dark:bg-white/5 gap-6 md:gap-0">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-red-400/10 rounded-2xl flex items-center justify-center text-red-400 whitespace-nowrap">
               <FileText size={24} />
             </div>
             <div>
               <h3 className="text-xl font-bold text-black dark:text-white">{t('excel-to-pdf')}</h3>
-              <p className="text-black dark:text-gray-500 text-sm">{t('excel-to-pdf-desc')}</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">{t('excel-to-pdf-desc')}</p>
             </div>
           </div>
           {excelFile && (
             <button 
               onClick={removeFile}
-              className="p-2 text-black dark:text-gray-500 hover:text-red-400 transition-colors"
+              className="p-2 text-gray-600 dark:text-gray-400 hover:text-red-400 transition-colors"
               title="Clear"
             >
               <X size={20} />
@@ -302,8 +295,8 @@ export default function ExcelToPdfTool() {
                 <Upload size={32} />
               </div>
               <h4 className="text-black dark:text-white font-bold text-base md:text-lg mb-2 whitespace-nowrap">{commonT('chooseFiles')}</h4>
-              <p className="text-black dark:text-gray-500 text-sm mb-8">{t('excel-to-pdf-select-file-desc')}</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-black dark:text-gray-500 font-medium">
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-8">{t('excel-to-pdf-select-file-desc')}</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs text-gray-600 dark:text-gray-400 font-medium">
                 <div className="flex items-center gap-2">
                   <ShieldCheck size={14} className="text-blue-400" />
                   Secure Processing
@@ -320,14 +313,14 @@ export default function ExcelToPdfTool() {
                 layout
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-black/40 border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 flex items-center gap-6"
+                className="bg-gray-100 dark:bg-black/40 border border-zinc-300 dark:border-gray-800 rounded-2xl p-6 flex items-center gap-6"
               >
                 <div className="w-20 h-20 rounded-xl overflow-hidden bg-white dark:bg-gray-900 shrink-0 border border-zinc-300 dark:border-gray-800 flex items-center justify-center">
                   <FileSpreadsheet size={32} className="text-green-400" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-lg font-bold text-black dark:text-white truncate">{excelFile.file.name}</p>
-                  <p className="text-xs text-black dark:text-gray-500 uppercase tracking-wider mt-1">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wider mt-1">
                     {(excelFile.file.size / 1024).toFixed(1)} KB • Excel
                   </p>
                 </div>
@@ -340,7 +333,7 @@ export default function ExcelToPdfTool() {
                         {t('excel-to-pdf-status-completed')}
                       </div>
                       <button onClick={downloadPdf}
-                        className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-red-500 text-black dark:text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-500/20 whitespace-nowrap"
+                        className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-red-500 text-black dark:text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-red-600 transition-all border border-red-600 shadow-md whitespace-nowrap"
                       >
                         <Download size={18} /> {t('excel-to-pdf-download')}
                       </button>
@@ -353,7 +346,7 @@ export default function ExcelToPdfTool() {
                   ) : (
                     <button onClick={processExcel}
                       disabled={isProcessing}
-                      className="flex items-center gap-2 px-4 py-2 sm:px-8 sm:py-3 bg-red-500 text-black dark:text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-red-500/20 whitespace-nowrap"
+                      className="flex items-center gap-2 px-4 py-2 sm:px-8 sm:py-3 bg-red-500 text-black dark:text-white rounded-xl text-xs sm:text-sm font-bold hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all border border-red-600 shadow-md whitespace-nowrap"
                     >
                       {isProcessing ? (
                         <><Loader2 size={18} className="animate-spin" /> {t('excel-to-pdf-status-processing')}</>
@@ -365,7 +358,7 @@ export default function ExcelToPdfTool() {
                 </div>
               </motion.div>
 
-              <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl p-6 flex items-center gap-4">
+              <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl p-6 flex items-center gap-4">
                 <Table size={20} className="text-yellow-400 shrink-0" />
                 <p className="text-xs text-black dark:text-gray-400 leading-relaxed">
                   {t('excel-to-pdf-info-desc')}
@@ -386,30 +379,30 @@ export default function ExcelToPdfTool() {
 
       {/* SEO Content Section */}
       <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
+        <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-red-400/10 rounded-2xl flex items-center justify-center text-red-400 mb-6 whitespace-nowrap">
             <Table size={24} />
           </div>
           <h4 className="text-black dark:text-white font-bold mb-4">{t('excel-to-pdf-f1-title')}</h4>
-          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
             {t('excel-to-pdf-f1-desc')}
           </p>
         </div>
-        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
+        <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-yellow-400/10 rounded-2xl flex items-center justify-center text-yellow-400 mb-6">
             <Zap size={24} />
           </div>
           <h4 className="text-black dark:text-white font-bold mb-4">{t('excel-to-pdf-f2-title')}</h4>
-          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
             {t('excel-to-pdf-f2-desc')}
           </p>
         </div>
-        <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
+        <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-3xl p-8">
           <div className="w-12 h-12 bg-blue-400/10 rounded-2xl flex items-center justify-center text-blue-400 mb-6">
             <ShieldCheck size={24} />
           </div>
           <h4 className="text-black dark:text-white font-bold mb-4">{t('excel-to-pdf-f3-title')}</h4>
-          <p className="text-black dark:text-gray-500 text-sm leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
             {t('excel-to-pdf-f3-desc')}
           </p>
         </div>

@@ -80,6 +80,17 @@ export default async function ToolsDirectory() {
       tools: [
         { id: "video-to-gif", name: tTools('video-to-gif'), icon: FileVideo },
       ]
+    },
+    {
+      title: tCommon('directoryPopularTasks'),
+      isRootPath: true,
+      tools: [
+        { id: "compress-pdf-for-email", name: tTools('compress-pdf-for-email'), icon: Minimize },
+        { id: "resize-image-for-linkedin-banner", name: tTools('resize-image-for-linkedin-banner'), icon: Maximize },
+        { id: "fix-blurry-scanned-pdf", name: tTools('fix-blurry-scanned-pdf'), icon: Type },
+        { id: "make-background-transparent-free", name: tTools('make-background-transparent-free'), icon: Eraser },
+        { id: "remove-tiktok-watermark-free", name: tTools('remove-tiktok-watermark-free'), icon: Droplets },
+      ]
     }
   ];
 
@@ -97,7 +108,7 @@ export default async function ToolsDirectory() {
                 {category.tools.map((tool, toolIdx) => (
                   <li key={toolIdx}>
                     <Link
-                      href={`/tools/${tool.id}`}
+                      href={category.isRootPath ? `/${tool.id}` : `/tools/${tool.id}`}
                       className="group flex items-center gap-3 text-black dark:text-gray-400 hover:text-[#d4ff33] transition-colors"
                     >
                       <div className="w-8 h-8 rounded-lg bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-[#d4ff33]/10 transition-colors">

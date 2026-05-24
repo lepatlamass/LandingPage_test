@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { auth } from "../firebase";
 
 export const getAi = () => {
   const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
@@ -76,9 +77,15 @@ export const processBackgroundRemoval = async (
   _mimeType: string,
   options: { prompt?: string; backgroundImageBase64?: string; backgroundMimeType?: string }
 ): Promise<string> => {
+  const user = auth.currentUser;
+  const token = user ? await user.getIdToken() : '';
+
   const response = await fetch('/api/tools/background-removal', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
     body: JSON.stringify({ base64Image, mimeType: _mimeType, options }),
   });
 

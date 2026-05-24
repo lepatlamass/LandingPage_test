@@ -7,6 +7,7 @@ import { auth, googleProvider } from '@/lib/firebase';
 import { useRouter } from '@/navigation';
 import type { AIGateModalState } from '@/hooks/useAIGate';
 import { signInWithGoogle } from '@/lib/auth-utils';
+import { useTranslations } from 'next-intl';
 
 const CREDITS_CHECKOUT = process.env.NEXT_PUBLIC_CHARIOW_CREDITS_CHECKOUT || '/account/subscription';
 
@@ -33,7 +34,6 @@ export default function AIGateModal({ state, onClose, onLoginSuccess }: AIGateMo
         setIsSigning(false);
         return;
       }
-      // If result exists, we are logged in. Redirect will handle its own state.
       if (result) {
         onLoginSuccess();
       }
@@ -53,14 +53,14 @@ export default function AIGateModal({ state, onClose, onLoginSuccess }: AIGateMo
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop (Solid background, no blur glass effect) */}
           <motion.div
             key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/85"
             onClick={onClose}
           />
 
@@ -77,15 +77,12 @@ export default function AIGateModal({ state, onClose, onLoginSuccess }: AIGateMo
               className="relative w-full max-w-md pointer-events-auto rounded-3xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Gradient border glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#d4ff33]/30 via-transparent to-blue-500/20 pointer-events-none" />
-              
-              {/* Card body */}
-              <div className="relative bg-[#111317] border border-black/10 dark:border-white/10 rounded-3xl p-8">
+              {/* Card body (Solid border, no neon glowing border overlay) */}
+              <div className="relative bg-white dark:bg-[#111317] border-2 border-black dark:border-zinc-800 rounded-3xl p-8 shadow-2xl">
                 {/* Close button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-500 hover:text-black dark:text-white transition-all z-10"
+                  className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all z-10"
                 >
                   <X size={18} />
                 </button>
@@ -123,30 +120,32 @@ function LoginView({
   signError: string | null;
   onSignIn: () => void;
 }) {
+  const t = useTranslations('AIGateModal');
+
   return (
     <div className="text-center">
-      {/* Icon */}
-      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#d4ff33]/20 to-transparent flex items-center justify-center">
-        <Sparkles size={28} className="text-[#d4ff33]" />
+      {/* Icon (Solid border/bg, no glow gradient) */}
+      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border-2 border-black dark:border-zinc-700 flex items-center justify-center">
+        <Sparkles size={28} className="text-black dark:text-[#d4ff33]" />
       </div>
 
       {/* Headline */}
       <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
-        Unlock AI Features
+        {t('loginTitle')}
       </h2>
-      <p className="text-black dark:text-gray-400 text-sm mb-8 leading-relaxed">
-        Sign in to protect against abuse and gain access to our powerful AI tools.
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-8 leading-relaxed">
+        {t('loginDesc')}
       </p>
 
       {/* Perks */}
       <div className="grid grid-cols-2 gap-3 mb-8">
         {[
-          { icon: Shield, label: 'Secure Access' },
-          { icon: Zap, label: 'Instant Results' }
+          { icon: Shield, label: t('loginPerkSecure') },
+          { icon: Zap, label: t('loginPerkInstant') }
         ].map(({ icon: Icon, label }) => (
-          <div key={label} className="flex flex-col items-center gap-2 p-3 bg-white/5 rounded-2xl border border-black/10 dark:border-white/5">
-            <Icon size={18} className="text-[#d4ff33]" />
-            <span className="text-[10px] font-bold text-black dark:text-gray-400 uppercase tracking-wider leading-tight">{label}</span>
+          <div key={label} className="flex flex-col items-center gap-2 p-3 bg-zinc-50 dark:bg-white/5 rounded-2xl border border-zinc-100 dark:border-white/5">
+            <Icon size={18} className="text-black dark:text-[#d4ff33]" />
+            <span className="text-[10px] font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wider leading-tight">{label}</span>
           </div>
         ))}
       </div>
@@ -155,7 +154,7 @@ function LoginView({
       <button
         onClick={onSignIn}
         disabled={isSigning}
-        className={`w-full py-4 px-6 flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-black font-bold rounded-2xl transition-all shadow-xl ${
+        className={`w-full py-4 px-6 flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-black border border-black dark:border-zinc-700 font-bold rounded-2xl transition-all shadow-md ${
           isSigning ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02] active:scale-[0.98]'
         }`}
       >
@@ -169,11 +168,11 @@ function LoginView({
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
           </svg>
         )}
-        <span>{isSigning ? 'Signing in…' : 'Continue with Google'}</span>
+        <span>{isSigning ? t('loginBtnSigning') : t('loginBtnContinue')}</span>
       </button>
 
       {signError && (
-        <p className="mt-3 text-red-400 text-xs">{signError}</p>
+        <p className="mt-3 text-red-500 text-xs">{signError}</p>
       )}
     </div>
   );
@@ -190,60 +189,62 @@ function SubscribeView({
   onSubscribe: () => void;
   onClose: () => void;
 }) {
+  const t = useTranslations('AIGateModal');
+
   const perks = [
-    'Unlimited AI tools usage credits',
-    'High-resolution AI generations',
-    'Unlimited standard downloads',
-    'Cancel anytime',
+    t('subPerkUnlimited'),
+    t('subPerkHiRes'),
+    t('subPerkDownloads'),
+    t('subPerkCancel'),
   ];
 
   return (
     <div className="text-center">
-      {/* Icon */}
-      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-500/20 to-[#d4ff33]/20 flex items-center justify-center">
-        <Sparkles size={28} className="text-[#d4ff33]" />
+      {/* Icon (Solid border/bg, no glow gradient) */}
+      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border-2 border-black dark:border-zinc-700 flex items-center justify-center">
+        <Sparkles size={28} className="text-black dark:text-[#d4ff33]" />
       </div>
 
       {/* Badge */}
-      <div className="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
+      <div className="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
         <InfinityIcon size={12} />
-        Premium AI Access
+        {t('subBadge')}
       </div>
 
       {/* Headline */}
       <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
-        Upgrade for AI features
+        {t('subTitle')}
       </h2>
-      <p className="text-black dark:text-gray-400 text-sm mb-7 leading-relaxed">
-        Our AI models consume significant server credits. An active subscription is required to generate AI outputs.
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-7 leading-relaxed">
+        {t('subDesc')}
       </p>
 
       {/* Perks list */}
-      <div className="text-left space-y-3 mb-8 bg-white/[0.03] p-5 rounded-2xl border border-white/[0.05]">
+      <div className="text-left space-y-3 mb-8 bg-zinc-50 dark:bg-white/[0.03] p-5 rounded-2xl border border-zinc-200 dark:border-white/[0.05]">
         {perks.map((perk) => (
           <div key={perk} className="flex items-center gap-3">
             <div className="w-5 h-5 rounded-full bg-[#d4ff33]/10 flex items-center justify-center shrink-0">
               <CheckCircle2 size={14} className="text-[#d4ff33]" />
             </div>
-            <span className="text-sm text-black dark:text-gray-300 font-medium">{perk}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">{perk}</span>
           </div>
         ))}
       </div>
 
-      {/* CTA */}
+      {/* CTA (Solid shadow & contrast border, no glow shadow) */}
       <button
         onClick={onSubscribe}
-        className="w-full py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black font-bold rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#d4ff33]/20"
+        className="w-full py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black border border-black font-bold rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md"
       >
-        View Plans
+        {t('subBtnPlans')}
         <ArrowRight size={18} />
       </button>
 
       <button
         onClick={onClose}
-        className="mt-3 w-full py-3 text-sm text-black dark:text-gray-500 hover:text-black dark:text-gray-300 transition-colors font-medium"
+        className="mt-3 w-full py-3 text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors font-medium"
       >
-        Back to tool
+        {t('subBtnBack')}
       </button>
     </div>
   );
@@ -259,6 +260,7 @@ function BuyCreditsView({
   onClose: () => void;
 }) {
   const router = useRouter();
+  const t = useTranslations('AIGateModal');
 
   const handleBuyCredits = () => {
     onClose();
@@ -271,55 +273,55 @@ function BuyCreditsView({
 
   return (
     <div className="text-center">
-      {/* Icon */}
-      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-transparent flex items-center justify-center">
-        <Zap size={28} className="text-amber-400" />
+      {/* Icon (Solid border/bg, no glow gradient) */}
+      <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-zinc-100 dark:bg-zinc-800 border-2 border-black dark:border-zinc-700 flex items-center justify-center">
+        <Zap size={28} className="text-black dark:text-amber-400" />
       </div>
 
       {/* Badge */}
-      <div className="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
+      <div className="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
         <Zap size={12} />
-        Credits Depleted
+        {t('depletedBadge')}
       </div>
 
       {/* Headline */}
       <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
-        Out of AI Credits
+        {t('depletedTitle')}
       </h2>
-      <p className="text-black dark:text-gray-400 text-sm mb-7 leading-relaxed">
-        You&apos;ve used all your AI credits for this billing period. Purchase more credits to continue using AI features.
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-7 leading-relaxed">
+        {t('depletedDesc')}
       </p>
 
       {/* Perks list */}
-      <div className="text-left space-y-3 mb-8 bg-white/[0.03] p-5 rounded-2xl border border-white/[0.05]">
+      <div className="text-left space-y-3 mb-8 bg-zinc-50 dark:bg-white/[0.03] p-5 rounded-2xl border border-zinc-200 dark:border-white/[0.05]">
         {[
-          'Instant credit top-up',
-          'Credits never expire',
-          'Use across all AI tools',
+          t('depletedPerkTopUp'),
+          t('depletedPerkNeverExpire'),
+          t('depletedPerkAllTools'),
         ].map((perk) => (
           <div key={perk} className="flex items-center gap-3">
             <div className="w-5 h-5 rounded-full bg-[#d4ff33]/10 flex items-center justify-center shrink-0">
               <CheckCircle2 size={14} className="text-[#d4ff33]" />
             </div>
-            <span className="text-sm text-black dark:text-gray-300 font-medium">{perk}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">{perk}</span>
           </div>
         ))}
       </div>
 
-      {/* CTA */}
+      {/* CTA (Solid shadow & contrast border, no glow shadow) */}
       <button
         onClick={handleBuyCredits}
-        className="w-full py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black font-bold rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#d4ff33]/20"
+        className="w-full py-4 px-6 flex items-center justify-center gap-2 bg-[#d4ff33] hover:bg-[#c8f020] text-black border border-black font-bold rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md"
       >
         <Zap size={18} />
-        Buy More Credits
+        {t('depletedBtnBuy')}
       </button>
 
       <button
         onClick={onClose}
-        className="mt-3 w-full py-3 text-sm text-black dark:text-gray-500 hover:text-black dark:text-gray-300 transition-colors font-medium"
+        className="mt-3 w-full py-3 text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors font-medium"
       >
-        Back to tool
+        {t('depletedBtnBack')}
       </button>
     </div>
   );

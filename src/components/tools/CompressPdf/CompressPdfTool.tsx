@@ -2,8 +2,10 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { useDownloadGate } from '@/hooks/useDownloadGate';
+import { dataUrlToBlob } from '@/lib/fileCache';
 import DownloadGateModal from '@/components/auth/DownloadGateModal';
 import { useTranslations } from 'next-intl';
+import WorkflowPrompts from '../WorkflowPrompts';
 import { 
   Upload, 
   X, 
@@ -36,7 +38,7 @@ interface PdfState {
 export default function CompressPdfTool() {
   const t = useTranslations('Common');
   const tt = useTranslations('Tools');
-  const { guardedDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate();
+  const { guardedBlobDownload, modalState, closeModal, onLoginSuccess } = useDownloadGate('compress-pdf');
   const [pdfState, setPdfState, resetPdfState] = useToolState<PdfState | null>('compress-pdf', null);
   const [level, setLevel, ] = useToolState<CompressionLevel>('compress-pdf-level', 'recommended');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -113,21 +115,10 @@ export default function CompressPdfTool() {
   const downloadPdf = () => {
     if (!pdfState?.resultDataUrl) return;
     trackFileDownloaded('compress-pdf');
-    guardedDownload(() => {
-      // Re-create Blob from the persisted data URL
-      fetch(pdfState.resultDataUrl!)
-        .then(r => r.blob())
-        .then(blob => {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `compressed-${pdfState.fileName}`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-        });
-    });
+    guardedBlobDownload(
+      () => dataUrlToBlob(pdfState.resultDataUrl!),
+      `compressed-${pdfState.fileName}`
+    );
   };
 
   const formatSize = (bytes: number) => {
@@ -158,7 +149,7 @@ export default function CompressPdfTool() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/5 border-2 border-dashed border-black/10 dark:border-white/10 rounded-[40px] p-8 md:p-20 text-center flex flex-col items-center justify-center group hover:border-red-400/50 transition-all cursor-pointer"
+          className="bg-black/5 dark:bg-white/5 border-2 border-dashed border-black/10 dark:border-white/10 rounded-[40px] p-8 md:p-20 text-center flex flex-col items-center justify-center group hover:border-red-400/50 transition-all cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
@@ -181,17 +172,17 @@ export default function CompressPdfTool() {
             <Upload size={32} />
           </div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-red-400 text-black px-4 py-3 sm:px-8 sm:py-4 rounded-2xl font-medium flex items-center gap-2 hover:bg-red-500 transition-colors shadow-lg shadow-red-400/20 whitespace-nowrap text-xs sm:text-sm">
+            <div className="bg-red-400 text-black px-4 py-3 sm:px-8 sm:py-4 rounded-2xl font-medium flex items-center gap-2 hover:bg-red-500 transition-colors border border-red-600 shadow-md whitespace-nowrap text-xs sm:text-sm">
               {t('chooseFiles')}
             </div>
           </div>
-          <p className="text-black dark:text-gray-500 text-sm">{t('dropFilesHere')}</p>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">{t('dropFilesHere')}</p>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Settings Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 sticky top-24">
+            <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] p-8 sticky top-24">
               <h3 className="text-black dark:text-white font-bold mb-6 flex items-center gap-2">
                 <Settings size={20} className="text-red-400" />
                 {t('settings')}
@@ -199,7 +190,7 @@ export default function CompressPdfTool() {
 
               <div className="space-y-6">
                 <div>
-                  <label className="text-xs font-bold text-black dark:text-gray-500 uppercase tracking-wider mb-4 block">
+                  <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-4 block">
                     {tt('compress-pdf-level-label')}
                   </label>
                   <div className="space-y-3">
@@ -210,7 +201,7 @@ export default function CompressPdfTool() {
                         className={`w-full p-4 rounded-2xl border text-left transition-all ${
                           level === l 
                             ? 'bg-red-400/10 border-red-400 text-black dark:text-white' 
-                            : 'bg-white/5 border-black/10 dark:border-white/10 text-black dark:text-gray-400 hover:border-black/20 dark:border-white/20'
+                            : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-black dark:text-gray-400 hover:border-black/20 dark:border-white/20'
                         }`}
                       >
                         <div className="font-bold text-sm mb-1 capitalize">
@@ -231,7 +222,7 @@ export default function CompressPdfTool() {
                     className={`w-full py-4 px-4 rounded-2xl font-medium flex items-center justify-center gap-2 transition-all whitespace-nowrap text-xs sm:text-sm ${
                       pdfState.status === 'completed'
                         ? 'bg-green-500 text-black cursor-default'
-                        : 'bg-red-400 text-black hover:bg-red-500 shadow-lg shadow-red-400/20 disabled:opacity-50 disabled:cursor-not-allowed'
+                        : 'bg-red-400 text-black hover:bg-red-500 border border-red-600 shadow-md disabled:opacity-50 disabled:cursor-not-allowed'
                     }`}
                   >
                     {isProcessing ? (
@@ -255,7 +246,7 @@ export default function CompressPdfTool() {
                   {pdfState.status === 'completed' && (
                     <button
                       onClick={downloadPdf}
-                      className="w-full py-4 px-4 rounded-2xl bg-red-400 text-black font-medium flex items-center justify-center gap-2 hover:bg-red-500 transition-all whitespace-nowrap text-xs sm:text-sm shadow-xl"
+                      className="w-full py-4 px-4 rounded-2xl bg-red-400 text-black font-medium flex items-center justify-center gap-2 hover:bg-red-500 transition-all whitespace-nowrap text-xs sm:text-sm border border-red-600 shadow-md"
                     >
                       <Download size={20} />
                       {tt('compress-pdf-download')}
@@ -264,7 +255,7 @@ export default function CompressPdfTool() {
 
                   <button
                     onClick={resetPdfState}
-                    className="w-full py-4 px-4 rounded-2xl bg-black/5 dark:bg-white/5 text-black dark:text-white font-medium flex items-center justify-center gap-2 hover:bg-black/10 dark:hover:bg-white/10 transition-all whitespace-nowrap text-xs sm:text-sm border border-black/10 dark:border-white/10"
+                    className="w-full py-4 px-4 rounded-2xl bg-black/5 dark:bg-black/5 dark:bg-white/5 text-black dark:text-white font-medium flex items-center justify-center gap-2 hover:bg-black/10 dark:hover:bg-white/10 transition-all whitespace-nowrap text-xs sm:text-sm border border-black/10 dark:border-white/10"
                   >
                     <X size={20} />
                     {t('chooseFiles')}
@@ -276,7 +267,7 @@ export default function CompressPdfTool() {
 
           {/* File List */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] overflow-hidden">
+            <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-[32px] overflow-hidden">
               <div className="p-6 border-b border-black/10 dark:border-white/10 flex items-center justify-between bg-white/[0.02]">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-red-400/10 rounded-lg text-red-400 whitespace-nowrap">
@@ -284,7 +275,7 @@ export default function CompressPdfTool() {
                   </div>
                   <div>
                     <h4 className="text-black dark:text-white font-bold text-sm">{pdfState.fileName}</h4>
-                    <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest font-bold">
+                    <p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase tracking-widest font-bold">
                       {formatSize(pdfState.originalSize)}
                     </p>
                   </div>
@@ -292,7 +283,7 @@ export default function CompressPdfTool() {
                 {pdfState.status === 'completed' && pdfState.compressedSize && (
                   <div className="flex items-center gap-4">
                     <div className="text-right">
-                      <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest font-bold mb-1">{tt('compress-pdf-new-size')}</p>
+                      <p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase tracking-widest font-bold mb-1">{tt('compress-pdf-new-size')}</p>
                       <p className="text-green-400 font-mono font-bold">{formatSize(pdfState.compressedSize)}</p>
                     </div>
                     <div className="bg-green-400/10 text-green-400 px-3 py-1 rounded-full text-xs font-bold border border-green-400/20">
@@ -337,7 +328,7 @@ export default function CompressPdfTool() {
                       </div>
                       <div className="space-y-2">
                         <p className="text-black dark:text-white font-bold">{tt('compress-pdf-optimizing')}</p>
-                        <p className="text-black dark:text-gray-500 text-xs">{tt('compress-pdf-processing-desc')}</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-xs">{tt('compress-pdf-processing-desc')}</p>
                       </div>
                     </motion.div>
                   )}
@@ -355,14 +346,15 @@ export default function CompressPdfTool() {
                       </div>
                       <div className="space-y-2">
                         <p className="text-black dark:text-white font-bold">{tt('compress-pdf-complete')}</p>
-                        <p className="text-black dark:text-gray-500 text-xs">{tt('compress-pdf-complete-desc')}</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-xs">{tt('compress-pdf-complete-desc')}</p>
                       </div>
                       <button onClick={downloadPdf}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-black rounded-xl font-medium hover:bg-green-600 transition-colors whitespace-nowrap text-xs sm:text-sm shadow-lg shadow-green-500/20"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-black rounded-xl font-medium hover:bg-green-600 transition-colors whitespace-nowrap text-xs sm:text-sm border border-green-600 shadow-md"
                       >
                         <Download size={18} />
                         {tt('compress-pdf-download')}
                       </button>
+                      <WorkflowPrompts currentTool="compress-pdf" />
                     </motion.div>
                   )}
 

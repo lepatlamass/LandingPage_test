@@ -21,6 +21,7 @@ import { useToolState } from '@/hooks/useToolState';
 import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
 import { consumeAICredit } from '@/lib/firestore/licenses';
 import { auth } from '@/lib/firebase';
+import WorkflowPrompts from '../WorkflowPrompts';
 
 interface ProcessedImage {
   id: string;
@@ -231,11 +232,11 @@ export default function BackgroundRemover() {
                 accept="image/png,image/jpeg,image/webp"
                 className="hidden" 
               />
-              <Upload className="w-10 h-10 text-black dark:text-gray-500 mb-4 group-hover:text-[#d4ff33] transition-colors" />
+              <Upload className="w-10 h-10 text-gray-600 dark:text-gray-400 mb-4 group-hover:text-[#d4ff33] transition-colors" />
               <p className="text-sm font-bold text-black dark:text-white mb-1">
                 {t('bg-remover-click-to-upload')} <span className="font-normal text-black dark:text-gray-400">{t('bg-remover-or-drag-drop')}</span>
               </p>
-              <p className="text-[10px] text-black dark:text-gray-500 uppercase tracking-widest">
+              <p className="text-[10px] text-gray-600 dark:text-gray-400 uppercase tracking-widest">
                 {t('bg-remover-formats')}
               </p>
             </div>
@@ -247,7 +248,7 @@ export default function BackgroundRemover() {
               onClick={() => setMode('prompt')}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                mode === 'prompt' ? "bg-black text-black dark:text-white shadow-lg" : "text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
+                mode === 'prompt' ? "bg-black text-black dark:text-white shadow-lg" : "text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-300"
               )}
             >
               <Sparkles size={14} />
@@ -257,7 +258,7 @@ export default function BackgroundRemover() {
               onClick={() => setMode('preset')}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                mode === 'preset' ? "bg-black text-black dark:text-white shadow-lg" : "text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
+                mode === 'preset' ? "bg-black text-black dark:text-white shadow-lg" : "text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-300"
               )}
             >
               <LayoutGrid size={14} />
@@ -267,7 +268,7 @@ export default function BackgroundRemover() {
               onClick={() => setMode('custom')}
               className={cn(
                 "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all",
-                mode === 'custom' ? "bg-black text-black dark:text-white shadow-lg" : "text-black dark:text-gray-500 hover:text-black dark:text-gray-300"
+                mode === 'custom' ? "bg-black text-black dark:text-white shadow-lg" : "text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-300"
               )}
             >
               <ImageIcon size={14} />
@@ -308,7 +309,7 @@ export default function BackgroundRemover() {
                       )}
                     >
                       <img src={p.url} alt={p.name} className="absolute inset-0 w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/40 flex items-end p-2">
+                      <div className="absolute inset-0 bg-gray-100 dark:bg-black/40 flex items-end p-2">
                         <span className="text-[10px] font-bold text-black dark:text-white">{p.name}</span>
                       </div>
                       {selectedPreset === p.id && (
@@ -341,7 +342,7 @@ export default function BackgroundRemover() {
                   ) : (
                     <div className="flex flex-col items-center gap-2">
                       <Upload size={24} className="text-gray-600 group-hover:text-[#d4ff33]" />
-                      <span className="text-xs font-bold text-black dark:text-gray-500">{t('bg-remover-select-bg')}</span>
+                      <span className="text-xs font-bold text-gray-600 dark:text-gray-400">{t('bg-remover-select-bg')}</span>
                     </div>
                   )}
                   {customBg && (
@@ -358,7 +359,7 @@ export default function BackgroundRemover() {
                 className={cn(
                   "w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all text-sm",
                   isProcessing || images.length === 0 || (mode === 'prompt' && !prompt) || (mode === 'custom' && !customBg) || (mode === 'preset' && !selectedPreset)
-                    ? "bg-white dark:bg-gray-800 text-black dark:text-gray-500 cursor-not-allowed"
+                    ? "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 cursor-not-allowed"
                     : "bg-[#84a12d] text-black hover:bg-[#d4ff33] shadow-lg"
                 )}
               >
@@ -454,6 +455,10 @@ export default function BackgroundRemover() {
               >
                 {t('bg-remover-clear-all')}
               </button>
+            )}
+
+            {images.some(img => img.status === 'completed') && (
+              <WorkflowPrompts currentTool="bg-remover" />
             )}
           </div>
         </div>

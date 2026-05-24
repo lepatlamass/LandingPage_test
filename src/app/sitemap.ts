@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { seoPages } from '../lib/seoData';
 
 const SITE_URL = 'https://refinedocs.com';
 
@@ -13,7 +14,7 @@ const toolSlugs = [
   'video-to-gif',
 ];
 
-const staticPages = ['', '/tools', '/blog', '/help', '/privacy', '/terms'];
+const staticPages = ['', '/tools', '/blog', '/faq', '/pricing', '/privacy', '/terms'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString().split('T')[0];
@@ -22,9 +23,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages across all locales
   for (const page of staticPages) {
     for (const locale of locales) {
-      const priority = page === '' ? 1.0 : page === '/tools' ? 0.9 : page === '/blog' || page === '/help' ? 0.7 : 0.3;
+      const priority = page === '' ? 1.0 : page === '/tools' ? 0.9 : page === '/blog' || page === '/faq' || page === '/pricing' ? 0.7 : 0.3;
       const changeFrequency: 'daily' | 'weekly' | 'monthly' | 'yearly' =
-        page === '' ? 'daily' : page === '/tools' ? 'weekly' : page === '/blog' || page === '/help' ? 'weekly' : 'yearly';
+        page === '' ? 'daily' : page === '/tools' ? 'weekly' : page === '/blog' || page === '/faq' || page === '/pricing' ? 'weekly' : 'yearly';
 
       entries.push({
         url: `${SITE_URL}/${locale}${page}`,
@@ -40,6 +41,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const locale of locales) {
       entries.push({
         url: `${SITE_URL}/${locale}/tools/${slug}`,
+        lastModified: now,
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      });
+    }
+  }
+
+  // SEO use-case landing pages — each slug × each locale = unique URL
+  const seoSlugs = Object.keys(seoPages);
+  for (const slug of seoSlugs) {
+    for (const locale of locales) {
+      entries.push({
+        url: `${SITE_URL}/${locale}/${slug}`,
         lastModified: now,
         changeFrequency: 'weekly',
         priority: 0.8,
