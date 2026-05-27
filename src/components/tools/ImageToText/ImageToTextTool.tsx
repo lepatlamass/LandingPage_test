@@ -37,7 +37,7 @@ interface ImageFile {
 export default function ImageToTextTool() {
   const t = useTranslations('Tools');
   const commonT = useTranslations('Common');
-  const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
+  const { guardedAction, guardedDownload, modalState, closeModal, onLoginSuccess } = useAIGate('image-to-text');
   // Persisted: the image extraction result survives locale changes
   const [images, setImages] = useToolState<ImageFile[]>('image-to-text-images', []);
   const [mode, setMode] = useToolState<'extract' | 'caption'>('image-to-text-mode', 'extract');
@@ -246,7 +246,7 @@ export default function ImageToTextTool() {
                       {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
                     </button>
                     <button 
-                      onClick={downloadText}
+                      onClick={() => guardedDownload(downloadText)}
                       className="p-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black dark:text-gray-400 hover:text-black dark:text-white rounded-lg transition-all whitespace-nowrap"
                       title="Download as .txt"
                     >

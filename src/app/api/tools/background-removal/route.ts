@@ -6,6 +6,11 @@ async function verifyFirebaseTokenAndLicense(request: NextRequest): Promise<{
   error?: string;
   status?: number;
 } | null> {
+  const firstUsageHeader = request.headers.get('x-first-usage');
+  if (firstUsageHeader === 'true') {
+    return null;
+  }
+
   const authHeader = request.headers.get('authorization');
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return { uid: '', error: 'Unauthorized: Missing or invalid Authorization header', status: 401 };

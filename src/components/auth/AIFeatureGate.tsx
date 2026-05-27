@@ -20,6 +20,37 @@ export default function AIFeatureGate({ children, toolId }: AIFeatureGateProps) 
   const router = useRouter();
   const t = useTranslations('AIGate');
 
+  // Helper to check if there is completed processing state in sessionStorage
+  const hasProcessedOutput = () => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const bgRemoverState = sessionStorage.getItem('refinedocs_tool_state_bg-remover-images');
+      if (bgRemoverState) {
+        const images = JSON.parse(bgRemoverState);
+        if (Array.isArray(images) && images.some(img => img.status === 'completed' && img.processed)) {
+          return true;
+        }
+      }
+      const imageToTextState = sessionStorage.getItem('refinedocs_tool_state_image-to-text-images');
+      if (imageToTextState) {
+        const images = JSON.parse(imageToTextState);
+        if (Array.isArray(images) && images.some(img => img.status === 'completed' && img.result)) {
+          return true;
+        }
+      }
+      const watermarkRemoverState = sessionStorage.getItem('refinedocs_tool_state_watermark-remover-images');
+      if (watermarkRemoverState) {
+        const images = JSON.parse(watermarkRemoverState);
+        if (Array.isArray(images) && images.some(img => img.status === 'completed' && img.processed)) {
+          return true;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to parse tool state', e);
+    }
+    return false;
+  };
+
   if (loading) {
     return (
       <div className="w-full bg-zinc-50 dark:bg-[#111317] border border-zinc-200 dark:border-white/5 rounded-[32px] p-12 md:p-20 text-center min-h-[400px] flex flex-col items-center justify-center">
@@ -33,8 +64,14 @@ export default function AIFeatureGate({ children, toolId }: AIFeatureGateProps) 
     );
   }
 
-  // If user is authenticated and has an active license, let them through
+  // 1. If user is authenticated and has an active license, let them through
   if (user && hasActiveLicense) {
+    return <>{children}</>;
+  }
+
+  // 2. If it's the user's first usage or there's an existing processed output, let them through
+  const usageCount = typeof window !== 'undefined' ? parseInt(localStorage.getItem(`refinedocs_ai_usage_count_${toolId}`) || '0', 10) : 0;
+  if (usageCount < 2 || hasProcessedOutput()) {
     return <>{children}</>;
   }
 

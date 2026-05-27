@@ -19,6 +19,7 @@ import { processWatermarkRemoval } from '@/lib/ai/gemini';
 import { consumeAICredit } from '@/lib/firestore/licenses';
 import { auth } from '@/lib/firebase';
 import { trackToolUsed, trackToolCompleted, trackFileDownloaded } from '@/lib/analytics';
+import { useToolState } from '@/hooks/useToolState';
 
 interface ProcessedImage {
   id: string;
@@ -33,8 +34,8 @@ interface ProcessedImage {
 export default function WatermarkRemoverTool() {
   const t = useTranslations('Tools');
   const commonT = useTranslations('Common');
-  const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
-  const [images, setImages] = useState<ProcessedImage[]>([]);
+  const { guardedAction, guardedDownload, modalState, closeModal, onLoginSuccess } = useAIGate('watermark-remover');
+  const [images, setImages] = useToolState<ProcessedImage[]>('watermark-remover-images', []);
   const [isProcessing, setIsProcessing] = useState(false);
   const [brushSize, setBrushSize] = useState(30);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -373,7 +374,7 @@ export default function WatermarkRemoverTool() {
                       </div>
                     </div>
                     <button 
-                      onClick={() => downloadImage(images[0].processed!, `cleaned-${images[0].id}.png`)}
+                      onClick={() => guardedDownload(() => downloadImage(images[0].processed!, `cleaned-${images[0].id}.png`))}
                       className="mt-6 bg-black text-black dark:text-white px-4 py-2 sm:px-8 sm:py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-white dark:bg-gray-900 transition-all shadow-xl whitespace-nowrap text-sm sm:text-base"
                     >
                       <Download size={18} />

@@ -36,7 +36,7 @@ interface ProcessedImage {
 export default function BackgroundRemover() {
   const t = useTranslations('Tools');
   const commonT = useTranslations('Common');
-  const { guardedAction, modalState, closeModal, onLoginSuccess } = useAIGate();
+  const { guardedAction, guardedDownload, modalState, closeModal, onLoginSuccess } = useAIGate('bg-remover');
   const [images, setImages] = useToolState<ProcessedImage[]>('bg-remover-images', []);
   const [mode, setMode] = useToolState<'prompt' | 'preset' | 'custom'>('bg-remover-mode', 'prompt');
   const [selectedPreset, setSelectedPreset] = useToolState<string | null>('bg-remover-preset', null);
@@ -118,6 +118,7 @@ export default function BackgroundRemover() {
   };
 
   const handleProcess = async () => {
+    const isFirstUsage = typeof window !== 'undefined' && !(parseInt(localStorage.getItem('refinedocs_ai_usage_count_bg-remover') || '0', 10) >= 2);
 
     guardedAction(async () => {
 
@@ -162,6 +163,7 @@ export default function BackgroundRemover() {
           }
         }
 
+
         const result = await processBackgroundRemoval(
           resizedOriginal,
           mimeType,
@@ -169,7 +171,8 @@ export default function BackgroundRemover() {
             prompt: mode === 'prompt' ? prompt : undefined,
             backgroundImageBase64: resizedBg,
             backgroundMimeType: mode === 'custom' || mode === 'preset' ? 'image/jpeg' : undefined
-          }
+          },
+          isFirstUsage
         );
 
         setImages(prev => prev.map((img, idx) =>
@@ -434,7 +437,7 @@ export default function BackgroundRemover() {
                           </span>
                           {img.status === 'completed' && img.processed && (
                             <button 
-                              onClick={() => downloadImage(img.processed!, `result-${img.id}.png`)}
+                              onClick={() => guardedDownload(() => downloadImage(img.processed!, `result-${img.id}.png`))}
                               className="text-[#84a12d] hover:text-[#d4ff33] transition-colors"
                             >
                               <Download size={14} />

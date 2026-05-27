@@ -75,7 +75,8 @@ export const processBackgroundRemovalServer = async (
 export const processBackgroundRemoval = async (
   base64Image: string,
   _mimeType: string,
-  options: { prompt?: string; backgroundImageBase64?: string; backgroundMimeType?: string }
+  options: { prompt?: string; backgroundImageBase64?: string; backgroundMimeType?: string },
+  isFirstUsage?: boolean
 ): Promise<string> => {
   const user = auth.currentUser;
   const token = user ? await user.getIdToken() : '';
@@ -84,7 +85,8 @@ export const processBackgroundRemoval = async (
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'X-First-Usage': isFirstUsage ? 'true' : 'false'
     },
     body: JSON.stringify({ base64Image, mimeType: _mimeType, options }),
   });
