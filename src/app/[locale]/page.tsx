@@ -6,7 +6,6 @@ import { ArrowRight, Zap, Shield, TrendingUp, CloudDownload, Gift } from 'lucide
 import Navbar from '../../components/layout/Navbar';
 import ToolsDirectory from '../../components/layout/ToolsDirectory';
 import Footer from '../../components/layout/Footer';
-import YouTubeFacade from '../../components/ui/YouTubeFacade';
 import PricingButtons from '../../components/billing/PricingButtons';
 import TrialSectionWrapper from '../../components/layout/TrialSectionWrapper';
 import { getProduct } from '../../lib/chariow';
@@ -30,7 +29,9 @@ export async function generateMetadata({ params }: MetaProps): Promise<Metadata>
   };
 
   return {
-    title: t('metaTitle'),
+    title: {
+      absolute: t('metaTitle'),
+    },
     description: t('metaDescription'),
     alternates: {
       canonical: `${siteUrl}/${locale}`,
@@ -99,11 +100,29 @@ export default async function Page({
     }
   };
 
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${siteUrl}/#organization`,
+    name: 'Refinedocs',
+    url: siteUrl,
+    logo: `${siteUrl}/favicon.ico`,
+    sameAs: [
+      'https://www.linkedin.com/in/konwolorentz/',
+      'https://x.com/LorentzKonwo',
+      'https://www.youtube.com/@konwolorentz7285'
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#111111] text-black dark:text-white font-sans selection:bg-[#d4ff33] selection:text-black">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
       <Navbar />
 
@@ -131,19 +150,18 @@ export default async function Page({
               {t('noCreditCard')}
             </span>
           </div>
-
-          {/* App Mockup Placeholder - YouTube Embed Ready */}
-          <div className="relative w-full max-w-5xl mx-auto rounded-xl overflow-hidden border-2 border-[#d4ff33] shadow-xl bg-white dark:bg-[#1a1c21] aspect-[16/9]">
-            <YouTubeFacade videoId="rCMfqbzG-uw" title="Refinedocs Demo" />
-          </div>
         </section>
 
         {/* Tools Grid Section */}
         <section className="py-16 bg-white dark:bg-[#111111]">
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2">{t('powerfulTools')}</h2>
-              <h2 className="text-2xl md:text-3xl font-bold text-black dark:text-[#d4ff33]">{t('powerfulToolsAccent')}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                {t('powerfulTools')}{' '}
+                <span className="text-black dark:text-[#d4ff33] block sm:inline">
+                  {t('powerfulToolsAccent')}
+                </span>
+              </h2>
             </div>
 
             {/* PDF Tools */}
@@ -242,8 +260,9 @@ export default async function Page({
                   <Image
                     src="/Business.svg"
                     alt={tCommon('alt.forBusinesses')}
-                    fill
-                    className="object-cover rounded-2xl"
+                    width={400}
+                    height={400}
+                    className="object-cover rounded-2xl w-full h-full"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -264,8 +283,9 @@ export default async function Page({
                   <Image
                     src="/Accountant.svg"
                     alt={tCommon('alt.forAccountants')}
-                    fill
-                    className="object-cover rounded-2xl"
+                    width={400}
+                    height={400}
+                    className="object-cover rounded-2xl w-full h-full"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -286,8 +306,9 @@ export default async function Page({
                   <Image
                     src="/Student.svg"
                     alt={tCommon('alt.forStudents')}
-                    fill
-                    className="object-cover rounded-2xl"
+                    width={400}
+                    height={400}
+                    className="object-cover rounded-2xl w-full h-full"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -308,8 +329,9 @@ export default async function Page({
                   <Image
                     src="/design.svg"
                     alt={tCommon('alt.forDesigners')}
-                    fill
-                    className="object-cover rounded-2xl"
+                    width={400}
+                    height={400}
+                    className="object-cover rounded-2xl w-full h-full"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -446,8 +468,9 @@ export default async function Page({
                   <Image
                     src="/Happy.svg"
                     alt={tCommon('alt.globeIllustration')}
-                    fill
-                    className="object-contain"
+                    width={256}
+                    height={256}
+                    className="object-contain w-full h-full"
                     referrerPolicy="no-referrer"
                   />
                 </div>

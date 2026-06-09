@@ -5,20 +5,31 @@ import FaqAccordion from './FaqAccordion';
 import ToolLimitsComparison from '../../../components/billing/ToolLimitsComparison';
 import ToolsDirectory from '../../../components/layout/ToolsDirectory';
 import type { Metadata } from 'next';
+import { locales } from '../../../i18n/config';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Help' });
+  const siteUrl = 'https://refinedocs.com';
+
+  const languages: Record<string, string> = {
+    'x-default': `${siteUrl}/en/faq`,
+  };
+  for (const loc of locales) {
+    languages[loc] = `${siteUrl}/${loc}/faq`;
+  }
+
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
     alternates: {
-      canonical: `https://refinedocs.com/${locale}/faq`,
+      canonical: `${siteUrl}/${locale}/faq`,
+      languages,
     },
     openGraph: {
       title: t('metaTitle'),
       description: t('metaDescription'),
-      url: `https://refinedocs.com/${locale}/faq`,
+      url: `${siteUrl}/${locale}/faq`,
       type: 'website',
     },
   };

@@ -1,0 +1,13 @@
+# Refinedocs
+
+> 100% free online PDF, image, and conversion tools processed locally in the browser.
+
+## Primary Tools
+- [PDF to Excel](https://refinedocs.com/en/tools/pdf-to-excel): Convert bank statements and invoices.
+- [PDF to Word](https://refinedocs.com/en/tools/pdf-to-word): Transform PDFs to editable Word documents.
+- [Background Remover](https://refinedocs.com/en/tools/bg-remover): Extract image backgrounds locally.
+- [Image Compressor](https://refinedocs.com/en/tools/compress-images): Optimize images for page speed.
+- [PDF to CSV](https://refinedocs.com/en/tools/pdf-to-csv): Convert PDF tables to CSV formats.
+- [Image Resizer](https://refinedocs.com/en/tools/resize): Change custom width and height.
+- [Image Converter](https://refinedocs.com/en/tools/image-converter): Transform between JPG, PNG, and WebP.
+- [Video to GIF](https://refinedocs.com/en/tools/video-to-gif): Convert video clips into animated GIFs.

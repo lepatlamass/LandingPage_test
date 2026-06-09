@@ -42,16 +42,19 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     };
   }
 
-  const languages: Record<string, string> = {};
-  for (const loc of locales) {
-    languages[loc] = `https://refinedocs.com/${loc}/blog/${slug}`;
-  }
+  // Since all blog posts are currently English-only:
+  // Canonicalize to English version and only declare en / x-default alternates
+  const canonicalUrl = `https://refinedocs.com/en/blog/${slug}`;
+  const languages = {
+    'x-default': canonicalUrl,
+    'en': canonicalUrl,
+  };
 
   return {
     title: `${post.title} | Refinedocs Blog`,
     description: post.description,
     alternates: {
-      canonical: `https://refinedocs.com/${locale}/blog/${slug}`,
+      canonical: canonicalUrl,
       languages,
     },
     openGraph: {
@@ -142,7 +145,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              <span suppressHydrationWarning>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              <span suppressHydrationWarning>{new Date(post.date).toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />

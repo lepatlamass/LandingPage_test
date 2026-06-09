@@ -12,6 +12,29 @@ Crawl-delay: 1
 User-agent: *
 Allow: /
 
+# AI Crawler Management (Allows citation search indexing)
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /*/account/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /*/account/
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 # Disallow internal/auth routes from indexing
 Disallow: /api/
 Disallow: /*/account/

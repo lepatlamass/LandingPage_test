@@ -6,20 +6,31 @@ import ToolLimitsComparison from '../../../components/billing/ToolLimitsComparis
 import ToolsDirectory from '../../../components/layout/ToolsDirectory';
 import { getProduct } from '../../../lib/chariow';
 import type { Metadata } from 'next';
+import { locales } from '../../../i18n/config';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Pricing' });
+  const siteUrl = 'https://refinedocs.com';
+
+  const languages: Record<string, string> = {
+    'x-default': `${siteUrl}/en/pricing`,
+  };
+  for (const loc of locales) {
+    languages[loc] = `${siteUrl}/${loc}/pricing`;
+  }
+
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
     alternates: {
-      canonical: `https://refinedocs.com/${locale}/pricing`,
+      canonical: `${siteUrl}/${locale}/pricing`,
+      languages,
     },
     openGraph: {
       title: t('metaTitle'),
       description: t('metaDescription'),
-      url: `https://refinedocs.com/${locale}/pricing`,
+      url: `${siteUrl}/${locale}/pricing`,
       type: 'website',
     },
   };

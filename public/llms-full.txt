@@ -1,0 +1,58 @@
+# Refinedocs Full Directory
+
+Refinedocs provides 100% free online PDF, image, and conversion tools. All processing runs 100% locally on your computer inside your web browser (client-side), ensuring complete privacy. No files are uploaded to any external servers.
+
+## Features & Philosophy
+- **Client-Side Execution**: All document and image transformations run locally in the browser using WebAssembly.
+- **Privacy-First**: No server uploads, preventing data leaks or third-party exposure.
+- **No Limits**: Unlimited free conversions with no premium price tags or forced watermarks.
+
+---
+
+## 1. PDF Conversion Tools
+
+- **[PDF to Excel Converter](https://refinedocs.com/en/tools/pdf-to-excel)**
+  - *Description*: Extract tables and data from PDFs into editable Excel spreadsheets. Ideal for bank statements, invoices, and financial reports.
+  - *Key Feature*: Automatically detects table boundaries for high-fidelity extraction.
+
+- **[PDF to Word Converter](https://refinedocs.com/en/tools/pdf-to-word)**
+  - *Description*: Transform PDF documents into fully editable Word documents (.docx) while retaining layouts, fonts, and formatting.
+
+- **[PDF to CSV Converter](https://refinedocs.com/en/tools/pdf-to-csv)**
+  - *Description*: Extract PDF tables and convert them to standard CSV formats for database or spreadsheet ingestion.
+
+- **[Excel/CSV Tools](https://refinedocs.com/en/tools/excel-to-csv)**
+  - *Description*: Convert spreadsheets between Excel (.xlsx, .xls) and CSV formats.
+
+---
+
+## 2. Image Tools
+
+- **[Background Remover](https://refinedocs.com/en/tools/bg-remover)**
+  - *Description*: Automatically remove image backgrounds with AI processing executed locally in your browser.
+
+- **[Watermark Tool](https://refinedocs.com/en/tools/watermark)**
+  - *Description*: Add custom text or logo watermarks to protect your images and PDF documents.
+
+- **[Watermark Remover](https://refinedocs.com/en/tools/watermark-remover)**
+  - *Description*: Erase watermarks, text, or logos from images with AI technology.
+
+- **[Image to Text (OCR)](https://refinedocs.com/en/tools/image-to-text)**
+  - *Description*: Scan and extract editable text from screenshots or scanned documents. Supports multiple languages.
+
+- **[Image Resizer](https://refinedocs.com/en/tools/resize)**
+  - *Description*: Resize images to custom dimensions (width/height) or aspect ratio lock.
+
+- **[Image Compressor](https://refinedocs.com/en/tools/compress-images)**
+  - *Description*: Reduce image file sizes (PNG, JPEG, WebP) without losing quality to optimize load speeds.
+
+---
+
+## 3. Media & File Converter
+
+- **[Video to GIF Converter](https://refinedocs.com/en/tools/video-to-gif)**
+  - *Description*: Convert video clips (MP4, WebM, etc.) into animated GIF images.
+  - *Key Feature*: Select start/end ranges and control FPS locally.
+
+- **[File Converter](https://refinedocs.com/en/tools/image-converter)**
+  - *Description*: Batch convert files between multiple formats (JPG, PNG, WebP, GIF, BMP, TIFF) locally.

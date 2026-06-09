@@ -4,19 +4,30 @@ import Navbar from '../../../components/layout/Navbar';
 import ToolsDirectory from '../../../components/layout/ToolsDirectory';
 import Footer from '../../../components/layout/Footer';
 import type { Metadata } from 'next';
+import { locales } from '../../../i18n/config';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  const siteUrl = 'https://refinedocs.com';
+
+  const languages: Record<string, string> = {
+    'x-default': `${siteUrl}/en/terms`,
+  };
+  for (const loc of locales) {
+    languages[loc] = `${siteUrl}/${loc}/terms`;
+  }
+
   return {
     title: 'Terms of Service | Refinedocs',
     description: 'Terms of Service and Conditions for using Refinedocs.',
     alternates: {
-      canonical: `https://refinedocs.com/${locale}/terms`,
+      canonical: `${siteUrl}/${locale}/terms`,
+      languages,
     },
     openGraph: {
       title: 'Terms of Service | Refinedocs',
       description: 'Terms of Service and Conditions for using Refinedocs.',
-      url: `https://refinedocs.com/${locale}/terms`,
+      url: `${siteUrl}/${locale}/terms`,
       type: 'website',
     },
   };

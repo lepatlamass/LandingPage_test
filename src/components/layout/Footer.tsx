@@ -52,15 +52,15 @@ export default async function Footer() {
 
         <div className="pt-10 border-t border-black/10 dark:border-gray-900 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6">
-            <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-400 hover:opacity-80 transition-opacity"><Linkedin size={20} /></a>
-            <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-400 hover:opacity-80 transition-opacity"><Twitter size={20} /></a>
-            <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-400 hover:opacity-80 transition-opacity"><Youtube size={20} /></a>
+            <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" aria-label="Lorentz Konwo on LinkedIn" className="text-black dark:text-gray-400 hover:opacity-80 transition-opacity"><Linkedin size={20} /></a>
+            <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" aria-label="Lorentz Konwo on X" className="text-black dark:text-gray-400 hover:opacity-80 transition-opacity"><Twitter size={20} /></a>
+            <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" aria-label="Lorentz Konwo on YouTube" className="text-black dark:text-gray-400 hover:opacity-80 transition-opacity"><Youtube size={20} /></a>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-[11px] text-black dark:text-gray-500 uppercase tracking-widest font-bold">
             <span>{tCommon('copyright')}</span>
             <Link href="/privacy" className="hover:text-black dark:text-white transition-colors">{tCommon('privacyNotice')}</Link>
             <Link href="/terms" className="hover:text-black dark:text-white transition-colors">{tCommon('termsConditions')}</Link>
-            <a href="mailto:konwoubuntu@gmail.com" className="hover:text-black dark:text-white transition-colors">{tCommon('contactUs')}</a>
+            <a href="mailto:contact@refinedocs.com" className="hover:text-black dark:text-white transition-colors">{tCommon('contactUs')}</a>
           </div>
         </div>
       </div>

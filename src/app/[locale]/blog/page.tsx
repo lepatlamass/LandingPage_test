@@ -4,22 +4,32 @@ import Navbar from '../../../components/layout/Navbar';
 import Footer from '../../../components/layout/Footer';
 import YouTubeBanner from '../../../components/blog/YouTubeBanner';
 import BlogClient from '../../../components/blog/BlogClient';
-
 import type { Metadata } from 'next';
+import { locales } from '../../../i18n/config';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Blog' });
+  const siteUrl = 'https://refinedocs.com';
+
+  const languages: Record<string, string> = {
+    'x-default': `${siteUrl}/en/blog`,
+  };
+  for (const loc of locales) {
+    languages[loc] = `${siteUrl}/${loc}/blog`;
+  }
+
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
     alternates: {
-      canonical: `https://refinedocs.com/${locale}/blog`,
+      canonical: `${siteUrl}/${locale}/blog`,
+      languages,
     },
     openGraph: {
       title: t('metaTitle'),
       description: t('metaDescription'),
-      url: `https://refinedocs.com/${locale}/blog`,
+      url: `${siteUrl}/${locale}/blog`,
       type: 'website',
     },
   };

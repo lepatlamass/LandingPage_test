@@ -14,7 +14,7 @@ const toolSlugs = [
   'video-to-gif',
 ];
 
-const staticPages = ['', '/tools', '/blog', '/faq', '/pricing', '/privacy', '/terms'];
+const staticPages = ['', '/blog', '/faq', '/pricing', '/privacy', '/terms'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString().split('T')[0];

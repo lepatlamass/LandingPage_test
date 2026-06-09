@@ -35,7 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://refinedocs.com/${locale}/${useCaseSlug}`;
   
   // Build hreflang alternates for all locales
-  const languages: Record<string, string> = {};
+  const languages: Record<string, string> = {
+    'x-default': `https://refinedocs.com/en/${useCaseSlug}`
+  };
   for (const loc of locales) {
     languages[loc] = `https://refinedocs.com/${loc}/${useCaseSlug}`;
   }

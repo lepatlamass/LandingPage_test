@@ -37,7 +37,8 @@ export default function YouTubeFacade({ videoId, title = 'Watch video' }: YouTub
         src={thumbnailUrl}
         alt={title}
         className="w-full h-full object-cover"
-        loading="lazy"
+        loading="eager"
+        fetchPriority="high"
       />
       {/* Play Button Overlay */}
       <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { locales } from '../../../i18n/config';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -10,11 +11,21 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Tools' });
+  const siteUrl = 'https://refinedocs.com';
+
+  const languages: Record<string, string> = {
+    'x-default': `${siteUrl}/en/tools`,
+  };
+  for (const loc of locales) {
+    languages[loc] = `${siteUrl}/${loc}/tools`;
+  }
+
   return {
     title: t('metaTitle'),
     description: t('metaDescription'),
     alternates: {
-      canonical: `https://refinedocs.com/${locale}/tools`,
+      canonical: `${siteUrl}/${locale}/tools`,
+      languages,
     },
   };
 }

@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import App from '../../../../App';
 import { locales } from '../../../../i18n/config';
@@ -49,7 +50,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   // Build hreflang alternates for all locales
-  const languages: Record<string, string> = {};
+  const languages: Record<string, string> = {
+    'x-default': `https://refinedocs.com/en/tools/${toolSlug}`
+  };
   for (const loc of locales) {
     languages[loc] = `https://refinedocs.com/${loc}/tools/${toolSlug}`;
   }
@@ -159,6 +162,10 @@ function ToolJsonLd({ locale, toolSlug, title, description, faqs }: {
 
 export default async function ToolPage({ params }: Props) {
   const { locale, toolSlug } = await params;
+
+  if (!VALID_TOOL_SLUGS.includes(toolSlug)) {
+    notFound();
+  }
 
   let title = toolSlug;
   let description = '';

@@ -786,8 +786,9 @@ export default function App({ toolSlug, seoOverride }: { toolSlug?: string; seoO
                 <Image
                   src="/amico.svg"
                   alt={t('alt.processGuide')}
-                  fill
-                  className="object-contain p-6 md:p-8"
+                  width={500}
+                  height={375}
+                  className="object-contain p-6 md:p-8 w-full h-full"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -909,16 +910,16 @@ export default function App({ toolSlug, seoOverride }: { toolSlug?: string; seoO
             </div>
 
             <div className="pt-8 md:pt-10 border-t border-black/10 dark:border-gray-900 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
-              <div className="flex items-center gap-6">
-                <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Linkedin size={20} /></a>
-                <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Twitter size={20} /></a>
-                <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Youtube size={20} /></a>
+            <div className="flex items-center gap-6">
+                <a href="https://www.linkedin.com/in/konwolorentz/" target="_blank" rel="noopener noreferrer" aria-label="Lorentz Konwo on LinkedIn" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Linkedin size={20} /></a>
+                <a href="https://x.com/LorentzKonwo" target="_blank" rel="noopener noreferrer" aria-label="Lorentz Konwo on X" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Twitter size={20} /></a>
+                <a href="https://www.youtube.com/@konwolorentz7285" target="_blank" rel="noopener noreferrer" aria-label="Lorentz Konwo on YouTube" className="text-black dark:text-gray-600 hover:opacity-80 transition-opacity"><Youtube size={20} /></a>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-[10px] md:text-[11px] text-black dark:text-gray-600 uppercase tracking-widest font-bold">
                 <span>{t('copyright')}</span>
                 <Link href="/privacy" className="hover:text-black dark:text-white transition-colors">{t('privacyNotice')}</Link>
                 <Link href="/terms" className="hover:text-black dark:text-white transition-colors">{t('termsConditions')}</Link>
-                <a href="mailto:konwoubuntu@gmail.com" className="hover:text-black dark:text-white transition-colors">{t('contactUs')}</a>
+                <a href="mailto:contact@refinedocs.com" className="hover:text-black dark:text-white transition-colors">{t('contactUs')}</a>
               </div>
             </div>
           </div>
