@@ -145,17 +145,24 @@ export default function SubscriptionPage() {
     let cancelled = false;
 
     (async () => {
-      const [country, r] = await Promise.all([
-        detectCountry(),
-        fetchRates(),
-      ]);
+      try {
+        const [country, r] = await Promise.all([
+          detectCountry(),
+          fetchRates(),
+        ]);
 
-      if (cancelled) return;
+        if (cancelled) return;
 
-      const currency = country ? COUNTRY_CURRENCY[country] ?? 'USD' : 'USD';
-      setUserCurrency(currency);
-      setRates(r);
-      setIsCurrencyLoading(false);
+        const currency = country ? COUNTRY_CURRENCY[country] ?? 'USD' : 'USD';
+        setUserCurrency(currency);
+        setRates(r);
+      } catch (err) {
+        console.error('Failed to load localized subscription prices:', err);
+      } finally {
+        if (!cancelled) {
+          setIsCurrencyLoading(false);
+        }
+      }
     })();
 
     return () => { cancelled = true; };
@@ -171,6 +178,9 @@ export default function SubscriptionPage() {
   const monthlyDisplay = (() => {
     if (!pricingData?.monthlyPrice?.value) return pricingData?.monthlyPrice?.formatted ?? '$9.99';
     if (isCurrencyLoading) return '$9.99';
+    if (!rates && pricingData.monthlyPrice.currency !== userCurrency) {
+      return pricingData.monthlyPrice.formatted;
+    }
     const converted = convert(pricingData.monthlyPrice.value, pricingData.monthlyPrice.currency);
     return formatLocalizedPrice(converted, userCurrency);
   })();
@@ -178,6 +188,9 @@ export default function SubscriptionPage() {
   const yearlyDisplay = (() => {
     if (!pricingData?.yearlyPrice?.value) return pricingData?.yearlyPrice?.formatted ?? '$89.99';
     if (isCurrencyLoading) return '$89.99';
+    if (!rates && pricingData.yearlyPrice.currency !== userCurrency) {
+      return pricingData.yearlyPrice.formatted;
+    }
     const converted = convert(pricingData.yearlyPrice.value, pricingData.yearlyPrice.currency);
     return formatLocalizedPrice(converted, userCurrency);
   })();

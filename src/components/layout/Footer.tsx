@@ -8,7 +8,7 @@ export default async function Footer() {
   return (
     <footer className="bg-white dark:bg-black py-20 px-16">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-20">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-6">
               <div className="w-6 h-6 bg-[#d4ff33] rounded flex items-center justify-center text-black font-bold text-sm">
@@ -46,6 +46,17 @@ export default async function Footer() {
               <li><Link href="/tools" className="hover:text-black dark:text-white transition-colors">All Free Tools</Link></li>
               <li><Link href="/blog" className="hover:text-black dark:text-white transition-colors">Blog</Link></li>
               <li><Link href="/pricing" className="hover:text-black dark:text-white transition-colors">{tCommon('pricing')}</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-black dark:text-white font-bold mb-6">{tCommon('refinedocsVs')}</h4>
+            <ul className="space-y-4 text-black dark:text-gray-500 text-sm">
+              <li><Link href="/blog/refinedocs-vs-smallpdf" className="hover:text-black dark:text-white transition-colors">{tCommon('refinedocsVsSmallpdf')}</Link></li>
+              <li><Link href="/blog/refinedocs-vs-ilovepdf" className="hover:text-black dark:text-white transition-colors">{tCommon('refinedocsVsIlovepdf')}</Link></li>
+              <li><Link href="/blog/refinedocs-vs-iloveimg" className="hover:text-black dark:text-white transition-colors">{tCommon('refinedocsVsIloveimg')}</Link></li>
+              <li><Link href="/blog/client-side-vs-cloud-document-tools" className="hover:text-black dark:text-white transition-colors">{tCommon('clientSideVsCloud')}</Link></li>
+              <li><Link href="/blog/refinedocs-alternatives" className="hover:text-black dark:text-white transition-colors">{tCommon('refinedocsAlternatives')}</Link></li>
             </ul>
           </div>
         </div>

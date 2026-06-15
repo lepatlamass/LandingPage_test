@@ -193,17 +193,24 @@ export default function PricingButtons({
     let cancelled = false;
 
     (async () => {
-      const [country, r] = await Promise.all([
-        detectCountry(),
-        fetchRates(),
-      ]);
+      try {
+        const [country, r] = await Promise.all([
+          detectCountry(),
+          fetchRates(),
+        ]);
 
-      if (cancelled) return;
+        if (cancelled) return;
 
-      const currency = country ? COUNTRY_CURRENCY[country] ?? 'USD' : 'USD';
-      setUserCurrency(currency);
-      setRates(r);
-      setIsLoading(false);
+        const currency = country ? COUNTRY_CURRENCY[country] ?? 'USD' : 'USD';
+        setUserCurrency(currency);
+        setRates(r);
+      } catch (err) {
+        console.error('Failed to load localized prices:', err);
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
     })();
 
     return () => { cancelled = true; };
@@ -219,6 +226,11 @@ export default function PricingButtons({
   const monthlyDisplay = (() => {
     if (!monthlyPrice?.value) return monthlyPrice?.formatted ?? t.foundryProPrice;
     if (isLoading) return null; // show skeleton
+    // If rate API failed or is loading, and store currency does not match user's detected currency,
+    // display the raw formatted price from the store instead of doing a 1:1 conversion.
+    if (!rates && monthlyPrice.currency !== userCurrency) {
+      return monthlyPrice.formatted;
+    }
     const converted = convert(monthlyPrice.value, monthlyPrice.currency);
     return formatLocalizedPrice(converted, userCurrency);
   })();
@@ -226,6 +238,11 @@ export default function PricingButtons({
   const yearlyDisplay = (() => {
     if (!yearlyPrice?.value) return yearlyPrice?.formatted ?? t.yearlyPrice;
     if (isLoading) return null; // show skeleton
+    // If rate API failed or is loading, and store currency does not match user's detected currency,
+    // display the raw formatted price from the store instead of doing a 1:1 conversion.
+    if (!rates && yearlyPrice.currency !== userCurrency) {
+      return yearlyPrice.formatted;
+    }
     const converted = convert(yearlyPrice.value, yearlyPrice.currency);
     return formatLocalizedPrice(converted, userCurrency);
   })();
@@ -312,7 +329,7 @@ export default function PricingButtons({
         <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{monthlyTitle}</h3>
         <div className="flex items-baseline gap-1 mb-4">
           {monthlyDisplay === null ? (
-            <span className="h-9 w-24 rounded-lg bg-white/10 animate-pulse inline-block" />
+            <span className="h-9 w-24 rounded-lg bg-black/10 dark:bg-white/10 animate-pulse inline-block" />
           ) : (
             <span className="text-3xl font-bold text-black dark:text-white">{monthlyDisplay}</span>
           )}
@@ -360,7 +377,7 @@ export default function PricingButtons({
         <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{yearlyTitle}</h3>
         <div className="flex items-baseline gap-2 mb-4">
           {yearlyDisplay === null ? (
-            <span className="h-9 w-24 rounded-lg bg-white/10 animate-pulse inline-block" />
+            <span className="h-9 w-24 rounded-lg bg-black/10 dark:bg-white/10 animate-pulse inline-block" />
           ) : (
             <span className="text-3xl font-bold text-black dark:text-white">{yearlyDisplay}</span>
           )}
