@@ -1,8 +1,8 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, readdirSync, existsSync } from 'fs';
 
 const SITE = 'https://refinedocs.com';
 const API_KEY = '2ea7f78466e549dd981da16cfd3dd02d';
-const locales = ['en', 'es', 'fr', 'pt-PT', 'pt-BR', 'it'];
+const locales = ['en', 'es', 'fr', 'pt-PT', 'it'];
 const today = new Date().toISOString().split('T')[0];
 
 const tools = [
@@ -13,7 +13,12 @@ const tools = [
   'pdf-to-word','word-to-pdf','video-to-gif'
 ];
 
-const blogs = ['background-remover-tips','compress-pdf-guide','excel-to-pdf-walkthrough'];
+const blogDir = './src/content/blog';
+const blogs = existsSync(blogDir)
+  ? readdirSync(blogDir)
+      .filter((file) => file.endsWith('.md'))
+      .map((file) => file.replace(/\.md$/, ''))
+  : [];
 
 const pages = [
   { path: '', priority: '1.0', freq: 'daily' },

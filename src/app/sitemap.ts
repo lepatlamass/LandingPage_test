@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { seoPages } from '../lib/seoData';
+import { getAllSlugs } from '../lib/blog';
 
 const SITE_URL = 'https://refinedocs.com';
 
@@ -57,6 +58,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: now,
         changeFrequency: 'weekly',
         priority: 0.8,
+      });
+    }
+  }
+
+  // Blog pages — each blog slug × each locale = unique URL
+  const blogSlugs = getAllSlugs();
+  for (const slug of blogSlugs) {
+    for (const locale of locales) {
+      entries.push({
+        url: `${SITE_URL}/${locale}/blog/${slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly',
+        priority: 0.7,
       });
     }
   }
