@@ -6,8 +6,7 @@ import { useTranslations } from 'next-intl';
 import type { PerToolCredits, AISolutionId } from '@/lib/firestore/licenses';
 import { AI_SOLUTION_IDS, AI_SOLUTION_META } from '@/lib/firestore/licenses';
 
-const CREDITS_CHECKOUT =
-  process.env.NEXT_PUBLIC_CHARIOW_CREDITS_CHECKOUT || '#';
+import { useRouter } from '@/navigation';
 
 /* ─────────────────────────────────────────── */
 /* Icon map                                    */
@@ -188,6 +187,7 @@ export default function AICreditsGrid({
   planType?: 'monthly' | 'yearly';
 }) {
   const t = useTranslations('Account.pages.subscription');
+  const router = useRouter();
   // Calculate aggregate stats
   const totalCreditsUsed = AI_SOLUTION_IDS.reduce((sum, id) => {
     const tool = perToolCredits[id];
@@ -242,9 +242,9 @@ export default function AICreditsGrid({
       </div>
 
       {/* Cards Grid */}
-      <div className="p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         {AI_SOLUTION_IDS.map((toolId, i) => {
-          const tool = perToolCredits[toolId];
+          const tool = perToolCredits?.[toolId];
           return (
             <AIToolCreditCard
               key={toolId}
@@ -260,7 +260,7 @@ export default function AICreditsGrid({
       {/* Buy More Credits CTA */}
       <div className="px-5 pb-5">
         <button
-          onClick={() => window.open(CREDITS_CHECKOUT, '_blank')}
+          onClick={() => router.push('/pricing')}
           className="w-full py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white border border-zinc-300 dark:border-zinc-700 font-bold text-sm hover:bg-zinc-200 dark:hover:bg-zinc-750 transition-all duration-200 flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] shadow-sm"
         >
           <ShoppingCart className="w-4 h-4 text-black dark:text-[#d4ff33]" />

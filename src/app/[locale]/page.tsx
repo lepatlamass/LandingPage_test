@@ -8,7 +8,7 @@ import ToolsDirectory from '../../components/layout/ToolsDirectory';
 import Footer from '../../components/layout/Footer';
 import PricingButtons from '../../components/billing/PricingButtons';
 import TrialSectionWrapper from '../../components/layout/TrialSectionWrapper';
-import { getProduct } from '../../lib/chariow';
+import { getProductPrice } from '../../lib/stripe';
 
 type MetaProps = {
   params: Promise<{ locale: string }>;
@@ -58,10 +58,10 @@ export default async function Page({
   const tCommon = await getTranslations('Common');
   const tPricing = await getTranslations('Pricing');
 
-  const MONTHLY_PRODUCT_ID = 'prd_zvd1cf';
-  const YEARLY_PRODUCT_ID = 'prd_ge7e1g';
+  const MONTHLY_PRICE_ID = process.env.STRIPE_MONTHLY_PRICE_ID || '';
+  const YEARLY_PRICE_ID = process.env.STRIPE_YEARLY_PRICE_ID || '';
 
-  // Fetch live prices from Chariow
+  // Fetch live prices from Stripe
   let monthlyPrice: { value: number; formatted: string; currency: string } | null = null;
   let yearlyPrice: { value: number; formatted: string; currency: string } | null = null;
   let monthlySale: string | null = null;
@@ -69,19 +69,21 @@ export default async function Page({
   let monthlyName: string | null = null;
   let yearlyName: string | null = null;
 
-  try {
-    const [monthly, yearly] = await Promise.all([
-      getProduct(MONTHLY_PRODUCT_ID),
-      getProduct(YEARLY_PRODUCT_ID),
-    ]);
-    monthlyPrice = monthly.currentPrice;
-    yearlyPrice = yearly.currentPrice;
-    monthlySale = monthly.priceOff ?? null;
-    yearlySale = yearly.priceOff ?? null;
-    monthlyName = monthly.name;
-    yearlyName = yearly.name;
-  } catch {
-    // If Chariow API is unavailable, prices will remain null and use fallbacks
+  if (MONTHLY_PRICE_ID && YEARLY_PRICE_ID) {
+    try {
+      const [monthly, yearly] = await Promise.all([
+        getProductPrice(MONTHLY_PRICE_ID),
+        getProductPrice(YEARLY_PRICE_ID),
+      ]);
+      monthlyPrice = monthly.currentPrice;
+      yearlyPrice = yearly.currentPrice;
+      monthlySale = monthly.priceOff ?? null;
+      yearlySale = yearly.priceOff ?? null;
+      monthlyName = monthly.name;
+      yearlyName = yearly.name;
+    } catch (err) {
+      console.error('Failed to fetch Stripe product prices on home page:', err);
+    }
   }
 
   const siteUrl = 'https://refinedocs.com';
@@ -383,6 +385,8 @@ export default async function Page({
                 yearlySale={yearlySale}
                 monthlyName={monthlyName}
                 yearlyName={yearlyName}
+                monthlyPriceId={MONTHLY_PRICE_ID}
+                yearlyPriceId={YEARLY_PRICE_ID}
                 showDetails={false}
               />
             </div>

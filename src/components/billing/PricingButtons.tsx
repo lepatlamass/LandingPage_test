@@ -6,8 +6,8 @@ import { Check } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
 import { trackSubscriptionStarted } from '@/lib/analytics';
 
-const MONTHLY_CHECKOUT = process.env.NEXT_PUBLIC_CHARIOW_MONTHLY_CHECKOUT || '#';
-const YEARLY_CHECKOUT = process.env.NEXT_PUBLIC_CHARIOW_YEARLY_CHECKOUT || '#';
+const DEFAULT_MONTHLY_PRICE_ID = 'price_1TlEWfBGFddGjctCnHIbBpeZ';
+const DEFAULT_YEARLY_PRICE_ID = 'price_1TlEXfBGFddGjctC1tmHlPAf';
 
 /** Map country code → currency code. */
 const COUNTRY_CURRENCY: Record<string, string> = {
@@ -169,6 +169,8 @@ interface PricingButtonsProps {
   yearlyName?: string | null;
   showDetails?: boolean;
   showFree?: boolean;
+  monthlyPriceId?: string;
+  yearlyPriceId?: string;
 }
 
 export default function PricingButtons({
@@ -180,6 +182,8 @@ export default function PricingButtons({
   yearlyName,
   showDetails = true,
   showFree = false,
+  monthlyPriceId,
+  yearlyPriceId,
 }: PricingButtonsProps) {
   const { user, hasActiveLicense, licenseInfo } = useAuth();
   const router = useRouter();
@@ -187,6 +191,7 @@ export default function PricingButtons({
   const [userCurrency, setUserCurrency] = useState<string>('USD');
   const [rates, setRates] = useState<Record<string, number> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [checkoutLoading, setCheckoutLoading] = useState<'monthly' | 'yearly' | null>(null);
 
   // On mount: detect country → get currency → fetch USD-based rates
   useEffect(() => {
@@ -252,22 +257,43 @@ export default function PricingButtons({
 
   const redirectPath = showFree ? '/pricing' : '/#price';
 
-  const handleMonthly = () => {
+  const startCheckout = async (priceId: string, plan: 'monthly' | 'yearly') => {
     if (!user) {
       router.push(`/login?redirect=${redirectPath}`);
-    } else {
-      trackSubscriptionStarted('monthly');
-      window.open(MONTHLY_CHECKOUT, '_blank');
+      return;
+    }
+    setCheckoutLoading(plan);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          priceId,
+          userId: user.uid,
+          userEmail: user.email,
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error('Failed to create checkout session:', data.error);
+        alert('Failed to start checkout. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error starting checkout:', err);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setCheckoutLoading(null);
     }
   };
 
+  const handleMonthly = () => {
+    startCheckout(monthlyPriceId || DEFAULT_MONTHLY_PRICE_ID, 'monthly');
+  };
+
   const handleYearly = () => {
-    if (!user) {
-      router.push(`/login?redirect=${redirectPath}`);
-    } else {
-      trackSubscriptionStarted('yearly');
-      window.open(YEARLY_CHECKOUT, '_blank');
-    }
+    startCheckout(yearlyPriceId || DEFAULT_YEARLY_PRICE_ID, 'yearly');
   };
 
   const isMonthlyActive = user !== null && hasActiveLicense && licenseInfo?.planType === 'monthly';
@@ -360,15 +386,17 @@ export default function PricingButtons({
         )}
 
         <button
-          disabled={isMonthlyActive}
+          disabled={isMonthlyActive || checkoutLoading !== null}
           onClick={handleMonthly}
-          className={`w-full py-4 rounded-xl font-black text-base transition-all hover:scale-[1.02] active:scale-[0.98] ${
-            isMonthlyActive
+          className={`w-full py-4 rounded-xl font-black text-base transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 ${
+            isMonthlyActive || checkoutLoading !== null
               ? 'bg-gray-200 dark:bg-[#222222] text-gray-400 dark:text-gray-600 cursor-default hover:scale-100 active:scale-100'
               : 'bg-[#d4ff33] text-black hover:bg-[#bce622]'
           }`}
         >
-          {isMonthlyActive ? (t.currentPlan || 'Current Plan') : t.startMonthly}
+          {checkoutLoading === 'monthly' ? (
+            <span className="w-5 h-5 rounded-full border-2 border-t-transparent border-black animate-spin" />
+          ) : isMonthlyActive ? (t.currentPlan || 'Current Plan') : t.startMonthly}
         </button>
       </div>
 
@@ -410,15 +438,17 @@ export default function PricingButtons({
         )}
 
         <button
-          disabled={isYearlyActive}
+          disabled={isYearlyActive || checkoutLoading !== null}
           onClick={handleYearly}
-          className={`w-full py-4 rounded-xl font-black text-base transition-all hover:scale-[1.02] active:scale-[0.98] ${
-            isYearlyActive
+          className={`w-full py-4 rounded-xl font-black text-base transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 ${
+            isYearlyActive || checkoutLoading !== null
               ? 'bg-gray-200 dark:bg-[#222222] text-gray-400 dark:text-gray-600 cursor-default hover:scale-100 active:scale-100'
               : 'bg-gray-100 dark:bg-[#2a2d35] text-black dark:text-white hover:bg-gray-200 dark:hover:bg-[#353943]'
           }`}
         >
-          {isYearlyActive ? (t.currentPlan || 'Current Plan') : t.getYearly}
+          {checkoutLoading === 'yearly' ? (
+            <span className="w-5 h-5 rounded-full border-2 border-t-transparent border-black dark:border-white animate-spin" />
+          ) : isYearlyActive ? (t.currentPlan || 'Current Plan') : t.getYearly}
         </button>
       </div>
     </div>

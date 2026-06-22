@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getProduct } from '@/lib/chariow';
+import { getProductPrice } from '@/lib/stripe';
 
 export async function GET(req: NextRequest) {
-  const MONTHLY_PRODUCT_ID = 'prd_zvd1cf';
-  const YEARLY_PRODUCT_ID = 'prd_ge7e1g';
+  const MONTHLY_PRICE_ID = process.env.STRIPE_MONTHLY_PRICE_ID;
+  const YEARLY_PRICE_ID = process.env.STRIPE_YEARLY_PRICE_ID;
+
+  if (!MONTHLY_PRICE_ID || !YEARLY_PRICE_ID) {
+    return NextResponse.json(
+      { error: 'Stripe price IDs are not configured' },
+      { status: 500 }
+    );
+  }
 
   try {
     const [monthly, yearly] = await Promise.all([
-      getProduct(MONTHLY_PRODUCT_ID),
-      getProduct(YEARLY_PRODUCT_ID),
+      getProductPrice(MONTHLY_PRICE_ID),
+      getProductPrice(YEARLY_PRICE_ID),
     ]);
     return NextResponse.json({
       monthlyPrice: monthly.currentPrice,
@@ -17,9 +24,11 @@ export async function GET(req: NextRequest) {
       yearlySale: yearly.priceOff ?? null,
       monthlyName: monthly.name,
       yearlyName: yearly.name,
+      monthlyPriceId: MONTHLY_PRICE_ID,
+      yearlyPriceId: YEARLY_PRICE_ID,
     });
   } catch (error: any) {
-    console.error('Failed to fetch Chariow products:', error);
+    console.error('Failed to fetch Stripe product prices:', error);
     return NextResponse.json(
       { error: error.message || 'Failed to fetch products' },
       { status: 500 }

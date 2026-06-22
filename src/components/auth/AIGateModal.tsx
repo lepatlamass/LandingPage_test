@@ -9,7 +9,7 @@ import type { AIGateModalState } from '@/hooks/useAIGate';
 import { signInWithGoogle } from '@/lib/auth-utils';
 import { useTranslations } from 'next-intl';
 
-const CREDITS_CHECKOUT = process.env.NEXT_PUBLIC_CHARIOW_CREDITS_CHECKOUT || '/account/subscription';
+const CREDITS_CHECKOUT = '/pricing';
 
 interface AIGateModalProps {
   state: AIGateModalState;

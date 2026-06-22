@@ -32,7 +32,7 @@ export const AI_SOLUTION_META: Record<
 
 export interface UserLicense {
   licenseKey: string;
-  chariowLicenseId: string;
+  stripeSubscriptionId: string;
   status: string;
   expiresAt: string;
   activatedAt: string;
@@ -83,7 +83,7 @@ function getNextResetAt(): string {
 
 /**
  * Store an activated license in the user's Firestore.
- * Path: users/{userId}/licenses/{chariowLicenseId}
+ * Path: users/{userId}/licenses/{stripeSubscriptionId}
  */
 export async function saveUserLicense(
   userId: string,
@@ -94,7 +94,7 @@ export async function saveUserLicense(
     license.perToolCredits ?? buildInitialPerToolCredits(license.planType);
 
   await setDoc(
-    doc(db, 'users', userId, 'licenses', license.chariowLicenseId),
+    doc(db, 'users', userId, 'licenses', license.stripeSubscriptionId),
     {
       ...license,
       perToolCredits,
@@ -274,7 +274,7 @@ export function getAICreditAllowance(planType: 'monthly' | 'yearly'): number {
 }
 
 /**
- * Infer plan type from Chariow product name.
+ * Infer plan type from Stripe product name.
  */
 export { getPlanType, getNextResetAt };
 
