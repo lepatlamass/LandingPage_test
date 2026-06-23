@@ -1,0 +1,576 @@
+[debug] [2026-06-23T14:47:27.600Z] ----------------------------------------------------------------------
+[debug] [2026-06-23T14:47:27.606Z] Command:       /opt/homebrew/Cellar/node/25.9.0_2/bin/node /opt/homebrew/bin/firebase deploy --only hosting --project backgrounds-on-demand
+[debug] [2026-06-23T14:47:27.606Z] CLI Version:   15.9.1
+[debug] [2026-06-23T14:47:27.606Z] Platform:      darwin
+[debug] [2026-06-23T14:47:27.606Z] Node Version:  v25.9.0
+[debug] [2026-06-23T14:47:27.607Z] Time:          Tue Jun 23 2026 15:47:27 GMT+0100 (West Africa Time)
+[debug] [2026-06-23T14:47:27.607Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-23T14:47:27.608Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-06-23T14:47:28.988Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-23T14:47:28.988Z] > authorizing via signed-in user (konwoubuntu@gmail.com)
+[debug] [2026-06-23T14:47:28.988Z] [iam] checking project backgrounds-on-demand for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-23T14:47:28.989Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:28.989Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:28.989Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions [none]
+[debug] [2026-06-23T14:47:28.989Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions  x-goog-user-project=backgrounds-on-demand
+[debug] [2026-06-23T14:47:28.989Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-23T14:47:29.956Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-06-23T14:47:29.957Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-06-23T14:47:30.461Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions 200
+[debug] [2026-06-23T14:47:30.461Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-23T14:47:30.462Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:30.462Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:30.462Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/backgrounds-on-demand [none]
+[debug] [2026-06-23T14:47:31.613Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/backgrounds-on-demand 200
+[debug] [2026-06-23T14:47:31.613Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/backgrounds-on-demand {"projectId":"backgrounds-on-demand","projectNumber":"594100146569","displayName":"Refinedocs","name":"projects/backgrounds-on-demand","resources":{"hostingSite":"backgrounds-on-demand"},"state":"ACTIVE","etag":"1_ad9ecd88-de4c-49c6-9726-64d0f0ef58d9"}
+[debug] [2026-06-23T14:47:33.436Z] defaultcredentials: writing to file /Users/cash/.config/firebase/konwoubuntu_gmail_com_application_default_credentials.json
+[debug] [2026-06-23T14:47:33.439Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:33.439Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:33.440Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites pageToken=&pageSize=10
+[debug] [2026-06-23T14:47:35.801Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites 200
+[debug] [2026-06-23T14:47:35.803Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites {"sites":[{"name":"projects/backgrounds-on-demand/sites/backgrounds-on-demand","defaultUrl":"https://backgrounds-on-demand.web.app","appId":"1:594100146569:web:761ad205e6688f0005d158","type":"DEFAULT_SITE"}]}
+[debug] [2026-06-23T14:47:35.805Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:35.805Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:35.805Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:594100146569:web:761ad205e6688f0005d158/config [none]
+[debug] [2026-06-23T14:47:37.121Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:594100146569:web:761ad205e6688f0005d158/config 200
+[debug] [2026-06-23T14:47:37.127Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:594100146569:web:761ad205e6688f0005d158/config {"projectId":"backgrounds-on-demand","appId":"1:594100146569:web:761ad205e6688f0005d158","storageBucket":"backgrounds-on-demand.firebasestorage.app","apiKey":"AIzaSyDAOY2j3ej-X-efPv2yL7-mzb6sDGaF4dk","authDomain":"backgrounds-on-demand.firebaseapp.com","messagingSenderId":"594100146569","measurementId":"G-6Y4G64N39S","projectNumber":"594100146569","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-06-23T14:47:41.636Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:41.636Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:47:41.637Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites/backgrounds-on-demand [none]
+[debug] [2026-06-23T14:47:43.685Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites/backgrounds-on-demand 200
+[debug] [2026-06-23T14:47:43.686Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites/backgrounds-on-demand {"name":"projects/backgrounds-on-demand/sites/backgrounds-on-demand","defaultUrl":"https://backgrounds-on-demand.web.app","appId":"1:594100146569:web:761ad205e6688f0005d158","type":"DEFAULT_SITE"}
+[info]   ▲ Next.js 14.2.13
+
+[info]   - Environments: .env.local
+
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully
+
+[info]    Skipping validation of types
+   Skipping linting
+
+[info]    Collecting page data ...
+
+[info]    Generating static pages (0/451) ...
+
+[info]    Generating static pages (112/451) 
+
+[info]    Generating static pages (225/451) 
+
+[info]    Generating static pages (338/451) 
+
+[info]  ✓ Generating static pages (451/451)
+
+[info]    Finalizing page optimization ...
+   Collecting build traces ...
+
+[info] 
+
+[info] Route (app)                                 Size     First Load JS
+┌ ○ /                                       147 B          87.7 kB
+├ ○ /_not-found                             883 B          88.4 kB
+├ ƒ /[locale]                               730 B           291 kB
+├ ● /[locale]/[useCaseSlug]                 181 B           945 kB
+├   ├ /en/compress-pdf-for-email
+├   ├ /en/resize-image-for-linkedin-banner
+├   ├ /en/fix-blurry-scanned-pdf
+├   └ [+222 more paths]
+├ ƒ /[locale]/account                       1.91 kB         266 kB
+├ ƒ /[locale]/account/billing               17.4 kB         282 kB
+├ ƒ /[locale]/account/settings              4.86 kB         280 kB
+├ ƒ /[locale]/account/subscription          6.64 kB         281 kB
+├ ● /[locale]/blog                          3.31 kB         284 kB
+├   ├ /en/blog
+├   ├ /es/blog
+├   ├ /fr/blog
+├   └ [+2 more paths]
+├ ● /[locale]/blog/[slug]                   2.23 kB         283 kB
+├   ├ /en/blog/background-remover-tips
+├   ├ /es/blog/background-remover-tips
+├   ├ /fr/blog/background-remover-tips
+├   └ [+102 more paths]
+├ ƒ /[locale]/faq                           1.33 kB         286 kB
+├ ƒ /[locale]/login                         1.46 kB         282 kB
+├ ƒ /[locale]/pricing                       244 B           288 kB
+├ ƒ /[locale]/privacy                       2.23 kB         283 kB
+├ ƒ /[locale]/signup                        1.46 kB         282 kB
+├ ƒ /[locale]/terms                         2.23 kB         283 kB
+├ ƒ /[locale]/tools                         147 B          87.7 kB
+├ ● /[locale]/tools/[toolSlug]              182 B           945 kB
+├   ├ /en/tools/bg-remover
+├   ├ /en/tools/watermark
+├   ├ /en/tools/watermark-remover
+├   └ [+102 more paths]
+├ ƒ /api/checkout                           0 B                0 B
+├ ƒ /api/checkout/verify                    0 B                0 B
+├ ƒ /api/credits/webhook                    0 B                0 B
+├ ƒ /api/emails/welcome                     0 B                0 B
+├ ○ /api/products                           0 B                0 B
+├ ƒ /api/tools/background-removal           0 B                0 B
+└ ○ /sitemap.xml                            0 B                0 B
++ First Load JS shared by all               87.5 kB
+  ├ chunks/7023-5634768bac021913.js         31.8 kB
+  ├ chunks/fd9d1056-8e171b49781c3ca0.js     53.7 kB
+  └ other shared chunks (total)             2.12 kB
+
+
+ƒ Middleware                                47.6 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses getStaticProps)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • middleware
+[info]  • Image Optimization
+[info]  • use of fallback /[locale]/blog
+[info]  • use of fallback /[locale]/blog/[slug]
+[info]  • non-static component /api/credits/webhook/route
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /api/checkout/verify/route
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /api/emails/welcome/route
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /api/checkout/route
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /api/tools/background-removal/route
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/privacy/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/signup/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/login/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/faq/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/pricing/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/[useCaseSlug]/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/tools/[toolSlug]/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/tools/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/terms/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/account/billing/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/account/subscription/page
+[debug] [2026-06-23T14:48:29.501Z]  • non-static component /[locale]/account/page
+[debug] [2026-06-23T14:48:29.502Z]  • non-static component /[locale]/account/settings/page
+[info]  • and 18 other reasons, use --debug to see more
+[info] 
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /es/blog due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /fr/blog due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /it/blog due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /pt-PT/blog due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/background-remover-tips due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/client-side-vs-cloud-document-tools due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/compress-pdf-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/digitize-documents-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/excel-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/excel-to-pdf-walkthrough due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/heic-to-png-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/image-converter-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/image-to-text-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/pdf-compressor-productivity due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/pdf-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.296Z] skipping /en/blog/protect-digital-assets-watermark due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/refinedocs-alternatives due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/refinedocs-vs-iloveimg due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/refinedocs-vs-ilovepdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/refinedocs-vs-smallpdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/say-goodbye-iphone-photo-compatibility-heic due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/shrink-files-not-quality-pdf-compressor due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/ultimate-image-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/unlock-your-data-pdf-to-csv due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /en/blog/watermark-tool-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/background-remover-tips due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/client-side-vs-cloud-document-tools due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/compress-pdf-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/digitize-documents-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/excel-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/excel-to-pdf-walkthrough due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/heic-to-png-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/image-converter-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/image-to-text-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/pdf-compressor-productivity due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/pdf-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/protect-digital-assets-watermark due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/refinedocs-alternatives due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/refinedocs-vs-iloveimg due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/refinedocs-vs-ilovepdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/refinedocs-vs-smallpdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/say-goodbye-iphone-photo-compatibility-heic due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/shrink-files-not-quality-pdf-compressor due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/ultimate-image-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/unlock-your-data-pdf-to-csv due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /es/blog/watermark-tool-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/background-remover-tips due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/client-side-vs-cloud-document-tools due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/compress-pdf-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/digitize-documents-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/excel-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/excel-to-pdf-walkthrough due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/heic-to-png-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/image-converter-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/image-to-text-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.297Z] skipping /fr/blog/pdf-compressor-productivity due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/pdf-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/protect-digital-assets-watermark due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/refinedocs-alternatives due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/refinedocs-vs-iloveimg due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/refinedocs-vs-ilovepdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/refinedocs-vs-smallpdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/say-goodbye-iphone-photo-compatibility-heic due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/shrink-files-not-quality-pdf-compressor due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/ultimate-image-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/unlock-your-data-pdf-to-csv due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /fr/blog/watermark-tool-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/background-remover-tips due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/client-side-vs-cloud-document-tools due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/compress-pdf-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/digitize-documents-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/excel-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/excel-to-pdf-walkthrough due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/heic-to-png-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/image-converter-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/image-to-text-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/pdf-compressor-productivity due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/pdf-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.298Z] skipping /it/blog/protect-digital-assets-watermark due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/refinedocs-alternatives due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/refinedocs-vs-iloveimg due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/refinedocs-vs-ilovepdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/refinedocs-vs-smallpdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/say-goodbye-iphone-photo-compatibility-heic due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/shrink-files-not-quality-pdf-compressor due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/ultimate-image-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/unlock-your-data-pdf-to-csv due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /it/blog/watermark-tool-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/background-remover-tips due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/client-side-vs-cloud-document-tools due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/compress-pdf-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/digitize-documents-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/excel-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/excel-to-pdf-walkthrough due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/heic-to-png-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/image-converter-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/image-to-text-ocr due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/pdf-compressor-productivity due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/pdf-to-csv-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/protect-digital-assets-watermark due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/refinedocs-alternatives due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/refinedocs-vs-iloveimg due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.299Z] skipping /pt-PT/blog/refinedocs-vs-ilovepdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping /pt-PT/blog/refinedocs-vs-smallpdf due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping /pt-PT/blog/say-goodbye-iphone-photo-compatibility-heic due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping /pt-PT/blog/shrink-files-not-quality-pdf-compressor due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping /pt-PT/blog/ultimate-image-converter due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping /pt-PT/blog/unlock-your-data-pdf-to-csv due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping /pt-PT/blog/watermark-tool-guide due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping / due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:30.300Z] skipping /404 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-06-23T14:48:53.038Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:48:53.039Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:48:53.040Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites/backgrounds-on-demand [none]
+[debug] [2026-06-23T14:48:54.996Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites/backgrounds-on-demand 200
+[debug] [2026-06-23T14:48:54.997Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/backgrounds-on-demand/sites/backgrounds-on-demand {"name":"projects/backgrounds-on-demand/sites/backgrounds-on-demand","defaultUrl":"https://backgrounds-on-demand.web.app","appId":"1:594100146569:web:761ad205e6688f0005d158","type":"DEFAULT_SITE"}
+[warn] ⚠  This integration expects Node version 20, 22, or 24. You're running version 25, problems may be encountered. 
+[debug] [2026-06-23T14:49:23.941Z] [web frameworks] effective firebase.json:  {
+  "hosting": [
+    {
+      "source": ".",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "frameworksBackend": {
+        "region": "us-central1",
+        "memory": "1GiB",
+        "cpu": 1
+      },
+      "site": "backgrounds-on-demand",
+      "rewrites": [
+        {
+          "source": "**",
+          "function": {
+            "functionId": "ssrbackgroundsondemand",
+            "region": "us-central1",
+            "pinTag": true
+          }
+        }
+      ],
+      "redirects": [
+        {
+          "source": "/",
+          "destination": "/en",
+          "type": 308
+        },
+        {
+          "source": "/help",
+          "destination": "/faq",
+          "type": 308
+        },
+        {
+          "source": "/:locale/help",
+          "destination": "/:locale/faq",
+          "type": 308
+        }
+      ],
+      "headers": [
+        {
+          "source": "/((?!api).*)*",
+          "headers": [
+            {
+              "key": "X-Frame-Options",
+              "value": "SAMEORIGIN"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "Permissions-Policy",
+              "value": "camera=(), microphone=(), geolocation=()"
+            },
+            {
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            }
+          ]
+        },
+        {
+          "source": "/_not-found",
+          "headers": [
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/_not-found/layout,_N_T_/_not-found/page,_N_T_/_not-found"
+            }
+          ]
+        },
+        {
+          "source": "/sitemap.xml",
+          "headers": [
+            {
+              "key": "cache-control",
+              "value": "public, max-age=0, must-revalidate"
+            },
+            {
+              "key": "content-type",
+              "value": "application/xml"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/sitemap.xml/layout,_N_T_/sitemap.xml/route,_N_T_/sitemap.xml"
+            }
+          ]
+        },
+        {
+          "source": "/api/products",
+          "headers": [
+            {
+              "key": "content-type",
+              "value": "application/json"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/api/layout,_N_T_/api/products/layout,_N_T_/api/products/route,_N_T_/api/products"
+            }
+          ]
+        },
+        {
+          "source": "**/*.[jt]s",
+          "headers": [
+            {
+              "key": "Set-Cookie",
+              "value": "__FIREBASE_DEFAULTS__=eyJjb25maWciOnsicHJvamVjdElkIjoiYmFja2dyb3VuZHMtb24tZGVtYW5kIiwiYXBwSWQiOiIxOjU5NDEwMDE0NjU2OTp3ZWI6NzYxYWQyMDVlNjY4OGYwMDA1ZDE1OCIsInN0b3JhZ2VCdWNrZXQiOiJiYWNrZ3JvdW5kcy1vbi1kZW1hbmQuZmlyZWJhc2VzdG9yYWdlLmFwcCIsImFwaUtleSI6IkFJemFTeURBT1kyajNlai1YLWVmUHYyeUw3LW16YjZzREdhRjRkayIsImF1dGhEb21haW4iOiJiYWNrZ3JvdW5kcy1vbi1kZW1hbmQuZmlyZWJhc2VhcHAuY29tIiwibWVzc2FnaW5nU2VuZGVySWQiOiI1OTQxMDAxNDY1NjkiLCJtZWFzdXJlbWVudElkIjoiRy02WTRHNjROMzlTIiwicHJvamVjdE51bWJlciI6IjU5NDEwMDE0NjU2OSIsInZlcnNpb24iOiIyIn0sIl9hdXRoVG9rZW5TeW5jVVJMIjoiL19fc2Vzc2lvbiJ9; SameSite=Strict; Expires=2028-05-18T01:29:23.940Z; Path=/;"
+            }
+          ]
+        }
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "public": ".firebase/backgrounds-on-demand/hosting",
+      "webFramework": "next_ssr"
+    }
+  ],
+  "functions": [
+    {
+      "source": ".firebase/backgrounds-on-demand/functions",
+      "codebase": "firebase-frameworks-backgrounds-on-demand"
+    }
+  ]
+}
+[debug] [2026-06-23T14:49:23.942Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-23T14:49:23.943Z] > authorizing via signed-in user (konwoubuntu@gmail.com)
+[debug] [2026-06-23T14:49:23.943Z] [iam] checking project backgrounds-on-demand for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2026-06-23T14:49:23.949Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:23.949Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:23.949Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions [none]
+[debug] [2026-06-23T14:49:23.949Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions  x-goog-user-project=backgrounds-on-demand
+[debug] [2026-06-23T14:49:23.949Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-06-23T14:49:25.425Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions 200
+[debug] [2026-06-23T14:49:25.425Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-06-23T14:49:25.427Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:25.427Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:25.427Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/backgrounds-on-demand/locations/-/functions [none]
+[debug] [2026-06-23T14:49:27.299Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/backgrounds-on-demand/locations/-/functions 200
+[debug] [2026-06-23T14:49:27.300Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/backgrounds-on-demand/locations/-/functions {}
+[debug] [2026-06-23T14:49:27.304Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:27.304Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:27.305Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/backgrounds-on-demand/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2026-06-23T14:49:28.759Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/backgrounds-on-demand/locations/-/functions 200
+[debug] [2026-06-23T14:49:28.759Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/backgrounds-on-demand/locations/-/functions {"functions":[{"name":"projects/backgrounds-on-demand/locations/us-central1/functions/ssrbackgroundsondemand","buildConfig":{"build":"projects/594100146569/locations/us-central1/builds/6c5b49c0-e6aa-469d-ac4b-97621a3f0d76","runtime":"nodejs20","entryPoint":"ssrbackgroundsondemand","source":{"storageSource":{"bucket":"gcf-v2-sources-594100146569-us-central1","object":"ssrbackgroundsondemand/function-source.zip","generation":"1781523387303247"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/backgrounds-on-demand/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-594100146569-us-central1","object":"ssrbackgroundsondemand/function-source.zip","generation":"1781523387303247"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/backgrounds-on-demand/serviceAccounts/594100146569-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/backgrounds-on-demand/locations/us-central1/services/ssrbackgroundsondemand","timeoutSeconds":60,"environmentVariables":{"VERCEL_URL":"backgrounds-on-demand.web.app","__FIREBASE_FRAMEWORKS_ENTRY__":"next.js","__FIREBASE_DEFAULTS__":"{\"config\":{\"projectId\":\"backgrounds-on-demand\",\"appId\":\"1:594100146569:web:761ad205e6688f0005d158\",\"storageBucket\":\"backgrounds-on-demand.firebasestorage.app\",\"apiKey\":\"AIzaSyDAOY2j3ej-X-efPv2yL7-mzb6sDGaF4dk\",\"authDomain\":\"backgrounds-on-demand.firebaseapp.com\",\"messagingSenderId\":\"594100146569\",\"measurementId\":\"G-6Y4G64N39S\",\"projectNumber\":\"594100146569\",\"version\":\"2\"},\"_authTokenSyncURL\":\"/__session\"}","FIREBASE_CONFIG":"{\"projectId\":\"backgrounds-on-demand\",\"storageBucket\":\"backgrounds-on-demand.firebasestorage.app\"}","GCLOUD_PROJECT":"backgrounds-on-demand","EVENTARC_CLOUD_EVENT_SOURCE":"projects/backgrounds-on-demand/locations/us-central1/services/ssrbackgroundsondemand","FUNCTION_TARGET":"ssrbackgroundsondemand","LOG_EXECUTION_ID":"true"},"maxInstanceCount":20,"ingressSettings":"ALLOW_ALL","uri":"https://ssrbackgroundsondemand-3ivmoiuwfa-uc.a.run.app","serviceAccountEmail":"594100146569-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"ssrbackgroundsondemand-00047-pex","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2026-06-23T14:17:34.780376113Z","labels":{"deployment-tool":"cli-firebase","firebase-functions-codebase":"firebase-frameworks-backgrounds-on-demand","firebase-functions-hash":"e5545584c418eea313650dc9ba57bc7d39bb6b9f"},"environment":"GEN_2","url":"https://us-central1-backgrounds-on-demand.cloudfunctions.net/ssrbackgroundsondemand","createTime":"2026-04-17T08:47:12.631781589Z","satisfiesPzi":true}]}
+[info] i  hosting: The following function(s) are pinned to site backgrounds-on-demand and will be deployed as well: ssrbackgroundsondemand 
+[info] 
+[info] === Deploying to 'backgrounds-on-demand'...
+[info] 
+[info] i  deploying functions, hosting 
+[debug] [2026-06-23T14:49:28.785Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:28.785Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:28.786Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand [none]
+[debug] [2026-06-23T14:49:29.262Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand 200
+[debug] [2026-06-23T14:49:29.263Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand {"projectNumber":"594100146569","projectId":"backgrounds-on-demand","lifecycleState":"ACTIVE","name":"Refinedocs","labels":{"monospace-workspace-id":"studio-4524328919","firebase":"enabled","firebase-core":"disabled","generative-language":"enabled"},"createTime":"2025-07-10T13:52:47.042545Z"}
+[info] i  functions: preparing codebase firebase-frameworks-backgrounds-on-demand for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2026-06-23T14:49:29.267Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:29.267Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:29.267Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/backgrounds-on-demand/adminSdkConfig [none]
+[debug] [2026-06-23T14:49:31.051Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/backgrounds-on-demand/adminSdkConfig 200
+[debug] [2026-06-23T14:49:31.052Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/backgrounds-on-demand/adminSdkConfig {"projectId":"backgrounds-on-demand","storageBucket":"backgrounds-on-demand.firebasestorage.app"}
+[debug] [2026-06-23T14:49:31.053Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:31.053Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:31.053Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/backgrounds-on-demand/configs [none]
+[debug] [2026-06-23T14:49:33.867Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/backgrounds-on-demand/configs 200
+[debug] [2026-06-23T14:49:33.867Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/backgrounds-on-demand/configs {}
+[debug] [2026-06-23T14:49:33.876Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2026-06-23T14:49:35.410Z] > [functions] package.json contents: {
+  "name": "refinedocs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.2",
+    "@google/genai": "latest",
+    "@next/third-parties": "14.2.13",
+    "clsx": "^2.1.1",
+    "docx": "^9.0.3",
+    "firebase": "^12.11.0",
+    "firebase-admin": "^13.10.0",
+    "framer-motion": "^12.38.0",
+    "gray-matter": "^4.0.3",
+    "heic-to": "^1.1.0",
+    "i18n-iso-countries": "^7.14.0",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.446.0",
+    "mammoth": "^1.8.0",
+    "motion": "^12.23.24",
+    "next": "14.2.13",
+    "next-intl": "^3.19.1",
+    "next-themes": "^0.4.6",
+    "papaparse": "^5.4.1",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "3.11.174",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
+    "reading-time": "^1.5.0",
+    "resend": "^4.0.0",
+    "stripe": "^22.2.2",
+    "tailwind-merge": "^2.5.4",
+    "xlsx": "^0.18.5",
+    "firebase-functions": "^6.3.0",
+    "sharp": "^0.32 || ^0.33",
+    "firebase-frameworks": "^0.11.0"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "server.js"
+}
+[debug] [2026-06-23T14:49:35.410Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase firebase-frameworks-backgrounds-on-demand to determine what to deploy 
+[debug] [2026-06-23T14:49:35.413Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-06-23T14:49:35.424Z] Found firebase-functions binary at '/Users/cash/Documents/code/LandingPage_test/.firebase/backgrounds-on-demand/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8664
+
+[debug] [2026-06-23T14:49:36.458Z] Got response from /__/functions.yaml {"endpoints":{"ssrbackgroundsondemand":{"availableMemoryMb":1024,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","cpu":1,"region":["us-central1"],"labels":{},"httpsTrigger":{},"entryPoint":"ssrbackgroundsondemand"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2026-06-23T14:49:40.510Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-23T14:49:40.510Z] > authorizing via signed-in user (konwoubuntu@gmail.com)
+[debug] [2026-06-23T14:49:40.510Z] [iam] checking project backgrounds-on-demand for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2026-06-23T14:49:40.511Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:40.511Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:40.511Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions [none]
+[debug] [2026-06-23T14:49:40.511Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions  x-goog-user-project=backgrounds-on-demand
+[debug] [2026-06-23T14:49:40.511Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-06-23T14:49:42.007Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions 200
+[debug] [2026-06-23T14:49:42.008Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-06-23T14:49:42.008Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:42.008Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:42.009Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/backgrounds-on-demand/instances pageSize=100&pageToken=
+[debug] [2026-06-23T14:49:43.946Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/backgrounds-on-demand/instances 200
+[debug] [2026-06-23T14:49:43.947Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/backgrounds-on-demand/instances {}
+[info] i  functions: Loaded environment variables from .env. 
+[info] i  functions: preparing .firebase/backgrounds-on-demand/functions directory for uploading... 
+[info] i  functions: packaged /Users/cash/Documents/code/LandingPage_test/.firebase/backgrounds-on-demand/functions (196.17 MB) for uploading 
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2026-06-23T14:49:56.396Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:56.396Z] Checked if tokens are valid: true, expires at: 1782229493256
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2026-06-23T14:49:56.396Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:56.396Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:56.396Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-06-23T14:49:56.396Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/pubsub.googleapis.com:generateServiceIdentity  x-goog-user-project=594100146569
+[debug] [2026-06-23T14:49:56.396Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/pubsub.googleapis.com:generateServiceIdentity {}
+[debug] [2026-06-23T14:49:56.419Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-06-23T14:49:56.419Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/eventarc.googleapis.com:generateServiceIdentity  x-goog-user-project=594100146569
+[debug] [2026-06-23T14:49:56.419Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/eventarc.googleapis.com:generateServiceIdentity {}
+[debug] [2026-06-23T14:49:58.623Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2026-06-23T14:49:58.624Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-594100146569@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"116173399733719356790"}}
+[debug] [2026-06-23T14:49:58.624Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2026-06-23T14:49:58.624Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/594100146569/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-594100146569@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"104033611171235512494"}}
+[debug] [2026-06-23T14:49:58.627Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:58.628Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:49:58.628Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand [none]
+[debug] [2026-06-23T14:50:00.097Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand 200
+[debug] [2026-06-23T14:50:00.097Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/backgrounds-on-demand {"projectNumber":"594100146569","projectId":"backgrounds-on-demand","lifecycleState":"ACTIVE","name":"Refinedocs","labels":{"monospace-workspace-id":"studio-4524328919","firebase":"enabled","firebase-core":"disabled","generative-language":"enabled"},"createTime":"2025-07-10T13:52:47.042545Z"}
+[debug] [2026-06-23T14:50:00.098Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:00.098Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:00.098Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/594100146569 [none]
+[debug] [2026-06-23T14:50:01.651Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/594100146569 200
+[debug] [2026-06-23T14:50:01.654Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/594100146569 {"kind":"compute#project","id":"1218720363708016479","creationTimestamp":"2026-05-01T00:43:45.101-07:00","name":"backgrounds-on-demand","commonInstanceMetadata":{"kind":"compute#metadata","fingerprint":"nymWFXC55J8="},"quotas":[{"metric":"SNAPSHOTS","limit":1000,"usage":0},{"metric":"NETWORKS","limit":5,"usage":1},{"metric":"FIREWALLS","limit":100,"usage":4},{"metric":"IMAGES","limit":100,"usage":0},{"metric":"STATIC_ADDRESSES","limit":8,"usage":0},{"metric":"ROUTES","limit":200,"usage":0},{"metric":"FORWARDING_RULES","limit":15,"usage":0},{"metric":"TARGET_POOLS","limit":50,"usage":0},{"metric":"HEALTH_CHECKS","limit":75,"usage":0},{"metric":"IN_USE_ADDRESSES","limit":8,"usage":0},{"metric":"TARGET_INSTANCES","limit":50,"usage":0},{"metric":"TARGET_HTTP_PROXIES","limit":10,"usage":0},{"metric":"URL_MAPS","limit":10,"usage":0},{"metric":"BACKEND_SERVICES","limit":50,"usage":0},{"metric":"INSTANCE_TEMPLATES","limit":100,"usage":0},{"metric":"TARGET_VPN_GATEWAYS","limit":5,"usage":0},{"metric":"VPN_TUNNELS","limit":10,"usage":0},{"metric":"BACKEND_BUCKETS","limit":3,"usage":0},{"metric":"ROUTERS","limit":10,"usage":0},{"metric":"TARGET_SSL_PROXIES","limit":10,"usage":0},{"metric":"TARGET_HTTPS_PROXIES","limit":10,"usage":0},{"metric":"SSL_CERTIFICATES","limit":10,"usage":0},{"metric":"SUBNETWORKS","limit":100,"usage":0},{"metric":"TARGET_TCP_PROXIES","limit":10,"usage":0},{"metric":"CPUS_ALL_REGIONS","limit":32,"usage":0},{"metric":"SECURITY_POLICIES","limit":10,"usage":0},{"metric":"SECURITY_POLICY_RULES","limit":100,"usage":0},{"metric":"XPN_SERVICE_PROJECTS","limit":1000,"usage":0},{"metric":"PACKET_MIRRORINGS","limit":20,"usage":0},{"metric":"NETWORK_ENDPOINT_GROUPS","limit":100,"usage":0},{"metric":"INTERCONNECTS","limit":6,"usage":0},{"metric":"SSL_POLICIES","limit":10,"usage":0},{"metric":"GLOBAL_INTERNAL_ADDRESSES","limit":5000,"usage":0},{"metric":"VPN_GATEWAYS","limit":5,"usage":0},{"metric":"MACHINE_IMAGES","limit":100,"usage":0},{"metric":"SECURITY_POLICY_CEVAL_RULES","limit":20,"usage":0},{"metric":"GPUS_ALL_REGIONS","limit":0,"usage":0},{"metric":"EXTERNAL_VPN_GATEWAYS","limit":5,"usage":0},{"metric":"PUBLIC_ADVERTISED_PREFIXES","limit":1,"usage":0},{"metric":"PUBLIC_DELEGATED_PREFIXES","limit":10,"usage":0},{"metric":"STATIC_BYOIP_ADDRESSES","limit":128,"usage":0},{"metric":"NETWORK_FIREWALL_POLICIES","limit":10,"usage":0},{"metric":"INTERNAL_TRAFFIC_DIRECTOR_FORWARDING_RULES","limit":15,"usage":0},{"metric":"GLOBAL_EXTERNAL_MANAGED_FORWARDING_RULES","limit":15,"usage":0},{"metric":"GLOBAL_INTERNAL_MANAGED_BACKEND_SERVICES","limit":50,"usage":0},{"metric":"GLOBAL_EXTERNAL_MANAGED_BACKEND_SERVICES","limit":50,"usage":0},{"metric":"GLOBAL_EXTERNAL_PROXY_LB_BACKEND_SERVICES","limit":50,"usage":0},{"metric":"GLOBAL_INTERNAL_TRAFFIC_DIRECTOR_BACKEND_SERVICES","limit":250,"usage":0}],"selfLink":"https://www.googleapis.com/compute/v1/projects/backgrounds-on-demand","defaultServiceAccount":"594100146569-compute@developer.gserviceaccount.com","xpnProjectStatus":"UNSPECIFIED_XPN_PROJECT_STATUS","defaultNetworkTier":"PREMIUM","vmDnsSetting":"ZONAL_ONLY","cloudArmorTier":"CA_STANDARD"}
+[debug] [2026-06-23T14:50:01.663Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:01.663Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:01.663Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/backgrounds-on-demand/versions [none]
+[debug] [2026-06-23T14:50:01.663Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/backgrounds-on-demand/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase","firebase-web-framework":"next_ssr"}}
+[debug] [2026-06-23T14:50:04.182Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/backgrounds-on-demand/versions 200
+[debug] [2026-06-23T14:50:04.182Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/backgrounds-on-demand/versions {"name":"projects/594100146569/sites/backgrounds-on-demand/versions/089dc88d2a4390b4","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase","firebase-web-framework":"next_ssr"}}
+[debug] [2026-06-23T14:50:04.184Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:04.184Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:04.185Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/backgrounds-on-demand/billingInfo [none]
+[debug] [2026-06-23T14:50:07.420Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/backgrounds-on-demand/billingInfo 200
+[debug] [2026-06-23T14:50:07.420Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/backgrounds-on-demand/billingInfo {"name":"projects/backgrounds-on-demand/billingInfo","projectId":"backgrounds-on-demand","billingAccountName":"billingAccounts/012DF3-205AEC-40F113","billingEnabled":true}
+[debug] [2026-06-23T14:50:07.427Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:07.427Z] Checked if tokens are valid: true, expires at: 1782229493256
+[debug] [2026-06-23T14:50:07.427Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/backgrounds-on-demand/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2026-06-23T14:50:10.154Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/backgrounds-on-demand/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2026-06-23T14:50:10.155Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/backgrounds-on-demand/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-594100146569.us-central1.cloudfunctions.appspot.com/5accc6f1-03d4-46da-98e5-e9b10dc77427.zip?GoogleAccessId=service-594100146569@gcf-admin-robot.iam.gserviceaccount.com&Expires=1782228009&Signature=hYJSLwvQfVEeEL8bKrzQRCaFAoUnUzU2XYJ%2BZAjeDn2%2BZT1UAeGcHyr17K3EEF9aLS60k2NDCibSQV4HwSjkJoxNfcKfEBB%2BDu%2FNERyfp6asV1CKRQ0WUHDO9H6ccaH4057qI6EF%2BjlMAJTd3AjMw1%2F99iA4jvLhjb0n1Ug30Y%2BJI3z2eOkh8IGc4BvvyX2wiN09vsqKpq6VqLlbrRCTmlo10T9%2BYJrwCQUpOPSI3vPfiP8sqgmZ3kc2BnvYhXs5H12l5Zif%2B%2FVGFfhwp8pYPS9NBPAhmzcLyimdHxhABR7mNieqEIpqa7IApddKEu6K7PC8lfXDL4PT8ZvoPGGNxQ%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-594100146569.us-central1.cloudfunctions.appspot.com","object":"5accc6f1-03d4-46da-98e5-e9b10dc77427.zip"}}
+[debug] [2026-06-23T14:50:10.159Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-594100146569.us-central1.cloudfunctions.appspot.com/5accc6f1-03d4-46da-98e5-e9b10dc77427.zip GoogleAccessId=service-594100146569%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1782228009&Signature=hYJSLwvQfVEeEL8bKrzQRCaFAoUnUzU2XYJ%2BZAjeDn2%2BZT1UAeGcHyr17K3EEF9aLS60k2NDCibSQV4HwSjkJoxNfcKfEBB%2BDu%2FNERyfp6asV1CKRQ0WUHDO9H6ccaH4057qI6EF%2BjlMAJTd3AjMw1%2F99iA4jvLhjb0n1Ug30Y%2BJI3z2eOkh8IGc4BvvyX2wiN09vsqKpq6VqLlbrRCTmlo10T9%2BYJrwCQUpOPSI3vPfiP8sqgmZ3kc2BnvYhXs5H12l5Zif%2B%2FVGFfhwp8pYPS9NBPAhmzcLyimdHxhABR7mNieqEIpqa7IApddKEu6K7PC8lfXDL4PT8ZvoPGGNxQ%3D%3D
+[debug] [2026-06-23T14:50:10.159Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-594100146569.us-central1.cloudfunctions.appspot.com/5accc6f1-03d4-46da-98e5-e9b10dc77427.zip [stream]
