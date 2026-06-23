@@ -47,7 +47,6 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BACKGROUNDS_ON_DEMAND }}
           channelId: live
           projectId: backgrounds-on-demand
-          firebaseToolsVersion: '13.31.2'
         env:
           NPM_CONFIG_LEGACY_PEER_DEPS: 'true'
           FIREBASE_CLI_EXPERIMENTS: webframeworks
