@@ -1,0 +1,43 @@
+# Cloud Run service configuration
+runConfig:
+  cpu: 1
+  memoryMiB: 1024
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 80
+
+# Environment variables
+env:
+  # Client-accessible environment variables (must be available during BUILD and RUNTIME)
+  - variable: NEXT_PUBLIC_GEMINI_API_KEY
+    value: "AIzaSyBmfoTNliiL_XAObCyN2G1xF1j82MtTVoQ"
+  - variable: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    value: "pk_live_51TjayeBGFddGjctC13eNz4YF5PubkKrEp4Kt9JzxX2XKqu2sojB1LHomESFclqyweoo2T25nRH898HmUpkOMEgyb00dXEaA5lQ"
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyDAOY2j3ej-X-efPv2yL7-mzb6sDGaF4dk"
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "refinedocs.com"
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "backgrounds-on-demand"
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "backgrounds-on-demand.firebasestorage.app"
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "594100146569"
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:594100146569:web:761ad205e6688f0005d158"
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    value: "G-6Y4G64N39S"
+  - variable: STRIPE_MONTHLY_PRICE_ID
+    value: "price_1TlEWfBGFddGjctCnHIbBpeZ"
+  - variable: STRIPE_YEARLY_PRICE_ID
+    value: "price_1TlEXfBGFddGjctC1tmHlPAf"
+  - variable: RESEND_WELCOME_TEMPLATE_ID
+    value: "welcome-mail"
+
+  # Secrets bound to Cloud Secret Manager (server-side only, available at RUNTIME)
+  - variable: STRIPE_SECRET_KEY
+    secret: STRIPE_SECRET_KEY
+  - variable: STRIPE_WEBHOOK_SECRET
+    secret: STRIPE_WEBHOOK_SECRET
+  - variable: RESEND_API_KEY
+    secret: RESEND_API_KEY
