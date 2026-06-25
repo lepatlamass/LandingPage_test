@@ -6,13 +6,16 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
+    "redirects": [
       {
-        "source": "**",
-        "run": {
-          "serviceId": "studio",
-          "region": "us-central1"
-        }
+        "source": "/",
+        "destination": "https://studio--backgrounds-on-demand.us-central1.hosted.app/",
+        "type": 308
+      },
+      {
+        "source": "/:path*",
+        "destination": "https://studio--backgrounds-on-demand.us-central1.hosted.app/:path",
+        "type": 308
       }
     ]
   },
