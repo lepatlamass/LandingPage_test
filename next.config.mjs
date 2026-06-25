@@ -25,7 +25,18 @@ const nextConfig = {
       },
     ],
   },
-
+  async rewrites() {
+    return [
+      {
+        source: '/__/:path*',
+        destination: 'https://backgrounds-on-demand.firebaseapp.com/__/:path*',
+      },
+      {
+        source: '/:locale/__/:path*',
+        destination: 'https://backgrounds-on-demand.firebaseapp.com/__/:path*',
+      },
+    ];
+  },
   async redirects() {
     return [
       {

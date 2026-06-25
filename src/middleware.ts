@@ -16,6 +16,6 @@ export const config = {
     '/(en|es|fr|pt-PT|it)/:path*',
     // Enable redirects that add missing locales
     // (e.g. `/pathnames` -> `/en/pathnames`)
-    '/((?!_next|_vercel|api|.*\\..*).*)'
+    '/((?!_next|_vercel|api|__|.*\\..*).*)'
   ]
 };
